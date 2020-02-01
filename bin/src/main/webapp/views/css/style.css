@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+.ubuntu{
+    font-family:'Ubuntu', sans-serif;
+}
+
+.open-sans{
+    font-family: 'Open Sans', sans-serif;
+}
+
+.mandatory{
+    color: red;
+}
+.mandatory-text{
+    font-size: smaller;
+}
+.card-head{
+	background: linear-gradient(145deg,#3498db,#8e10ad);
+}
+.btn-custom{
+	background: linear-gradient(225deg,#3498db,#8e10ad);
+	color: #fff;
+	transition: 5s;
+	font-size: 18px;
+	width: 100%;
+}
+.btn-custom:hover{
+	background: linear-gradient(90deg,#3498db,#8e10ad);
+	color: #fff;
+}
+.error{
+	color:red;
+}
+
+@media screen and (max-width:800px){
+	.card{
+		width: 20rem;
+	}
+}
+

@@ -11,9 +11,5 @@
 	
 	This is raja.
 	
-	This is raja2.
-	
-	This is Jesu.
-	
 </body>
 </html>
