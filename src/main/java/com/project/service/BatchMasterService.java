@@ -22,4 +22,9 @@ public class BatchMasterService {
 		List<BatchMaster> list = bmrepo.findAll();
 		return list;
 	}
+
+	public List<BatchMaster> selectBatchByFromTo(int from_year, int to_year) {
+		List<BatchMaster> list = bmrepo.selectByFromTo(from_year,to_year); 
+		return list;
+	}
 }

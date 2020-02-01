@@ -18,6 +18,7 @@ public class BatchMaster {
 	private int to_year;
 	private int no_of_years;
 	private int inn;
+	
 	public int getId() {
 		return id;
 	}

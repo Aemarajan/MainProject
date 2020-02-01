@@ -108,7 +108,7 @@ public class UserController {
 			if(userloc.getPassword().equals(signin.getPassword())) {
 				session.setAttribute("name", userloc.getUsername());
 				session.setAttribute("id", userloc.getUser_id());
-				log.info("User : " +session.getAttribute("username")+" - Login Succesful ");
+				log.info("User : " +session.getAttribute("user")+" - Login Succesful ");
 				if(userloc.getPrivilegeProvide() == 0) {
 					model.setViewName("redirect:/Gallery");
 				}else {
