@@ -7,11 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	This jsp For add batch...
-	
-	This is raja.
-	
-	This is raja2.
 	
 </body>
 </html>
