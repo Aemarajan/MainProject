@@ -62,7 +62,7 @@ public class PrivilegeController {
 			@RequestParam("id") int id,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("show");
+		ModelAndView m = new ModelAndView("AddPrivilege");
 		List<Menu> menuList = menuService.selectAll();
 		try {
 			int menuId[] = new int[menuList.size()];
@@ -97,6 +97,7 @@ public class PrivilegeController {
 				}
 			}
 			userService.updatePrivilegeProvide(id,1);
+			m.addObject("added","added");
 		} catch (NullPointerException e) {
 			System.out.println(e);
 			m.addObject("error", e);
@@ -116,7 +117,7 @@ public class PrivilegeController {
 	public ModelAndView updatePrivilegeForm(HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("updatePrivilege");
+		ModelAndView m = new ModelAndView("UpdatePrivilege");
 		List<User> userList = userService.selectByPp(1);
 		m.addObject("list", userList);
 		return m;
@@ -140,7 +141,7 @@ public class PrivilegeController {
 	public ModelAndView updatePrivilege(@RequestParam int user_id,@RequestParam("menu_id") int[] check,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("updatePrivilege");
+		ModelAndView m = new ModelAndView("UpdatePrivilege");
 		try {
 		List<Menu> menuList = menuService.selectAll();
 		int menuid[] = new int[menuList.size()];
@@ -158,7 +159,7 @@ public class PrivilegeController {
 			}
 		}
 		}catch(NullPointerException e) {
-			m.setViewName("updatePrivilege");
+			m.setViewName("UpdatePrivilege");
 			m.addObject("error", "failure");
 		}
 		m.addObject("success", "success");

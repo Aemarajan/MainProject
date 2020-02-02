@@ -36,6 +36,18 @@ body {
 		<div class="container">
 		<h3 class="text-center">Privilege</h3>
 		<br>
+		<c:if test="${added != null }">
+			<div class="mt-1 alert alert-success alert-dismissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				Privilege added successfully.
+			</div>
+		</c:if>
+		<c:if test="${error != null }">
+			<div class="mt-1 alert alert-danger alert-dismissible">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				Something wrong.
+			</div>
+		</c:if>
 		<form action="createPrivilege" method="post">
 			<h4>User name :</h4>
 			<select name="id" class="form-control username" style="width: 300px;">
