@@ -8,7 +8,6 @@
 .open-sans{
     font-family: 'Open Sans', sans-serif;
 }
-
 .mandatory{
     color: red;
 }
@@ -22,7 +21,7 @@
 	background: linear-gradient(225deg,#3498db,#8e10ad);
 	color: #fff;
 	transition: 5s;
-	font-size: 18px;
+	font-size: 16px;
 	width: 100%;
 }
 .btn-custom:hover{
@@ -32,10 +31,17 @@
 .error{
 	color:red;
 }
-
+.footer{
+		position:absolute;
+		left:0;
+		bottom:0;
+		width:100%;
+}
+.unstyle {
+	list-style: none;
+}
 @media screen and (max-width:800px){
 	.card{
 		width: 20rem;
 	}
 }
-

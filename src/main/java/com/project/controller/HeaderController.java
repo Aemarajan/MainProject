@@ -267,7 +267,7 @@ public class HeaderController {
 	@RequestMapping("home")
 	public String getHome(HttpSession session) {
 		if (session.getAttribute("name") != null)
-			return "home";
+			return "Home";
 		return "redirect:/logout";
 	}
 	
@@ -361,7 +361,7 @@ public class HeaderController {
 	public ModelAndView getHeader(HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("header");
+		ModelAndView m = new ModelAndView("Menubar");
 		List<Menu> menuList = new ArrayList<Menu>();
 		List<LevelOne> lvl1p = new ArrayList<LevelOne>();
 		List<LevelTwo> lvl2p = new ArrayList<LevelTwo>();

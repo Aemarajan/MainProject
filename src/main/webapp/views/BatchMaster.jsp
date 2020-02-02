@@ -20,22 +20,19 @@
 <body>
   <!-- Start your project here-->  
   <div>
-    <div class="m-2 p-auto">
-      
-      
-
-      <div id="header"></div> 
-      
-      <div class="content">
-        <div class="container-fluid">
+    <div class="p-auto">
+      <jsp:include page="Header.jsp" />
+            
+      <div class="content mt-2">  
+        
+        <div id="header"></div>
+        
+        <div class="container-fluid mt-2 mb-2">
           <div class="row">
-            
-            <div class="  col col-md-3.5"></div>
-            
+            <div class="col col-md-3.5"></div>
             <div class="col col-md-5 mt-2 mb-2">
-            
               <div class="card">
-                
+              
                 <div class="card-head white-text text-center py-2 ubuntu">
                   <strong><h3 class="d-flex justify-content-end mr-5">ADD</h3><h4 class="d-flex justify-content-start ml-5">Batch Master</h4></strong>
                 </div>
@@ -43,50 +40,66 @@
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveBatchMaster" method="post">
-                    <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
+                  <s:form style="color: #757575;" action="SaveBatchMaster" method="post" modelAttribute="addBatch">
                     
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Batch details are added successfully.</strong>
+                        Batch added successfully.
                       </div>
                     </c:if>
-
+                    
+                    <c:if test="${invalidYear != null }">
+                      <div class="mt-1 alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Invalid batch.
+                      </div>
+                    </c:if>
+					
+					<c:if test="${exist != null }">
+                      <div class="mt-1 alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Batch already exist.
+                      </div>
+                    </c:if>
+                    
+                    <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
+                    
                     <!-- From Year -->
-                    <div class="md-form mt-4">
-                      <input type="text" name="from_year" id="from_year" class="form-control">
-                      <label for="From Year">From year<span class="mandatory"> *</span></label>
+                    <div class="md-form mt-2">
+                      <s:input path="from_year" type="text" id="from_year" class="form-control"></s:input>
+                      <s:label path="from_year" for="From Year">From year<span class="mandatory"> *</span></s:label>
+                      <s:errors path="from_year" cssClass="error"></s:errors>
                     </div>
 
                     <!-- To Year -->
-                    <div class="md-form mt-4">
-                      <input type="text" name="to_year" id="to_year" class="form-control">
-                      <label for="To Year">To year<span class="mandatory"> *</span></label>
+                    <div class="md-form mt-2">
+                      <s:input path="to_year" type="text" id="to_year" class="form-control"></s:input>
+                      <s:label path="to_year" for="To Year">To year<span class="mandatory"> *</span></s:label>
+                      <s:errors path="to_year" cssClass="error"></s:errors>
                     </div>
 
                     <div class="d-flex justify-content-start">
                       <div>
-                        <input type="checkbox" class="drop" id="inuse" name="inn">
-                        <label>Inuse</label>
+                      	<s:checkbox path="inn" cssClass="drop"/>
+                        <label>In use</label>
                       </div>
                     </div>
                     
                     <div class="mt-4">
                       <button type="submit" class="btn btn-custom waves-effect">Add Batch</button>
                     </div>
-                  </form> 
+                  </s:form> 
                   <!-- Form -->
                 </div>
               </div>
             </div>
-
             <div class="col col-md-3.5"></div>
-          
           </div>
         </div>
       </div>
-      <jsp:include page="Footer.jsp"></jsp:include>
+      
+      <jsp:include page="Footer.jsp" />
     </div>
   </div>
   <!-- End your project here-->

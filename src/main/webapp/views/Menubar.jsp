@@ -7,12 +7,18 @@
 <meta charset="ISO-8859-1">
 <title>Header</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">	
+
 <link rel="stylesheet" href="./views/css/animate.min.css">
+
 <link rel="stylesheet" href="./views/css/bootnavbar.css">
+
+<link rel="stylesheet" href="./views/css/style.css">
+
 </head>
-<body>
-	<nav class="navbar navbar-expand-lg  navbar-light bg-light" id="main_navbar">
+<body>	
+	<nav class="navbar navbar-expand-lg  navbar-light bg-light ubuntu py-1 mt-2" id="main_navbar">
 		<a class="navbar-brand" href="home">REPORT REPO</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -105,10 +111,16 @@
 			</c:if>
 		</c:forEach>
 	</ul>-->
-	
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+	<!-- jQuery -->
+  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+  
+  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
+  
+  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+  
+  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
+  	
     <script src="./views/js/bootnavbar.js" ></script>
     <script>
         $(function () {

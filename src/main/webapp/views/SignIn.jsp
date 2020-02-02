@@ -9,41 +9,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Sign In</title>
-<link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
-<!-- Bootstrap core CSS 
-<link rel="stylesheet" href="./views/css/bootstrap.min.css">-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<!-- Material Design Bootstrap -->
+
+<link rel="stylesheet" href="./views/css/bootstrap.min.css">
+
 <link rel="stylesheet" href="./views/css/mdb.min.css">
+
 <link rel="stylesheet" href="./views/css/style.css">
-<style type="text/css">
-	*{
-		font-family: 'Ubuntu', sans-serif;
-	}
-	.footer{
-		position:absolute;
-		left:0;
-		bottom:0;
-		width:100%;
-	}
-</style>
+
 </head>
 <body>
 	<div>
-		<div class="bg-light text-center py-3">
-			<h3>PSNA College of Engineering and Technology</h3>
-		</div>
+		<jsp:include page="Header.jsp" />
+		
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col col-md-3.5"></div>
 					<div class="col col-md-5 mt-2 mb-2">
 						<div class="card">
-							<h5 class="card-header info-color white-text text-center py-4">
+							<h5 class="card-head white-text text-center py-4 ubuntu">
 								<strong>Sign in</strong>
 							</h5>
 							<!--Card content-->
-							<div class="card-body px-lg-5 pt-0">
+							<div class="card-body px-lg-5 pt-0 open-sans">
 
 								<!-- Form -->
 								<s:form cssClass="login-form" style="color: #757575;" action="Login" method="post" modelAttribute="signin">
@@ -82,12 +70,10 @@
 
 									<!-- Sign in button -->
 									<div>
-										<button	class="btn  btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+										<button	class="btn btn-custom btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
 									</div>
 									<!-- Register -->
-									<p>
-										Not a member? <a href="SignUp">SignUp</a>
-									</p>
+									<p class="text-center">Not a member? <a href="SignUp">SignUp</a></p>
 								</s:form>
 								<!-- Form -->
 							</div>
@@ -97,16 +83,22 @@
 				</div>
 			</div>
 		</div>
+		
 		<div class="footer">
 			<jsp:include page="Footer.jsp" />
 		</div>
 	</div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script><!-- MDB core JavaScript -->
-	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-	<!-- Your custom scripts (optional) -->
-	<script type="text/javascript">
+	
+	<!-- jQuery -->
+  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+  
+  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
+  
+  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+  
+  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
+  
+  	<script type="text/javascript">
 	function showPassword() {
 		  var x = document.getElementById("password");
 		  if (x.type === "password") {
@@ -116,5 +108,6 @@
 		  }
 		} 
 	</script>
+
 </body>
 </html>

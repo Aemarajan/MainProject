@@ -3,20 +3,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Header</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-<link rel="stylesheet" href="./views/css/bootstrap.css" />
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="./views/css/mdb.min.css">
+
+<link rel="stylesheet" href="./views/css/style.css">
+
+</head>
 <body>
-	<div class="bg-light">
-		<div class="text-center">
-			<p>2020 Copyright: PSNACET</p>
-			<h6">Application best Viewed in Chrome, Firefox, Opera</h6>
-		</div>
-	</div>
+	
+<div class="white-text text-center py-2 ubuntu card-head">
+	<h5> © 2020 PSNACET. All rights reserved</h5>
+	<h6>Application best Viewed in Chrome, Firefox, Opera</h6>
+</div>
+
+<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="./views/js/popper.min.js"></script>
+
+<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="./views/js/mdb.min.js"></script>
 </body>
 </html>
-
