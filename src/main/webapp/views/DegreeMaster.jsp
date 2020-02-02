@@ -8,12 +8,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Batch Master</title>
+  <title>Degree Master </title>
 
   <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-  
+
   <link rel="stylesheet" href="./views/css/mdb.min.css">
-  
+
   <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
@@ -24,58 +24,61 @@
       
       
 
-      <div id="header"></div> 
+      <div class="header"></div> 
       
       <div class="content">
         <div class="container-fluid">
           <div class="row">
             
-            <div class="  col col-md-3.5"></div>
+            <div class="col col-md-3.5"></div>
             
             <div class="col col-md-5 mt-2 mb-2">
             
               <div class="card">
                 
                 <div class="card-head white-text text-center py-2 ubuntu">
-                  <strong><h3 class="d-flex justify-content-end mr-5">ADD</h3><h4 class="d-flex justify-content-start ml-5">Batch Master</h4></strong>
+                  <strong><h3 class="d-flex justify-content-end mr-5">ADD</h3><h4 class="d-flex justify-content-start ml-5">Degree Master</h4></strong>
                 </div>
                 
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveBatchMaster" method="post">
+                  <s:form style="color: #757575;" action="SaveDegreeMaster" method="post" modelAttribute="">
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
                     
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Batch details are added successfully.</strong>
+                        <strong>Degree details are added successfully.</strong>
                       </div>
                     </c:if>
 
-                    <!-- From Year -->
+                    <!-- Name -->
                     <div class="md-form mt-4">
-                      <input type="text" name="from_year" id="from_year" class="form-control">
-                      <label for="From Year">From year<span class="mandatory"> *</span></label>
+                      <s:input path="name" type="text" id="country_name" class="form-control" />
+                      <s:label path="name" for="Name">Degree Name<span class="mandatory"> *</span></s:label>
+                      <s:errors path="name" cssClass="error" />
                     </div>
 
-                    <!-- To Year -->
-                    <div class="md-form mt-4">
-                      <input type="text" name="to_year" id="to_year" class="form-control">
-                      <label for="To Year">To year<span class="mandatory"> *</span></label>
+                    <!-- Acronym -->
+                    <div class="md-form">
+                      <s:input path="acronym" type="text" name="acronym" id="country_acronym" class="form-control" />
+                      <s:label path="acronym" for="Acronym">Acronym<span class="mandatory"> *</span></s:label>
+                      <s:errors path="acronym" cssClass="error" />
                     </div>
 
                     <div class="d-flex justify-content-start">
                       <div>
-                        <input type="checkbox" class="drop" id="inuse" name="inn">
-                        <label>Inuse</label>
+                      	<s:checkbox path="inn" id="inn" cssClass="drop" />
+                        <s:label path="inn">Inuse</s:label>
+                        <s:errors path="inn" cssClass="error" />
                       </div>
                     </div>
                     
                     <div class="mt-4">
-                      <button type="submit" class="btn btn-custom waves-effect">Add Batch</button>
+                      <button type="submit" class="btn btn-custom waves-effect">Add Degree</button>
                     </div>
-                  </form> 
+                  </s:form> 
                   <!-- Form -->
                 </div>
               </div>

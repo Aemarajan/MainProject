@@ -8,17 +8,18 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="batch_master")
-public class BatchMaster {
+public class Batch {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	int id;
 	
-	private int from_year;
-	private int to_year;
-	private int no_of_years;
-	private int inn;
-	public int getId() {
+	int from_year;
+	int to_year;
+	int no_of_years;
+	int inn;
+	
+	 public int getId() {
 		return id;
 	}
 	public void setId(int id) {
@@ -46,7 +47,7 @@ public class BatchMaster {
 		return inn;
 	}
 	public void setInn(boolean inn) {
-		this.inn = BatchMaster.check(inn);
+		this.inn = Batch.check(inn);
 	}
 	
 	public static int check(boolean bool) {
