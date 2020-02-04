@@ -15,8 +15,15 @@ public class Community {
 	int id;
 	
 	String name;
+	String acronym;
 	int inn;
 	
+	public String getAcronym() {
+		return acronym;
+	}
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
+	}
 	public int getId() {
 		return id;
 	}
@@ -47,6 +54,7 @@ public class Community {
 	
 	@Override
 	public String toString() {
-		return "CommunityMaster [id=" + id + ", name=" + name + ", inn=" + inn + "]";
+		return "Community [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn + "]";
 	}
+	
 }

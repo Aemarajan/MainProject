@@ -18,7 +18,7 @@
 <body>
 
 	<jsp:include page="Header.jsp" />
-	
+		
 	<div id="header"></div>
 	
 	<div class="d-flex justify-content-center ubuntu">
@@ -39,10 +39,9 @@
   	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
 	
 	<script>
-    $(document).ready(function(){
-        $('#header').load("http://localhost:8080/header");
-    });
-    </script>
-    
+    	$(document).ready(function(){
+       		$('#header').load("http://localhost:8080/header");
+    	});
+    </script> 
 </body>
 </html>

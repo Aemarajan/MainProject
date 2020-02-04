@@ -22,4 +22,13 @@ public class CommunityService {
 		List<Community> list = cmrepo.findAll();
 		return list;
 	}
+
+	public List<Community> selectByAcronym(String acronym) {
+		List<Community> list = cmrepo.findByAcronym(acronym);
+		return list;
+	}
+	
+	public List<Community> selectByCommunity(String country){
+		return cmrepo.findByName(country);
+	}
 }

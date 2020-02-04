@@ -5,23 +5,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<meta http-equiv="x-ua-compatible" content="ie=edge">
-	<title>Diploma Master </title>
-
-	<link rel="stylesheet" href="./views/css/bootstrap.min.css">
-
-  	<link rel="stylesheet" href="./views/css/mdb.min.css">
-
-  	<link rel="stylesheet" href="./views/css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Regulation Master </title>
   
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  
+  <link rel="stylesheet" href="css/mdb.min.css">
+  
+  <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
-	<!-- Start your project here-->  
-  	<div>
+  <!-- Start your project here-->  
+  <div>    
       <jsp:include page="Header.jsp" />
-	  
+
       <div id="header"></div> 
       
       <div class="content">
@@ -34,45 +34,38 @@
                 <div class="card-head white-text text-center py-2 ubuntu">
                   <strong>
                   	<h3 class="d-flex justify-content-end mr-5">ADD</h3>
-                  	<h4 class="d-flex justify-content-start ml-5">Diploma Master</h4>
+                  	<h4 class="d-flex justify-content-start ml-5">Regulation Master</h4>
                   </strong>
                 </div>
                 
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form  style="color: #757575;" action="SaveDiplomaMaster" method="post" >
+                  <form style="color: #757575;" action="SaveRegulationMaster" method="post">
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
-                    
+
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Diploma details are added successfully.</strong>
+                        <strong>Regulation details are added successfully.</strong>
                       </div>
                     </c:if>
-
+                    
                     <!-- Name -->
-                    <div class="md-form mt-2">
-                      <input type="text" name="name" id="diploma_name" class="form-control" />
-                      <label for="Name">Diploma Course Name<span class="mandatory"> *</span></label>
-                    </div>
-
-                    <!-- Specialization -->
                     <div class="md-form">
-                      <input name="specialization" type="text"  id="Specialization" class="form-control" />
-                      <label for="Specialization">Specialization<span class="mandatory"> *</span></label>
-                      
+                      <input type="text" name="name" id="regulation_name" class="form-control">
+                      <label for="Regulation Name">Regulation Name<span class="mandatory"> *</span></label>
                     </div>
 
                     <div class="d-flex justify-content-start">
                       <div>
-                      	<input type="checkbox" name="inn" id="inn" Class="drop"/>
+                        <input type="checkbox" class="drop" id="inuse" name="inn">
                         <label>Inuse</label>
                       </div>
                     </div>
                     
                     <div class="mt-4">
-                      <button type="submit" class="btn btn-custom waves-effect">Add Diploma Course</button>
+                      <button type="submit" class="btn btn-custom waves-effect">Add Regulation</button>
                     </div>
                   </form> 
                   <!-- Form -->
