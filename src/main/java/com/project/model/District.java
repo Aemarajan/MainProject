@@ -10,8 +10,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="department_master")
-public class Department {
+@Table(name="district_master")
+public class District {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,8 @@ public class Department {
 	String acronym;
 	
 	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="degree",referencedColumnName = "id")
-	Degree degree;
+	@JoinColumn(name="state",referencedColumnName = "id")
+	State state;
 	
 	int inn;
 
@@ -44,20 +44,20 @@ public class Department {
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
 	}
-	public Degree getDegree() {
-		return degree;
+	public State getState() {
+		return state;
 	}
-	public void setDegree(Degree degree) {
-		this.degree = degree;
+	public void setState(State state) {
+		this.state = state;
 	}
 	public int getInn() {
 		return inn;
 	}
 	public void setInn(boolean inn) {
-		this.inn = Department.check(inn);
+		this.inn = District.check(inn);
 	}
-	
-	public static int check(boolean bool) {
+
+	private static int check(boolean bool) {
 		int status = 0;
 		if(bool == true)
 			status = 1;
@@ -68,8 +68,6 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", acronym=" + acronym + ", degree=" + degree + ", inn="
-				+ inn + "]";
+		return "District [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn + "]";
 	}
-
 }

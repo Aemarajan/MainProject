@@ -7,16 +7,24 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.model.Country;
+import com.project.model.Degree;
 import com.project.model.LevelOne;
 import com.project.model.LevelThree;
 import com.project.model.LevelTwo;
 import com.project.model.Menu;
+import com.project.model.Regulation;
+import com.project.model.State;
 import com.project.model.User;
+import com.project.service.CountryService;
+import com.project.service.DegreeService;
 import com.project.service.LevelOneService;
 import com.project.service.LevelThreeService;
 import com.project.service.LevelTwoService;
 import com.project.service.MenuService;
 import com.project.service.PrivilegeService;
+import com.project.service.RegulationService;
+import com.project.service.StateService;
 import com.project.service.UserService;
 
 @RestController
@@ -40,6 +48,18 @@ public class ApiController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	DegreeService degreeService;
+	
+	@Autowired
+	StateService stateService;
+	
+	@Autowired
+	CountryService countryService;
+	
+	@Autowired
+	RegulationService regulationService;
 	
 	@RequestMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
@@ -86,4 +106,23 @@ public class ApiController {
 		return list;
 	}
 	
+	@RequestMapping("/getAllDegree")
+	public List<Degree> getAllDegree(){
+		return degreeService.selectAll();
+	}
+	
+	@RequestMapping("/getAllState")
+	public List<State> getAllState(){
+		return stateService.selectAll();
+	}
+	
+	@RequestMapping("/getAllCountry")
+	public List<Country> getAllCountry(){
+		return countryService.selectAll();
+	}
+	
+	@RequestMapping("/getAllRegulation")
+	public List<Regulation> getAllRegulation(){
+		return regulationService.selectAll();
+	}
 }

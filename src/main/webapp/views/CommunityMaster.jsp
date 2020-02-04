@@ -20,30 +20,27 @@
 <body>
   <!-- Start your project here-->  
   <div>
-    <div class="m-2 p-auto">
-      
-      
-
-      <div class="header"></div> 
+	<jsp:include page="Header.jsp" />
+	
+      <div id="header"></div> 
       
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            
             <div class="col col-md-3.5"></div>
-            
             <div class="col col-md-5 mt-2 mb-2">
-            
               <div class="card">
-                
                 <div class="card-head white-text text-center py-2 ubuntu">
-                  <strong><h3 class="d-flex justify-content-end mr-5">ADD</h3><h4 class="d-flex justify-content-start ml-5">Community Master</h4></strong>
+                  <strong>
+                  	<h3 class="d-flex justify-content-end mr-5">ADD</h3>
+                  	<h4 class="d-flex justify-content-start ml-5">Community Master</h4>
+                  </strong>
                 </div>
                 
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <s:form style="color: #757575;" action="SaveCommunityMaster" method="post" modelAttribute="">
+                  <form style="color: #757575;" action="SaveCommunityMaster" method="post" >
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
                     
                     <c:if test="${added != null }">
@@ -54,44 +51,38 @@
                     </c:if>
 
                     <!-- Name -->
-                    <div class="md-form mt-4">
-                      <s:input path="name" type="text" id="community_name" cssClass="form-control"></s:input>
-                      <s:label path="name" for="Name">Community Name<span Class="mandatory"> *</span></s:label>
-                      <s:errors path="name" cssClass="error"></s:errors>
+                    <div class="md-form">
+                      <input name="name" type="text" id="community_name" Class="form-control" />
+                      <label for="Name">Community Name<span Class="mandatory"> *</span></label>
                     </div>
 
                     <!-- Acronym -->
                     <div class="md-form">
-                      <s:input path="acronym" type="text"  id="community_acronym" class="form-control"></s:input>
-                      <s:label path="acronym" for="Acronym">Acronym<span class="mandatory"> *</span></s:label>
-                      <s:errors path="acronym" cssClass="error"></s:errors>
+                      <input name="acronym" type="text"  id="community_acronym" class="form-control"></input>
+                      <label for="Acronym">Acronym<span class="mandatory"> *</span></label>
                     </div>
 
                     <div class="d-flex justify-content-start">
                       <div>
-               	      	<s:checkbox path="inn" cssClass="drop" id="inuse"/>
-                        <s:label path="inn">Inuse</s:label>
-                        <s:errors path="inn" cssClass="error"></s:errors>
+               	      	<input type="checkbox"name="inn" Class="drop" id="inuse"/>
+                        <label>Inuse</label>
                       </div>
                     </div>
                     
                     <div class="mt-4">
                       <button type="submit" class="btn btn-custom waves-effect">Add Community</button>
                     </div>
-                  </s:form> 
+                  </form> 
                   <!-- Form -->
                 </div>
               </div>
             </div>
-
             <div class="col col-md-3.5"></div>
-          
           </div>
         </div>
       </div>
-      <jsp:include page="Footer.jsp"></jsp:include>
+      <jsp:include page="Footer.jsp" />
     </div>
-  </div>
   <!-- End your project here-->
 
   <!-- jQuery -->

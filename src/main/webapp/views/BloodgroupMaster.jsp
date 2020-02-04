@@ -20,23 +20,22 @@
 <body>
   <!-- Start your project here-->  
   <div>
-    <div class="m-2 p-auto">
-      
-
+  	<jsp:include page="Header.jsp" />
+ 
       <div id="header"></div> 
       
       <div class="content">
         <div class="container-fluid">
-          <div class="row">
-            
+          <div class="row">        
             <div class="  col col-md-3.5"></div>
-            
             <div class="col col-md-5 mt-2 mb-2">
-            
               <div class="card">
                 
                 <div class="card-head white-text text-center py-2 ubuntu">
-                  <strong><h3 class="d-flex justify-content-end mr-5">ADD</h3><h4 class="d-flex justify-content-start ml-5">Blood Group Master</h4></strong>
+                  <strong>
+                  	<h3 class="d-flex justify-content-end mr-5">ADD</h3>
+                  	<h4 class="d-flex justify-content-start ml-5">Blood Group Master</h4>
+                  </strong>
                 </div>
                 
                <!--Card content-->
@@ -79,9 +78,8 @@
           </div>
         </div>
       </div>
-      <jsp:include page="Footer.jsp"></jsp:include>
+      <jsp:include page="Footer.jsp" />
     </div>
-  </div>
   <!-- End your project here-->
   
   <script type="text/javascript" src="./views/js/jquery.min.js"></script>

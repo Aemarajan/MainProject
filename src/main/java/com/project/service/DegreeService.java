@@ -21,7 +21,5 @@ public class DegreeService {
 	public List<Degree> selectAll(){
 		List<Degree> list = dgrepo.findAll();
 		return list;
-	}
-	
-	
+	}	
 }

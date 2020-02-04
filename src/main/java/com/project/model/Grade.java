@@ -10,33 +10,40 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="department_master")
-public class Department {
-
+@Table(name="grade_master")
+public class Grade {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
-	String name;
-	String acronym;
-	
 	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="degree",referencedColumnName = "id")
-	Degree degree;
+	@JoinColumn(name="regulation",referencedColumnName = "id")
+	Regulation regulation;
 	
+	String word;
+	String acronym;
+	int point;
+	int marks_range;
 	int inn;
-
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public Regulation getReguation() {
+		return regulation;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setReguation(Regulation reguation) {
+		this.regulation = reguation;
+	}
+	public String getWord() {
+		return word;
+	}
+	public void setWord(String word) {
+		this.word = word;
 	}
 	public String getAcronym() {
 		return acronym;
@@ -44,17 +51,23 @@ public class Department {
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
 	}
-	public Degree getDegree() {
-		return degree;
+	public int getPoint() {
+		return point;
 	}
-	public void setDegree(Degree degree) {
-		this.degree = degree;
+	public void setPoint(int point) {
+		this.point = point;
+	}
+	public int getMarks_range() {
+		return marks_range;
+	}
+	public void setMarks_range(int marks_range) {
+		this.marks_range = marks_range;
 	}
 	public int getInn() {
 		return inn;
 	}
 	public void setInn(boolean inn) {
-		this.inn = Department.check(inn);
+		this.inn = Grade.check(inn);
 	}
 	
 	public static int check(boolean bool) {
@@ -65,11 +78,10 @@ public class Department {
 			status = 0;
 		return status;
 	}
-
+	
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", acronym=" + acronym + ", degree=" + degree + ", inn="
-				+ inn + "]";
+		return "Grade [id=" + id + ", word=" + word + ", acronym=" + acronym + ", point=" + point + ", marks_range="
+				+ marks_range + ", inn=" + inn + "]";
 	}
-
 }

@@ -21,6 +21,10 @@ import com.project.model.Country;
 import com.project.model.Degree;
 import com.project.model.Department;
 import com.project.model.Diploma;
+import com.project.model.District;
+import com.project.model.Grade;
+import com.project.model.Regulation;
+import com.project.model.State;
 import com.project.service.BatchService;
 import com.project.service.BloodgroupService;
 import com.project.service.CommunityService;
@@ -28,31 +32,47 @@ import com.project.service.CountryService;
 import com.project.service.DegreeService;
 import com.project.service.DepartmentService;
 import com.project.service.DiplomaService;
+import com.project.service.DistrictService;
+import com.project.service.GradeService;
+import com.project.service.RegulationService;
+import com.project.service.StateService;
 import com.project.validator.AddBatchMaster;
 
 @Controller
 public class MasterController {
 
 	@Autowired
-	BatchService bmservice;
+	BatchService batchService;
 	
 	@Autowired
-	BloodgroupService bgmservice;
+	BloodgroupService bloodgroupService;
 	
 	@Autowired
-	CommunityService cmservice;
+	CommunityService communityService;
 	
 	@Autowired
-	CountryService cnservice;
+	CountryService countryService;
 	
 	@Autowired
-	DegreeService dgservice;
+	DegreeService degreeService;
 	
 	@Autowired
-	DepartmentService dpservice;
+	DepartmentService departmentService;
 	
 	@Autowired
-	DiplomaService dmservice;
+	DiplomaService diplomaService;
+	
+	@Autowired
+	DistrictService districtService;
+	
+	@Autowired
+	StateService stateService;
+	
+	@Autowired
+	GradeService gradeService;
+	
+	@Autowired
+	RegulationService regulationService;
 	
 	@GetMapping("GetBatchMaster")
 	public String getBatchMaster(HttpSession session,ModelMap model) {
@@ -72,7 +92,7 @@ public class MasterController {
 			return new ModelAndView("BatchMaster");
 		}
 		ModelAndView m = new ModelAndView();
-		List<Batch> exist = bmservice.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
+		List<Batch> exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
 		if(exist.size()!=0) {
 			m.setViewName("BatchMaster");
 			m.addObject("exist", "already exist");
@@ -87,7 +107,7 @@ public class MasterController {
 			bm.setTo_year(t_year);
 			bm.setNo_of_years(n_year);		
 			bm.setInn(batch.isInn());
-			bmservice.saveBatchMaster(bm);
+			batchService.saveBatchMaster(bm);
 
 			ModelAndView mv = new ModelAndView("Batch");
 			mv.addObject("added", "Success Message");
@@ -111,7 +131,7 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		bgmservice.saveBloodgroupMaster(bgm);
+		bloodgroupService.saveBloodgroupMaster(bgm);
 			
 		ModelAndView mv = new ModelAndView("BloodgroupMaster");
 		mv.addObject("added", "Success Message");
@@ -131,7 +151,7 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		cmservice.saveCommunityMaster(cm);
+		communityService.saveCommunityMaster(cm);
 			
 		ModelAndView mv = new ModelAndView("CommunityMaster");
 		mv.addObject("added", "Success Message");
@@ -152,7 +172,7 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		cnservice.saveCountryMaster(cn);
+		countryService.saveCountryMaster(cn);
 			
 		ModelAndView mv = new ModelAndView("CountryMaster");
 		mv.addObject("added", "Success Message");
@@ -172,7 +192,7 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		dgservice.saveDegreeMaster(dgm);
+		degreeService.saveDegreeMaster(dgm);
 			
 		ModelAndView mv = new ModelAndView("DegreeMaster");
 		mv.addObject("added", "Success Message");
@@ -192,7 +212,7 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		dpservice.saveDepartmentMaster(dpm);
+		departmentService.saveDepartmentMaster(dpm);
 			
 		ModelAndView mv = new ModelAndView("DepartmentMaster");
 		mv.addObject("added", "Success Message");
@@ -212,11 +232,90 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		dmservice.saveDiplomaMaster(dm);
+		diplomaService.saveDiplomaMaster(dm);
 			
 		ModelAndView mv = new ModelAndView("DiplomaMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
+	@GetMapping("GetDistrictMaster")
+	public String getDistrictMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "DistrictMaster";
+	}
+	
+	@PostMapping("SaveDistrictMaster")
+	public ModelAndView saveDistrictMaster(District ds,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		districtService.saveDistrictMaster(ds);
+			
+		ModelAndView mv = new ModelAndView("DistrictMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@GetMapping("GetStateMaster")
+	public String getStateMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "StateMaster";
+	}
+	
+	@PostMapping("SaveStateMaster")
+	public ModelAndView saveStateMaster(State st,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		stateService.saveStateMaster(st);
+			
+		ModelAndView mv = new ModelAndView("StateMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@GetMapping("GetGradeMaster")
+	public String getGradeMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "GradeMaster";
+	}
+	
+	@PostMapping("SaveGradeMaster")
+	public ModelAndView saveGradeMaster(Grade gd,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		gradeService.saveGradeMaster(gd);
+			
+		ModelAndView mv = new ModelAndView("GradeMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@GetMapping("GetRegulationMaster")
+	public String getRegulationMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "RegulationMaster";
+	}
+	
+	@PostMapping("SaveRegulationMaster")
+	public ModelAndView saveRegulationMaster(Regulation rg,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		regulationService.saveRegulationMaster(rg);
+			
+		ModelAndView mv = new ModelAndView("RegulationMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
 }

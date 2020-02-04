@@ -8,12 +8,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Country Master </title>
-  
+  <title>Department Master </title>
+
   <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-  
+
   <link rel="stylesheet" href="./views/css/mdb.min.css">
-  
+
   <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
@@ -26,52 +26,64 @@
       
       <div class="content">
         <div class="container-fluid">
-          <div class="row">
+          <div class="row">           
             <div class="col col-md-3.5"></div>
             <div class="col col-md-5 mt-2 mb-2">
               <div class="card">
                 
                 <div class="card-head white-text text-center py-2 ubuntu">
                   <strong>
-                  	<h3 class="d-flex justify-content-end mr-5">ADD</h3>
-                  	<h4 class="d-flex justify-content-start ml-5">Country Master</h4>
-                  </strong>
+                  		<h3 class="d-flex justify-content-end mr-5">ADD</h3>
+                  		<h4 class="d-flex justify-content-start ml-5">Department Master</h4>
+                  	</strong>
                 </div>
                 
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveCountryMaster" method="post" >
+                  <form style="color: #757575;" action="SaveDepartmentMaster" method="post">
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
-                    
+
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Country details are added successfully.</strong>
+                        <strong>Department details are added successfully.</strong>
                       </div>
                     </c:if>
+					
+					<!-- Label -->
+                    <div class="md-form">
+                      <label><strong>Degree</strong><span class="mandatory"> *</span></label>
+                    </div><br>
 
+                    <!-- Degree id -->
+                    <div class="md-form">
+                      <select class="browser-defult custom-select" id="degree" name="degree">
+                        
+                      </select>
+                    </div>
+					
                     <!-- Name -->
                     <div class="md-form">
-                      <input name="name" type="text"  id="country_name" class="form-control"></input>
-                      <label for="Name">Country Name<span class="mandatory"> *</span></label>
+                      <input type="text" name="name" id="department_name" class="form-control">
+                      <label for="Name">Department Name<span class="mandatory"> *</span></label>
                     </div>
 
                     <!-- Acronym -->
                     <div class="md-form">
-                      <input name="acronym" type="text"  id="country_acronym" class="form-control" />
+                      <input type="text" name="acronym" id="department_acronym" class="form-control">
                       <label for="Acronym">Acronym<span class="mandatory"> *</span></label>
                     </div>
 
                     <div class="d-flex justify-content-start">
                       <div>
-                      	<input type="checkbox" name="inn" id="inn" Class="drop"/>
-                        <label id="inn">Inuse</label>
+                        <input type="checkbox" class="drop" id="inuse" name="inn">
+                        <label>Inuse</label>
                       </div>
                     </div>
                     
                     <div class="mt-4">
-                      <button type="submit" class="btn btn-custom waves-effect">Add Country</button>
+                      <button type="submit" class="btn btn-custom waves-effect">Add Department</button>
                     </div>
                   </form> 
                   <!-- Form -->
@@ -98,6 +110,23 @@
   <script type="text/javascript">
     $(document).ready(function() {
       $('#header').load("http://localhost:8080/header");
+      
+      var varurl = "http://localhost:8080/api/getAllDegree";
+      var degree = $('#degree');
+      $.ajax({
+        type: 'GET',
+        url: varurl,
+        async: true,
+        success: function(result){
+          console.log("welcome");
+          console.log(result);
+          var output = "<option selected disabled value='none'> -- Select -- </option>";
+          for(var i in result){
+            output+="<option value="+result[i].id+">"+result[i].name+"</option>";
+          }
+          degree.html(output);
+        }
+      });
     });
   </script>
 </body>

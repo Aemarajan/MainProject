@@ -8,7 +8,7 @@
 <title>Header</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">	
+<link rel="stylesheet" href=".views/css/bootstrap.min.css">	
 
 <link rel="stylesheet" href="./views/css/animate.min.css">
 
@@ -127,6 +127,5 @@
             $('#main_navbar').bootnavbar();
         })
     </script>
-
 </body>
 </html>
