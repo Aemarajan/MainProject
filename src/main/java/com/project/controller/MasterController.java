@@ -116,7 +116,7 @@ public class MasterController {
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
-		m.setViewName("Batch");
+		m.setViewName("BatchMaster");
 		m.addObject("invalidYear", "Invalid year");
 		return m;
 	}
