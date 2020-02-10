@@ -7,6 +7,8 @@ import com.project.customvalidator.NotEmpty;
 
 public class AddBatchMaster {
 	
+	int id;
+	
 	@NotEmpty(message="* From year should not empty")
 	@Size(max=4,message="* Size should be 4")
 	@Pattern(regexp="[0-9]+",message="* Numbers only allowed")
@@ -19,6 +21,12 @@ public class AddBatchMaster {
 	
 	boolean inn;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getFrom_year() {
 		return from_year;
 	}

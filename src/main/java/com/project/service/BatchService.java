@@ -27,4 +27,12 @@ public class BatchService {
 		List<Batch> list = bmrepo.selectByFromTo(from_year,to_year); 
 		return list;
 	}
+
+	public void updateBatchMaster(int id, int f_year, int t_year, int n_year, int inn) {
+		bmrepo.updateBatch(id,f_year,t_year,n_year,inn);
+	}
+
+	public void deleteById(int id) {
+		bmrepo.deleteById(id);		
+	}
 }
