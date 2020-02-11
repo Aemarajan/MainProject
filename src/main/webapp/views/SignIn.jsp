@@ -45,6 +45,7 @@
 									
 									<!-- Email -->
 									<div class="md-form">
+										<i class="fas fa-envelope prefix mt-2"></i>
 										<s:input path="email" id="email" autofocus="autofocus" class="form-control text-lowercase"></s:input> 
 										<s:label for="email" path="email">E-mail</s:label>
 										<s:errors path="email" cssClass="error"></s:errors>
@@ -52,6 +53,7 @@
 
 									<!-- Password -->
 									<div class="md-form">
+										<i class="fas fa-lock prefix mt-2"></i>
 										<s:password path="password" id="password" class="form-control"></s:password> 
 										<s:label path="password" for="password">Password</s:label>
 										<s:errors path="password" cssClass="error"></s:errors>

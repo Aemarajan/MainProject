@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Regulation Master </title>
+  <title>Language Master </title>
   
   <link rel="stylesheet" href="css/bootstrap.min.css">
   
@@ -19,8 +19,8 @@
 </head>
 <body>
   <!-- Start your project here-->  
-  <div>    
-      <jsp:include page="Header.jsp" />
+  <div>
+  	<jsp:include page="Header.jsp"></jsp:include>
 
       <div id="header"></div> 
       
@@ -34,35 +34,35 @@
                 <div class="card-head white-text text-center py-2 ubuntu">
                   <strong>
                   	<h3 class="d-flex justify-content-end mr-5">ADD</h3>
-                  	<h4 class="d-flex justify-content-start ml-5">Regulation Master</h4>
+                  	<h4 class="d-flex justify-content-start ml-5">Language Master</h4>
                   </strong>
                 </div>
                 
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveRegulationMaster" method="post">
+                  <form style="color: #757575;" action="SaveLanguageMaster" method="post">
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
 
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Regulation details are added successfully.</strong>
+                        <strong>Language details are added successfully.</strong>
                       </div>
                     </c:if>
                     
                     <!-- Name -->
                     <div class="md-form">
-                      <input type="text" name="name" id="regulation_name" class="form-control">
-                      <label for="Regulation Name">Regulation Name<span class="mandatory"> *</span></label>
+                      <input type="text" name="name" id="language_name" class="form-control">
+                      <label for="Name">Language Name<span class="mandatory"> *</span></label>
                     </div>
-                    
-                    <!-- In Use -->
-					<div class="md-form">
-                      <input type="text" name="acronym" id="regulation_acronym" class="form-control">
-                      <label for="Regulation Acronym">Acronym<span class="mandatory"> *</span></label>
+
+                    <!-- Acronym -->
+                    <div class="md-form">
+                      <input type="text" name="acronym" id="language_acronym" class="form-control">
+                      <label for="Acronym">Acronym<span class="mandatory"> *</span></label>
                     </div>
-					
+
                     <div class="d-flex justify-content-start">
                       <div>
                         <input type="checkbox" class="drop" id="inuse" name="inn">
@@ -71,7 +71,7 @@
                     </div>
                     
                     <div class="mt-4">
-                      <button type="submit" class="btn btn-custom waves-effect">Add Regulation</button>
+                      <button type="submit" class="btn btn-custom waves-effect">Add Language</button>
                     </div>
                   </form> 
                   <!-- Form -->

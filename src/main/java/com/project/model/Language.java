@@ -7,15 +7,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="regulation_master")
-public class Regulation {
+@Table(name="language_master")
+public class Language {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
 	String name;
-	String acronym;
 	int inn;
 	
 	public int getId() {
@@ -30,20 +29,14 @@ public class Regulation {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAcronym() {
-		return acronym;
-	}
-	public void setAcronym(String acronym) {
-		this.acronym = acronym;
-	}
 	public int getInn() {
 		return inn;
 	}
 	public void setInn(boolean inn) {
-		this.inn = Regulation.check(inn);
+		this.inn = Language.check(inn);
 	}
 	
-	public static int check(boolean bool) {
+	private static int check(boolean bool) {
 		int status = 0;
 		if(bool == true)
 			status = 1;
@@ -54,6 +47,6 @@ public class Regulation {
 	
 	@Override
 	public String toString() {
-		return "Regulation [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn + "]";
+		return "Language [id=" + id + ", name=" + name + ", inn=" + inn + "]";
 	}
 }

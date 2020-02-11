@@ -8,7 +8,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Grade Master </title>
+  <title>Post Graduate Master </title>
   
   <link rel="stylesheet" href="css/bootstrap.min.css">
   
@@ -26,91 +26,53 @@
       
       <div class="content">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col col-md-3.5"></div>
+          <div class="row">  
+            <div class="  col col-md-3.5"></div>
             <div class="col col-md-5 mt-2 mb-2">
               <div class="card">
                 
                 <div class="card-head white-text text-center py-2 ubuntu">
                   <strong>
                   	<h3 class="d-flex justify-content-end mr-5">ADD</h3>
-                  	<h4 class="d-flex justify-content-start ml-5">Grade Master</h4>
+                  	<h4 class="d-flex justify-content-start ml-5">Post Graduate Master</h4>
                   </strong>
                 </div>
                 
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveGradeMaster" method="post">
+                  <form style="color: #757575;" action="SavePGMaster" method="post">
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
-                    
+
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Grade details are added successfully.</strong>
+                        <strong>Post gradute details are added successfully.</strong>
                       </div>
                     </c:if>
+                    
+                    <!-- Name -->
+                    <div class="md-form">
+                      <input type="text" name="name" id="post_graduate_name" class="form-control">
+                      <label for="Name">Post Graduate Name<span class="mandatory"> *</span></label>
+                    </div>
 
                     <!-- Label -->
                     <div class="md-form">
-                      <label><strong>Regulation</strong><span class="mandatory"> *</span></label>
+                      <label><strong>Degree</strong><span class="mandatory"> *</span></label>
                     </div><br>
 
-                    <!-- Regulation Name -->
+                    <!-- Degree id -->
                     <div class="md-form">
-                      <select class="browser-defult custom-select" id="regulation" name="regulation">
+                      <select class="browser-defult custom-select" id="degree" name="degree">
                         
                       </select>
                     </div>
 
-                    <!-- Grade Word -->
+                    <!-- Specialization -->
                     <div class="md-form">
-                      <input type="text" name="word" id="grade_word" class="form-control">
-                      <label for="Word">Grade Word<span class="mandatory"> *</span></label>
-                    </div>
-
-                    <!-- Acronym -->
-                    <div class="md-form">
-                      <input type="text" name="acronym" id="grade_acronym" class="form-control">
-                      <label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-                    </div>
-
-					<!-- Label -->
-                    <div class="md-form">
-                      <label><strong>Grade Point</strong><span class="mandatory"> *</span></label>
-                    </div><br>
-					
-                    <!-- Grade point -->
-                    <div class="md-form">
-                      <select name="point" id="grade_point" class="browser-default custom-select">
-                      	<option selected disabled value="">-- Select --</option>
-                      	<option value="10">10</option>
-                      	<option value="9">9</option>
-                      	<option value="8">8</option>
-                      	<option value="7">7</option>
-                      	<option value="6">6</option>
-                      	<option value="5">5</option>
-                      	<option value="0">0</option>
-                      </select>
-                    </div>
-					
-					<!-- Label -->
-                    <div class="md-form">
-                      <label><strong>Marks Range</strong><span class="mandatory"> *</span></label>
-                    </div><br>
-					
-                    <!-- Grade Mark range -->
-                    <div class="md-form">
-                      <select name="marks_range" id="marks_range" class="browser-default custom-select">
-                      	<option selected disabled value="">-- Select --</option>
-                      	<option value="91-100">91-100</option>
-                      	<option value="81-90">81-90</option>
-                      	<option value="71-80">71-80</option>
-                      	<option value="61-70">61-70</option>
-                      	<option value="57-60">57-60</option>
-                      	<option value="50-56">50-56</option>
-                      	<option value="less than 50">less than 50</option>
-                      </select>
+                      <input type="text" name="specialization" id="post_graduate_specialization" class="form-control">
+                      <label for="Specialization">Specialization<span class="mandatory"> *</span></label>
                     </div>
 
                     <div class="d-flex justify-content-start">
@@ -121,7 +83,7 @@
                     </div>
                     
                     <div class="mt-4">
-                      <button type="submit" class="btn btn-custom waves-effect">Add Grade</button>
+                      <button type="submit" class="btn btn-custom waves-effect">Add Post Graduate</button>
                     </div>
                   </form> 
                   <!-- Form -->
@@ -149,8 +111,8 @@
     $(document).ready(function() {
       $('#header').load("http://localhost:8080/header");
       
-      var varurl = "http://localhost:8080/api/getAllRegulation";
-      var regulation = $('#regulation');
+      var varurl = "http://localhost:8080/api/getAllDegree";
+      var degree = $('#degree');
       $.ajax({
         type: 'GET',
         url: varurl,
@@ -162,11 +124,10 @@
           for(var i in result){
             output+="<option value="+result[i].id+">"+result[i].name+"</option>";
           }
-          regulation.html(output);
+          degree.html(output);
         }
       });
     });
   </script>
-
 </body>
 </html>

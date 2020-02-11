@@ -23,7 +23,11 @@ import com.project.model.Department;
 import com.project.model.Diploma;
 import com.project.model.District;
 import com.project.model.Grade;
+import com.project.model.Language;
+import com.project.model.MPhil;
+import com.project.model.PG;
 import com.project.model.Regulation;
+import com.project.model.Religion;
 import com.project.model.State;
 import com.project.service.BatchService;
 import com.project.service.BloodgroupService;
@@ -34,7 +38,11 @@ import com.project.service.DepartmentService;
 import com.project.service.DiplomaService;
 import com.project.service.DistrictService;
 import com.project.service.GradeService;
+import com.project.service.LanguageService;
+import com.project.service.MPhilService;
+import com.project.service.PGService;
 import com.project.service.RegulationService;
+import com.project.service.ReligionService;
 import com.project.service.StateService;
 import com.project.validator.AddBatchMaster;
 
@@ -73,6 +81,18 @@ public class MasterController {
 	
 	@Autowired
 	RegulationService regulationService;
+	
+	@Autowired
+	LanguageService languageService;
+	
+	@Autowired
+	MPhilService mphilService;
+	
+	@Autowired
+	PGService pgService;
+	
+	@Autowired
+	ReligionService religionService;
 	
 	@GetMapping("GetBatchMaster")
 	public String getBatchMaster(HttpSession session,ModelMap model) {
@@ -292,6 +312,7 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
+		System.out.println(gd.toString());
 		gradeService.saveGradeMaster(gd);
 			
 		ModelAndView mv = new ModelAndView("GradeMaster");
@@ -315,6 +336,86 @@ public class MasterController {
 		regulationService.saveRegulationMaster(rg);
 			
 		ModelAndView mv = new ModelAndView("RegulationMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@GetMapping("GetLanguageMaster")
+	public String getLanguageMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "LanguageMaster";
+	}
+	
+	@PostMapping("SaveLanguageMaster")
+	public ModelAndView saveLanguageMaster(Language lg,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		languageService.saveLanguageMaster(lg);
+			
+		ModelAndView mv = new ModelAndView("LanguageMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@GetMapping("GetMPhilMaster")
+	public String getMPhilMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "MPhilMaster";
+	}
+	
+	@PostMapping("SaveMPhilMaster")
+	public ModelAndView saveMPhilMaster(MPhil mp,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		mphilService.saveMPhilMaster(mp);
+			
+		ModelAndView mv = new ModelAndView("MPhilMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@GetMapping("GetPGMaster")
+	public String getPGMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "PGMaster";
+	}
+	
+	@PostMapping("SavePGMaster")
+	public ModelAndView savePGMaster(PG pg,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		pgService.savePGMaster(pg);
+			
+		ModelAndView mv = new ModelAndView("PGMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@GetMapping("GetReligionMaster")
+	public String getReligionMaster(HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return "redirect:/logout";
+		}
+		return "ReligionMaster";
+	}
+	
+	@PostMapping("SaveReligionMaster")
+	public ModelAndView saveReligionMaster(Religion rg,HttpSession session,ModelMap model) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		religionService.saveReligionMaster(rg);
+			
+		ModelAndView mv = new ModelAndView("ReligionMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
