@@ -41,39 +41,52 @@
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveCountryMaster" method="post" >
+                  <s:form style="color: #757575;" action="SaveCountryMaster" method="post" modelAttribute="country" >
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
                     
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Country details are added successfully.</strong>
+                        Country details are added successfully.
                       </div>
                     </c:if>
-
+                    <c:if test="${exist != null }">
+                      <div class="mt-1 alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Acronym already exist
+                      </div>
+                    </c:if>
+					<c:if test="${existcountry != null }">
+                      <div class="mt-1 alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Country already exist
+                      </div>
+                    </c:if>
                     <!-- Name -->
                     <div class="md-form">
-                      <input name="name" type="text"  id="country_name" class="form-control"></input>
-                      <label for="Name">Country Name<span class="mandatory"> *</span></label>
+                      <s:input path="name" type="text"  id="country_name" class="form-control"></s:input>
+                      <s:label path="name" for="Name">Country Name<span class="mandatory"> *</span></s:label>
+                      <s:errors path="name" cssClass="error"/>
                     </div>
 
                     <!-- Acronym -->
                     <div class="md-form">
-                      <input name="acronym" type="text"  id="country_acronym" class="form-control" />
-                      <label for="Acronym">Acronym<span class="mandatory"> *</span></label>
+                      <s:input path="acronym" type="text"  id="country_acronym" class="form-control" />
+                      <s:label path="acronym" for="Acronym">Acronym<span class="mandatory"> *</span></s:label>
+                      <s:errors path="acronym" cssClass="error"></s:errors>
                     </div>
 
                     <div class="d-flex justify-content-start">
                       <div>
-                      	<input type="checkbox" name="inn" id="inn" Class="drop"/>
-                        <label id="inn">Inuse</label>
+                      	<s:checkbox path="inn"/>
+                        <s:label path="inn">Inuse</s:label>
                       </div>
                     </div>
                     
                     <div class="mt-4">
                       <button type="submit" class="btn btn-custom waves-effect">Add Country</button>
                     </div>
-                  </form> 
+                  </s:form> 
                   <!-- Form -->
                 </div>
               </div>

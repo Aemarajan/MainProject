@@ -273,7 +273,7 @@ public class HeaderController {
 	
 	@RequestMapping("Gallery")
 	public String getGallery(HttpSession session) {
-		if(session.getAttribute("name") != null)
+		if(session.getAttribute("id") != null)
 			return "Gallery";
 		return "redirect:/logout";
 	}

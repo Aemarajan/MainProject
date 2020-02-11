@@ -20,7 +20,11 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
 	User findByEmail(String email);
 	
-	User findById(int id);
+	
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM user u where u.user_id=:id",nativeQuery=true)
+	List<User> findById(@Param("id")int id);
 
 	@Transactional
 	@Modifying

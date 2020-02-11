@@ -1,0 +1,39 @@
+package com.project.validator;
+
+import javax.validation.constraints.Size;
+
+import com.project.customvalidator.NotEmpty;
+
+public class AddCommunity {
+	
+	@NotEmpty(message="* Name should not empty")
+	String name;
+	
+	@NotEmpty(message="* Acronym should not empty")
+	@Size(max=3,min=2,message="* Size between 2 to 3")
+	String acronym;
+	
+	boolean inn;
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getAcronym() {
+		return acronym;
+	}
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
+	}
+	public boolean isInn() {
+		return inn;
+	}
+	public void setInn(boolean inn) {
+		this.inn = inn;
+	}
+	
+	
+
+}

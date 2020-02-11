@@ -22,5 +22,10 @@ public class BloodgroupService {
 		List<Bloodgroup> list = bgmrepo.findAll();
 		return list;
 	}
+
+	public List<Bloodgroup> selectByName(String name) {
+		List<Bloodgroup> list = bgmrepo.selectByName(name);
+		return list;
+	}
 	
 }

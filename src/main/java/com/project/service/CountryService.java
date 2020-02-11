@@ -22,5 +22,13 @@ public class CountryService {
 		List<Country> list = cnrepo.findAll();
 		return list;
 	}
+
+	public List<Country> selectByAcronym(String acronym) {
+		return cnrepo.findByAcronym(acronym);
+	}
+	
+	public List<Country> selectByCountry(String country){
+		return cnrepo.findByName(country);
+	}
 	
 }

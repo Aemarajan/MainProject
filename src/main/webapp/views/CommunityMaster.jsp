@@ -40,39 +40,53 @@
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveCommunityMaster" method="post" >
+                  <s:form style="color: #757575;" action="SaveCommunityMaster" method="post" modelAttribute="community" >
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
                     
                     <c:if test="${added != null }">
                       <div class="mt-1 alert alert-success alert-dismissible">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                        <strong>Community details are added successfully.</strong>
+                        Community details are added successfully.
+                      </div>
+                    </c:if>
+                    <c:if test="${exist != null }">
+                      <div class="mt-1 alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Acronym already exist.
+                      </div>
+                    </c:if>
+                    <c:if test="${existcommunity != null }">
+                      <div class="mt-1 alert alert-danger alert-dismissible">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        Acronym already exist.
                       </div>
                     </c:if>
 
                     <!-- Name -->
                     <div class="md-form">
-                      <input name="name" type="text" id="community_name" Class="form-control" />
-                      <label for="Name">Community Name<span Class="mandatory"> *</span></label>
+                      <s:input path="name" type="text" id="community_name" cssClass="form-control"></s:input>
+                      <s:label path="name" for="Name">Community Name<span Class="mandatory"> *</span></s:label>
+                      <s:errors path="name" cssClass="error"></s:errors>
                     </div>
 
                     <!-- Acronym -->
                     <div class="md-form">
-                      <input name="acronym" type="text"  id="community_acronym" class="form-control"></input>
-                      <label for="Acronym">Acronym<span class="mandatory"> *</span></label>
+                      <s:input path="acronym" type="text"  id="community_acronym" class="form-control"></s:input>
+                      <s:label path="acronym" for="Acronym">Acronym<span class="mandatory"> *</span></s:label>
+                      <s:errors path="acronym" cssClass="error"></s:errors>
                     </div>
 
                     <div class="d-flex justify-content-start">
                       <div>
-               	      	<input type="checkbox"name="inn" Class="drop" id="inuse"/>
-                        <label>Inuse</label>
+                      	<s:checkbox path="inn"/>
+                        <s:label path="inn">Inuse</s:label>
                       </div>
                     </div>
                     
                     <div class="mt-4">
                       <button type="submit" class="btn btn-custom waves-effect">Add Community</button>
                     </div>
-                  </form> 
+                  </s:form> 
                   <!-- Form -->
                 </div>
               </div>

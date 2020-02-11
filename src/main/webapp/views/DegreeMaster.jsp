@@ -53,10 +53,9 @@
                     		</c:if>
 
 		                    <!-- Name -->
-		                    <div class="md-form mt-4">
+		                    <div class="md-form">
 		                      <input type="text" name="name" id="country_name" class="form-control" />
 		                      <label for="Name">Degree Name<span class="mandatory"> *</span></label>
-		                      
 		                    </div>
 		
 		                    <!-- Acronym -->

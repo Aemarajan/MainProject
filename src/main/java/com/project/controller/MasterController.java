@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.model.Batch;
@@ -45,6 +46,9 @@ import com.project.service.RegulationService;
 import com.project.service.ReligionService;
 import com.project.service.StateService;
 import com.project.validator.AddBatchMaster;
+import com.project.validator.AddBloodGroup;
+import com.project.validator.AddCommunity;
+import com.project.validator.AddCountry;
 
 @Controller
 public class MasterController {
@@ -95,12 +99,15 @@ public class MasterController {
 	ReligionService religionService;
 	
 	@GetMapping("GetBatchMaster")
-	public String getBatchMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getBatchMaster(HttpSession session) {
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			return new ModelAndView("redirect:/logout");
 		}
-		model.addAttribute("addBatch", new AddBatchMaster());
-		return "BatchMaster";
+		ModelAndView model = new ModelAndView("BatchMaster");
+		List<Batch> list = batchService.selectAll();
+		model.addObject("list", list);
+		model.addObject("addBatch", new AddBatchMaster());
+		return model;
 	}
 	
 	@PostMapping("SaveBatchMaster")
@@ -109,12 +116,17 @@ public class MasterController {
 			return new ModelAndView("redirect:/logout");
 		}
 		if(result.hasErrors()) {
-			return new ModelAndView("BatchMaster");
+			ModelAndView m = new ModelAndView("BatchMaster");
+			m.addObject("addError", "error");
+			return  m;
 		}
 		ModelAndView m = new ModelAndView();
+		List<Batch> list = batchService.selectAll();
 		List<Batch> exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
 		if(exist.size()!=0) {
 			m.setViewName("BatchMaster");
+			m.addObject("list", list);
+			m.addObject("addError", "error");
 			m.addObject("exist", "already exist");
 			return m;
 		}
@@ -129,13 +141,58 @@ public class MasterController {
 			bm.setInn(batch.isInn());
 			batchService.saveBatchMaster(bm);
 
-			ModelAndView mv = new ModelAndView("Batch");
+			ModelAndView mv = new ModelAndView("BatchMaster");
+			mv.addObject("list", list);
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
-		m.setViewName("Batch");
+		m.setViewName("BatchMaster");
 		m.addObject("invalidYear", "Invalid year");
 		return m;
+	}
+	
+	@PostMapping("EditBatch")
+	public ModelAndView editBatch(@Valid @ModelAttribute("addBatch")AddBatchMaster batch,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(result.hasErrors()) {
+			mv.setViewName("BatchMaster");
+			mv.addObject("list", batchService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		if(session.getAttribute("id") == null)
+			return new ModelAndView("redirect:/logout");
+		List<Batch> exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
+		if(exist.size()!=0) {
+			mv.setViewName("BatchMaster");
+			mv.addObject("list",batchService.selectAll());
+			mv.addObject("editError", "error");
+			mv.addObject("exist", "already exist");
+			return mv;
+		}
+		int f_year = Integer.parseInt(batch.getFrom_year());
+		int t_year = Integer.parseInt(batch.getTo_year());
+		int n_year = t_year - f_year;
+		if(n_year<=4 && n_year>=2) {
+			Batch bm = new Batch();		
+			bm.setInn(batch.isInn());
+			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
+			mv.addObject("list", batchService.selectAll());
+			mv.setViewName("BatchMaster");
+			mv.addObject("added", "Success Message");
+			return mv;
+		}
+		mv.setViewName("BatchMaster");
+		mv.addObject("invalidYear", "Invalid year");
+		return mv;
+	}
+	
+	@PostMapping("DeleteBatch")
+	public String deleteBatch(@RequestParam("id") int id,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return "redirect:/logout";
+		batchService.deleteById(id);
+		return "redirect:/GetBatchMaster";
 	}
 	
 	@GetMapping("GetBloodGroupMaster")
@@ -143,15 +200,28 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return "redirect:/logout";
 		}
+		model.addAttribute("bloodgroup", new AddBloodGroup());
 		return "BloodgroupMaster";
 	}
 	
 	@PostMapping("SaveBloodGroupMaster")
-	public ModelAndView saveBloodgroupMaster(Bloodgroup bgm,HttpSession session,ModelMap model) {
+	public ModelAndView saveBloodgroupMaster(@Valid @ModelAttribute("bloodgroup") AddBloodGroup blood,BindingResult result,HttpSession session,ModelMap model) {
+		if(result.hasErrors()) {
+			return new ModelAndView("BloodgroupMaster");
+		}
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		bloodgroupService.saveBloodgroupMaster(bgm);
+		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
+		if(list.size() != 0) {
+			ModelAndView m = new ModelAndView("BloodgroupMaster");
+			m.addObject("exist", "already exist");
+			return m;
+		}
+		Bloodgroup bm = new Bloodgroup();
+		bm.setName(blood.getName().toUpperCase());
+		bm.setInn(blood.isInn());
+		bloodgroupService.saveBloodgroupMaster(bm);
 			
 		ModelAndView mv = new ModelAndView("BloodgroupMaster");
 		mv.addObject("added", "Success Message");
@@ -163,17 +233,38 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return "redirect:/logout";
 		}
+		model.addAttribute("community", new AddCommunity());
 		return "CommunityMaster";
 	}
 	
 	@PostMapping("SaveCommunityMaster")
-	public ModelAndView saveCommunityMaster(Community cm,HttpSession session,ModelMap model) {
+	public ModelAndView saveCommunityMaster(@Valid @ModelAttribute("community") AddCommunity comm,BindingResult result,HttpSession session,ModelMap model) {
+		if(result.hasErrors()) {
+			return new ModelAndView("CommunityMaster");
+		}
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
+		ModelAndView mv = new ModelAndView("CommunityMaster");
+		List<Community> exist1 = communityService.selectByCommunity(comm.getName().toLowerCase());
+		for(Community c : exist1) {
+			if(c.getName().equalsIgnoreCase(comm.getName())) {
+				mv.addObject("existcommunity", "already exist");
+				return mv;
+			}
+		}
+		List<Community> exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
+		if(exist.size() != 0) {
+			ModelAndView m = new ModelAndView("CommunityMaster");
+			m.addObject("exist", "already exist");
+			return m;
+		}
+		Community cm = new Community();
+		cm.setName(comm.getName().toLowerCase());
+		cm.setAcronym(comm.getAcronym().toUpperCase());
+		cm.setInn(comm.isInn());
 		communityService.saveCommunityMaster(cm);
 			
-		ModelAndView mv = new ModelAndView("CommunityMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
@@ -184,17 +275,38 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return "redirect:/logout";
 		}
+		model.addAttribute("country", new AddCountry());
 		return "CountryMaster";
 	}
 	
 	@PostMapping("SaveCountryMaster")
-	public ModelAndView saveCountryMaster(Country cn,HttpSession session,ModelMap model) {
+	public ModelAndView saveCountryMaster(@Valid @ModelAttribute("country")AddCountry country,BindingResult result,HttpSession session,ModelMap model) {
+		if(result.hasErrors()) {
+			return new ModelAndView("CountryMaster");
+		}
+		
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
+		ModelAndView mv = new ModelAndView("CountryMaster");
+		List<Country> exist1 = countryService.selectByCountry(country.getName().toLowerCase());
+		for(Country c: exist1) {
+			if(country.getName().equalsIgnoreCase(c.getName())) {
+				mv.addObject("existcountry", "already exist");
+				return mv;
+			}
+		}
+		List<Country> exist = countryService.selectByAcronym(country.getAcronym().toUpperCase());
+		if(exist.size() != 0) {
+			mv.addObject("exist", "already exist");
+			return mv;
+		}
+		Country cn = new Country();
+		cn.setName(country.getName().toLowerCase());
+		cn.setAcronym(country.getAcronym().toUpperCase());
+		cn.setInn(country.isInn());
 		countryService.saveCountryMaster(cn);
 			
-		ModelAndView mv = new ModelAndView("CountryMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}

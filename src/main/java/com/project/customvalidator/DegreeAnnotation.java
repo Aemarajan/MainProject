@@ -10,15 +10,16 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = NotEmptyValidator.class)
+@Constraint(validatedBy = DegreeValidator.class)
 @Target({ElementType.METHOD,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ConfirmPassword {
-	
-	String message() default "{com.project.customvalidator.ConfirmPassword.message}";
+public @interface DegreeAnnotation {
+
+
+    String message() default "{com.project.customvalidator.BloodGroup.message}";
 
     Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
-    
+
 }

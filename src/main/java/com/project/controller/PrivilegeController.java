@@ -62,7 +62,7 @@ public class PrivilegeController {
 			@RequestParam("id") int id,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("show");
+		ModelAndView m = new ModelAndView("AddPrivilege");
 		List<Menu> menuList = menuService.selectAll();
 		try {
 			int menuId[] = new int[menuList.size()];
@@ -97,6 +97,7 @@ public class PrivilegeController {
 				}
 			}
 			userService.updatePrivilegeProvide(id,1);
+			m.addObject("added","added");
 		} catch (NullPointerException e) {
 			System.out.println(e);
 			m.addObject("error", e);
