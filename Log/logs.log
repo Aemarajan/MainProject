@@ -1,8 +1,74 @@
-"05-02-2020 15:44:46 [HikariPool-88 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-88 - Thread starvation or clock leap detected (housekeeper delta=22h8m37s634ms389µs400ns).
-""05-02-2020 18:26:36 [HikariPool-88 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-88 - Thread starvation or clock leap detected (housekeeper delta=2h41m29s243ms480µs800ns).
-""05-02-2020 18:27:58 [RMI TCP Connection(251)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
-""05-02-2020 18:27:58 [RMI TCP Connection(251)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
-""05-02-2020 18:27:59 [RMI TCP Connection(251)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-""05-02-2020 18:27:59 [RMI TCP Connection(251)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-88 - Shutdown initiated...
-""05-02-2020 18:27:59 [RMI TCP Connection(251)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-88 - Shutdown completed.
+"12-02-2020 09:12:27 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Aemarajan with PID 4612 (C:\Users\Raja\Documents\workspace-spring-tool-suite-4-4.3.2.RELEASE\MainProject\target\classes started by Raja in C:\Users\Raja\Documents\workspace-spring-tool-suite-4-4.3.2.RELEASE\MainProject)
+""12-02-2020 09:12:27 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 09:12:27 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\Raja\.m2\repository\org\glassfish\jaxb\jaxb-runtime\2.3.2\jaxb-runtime-2.3.2.jar referenced one or more files that do not exist: file:/C:/Users/Raja/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.xml.bind-api-2.3.2.jar,file:/C:/Users/Raja/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/txw2-2.3.2.jar,file:/C:/Users/Raja/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/istack-commons-runtime-3.0.8.jar,file:/C:/Users/Raja/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/stax-ex-1.8.1.jar,file:/C:/Users/Raja/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/FastInfoset-1.2.16.jar,file:/C:/Users/Raja/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.activation-api-1.2.1.jar
+""12-02-2020 09:12:27 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+""12-02-2020 09:12:27 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+""12-02-2020 09:12:31 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 09:12:31 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 484ms. Found 17 JPA repository interfaces.
+""12-02-2020 09:12:32 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 09:12:33 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 09:12:33 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 09:12:33 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 09:12:34 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 09:12:34 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 09:12:34 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 7064 ms
+""12-02-2020 09:12:35 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+""12-02-2020 09:12:37 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+""12-02-2020 09:12:37 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 09:12:38 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 09:12:39 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate Core {5.4.9.Final}
+""12-02-2020 09:12:39 [restartedMain] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+""12-02-2020 09:12:40 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 09:12:45 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 09:12:45 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 09:12:51 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 09:12:56 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 09:12:58 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 09:12:59 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 09:12:59 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 32.818 seconds (JVM running for 35.662)
+""12-02-2020 09:12:59 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 09:13:28 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+""12-02-2020 09:13:28 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+""12-02-2020 09:13:29 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 123 ms
+""12-02-2020 09:13:29 [http-nio-8080-exec-1] INFO  c.project.controller.MainController - Index Accessed.....
+""12-02-2020 09:13:30 [http-nio-8080-exec-2] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 09:13:57 [http-nio-8080-exec-6] INFO  c.project.controller.UserController - User : Raja - Login Succesful 
+""12-02-2020 09:17:47 [http-nio-8080-exec-2] INFO  c.project.controller.MainController - Index Accessed.....
+""12-02-2020 09:17:47 [http-nio-8080-exec-6] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 09:18:24 [http-nio-8080-exec-8] INFO  c.project.controller.UserController - User : Raja - Login Succesful 
+""12-02-2020 09:23:43 [Thread-6] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 09:23:43 [Thread-6] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 09:23:43 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+""12-02-2020 09:23:43 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+""12-02-2020 09:23:45 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Aemarajan with PID 4612 (C:\Users\Raja\Documents\workspace-spring-tool-suite-4-4.3.2.RELEASE\MainProject\target\classes started by Raja in C:\Users\Raja\Documents\workspace-spring-tool-suite-4-4.3.2.RELEASE\MainProject)
+""12-02-2020 09:23:45 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 09:23:48 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 09:23:48 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 201ms. Found 17 JPA repository interfaces.
+""12-02-2020 09:23:48 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 09:23:48 [restartedMain] WARN  o.a.tomcat.util.modeler.Registry - The MBean registry cannot be disabled because it has already been initialised
+""12-02-2020 09:23:49 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 09:23:49 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 09:23:49 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 09:23:49 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 09:23:49 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 09:23:49 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3519 ms
+""12-02-2020 09:23:49 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+""12-02-2020 09:23:49 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+""12-02-2020 09:23:49 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 09:23:49 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 09:23:49 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 09:23:50 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 09:23:50 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 09:23:51 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 09:23:52 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 09:23:52 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 09:23:52 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 09:23:52 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 6.985 seconds (JVM running for 688.876)
+""12-02-2020 09:23:52 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+""12-02-2020 09:23:52 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 09:47:16 [RMI TCP Connection(28)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+""12-02-2020 09:47:16 [RMI TCP Connection(28)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 09:47:16 [RMI TCP Connection(28)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 09:47:16 [RMI TCP Connection(28)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+""12-02-2020 09:47:16 [RMI TCP Connection(28)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
 "
