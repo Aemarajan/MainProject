@@ -11,7 +11,7 @@ pageEncoding="ISO-8859-1"%>
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Batch Master</title>
 
-<link rel="stylesheet" href="./views/css/all.min.css">
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
@@ -105,7 +105,7 @@ pageEncoding="ISO-8859-1"%>
 		color: #F44336;
 	}
 	table.table td i {
-		font-size: 19px;
+		font-size: 17px !important 
 	}
 	table.table .avatar {
 		border-radius: 50%;
@@ -144,7 +144,7 @@ pageEncoding="ISO-8859-1"%>
 <!-- Project Start --> 
 <div>
 	<jsp:include page="Header.jsp" />
-
+	
 	<div class="content">  
 		<div id="header"></div>
 		
@@ -189,7 +189,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }">In Active</c:if>
 										</td>
 										<td>
-											<a href="#editBatchModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editBatchModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteBatchModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -202,6 +202,7 @@ pageEncoding="ISO-8859-1"%>
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<s:form action="SaveBatchMaster" method="post" modelAttribute="addBatch">
+<<<<<<< HEAD
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Batch</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -234,6 +235,7 @@ pageEncoding="ISO-8859-1"%>
 												<label>In use</label>
 											</div>					
 										</div>
+<<<<<<< HEAD
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 											<input type="submit" class="btn btn-info" value="Add">
@@ -242,8 +244,7 @@ pageEncoding="ISO-8859-1"%>
 								</div>
 							</div>
 						</div>
-						
-					
+											
 						<!-- Edit Modal HTML -->
 						<div id="editBatchModal" class="modal fade">
 							<div class="modal-dialog">

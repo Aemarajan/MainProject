@@ -123,8 +123,8 @@ public class MasterController {
 			return  m;
 		}
 		ModelAndView m = new ModelAndView();
-		List<Batch> exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
-		if(exist.size()!=0) {
+		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
+		if(exist != null) {
 			m.setViewName("BatchMaster");
 			m.addObject("list", batchService.selectAll());
 			m.addObject("addError", "error");
@@ -141,9 +141,7 @@ public class MasterController {
 			bm.setNo_of_years(n_year);		
 			bm.setInn(batch.isInn());
 			batchService.saveBatchMaster(bm);
-
-			ModelAndView mv = new ModelAndView("BatchMaster");
-			mv.addObject("list", batchService.selectAll());
+			ModelAndView mv = new ModelAndView("redirect:/GetBatchMaster");
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
@@ -163,8 +161,8 @@ public class MasterController {
 		}
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		List<Batch> exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
-		if(exist.size()!=0) {
+		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()),batch.isInn()?1:0);
+		if(exist != null) {
 			mv.setViewName("BatchMaster");
 			mv.addObject("list",batchService.selectAll());
 			mv.addObject("editError", "error");
@@ -179,7 +177,7 @@ public class MasterController {
 			bm.setInn(batch.isInn());
 			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
 			mv.addObject("list", batchService.selectAll());
-			mv.setViewName("BatchMaster");
+			mv.setViewName("redirect:/GetBatchMaster");
 			mv.addObject("added", "Success Message");
 			return mv;
 		}

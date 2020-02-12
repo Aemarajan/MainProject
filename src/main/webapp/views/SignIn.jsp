@@ -10,7 +10,7 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Sign In</title>
 
-<link rel="stylesheet" href="./views/css/all.min.css">
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 
