@@ -17,4 +17,9 @@ public interface BatchRepository extends JpaRepository<Batch, Integer>{
 	@Modifying
 	@Query(value="SELECT * FROM batch_master b where b.from_year=:from AND b.to_year=:to",nativeQuery=true)
 	List<Batch> selectByFromTo(@Param("from")int from_year,@Param("to") int to_year);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE batch_master SET from_year=:f,to_year=:t,no_of_years=:n,inn=:inn WHERE id=:id",nativeQuery=true)
+	void updateBatch(@Param("id")int id,@Param("f") int f_year,@Param("t") int t_year,@Param("n") int n_year,@Param("inn") int inn);
 }

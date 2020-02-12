@@ -23,8 +23,47 @@ public class BatchService {
 		return list;
 	}
 
-	public List<Batch> selectBatchByFromTo(int from_year, int to_year) {
-		List<Batch> list = bmrepo.selectByFromTo(from_year,to_year); 
-		return list;
+	public Batch selectBatchByFromTo(int from_year, int to_year) {
+		List<Batch> list = bmrepo.selectByFromTo(from_year,to_year);
+		Batch batch = new Batch();
+		for(Batch b:list) {
+			if(b.getFrom_year() == from_year && b.getTo_year() == to_year) {
+				batch.setFrom_year(b.getFrom_year());
+				batch.setTo_year(b.getTo_year());
+				batch.setTo_year(b.getNo_of_years());
+				if(b.getInn() == 1)
+					batch.setInn(true);
+				else
+					batch.setInn(false);
+				return batch;
+			}
+		}
+		return null;
+	}
+	
+	public Batch selectBatchByFromTo(int from_year, int to_year,int inn) {
+		List<Batch> list = bmrepo.selectByFromTo(from_year,to_year);
+		Batch batch = new Batch();
+		for(Batch b:list) {
+			if(b.getFrom_year() == from_year && b.getTo_year() == to_year && b.getInn() == inn) {
+				batch.setFrom_year(b.getFrom_year());
+				batch.setTo_year(b.getTo_year());
+				batch.setTo_year(b.getNo_of_years());
+				if(b.getInn() == 1)
+					batch.setInn(true);
+				else
+					batch.setInn(false);
+				return batch;
+			}
+		}
+		return null;
+	}
+
+	public void updateBatchMaster(int id, int f_year, int t_year, int n_year, int inn) {
+		bmrepo.updateBatch(id,f_year,t_year,n_year,inn);
+	}
+
+	public void deleteById(int id) {
+		bmrepo.deleteById(id);		
 	}
 }

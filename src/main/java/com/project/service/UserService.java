@@ -32,7 +32,18 @@ public class UserService {
 	}
 	
 	public User findById(int id) {
-		return userRepo.findById(id);
+		List<User> list = userRepo.findById(id);
+		User user = new User();
+		for(User u:list) {
+			if(u.getUser_id() == id) {
+				user.setUser_id(u.getUser_id());
+				user.setEmail(u.getEmail());
+				user.setPassword(u.getPassword());
+				user.setUsername(u.getUsername());
+				user.setPrivilegeProvide(u.getPrivilegeProvide());
+			}
+		}
+		return user;
 	}
 
 	public void updatePrivilegeProvide(int id, int i) {

@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.model.Batch;
@@ -78,12 +79,15 @@ public class MasterController {
 	RegulationService regulationService;
 	
 	@GetMapping("GetBatchMaster")
-	public String getBatchMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getBatchMaster(HttpSession session) {
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			return new ModelAndView("redirect:/logout");
 		}
-		model.addAttribute("addBatch", new AddBatchMaster());
-		return "BatchMaster";
+		ModelAndView model = new ModelAndView("BatchMaster");
+		List<Batch> list = batchService.selectAll();
+		model.addObject("list", list);
+		model.addObject("addBatch", new AddBatchMaster());
+		return model;
 	}
 	
 	@PostMapping("SaveBatchMaster")
@@ -92,12 +96,16 @@ public class MasterController {
 			return new ModelAndView("redirect:/logout");
 		}
 		if(result.hasErrors()) {
-			return new ModelAndView("BatchMaster");
+			ModelAndView m = new ModelAndView("BatchMaster");
+			m.addObject("addError", "error");
+			return  m;
 		}
 		ModelAndView m = new ModelAndView();
-		List<Batch> exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
-		if(exist.size()!=0) {
+		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
+		if(exist != null) {
 			m.setViewName("BatchMaster");
+			m.addObject("list", batchService.selectAll());
+			m.addObject("addError", "error");
 			m.addObject("exist", "already exist");
 			return m;
 		}
@@ -112,13 +120,57 @@ public class MasterController {
 			bm.setInn(batch.isInn());
 			batchService.saveBatchMaster(bm);
 
-			ModelAndView mv = new ModelAndView("Batch");
+			ModelAndView mv = new ModelAndView("redirect:/GetBatchMaster");
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
 		m.setViewName("BatchMaster");
 		m.addObject("invalidYear", "Invalid year");
 		return m;
+	}
+	
+	@PostMapping("EditBatch")
+	public ModelAndView editBatch(@Valid @ModelAttribute("addBatch")AddBatchMaster batch,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(result.hasErrors()) {
+			mv.setViewName("BatchMaster");
+			mv.addObject("list", batchService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		if(session.getAttribute("id") == null)
+			return new ModelAndView("redirect:/logout");
+		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()),batch.isInn()?1:0);
+		if(exist != null) {
+			mv.setViewName("BatchMaster");
+			mv.addObject("list",batchService.selectAll());
+			mv.addObject("editError", "error");
+			mv.addObject("exist", "already exist");
+			return mv;
+		}
+		int f_year = Integer.parseInt(batch.getFrom_year());
+		int t_year = Integer.parseInt(batch.getTo_year());
+		int n_year = t_year - f_year;
+		if(n_year<=4 && n_year>=2) {
+			Batch bm = new Batch();		
+			bm.setInn(batch.isInn());
+			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
+			mv.addObject("list", batchService.selectAll());
+			mv.setViewName("redirect:/GetBatchMaster");
+			mv.addObject("added", "Success Message");
+			return mv;
+		}
+		mv.setViewName("BatchMaster");
+		mv.addObject("invalidYear", "Invalid year");
+		return mv;
+	}
+	
+	@PostMapping("DeleteBatch")
+	public String deleteBatch(@RequestParam("id") int id,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return "redirect:/logout";
+		batchService.deleteById(id);
+		return "redirect:/GetBatchMaster";
 	}
 	
 	@GetMapping("GetBloodGroupMaster")
