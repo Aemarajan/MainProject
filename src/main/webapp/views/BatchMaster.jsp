@@ -5,40 +5,33 @@ pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Batch Master</title>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="./views/css/all.min.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 
 <style type="text/css">
-    body {
-        color: #566787;
-		background: #f5f5f5;
-		font-family: 'Varela Round', sans-serif;
-		font-size: 13px;
-	}
 	.table-wrapper {
-        background: #fff;
-        padding: 20px 25px;
-        margin: 30px 0;
+		background: #fff;
+		padding: 20px 25px;
+		margin: 30px 0;
 		border-radius: 3px;
-        box-shadow: 0 1px 1px rgba(0,0,0,.05);
-    }
+		box-shadow: 0 1px 1px rgba(0,0,0,.05);
+	}
 	.table-title {        
-		padding-bottom: 15px;
 		background: #435d7d;
 		color: #fff;
-		padding: 16px 30px;
+		padding: 5px 30px;
 		margin: -20px -25px 10px;
 		border-radius: 3px 3px 0 0;
-    }
-    .table-title h2 {
+	}
+	.table-title h2 {
 		margin: 5px 0 0;
 		font-size: 24px;
 	}
@@ -48,7 +41,7 @@ pageEncoding="ISO-8859-1"%>
 	.table-title .btn {
 		color: #fff;
 		float: right;
-		font-size: 13px;
+		font-size: 15px;
 		border: none;
 		min-width: 50px;
 		border-radius: 2px;
@@ -63,35 +56,38 @@ pageEncoding="ISO-8859-1"%>
 	}
 	.table-title .btn span {
 		float: left;
-		margin-top: 2px;
+		margin-top: 0px;
 	}
-    table.table tr th, table.table tr td {
-        border-color: #e9e9e9;
+	.table{
+		padding: 0px 0px ;
+	}
+	table.table tr th, table.table tr td {
+		border-color: #e9e9e9;
 		padding: 12px 15px;
 		vertical-align: middle;
-    }
+	}
 	table.table tr th:first-child {
-		width: 60px;
+		width: 150px;
 	}
 	table.table tr th:last-child {
 		width: 100px;
 	}
-    table.table-striped tbody tr:nth-of-type(odd) {
-    	background-color: #fcfcfc;
+	table.table-striped tbody tr:nth-of-type(odd) {
+		background-color: #fcfcfc;
 	}
 	table.table-striped.table-hover tbody tr:hover {
 		background: #f5f5f5;
 	}
-    table.table th i {
-        font-size: 13px;
-        margin: 0 5px;
-        cursor: pointer;
-    }	
-    table.table td:last-child i {
+	table.table th i {
+		font-size: 13px;
+		margin: 0 5px;
+		cursor: pointer;
+	}	
+	table.table td:last-child i {
 		opacity: 0.9;
 		font-size: 22px;
-        margin: 0 5px;
-    }
+		margin: 0 5px;
+	}
 	table.table td a {
 		font-weight: bold;
 		color: #566787;
@@ -103,107 +99,24 @@ pageEncoding="ISO-8859-1"%>
 		color: #2196F3;
 	}
 	table.table td a.edit {
-        color: #FFC107;
-    }
-    table.table td a.delete {
-        color: #F44336;
-    }
-    table.table td i {
-        font-size: 19px;
-    }
+		color: #FFC107;
+	}
+	table.table td a.delete {
+		color: #F44336;
+	}
+	table.table td i {
+		font-size: 19px;
+	}
 	table.table .avatar {
 		border-radius: 50%;
 		vertical-align: middle;
 		margin-right: 10px;
 	}
-    .pagination {
-        float: right;
-        margin: 0 0 5px;
-    }
-    .pagination li a {
-        border: none;
-        font-size: 13px;
-        min-width: 30px;
-        min-height: 30px;
-        color: #999;
-        margin: 0 2px;
-        line-height: 30px;
-        border-radius: 2px !important;
-        text-align: center;
-        padding: 0 6px;
-    }
-    .pagination li a:hover {
-        color: #666;
-    }	
-    .pagination li.active a, .pagination li.active a.page-link {
-        background: #03A9F4;
-    }
-    .pagination li.active a:hover {        
-        background: #0397d6;
-    }
-	.pagination li.disabled i {
-        color: #ccc;
-    }
-    .pagination li i {
-        font-size: 16px;
-        padding-top: 6px
-    }
-    .hint-text {
-        float: left;
-        margin-top: 10px;
-        font-size: 13px;
-    }    
-	/* Custom checkbox */
-	.custom-checkbox {
-		position: relative;
-	}
-	.custom-checkbox input[type="checkbox"] {    
-		opacity: 0;
-		position: absolute;
-		margin: 5px 0 0 3px;
-		z-index: 9;
-	}
-	.custom-checkbox label:before{
-		width: 18px;
-		height: 18px;
-	}
-	.custom-checkbox label:before {
-		content: '';
-		margin-right: 10px;
-		display: inline-block;
-		vertical-align: text-top;
-		background: white;
-		border: 1px solid #bbb;
-		border-radius: 2px;
-		box-sizing: border-box;
-		z-index: 2;
-	}
-	.custom-checkbox input[type="checkbox"]:checked + label:after {
-		content: '';
-		position: absolute;
-		left: 6px;
-		top: 3px;
-		width: 6px;
-		height: 11px;
-		border: solid #000;
-		border-width: 0 3px 3px 0;
-		transform: inherit;
-		z-index: 3;
-		transform: rotateZ(45deg);
-	}
-	.custom-checkbox input[type="checkbox"]:checked + label:before {
-		border-color: #03A9F4;
-		background: #03A9F4;
-	}
-	.custom-checkbox input[type="checkbox"]:checked + label:after {
-		border-color: #fff;
-	}
-	.custom-checkbox input[type="checkbox"]:disabled + label:before {
-		color: #b8b8b8;
-		cursor: auto;
-		box-shadow: none;
-		background: #ddd;
-	}
+	.hint-text {
+		float: left;
+		margin-top: 10px;
+		font-size: 13px;
+	}    
 	/* Modal styles */
 	.modal .modal-dialog {
 		max-width: 400px;
@@ -218,39 +131,28 @@ pageEncoding="ISO-8859-1"%>
 		background: #ecf0f1;
 		border-radius: 0 0 3px 3px;
 	}
-    .modal .modal-title {
-        display: inline-block;
-    }
-	.modal .form-control {
-		border-radius: 2px;
-		box-shadow: none;
-		border-color: #dddddd;
-	}
-	.modal textarea.form-control {
-		resize: vertical;
-	}
-	.modal .btn {
-		border-radius: 2px;
-		min-width: 100px;
+	.modal .modal-title {
+		display: inline-block;
 	}	
-	.modal form label {
-		font-weight: normal;
-	}	
+	.add-new{
+		border-radius:50px !important
+	}
 </style>
 </head>
 <body>
 
-<!-- Start your project here-->  
+<!-- Project Start --> 
 <div>
 	<jsp:include page="Header.jsp" />
-            
-    <div class="content">  
-    	<div id="header"></div>
-       	<div class="container-fluid">
+
+	<div class="content">  
+		<div id="header"></div>
+		
+		<div class="container-fluid">
 			<div class="row">
 				
 				<div class="col col-md-1"></div>
-				
+					
 				<div class="col col-md-10">
 					<div class="table-wrapper">
 						<div class="table-title">
@@ -258,9 +160,8 @@ pageEncoding="ISO-8859-1"%>
 								<div class="col-sm-6">
 									<h2>Manage <b>Batch</b></h2>
 								</div>
-									
 								<div class="col-sm-6">
-									<a href="#addEmployeeModal" class="btn btn-info add-new" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
+									<a href="#addBatchModal" class="btn btn-info add-new" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
 								</div>
 							</div>
 						</div>
@@ -275,9 +176,9 @@ pageEncoding="ISO-8859-1"%>
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
-							</thead>
-							<tbody>
-								<c:forEach var="l" items="${list }">
+								</thead>
+								<tbody>
+									<c:forEach var="l" items="${list }">
 									<tr>
 										<td>${l.from_year } - ${l.to_year }</td>
 										<td>${l.from_year }</td>
@@ -288,8 +189,8 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }">In Active</c:if>
 										</td>
 										<td>
-											<a href="#editEmployeeModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editBatchModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteBatchModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -301,28 +202,31 @@ pageEncoding="ISO-8859-1"%>
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<s:form action="SaveBatchMaster" method="post" modelAttribute="addBatch">
-									
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Batch</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
-										<c:if test="${exist != null }">
-											<div class="mt-1 alert alert-danger alert-dismissible">
+										
+										<div class="modal-body">
+											
+											<c:if test="${exist != null }">
+												<div class="mt-1 alert alert-danger alert-dismissible">
 												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 													Batch Already exist.
-											</div>
-										</c:if>
-								
-										<div class="modal-body">
+												</div>
+											</c:if>
+										
+											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
+											
 											<s:hidden path="id"/>					
-											<div class="form-group">
-												<label>From Year</label>
-												<s:input path="from_year" class="form-control"/>
+											<div class="md-form mt-0">
+												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+												<label for="From Year">From Year<span class="mandatory"> *</span></label>
 												<s:errors path="from_year" cssClass="error"></s:errors>
-											</div>
-											<div class="form-group">
-												<label>To Year</label>
-												<s:input path="to_year" class="form-control"/>
+											</div>											
+											<div class="md-form">
+												<s:input path="to_year" maxlength="4" cssClass="form-control"/>
+												<label for="To Year">To Year<span class="mandatory"> *</span></label>
 												<s:errors path="to_year" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
@@ -330,58 +234,60 @@ pageEncoding="ISO-8859-1"%>
 												<label>In use</label>
 											</div>					
 										</div>
-								
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-											<input type="submit" class="btn btn-success" value="Add">
+											<input type="submit" class="btn btn-info" value="Add">
 										</div>
 									</s:form>
 								</div>
 							</div>
 						</div>
-				
+						
+					
 						<!-- Edit Modal HTML -->
 						<div id="editBatchModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<s:form action="EditBatch" method="post" modelAttribute="addBatch">
-										
 										<div class="modal-header">						
 											<h4 class="modal-title">Edit Batch</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
-										
+															
 										<div class="modal-body">
 											<c:if test="${exist != null }">
 												<div class="mt-1 alert alert-danger alert-dismissible">
 													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-														Batch Already exist.
+													Batch Already exist.
 												</div>
 											</c:if>
+											
 											<c:if test="${invalidYear != null }">
 												<div class="mt-1 alert alert-danger alert-dismissible">
 													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-														Batch duration between 2 and 4.
+													Batch duration between 2 and 4.
 												</div>
 											</c:if>		
+												
+											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id" id="id"/>		
-											<div class="form-group">
-												<label>From Year</label>
-												<s:input path="from_year" id="from_year" class="form-control"></s:input>
-												<s:errors path="from_year"></s:errors>
+											<s:hidden path="id"/>					
+											<div class="md-form mt-0">
+												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+												<label for="From Year">From Year<span class="mandatory"> *</span></label>
+												<s:errors path="from_year" cssClass="error"></s:errors>
+											</div>
+											<div class="md-form">
+												<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+												<label for="To Year">To Year<span class="mandatory"> *</span></label>
+												<s:errors path="to_year" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
-												<label>To Year</label>
-												<s:input path="to_year" id="to_year" class="form-control"></s:input>
-												<s:errors path="to_year"></s:errors>
-											</div>
-											<div class="form-group">
-												<s:checkbox path="inn" id="inn"/>
+												<s:checkbox path="inn"/>
 												<label>In use</label>
 											</div>					
-										</div>			
-									
+										</div>
+										
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 											<input type="submit" class="btn btn-info" value="Save">
@@ -391,25 +297,23 @@ pageEncoding="ISO-8859-1"%>
 							</div>
 						</div>
 						
-						
-						<!-- Delete Modal HTML --> 
+						<!-- Delete Modal HTML -->
 						<div id="deleteBatchModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<form action="DeleteBatch" method="post">
-										
 										<div class="modal-header">						
-											<h4 class="modal-title">Delete Batch</h4>
+											<h4 class="modal-title">Delete Employee</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
-										
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
-											<input id="name" class="form-control" readonly/>
+											<div class="md-form mt-0">
+												<input id="name" class="form-control" readonly/>
+											</div>
 											<p>Are you sure you want to delete these Records?</p>
 											<p class="text-warning"><small>This action cannot be undone.</small></p>
 										</div>
-										
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 											<input type="submit" class="btn btn-danger" value="Delete">
@@ -418,14 +322,21 @@ pageEncoding="ISO-8859-1"%>
 								</div>
 							</div>
 						</div>
+					
 					</div>
+					<!-- Table wrapper -->
 				</div>
+				<!-- col-md-10 -->
 				
 				<div class="col col-md-1"></div>
 			
 			</div>
+			<!-- Row -->
 		</div>
+		<!-- Container Fluid -->
 	</div>
+	<!-- Content -->
+	
 	<jsp:include page="Footer.jsp" />
 </div>
 
@@ -440,7 +351,8 @@ pageEncoding="ISO-8859-1"%>
 		$('#editBatchModal').modal('show');
 	</script>
 </c:if>
-<!-- End your project here-->  
+
+<!-- Project End -->
 
 <!-- jQuery -->
 <script type="text/javascript" src="./views/js/jquery.min.js"></script>
@@ -454,7 +366,8 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
-		$('#editEmployeeModal').on('show.bs.modal', function (event) {
+
+		$('#editBatchModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var from = button.data('from'); 
@@ -469,7 +382,8 @@ pageEncoding="ISO-8859-1"%>
 			else
 				modal.find('#inn').prop('checked',false);
 		});
-		$('#deleteEmployeeModal').on('show.bs.modal', function (event) {
+
+		$('#deleteBatchModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var from = button.data('from'); 

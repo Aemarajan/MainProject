@@ -116,16 +116,17 @@ public class MasterController {
 			return new ModelAndView("redirect:/logout");
 		}
 		if(result.hasErrors()) {
-			ModelAndView m = new ModelAndView("BatchMaster");
+			ModelAndView m = new ModelAndView();
+			m.setViewName("BatchMaster");
+			m.addObject("list", batchService.selectAll());
 			m.addObject("addError", "error");
 			return  m;
 		}
 		ModelAndView m = new ModelAndView();
-		List<Batch> list = batchService.selectAll();
 		List<Batch> exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
 		if(exist.size()!=0) {
 			m.setViewName("BatchMaster");
-			m.addObject("list", list);
+			m.addObject("list", batchService.selectAll());
 			m.addObject("addError", "error");
 			m.addObject("exist", "already exist");
 			return m;
@@ -142,7 +143,7 @@ public class MasterController {
 			batchService.saveBatchMaster(bm);
 
 			ModelAndView mv = new ModelAndView("BatchMaster");
-			mv.addObject("list", list);
+			mv.addObject("list", batchService.selectAll());
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
@@ -183,6 +184,8 @@ public class MasterController {
 			return mv;
 		}
 		mv.setViewName("BatchMaster");
+		mv.addObject("list",batchService.selectAll());
+		mv.addObject("editError", "error");
 		mv.addObject("invalidYear", "Invalid year");
 		return mv;
 	}
