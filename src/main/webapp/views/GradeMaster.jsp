@@ -22,7 +22,7 @@
   <div>
   	<jsp:include page="Header.jsp" />
 
-      <div id="header"></div> 
+      <div class="header"></div> 
       
       <div class="content">
         <div class="container-fluid">
@@ -41,7 +41,7 @@
                <!--Card content-->
                 <div class="card-body px-lg-5 pt-0 open-sans">
                   <!-- Form -->
-                  <form style="color: #757575;" action="SaveGradeMaster" method="post">
+                  <form class="text-center" style="color: #757575;" action="SaveGradeMaster" method="post">
                     <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
                     
                     <c:if test="${added != null }">
@@ -75,42 +75,16 @@
                       <label for="Acronym">Acronym<span class="mandatory"> *</span></label>
                     </div>
 
-					<!-- Label -->
-                    <div class="md-form">
-                      <label><strong>Grade Point</strong><span class="mandatory"> *</span></label>
-                    </div><br>
-					
                     <!-- Grade point -->
                     <div class="md-form">
-                      <select name="point" id="grade_point" class="browser-default custom-select">
-                      	<option selected disabled value="">-- Select --</option>
-                      	<option value="10">10</option>
-                      	<option value="9">9</option>
-                      	<option value="8">8</option>
-                      	<option value="7">7</option>
-                      	<option value="6">6</option>
-                      	<option value="5">5</option>
-                      	<option value="0">0</option>
-                      </select>
+                      <input type="text" name="point" id="grade_point" class="form-control">
+                      <label for="Point">Grade Point<span class="mandatory"> *</span></label>
                     </div>
-					
-					<!-- Label -->
-                    <div class="md-form">
-                      <label><strong>Marks Range</strong><span class="mandatory"> *</span></label>
-                    </div><br>
-					
+
                     <!-- Grade Mark range -->
                     <div class="md-form">
-                      <select name="marks_range" id="marks_range" class="browser-default custom-select">
-                      	<option selected disabled value="">-- Select --</option>
-                      	<option value="91-100">91-100</option>
-                      	<option value="81-90">81-90</option>
-                      	<option value="71-80">71-80</option>
-                      	<option value="61-70">61-70</option>
-                      	<option value="57-60">57-60</option>
-                      	<option value="50-56">50-56</option>
-                      	<option value="less than 50">less than 50</option>
-                      </select>
+                      <input type="text" name="mark_range" id="grade_marks_range" class="form-control">
+                      <label for="Marks Range">Marks Range<span class="mandatory"> *</span></label>
                     </div>
 
                     <div class="d-flex justify-content-start">

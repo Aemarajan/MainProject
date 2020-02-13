@@ -56,13 +56,7 @@
                       <input type="text" name="name" id="regulation_name" class="form-control">
                       <label for="Regulation Name">Regulation Name<span class="mandatory"> *</span></label>
                     </div>
-                    
-                    <!-- In Use -->
-					<div class="md-form">
-                      <input type="text" name="acronym" id="regulation_acronym" class="form-control">
-                      <label for="Regulation Acronym">Acronym<span class="mandatory"> *</span></label>
-                    </div>
-					
+
                     <div class="d-flex justify-content-start">
                       <div>
                         <input type="checkbox" class="drop" id="inuse" name="inn">

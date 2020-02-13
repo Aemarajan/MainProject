@@ -10,8 +10,6 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Sign In</title>
 
-<link rel="stylesheet" href="./views/font-awesome/css/all.css">
-
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 
 <link rel="stylesheet" href="./views/css/mdb.min.css">
@@ -39,15 +37,14 @@
 								<s:form cssClass="login-form" style="color: #757575;" action="Login" method="post" modelAttribute="signin">
 									
 									<c:if test="${msg != null }">
-										<div class="alert alert-danger alert-dismissible mt-1">
-											<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-											Invalid Email or password.
+										<div class="alert alert-danger alert-dismissible mt-2">
+												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+												<strong>Invalid email or password.</strong>
 										</div>
 									</c:if>
 									
 									<!-- Email -->
 									<div class="md-form">
-										<i class="fa fa-envelope prefix mt-2"></i>
 										<s:input path="email" id="email" autofocus="autofocus" class="form-control text-lowercase"></s:input> 
 										<s:label for="email" path="email">E-mail</s:label>
 										<s:errors path="email" cssClass="error"></s:errors>
@@ -55,7 +52,6 @@
 
 									<!-- Password -->
 									<div class="md-form">
-										<i class="fa fa-lock prefix mt-2" aria-hidden="true"></i>
 										<s:password path="password" id="password" class="form-control"></s:password> 
 										<s:label path="password" for="password">Password</s:label>
 										<s:errors path="password" cssClass="error"></s:errors>
@@ -68,7 +64,7 @@
 										</div>
 										<div>
 											<!-- Forgot password -->
-											<a href="">Forgot password ?</a>
+											<a href="">Forgot password?</a>
 										</div>
 									</div>
 
