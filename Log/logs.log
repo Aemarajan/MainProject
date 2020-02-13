@@ -493,4 +493,298 @@ Caused by: java.io.IOException: An existing connection was forcibly closed by th
 ""12-02-2020 13:51:08 [http-nio-8080-exec-9] INFO  c.project.controller.MainController - Index Accessed.....
 ""12-02-2020 13:51:08 [http-nio-8080-exec-2] INFO  c.project.controller.MainController - Sign In Accessed....
 ""12-02-2020 13:51:27 [http-nio-8080-exec-9] INFO  c.project.controller.UserController - User : Jesu - Login Succesful 
+""12-02-2020 14:18:09 [http-nio-8080-exec-6] INFO  c.project.controller.MainController - Index Accessed.....
+""12-02-2020 14:18:12 [http-nio-8080-exec-1] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 14:18:27 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+""12-02-2020 14:18:30 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 14:18:30 [http-nio-8080-exec-10] INFO  c.project.controller.MainController - Index Accessed.....
+""12-02-2020 14:18:30 [RMI TCP Connection(2)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 14:18:30 [http-nio-8080-exec-2] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 14:18:34 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+""12-02-2020 14:18:35 [RMI TCP Connection(2)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+""12-02-2020 17:54:23 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Jesu with PID 1612 (C:\Users\Jesu07\git\MainProject\target\classes started by Jesu07 in C:\Users\Jesu07\git\MainProject)
+""12-02-2020 17:54:23 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 17:54:24 [restartedMain] INFO  o.s.b.d.restart.ChangeableUrls - The Class-Path manifest attribute in C:\Users\Jesu07\.m2\repository\org\glassfish\jaxb\jaxb-runtime\2.3.2\jaxb-runtime-2.3.2.jar referenced one or more files that do not exist: file:/C:/Users/Jesu07/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.xml.bind-api-2.3.2.jar,file:/C:/Users/Jesu07/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/txw2-2.3.2.jar,file:/C:/Users/Jesu07/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/istack-commons-runtime-3.0.8.jar,file:/C:/Users/Jesu07/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/stax-ex-1.8.1.jar,file:/C:/Users/Jesu07/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/FastInfoset-1.2.16.jar,file:/C:/Users/Jesu07/.m2/repository/org/glassfish/jaxb/jaxb-runtime/2.3.2/jakarta.activation-api-1.2.1.jar
+""12-02-2020 17:54:24 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+""12-02-2020 17:54:24 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+""12-02-2020 17:54:28 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 17:54:29 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 984ms. Found 21 JPA repository interfaces.
+""12-02-2020 17:54:31 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 17:54:32 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 17:54:32 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 17:54:32 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 17:54:33 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 17:54:33 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 17:54:33 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 9723 ms
+""12-02-2020 17:54:34 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+""12-02-2020 17:54:36 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+""12-02-2020 17:54:36 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 17:54:41 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 17:54:41 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate Core {5.4.9.Final}
+""12-02-2020 17:54:41 [restartedMain] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+""12-02-2020 17:54:42 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 17:54:44 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 17:54:44 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 17:54:49 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 17:54:50 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 17:54:50 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 17:54:51 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 17:54:51 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 31.203 seconds (JVM running for 37.924)
+""12-02-2020 17:54:51 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 17:56:32 [http-nio-8080-exec-10] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+""12-02-2020 17:56:32 [http-nio-8080-exec-10] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+""12-02-2020 17:56:32 [http-nio-8080-exec-10] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 16 ms
+""12-02-2020 17:56:32 [http-nio-8080-exec-10] INFO  c.project.controller.MainController - Index Accessed.....
+""12-02-2020 17:56:32 [http-nio-8080-exec-9] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 17:57:58 [http-nio-8080-exec-4] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 17:58:53 [http-nio-8080-exec-3] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 17:59:42 [http-nio-8080-exec-10] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 18:00:20 [http-nio-8080-exec-7] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 18:00:58 [http-nio-8080-exec-10] INFO  c.project.controller.UserController - User : Jesu - Login Succesful 
+""12-02-2020 18:01:15 [http-nio-8080-exec-10] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:02:56 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:03:07 [http-nio-8080-exec-5] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:03:15 [http-nio-8080-exec-6] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:03:33 [http-nio-8080-exec-5] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:04:06 [http-nio-8080-exec-1] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:04:38 [http-nio-8080-exec-5] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:04:45 [http-nio-8080-exec-3] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:05:11 [http-nio-8080-exec-4] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:06:00 [http-nio-8080-exec-2] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 18:06:00 [http-nio-8080-exec-2] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 18:06:00 [http-nio-8080-exec-2] INFO  c.p.controller.HeaderController - Form error : org.springframework.validation.BeanPropertyBindingResult: 4 errors
+Field error in object 'levelOne' on field 'ref': rejected value []; codes [Size.levelOne.ref,Size.ref,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.ref,ref]; arguments []; default message [ref],2147483647,3]; default message [* Size minimum 3]
+Field error in object 'levelOne' on field 'name': rejected value []; codes [Size.levelOne.name,Size.name,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.name,name]; arguments []; default message [name],20,3]; default message [* Size must be 3 to 20]
+Field error in object 'levelOne' on field 'name': rejected value []; codes [NotEmpty.levelOne.name,NotEmpty.name,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.name,name]; arguments []; default message [name]]; default message [* Header field not empty]
+Field error in object 'levelOne' on field 'ref': rejected value []; codes [NotEmpty.levelOne.ref,NotEmpty.ref,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.ref,ref]; arguments []; default message [ref]]; default message [* Reference field should not empty]
+""12-02-2020 18:06:00 [http-nio-8080-exec-2] INFO  c.p.controller.HeaderController - -------------------------------------------------------
+""12-02-2020 18:11:17 [Thread-6] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:11:18 [Thread-6] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:11:33 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+""12-02-2020 18:11:40 [Thread-6] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+""12-02-2020 18:13:00 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Jesu with PID 1612 (C:\Users\Jesu07\git\MainProject\target\classes started by Jesu07 in C:\Users\Jesu07\git\MainProject)
+""12-02-2020 18:13:00 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 18:13:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 18:13:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 370ms. Found 21 JPA repository interfaces.
+""12-02-2020 18:13:08 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 18:13:08 [restartedMain] WARN  o.a.tomcat.util.modeler.Registry - The MBean registry cannot be disabled because it has already been initialised
+""12-02-2020 18:13:12 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 18:13:12 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 18:13:12 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 18:13:13 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 18:13:13 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 18:13:13 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 13230 ms
+""12-02-2020 18:13:13 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+""12-02-2020 18:13:14 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+""12-02-2020 18:13:14 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 18:13:15 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 18:13:15 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 18:13:17 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 18:13:17 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:13:19 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 18:13:20 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:13:21 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 18:13:21 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 18:13:21 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 22.359 seconds (JVM running for 1148.498)
+""12-02-2020 18:13:21 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+""12-02-2020 18:13:21 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 18:13:57 [Thread-9] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:13:57 [Thread-9] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:13:57 [Thread-9] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+""12-02-2020 18:13:57 [Thread-9] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+""12-02-2020 18:14:36 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Jesu with PID 1612 (C:\Users\Jesu07\git\MainProject\target\classes started by Jesu07 in C:\Users\Jesu07\git\MainProject)
+""12-02-2020 18:14:36 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 18:14:40 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 18:14:41 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1271ms. Found 21 JPA repository interfaces.
+""12-02-2020 18:14:42 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 18:14:42 [restartedMain] WARN  o.a.tomcat.util.modeler.Registry - The MBean registry cannot be disabled because it has already been initialised
+""12-02-2020 18:14:43 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 18:14:43 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 18:14:43 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 18:14:43 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 18:14:43 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 18:14:43 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 7147 ms
+""12-02-2020 18:14:43 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+""12-02-2020 18:14:44 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+""12-02-2020 18:14:44 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 18:14:44 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 18:14:44 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 18:14:45 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 18:14:45 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:14:47 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 18:14:47 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:14:48 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 18:14:48 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 18:14:48 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 11.984 seconds (JVM running for 1235.07)
+""12-02-2020 18:14:48 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+""12-02-2020 18:14:48 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 18:15:23 [Thread-14] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:15:23 [Thread-14] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:15:24 [Thread-14] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+""12-02-2020 18:15:24 [Thread-14] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.
+""12-02-2020 18:16:04 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Jesu with PID 1612 (C:\Users\Jesu07\git\MainProject\target\classes started by Jesu07 in C:\Users\Jesu07\git\MainProject)
+""12-02-2020 18:16:04 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 18:16:05 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 18:16:05 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 170ms. Found 21 JPA repository interfaces.
+""12-02-2020 18:16:05 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 18:16:06 [restartedMain] WARN  o.a.tomcat.util.modeler.Registry - The MBean registry cannot be disabled because it has already been initialised
+""12-02-2020 18:16:07 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 18:16:07 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 18:16:07 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 18:16:07 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 18:16:07 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 18:16:07 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3086 ms
+""12-02-2020 18:16:07 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Starting...
+""12-02-2020 18:16:07 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Start completed.
+""12-02-2020 18:16:07 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 18:16:07 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 18:16:07 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 18:16:08 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 18:16:08 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:16:09 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 18:16:10 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:16:10 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 18:16:10 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 18:16:10 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 6.834 seconds (JVM running for 1317.517)
+""12-02-2020 18:16:10 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+""12-02-2020 18:16:10 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 18:27:33 [Thread-19] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:27:37 [Thread-19] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:27:44 [Thread-19] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown initiated...
+""12-02-2020 18:27:50 [Thread-19] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-4 - Shutdown completed.
+""12-02-2020 18:29:31 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Jesu with PID 1612 (C:\Users\Jesu07\git\MainProject\target\classes started by Jesu07 in C:\Users\Jesu07\git\MainProject)
+""12-02-2020 18:29:31 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 18:29:46 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 18:29:47 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 675ms. Found 21 JPA repository interfaces.
+""12-02-2020 18:29:48 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 18:29:48 [restartedMain] WARN  o.a.tomcat.util.modeler.Registry - The MBean registry cannot be disabled because it has already been initialised
+""12-02-2020 18:29:52 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 18:29:52 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 18:29:52 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 18:29:53 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 18:29:53 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 18:29:53 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 21518 ms
+""12-02-2020 18:29:53 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Starting...
+""12-02-2020 18:29:53 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Start completed.
+""12-02-2020 18:29:53 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 18:29:53 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 18:29:54 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 18:29:57 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 18:29:57 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 18:29:59 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 18:29:59 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 18:29:59 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 18:30:00 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 18:30:00 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 29.909 seconds (JVM running for 2146.758)
+""12-02-2020 18:30:00 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+""12-02-2020 18:30:00 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 18:30:03 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+""12-02-2020 18:30:03 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+""12-02-2020 18:30:03 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 31 ms
+""12-02-2020 18:30:03 [http-nio-8080-exec-1] INFO  c.project.controller.MainController - Index Accessed.....
+""12-02-2020 18:30:04 [http-nio-8080-exec-2] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 18:30:47 [http-nio-8080-exec-10] INFO  c.project.controller.UserController - User : Jesu - Login Succesful 
+""12-02-2020 18:30:59 [http-nio-8080-exec-3] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:31:08 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 18:31:08 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 18:31:08 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - Form error : org.springframework.validation.BeanPropertyBindingResult: 4 errors
+Field error in object 'levelOne' on field 'name': rejected value []; codes [NotEmpty.levelOne.name,NotEmpty.name,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.name,name]; arguments []; default message [name]]; default message [* Header name should not be empty.]
+Field error in object 'levelOne' on field 'ref': rejected value []; codes [Size.levelOne.ref,Size.ref,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.ref,ref]; arguments []; default message [ref],2147483647,3]; default message [* Reference should have minimum 3 characters.]
+Field error in object 'levelOne' on field 'ref': rejected value []; codes [NotEmpty.levelOne.ref,NotEmpty.ref,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.ref,ref]; arguments []; default message [ref]]; default message [* Reference should not be empty.]
+Field error in object 'levelOne' on field 'name': rejected value []; codes [Size.levelOne.name,Size.name,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.name,name]; arguments []; default message [name],20,3]; default message [* Size of the Header name should have minimum 3 to maximum 20 characters.]
+""12-02-2020 18:31:08 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - -------------------------------------------------------
+""12-02-2020 18:32:12 [http-nio-8080-exec-1] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 18:36:42 [http-nio-8080-exec-10] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 18:39:09 [http-nio-8080-exec-3] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 18:40:09 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 18:40:27 [http-nio-8080-exec-4] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 18:40:27 [http-nio-8080-exec-4] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 18:40:27 [http-nio-8080-exec-4] INFO  c.p.controller.HeaderController - Form error : org.springframework.validation.BeanPropertyBindingResult: 5 errors
+Field error in object 'levelTwo' on field 'name': rejected value []; codes [Size.levelTwo.name,Size.name,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.name,name]; arguments []; default message [name],20,3]; default message [* Size of the Header name should have minimum 3 characters and at the maximum of 20 characters.]
+Field error in object 'levelTwo' on field 'name': rejected value []; codes [NotEmpty.levelTwo.name,NotEmpty.name,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.name,name]; arguments []; default message [name]]; default message [* Header Name should not be null.]
+Field error in object 'levelTwo' on field 'lvl1': rejected value [0]; codes [Select.levelTwo.lvl1,Select.lvl1,Select.int,Select]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.lvl1,lvl1]; arguments []; default message [lvl1]]; default message [* Select level one]
+Field error in object 'levelTwo' on field 'ref': rejected value []; codes [NotEmpty.levelTwo.ref,NotEmpty.ref,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.ref,ref]; arguments []; default message [ref]]; default message [* Reference should not be null.]
+Field error in object 'levelTwo' on field 'ref': rejected value []; codes [Size.levelTwo.ref,Size.ref,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.ref,ref]; arguments []; default message [ref],2147483647,3]; default message [* Size of reference should have minimum 3 Characters.]
+""12-02-2020 18:41:48 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 18:41:48 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 18:41:48 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - Form error : org.springframework.validation.BeanPropertyBindingResult: 5 errors
+Field error in object 'levelTwo' on field 'name': rejected value []; codes [Size.levelTwo.name,Size.name,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.name,name]; arguments []; default message [name],20,3]; default message [* Size of the Header name should have minimum 3 characters and at the maximum of 20 characters.]
+Field error in object 'levelTwo' on field 'lvl1': rejected value [0]; codes [Select.levelTwo.lvl1,Select.lvl1,Select.int,Select]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.lvl1,lvl1]; arguments []; default message [lvl1]]; default message [* Select level one]
+Field error in object 'levelTwo' on field 'name': rejected value []; codes [NotEmpty.levelTwo.name,NotEmpty.name,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.name,name]; arguments []; default message [name]]; default message [* Header Name should not be null.]
+Field error in object 'levelTwo' on field 'ref': rejected value []; codes [NotEmpty.levelTwo.ref,NotEmpty.ref,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.ref,ref]; arguments []; default message [ref]]; default message [* Reference should not be null.]
+Field error in object 'levelTwo' on field 'ref': rejected value []; codes [Size.levelTwo.ref,Size.ref,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.ref,ref]; arguments []; default message [ref],2147483647,3]; default message [* Size of reference should have minimum 3 Characters.]
+""12-02-2020 18:42:12 [http-nio-8080-exec-7] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level one form accessed
+""12-02-2020 18:42:19 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 18:42:20 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 18:42:20 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - Form error : org.springframework.validation.BeanPropertyBindingResult: 4 errors
+Field error in object 'levelOne' on field 'name': rejected value []; codes [Size.levelOne.name,Size.name,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.name,name]; arguments []; default message [name],20,3]; default message [* Size of the Header name should have minimum 3 to maximum 20 characters.]
+Field error in object 'levelOne' on field 'ref': rejected value []; codes [Size.levelOne.ref,Size.ref,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.ref,ref]; arguments []; default message [ref],2147483647,3]; default message [* Reference should have minimum 3 characters.]
+Field error in object 'levelOne' on field 'ref': rejected value []; codes [NotEmpty.levelOne.ref,NotEmpty.ref,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.ref,ref]; arguments []; default message [ref]]; default message [* Reference should not be empty.]
+Field error in object 'levelOne' on field 'name': rejected value []; codes [NotEmpty.levelOne.name,NotEmpty.name,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelOne.name,name]; arguments []; default message [name]]; default message [* Header name should not be empty.]
+""12-02-2020 18:42:20 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - -------------------------------------------------------
+""12-02-2020 18:42:27 [http-nio-8080-exec-10] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 18:47:17 [http-nio-8080-exec-4] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 18:48:18 [http-nio-8080-exec-11] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 18:48:18 [http-nio-8080-exec-11] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 18:48:18 [http-nio-8080-exec-11] INFO  c.p.controller.HeaderController - Form error : org.springframework.validation.BeanPropertyBindingResult: 5 errors
+Field error in object 'levelTwo' on field 'ref': rejected value []; codes [NotEmpty.levelTwo.ref,NotEmpty.ref,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.ref,ref]; arguments []; default message [ref]]; default message [* Reference should not be null.]
+Field error in object 'levelTwo' on field 'ref': rejected value []; codes [Size.levelTwo.ref,Size.ref,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.ref,ref]; arguments []; default message [ref],2147483647,3]; default message [* Size of reference should have minimum 3 Characters.]
+Field error in object 'levelTwo' on field 'name': rejected value []; codes [Size.levelTwo.name,Size.name,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.name,name]; arguments []; default message [name],20,3]; default message [* Size of the Header name should have minimum 3 characters and at the maximum of 20 characters.]
+Field error in object 'levelTwo' on field 'name': rejected value []; codes [NotEmpty.levelTwo.name,NotEmpty.name,NotEmpty.java.lang.String,NotEmpty]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.name,name]; arguments []; default message [name]]; default message [* Header Name should not be null.]
+Field error in object 'levelTwo' on field 'lvl1': rejected value [0]; codes [Select.levelTwo.lvl1,Select.lvl1,Select.int,Select]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [levelTwo.lvl1,lvl1]; arguments []; default message [lvl1]]; default message [* Select level one]
+""12-02-2020 18:48:29 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 18:48:29 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 18:48:29 [http-nio-8080-exec-9] INFO  c.p.controller.HeaderController - Level Three Form Accessed.
+""12-02-2020 19:04:07 [Thread-24] INFO  o.s.s.c.ThreadPoolTaskExecutor - Shutting down ExecutorService 'applicationTaskExecutor'
+""12-02-2020 19:04:08 [Thread-24] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 19:04:11 [Thread-24] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown initiated...
+""12-02-2020 19:04:13 [Thread-24] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-5 - Shutdown completed.
+""12-02-2020 19:05:01 [restartedMain] INFO  com.project.ProjectApplication - Starting ProjectApplication on Jesu with PID 1612 (C:\Users\Jesu07\git\MainProject\target\classes started by Jesu07 in C:\Users\Jesu07\git\MainProject)
+""12-02-2020 19:05:01 [restartedMain] INFO  com.project.ProjectApplication - No active profile set, falling back to default profiles: default
+""12-02-2020 19:05:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+""12-02-2020 19:05:07 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 366ms. Found 21 JPA repository interfaces.
+""12-02-2020 19:05:08 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+""12-02-2020 19:05:08 [restartedMain] WARN  o.a.tomcat.util.modeler.Registry - The MBean registry cannot be disabled because it has already been initialised
+""12-02-2020 19:05:13 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+""12-02-2020 19:05:13 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+""12-02-2020 19:05:13 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+""12-02-2020 19:05:15 [restartedMain] INFO  org.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+""12-02-2020 19:05:15 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+""12-02-2020 19:05:15 [restartedMain] INFO  o.s.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 13881 ms
+""12-02-2020 19:05:15 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Starting...
+""12-02-2020 19:05:16 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-6 - Start completed.
+""12-02-2020 19:05:16 [restartedMain] INFO  o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:mysql://localhost:3306/project'
+""12-02-2020 19:05:16 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+""12-02-2020 19:05:16 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+""12-02-2020 19:05:17 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+""12-02-2020 19:05:17 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+""12-02-2020 19:05:21 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+""12-02-2020 19:05:21 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+""12-02-2020 19:05:22 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+""12-02-2020 19:05:22 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+""12-02-2020 19:05:22 [restartedMain] INFO  com.project.ProjectApplication - Started ProjectApplication in 21.587 seconds (JVM running for 4269.031)
+""12-02-2020 19:05:22 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+""12-02-2020 19:05:22 [restartedMain] INFO  com.project.ProjectApplication - Log saved
+""12-02-2020 19:54:32 [HikariPool-6 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=3m40s236ms75µs271ns).
+""12-02-2020 19:55:21 [http-nio-8080-exec-11] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+""12-02-2020 19:55:21 [http-nio-8080-exec-11] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+""12-02-2020 19:55:23 [http-nio-8080-exec-11] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1675 ms
+""12-02-2020 19:57:37 [http-nio-8080-exec-11] INFO  c.p.controller.HeaderController - session expired in level three form.
+""12-02-2020 19:57:37 [http-nio-8080-exec-11] INFO  c.p.controller.HeaderController - -------------------------------------------------------
+""12-02-2020 19:57:38 [http-nio-8080-exec-7] INFO  c.project.controller.UserController - null : Logout
+""12-02-2020 19:57:38 [http-nio-8080-exec-5] INFO  c.project.controller.MainController - Sign In Accessed....
+""12-02-2020 20:20:58 [http-nio-8080-exec-6] INFO  c.project.controller.UserController - User : Jesu - Login Succesful 
+""12-02-2020 20:21:13 [http-nio-8080-exec-3] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 20:21:13 [http-nio-8080-exec-3] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 20:21:13 [http-nio-8080-exec-3] INFO  c.p.controller.HeaderController - Level Three Form Accessed.
+""12-02-2020 20:21:24 [http-nio-8080-exec-11] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 20:27:26 [http-nio-8080-exec-4] INFO  c.p.controller.HeaderController - user name : Jesu / user id : 6 / Level two form accessed
+""12-02-2020 20:28:25 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 20:28:25 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 20:28:25 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - Level Three Form Accessed.
+""12-02-2020 20:29:26 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - user name : Jesu
+""12-02-2020 20:29:26 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - user id : 6
+""12-02-2020 20:29:26 [http-nio-8080-exec-8] INFO  c.p.controller.HeaderController - Level Three Form Accessed.
+""12-02-2020 20:50:26 [HikariPool-6 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=47s29ms611µs796ns).
+""12-02-2020 21:57:20 [HikariPool-6 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-6 - Thread starvation or clock leap detected (housekeeper delta=16m53s667ms44µs450ns).
 "

@@ -202,7 +202,6 @@ pageEncoding="ISO-8859-1"%>
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<s:form action="SaveBatchMaster" method="post" modelAttribute="addBatch">
-<<<<<<< HEAD
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Batch</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -235,7 +234,6 @@ pageEncoding="ISO-8859-1"%>
 												<label>In use</label>
 											</div>					
 										</div>
-<<<<<<< HEAD
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 											<input type="submit" class="btn btn-info" value="Add">

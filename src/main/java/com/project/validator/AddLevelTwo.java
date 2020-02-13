@@ -10,14 +10,14 @@ public class AddLevelTwo {
 	@Select(message="* Select level one")
 	int lvl1;
 	
-	@NotEmpty(message="* Name should not be null")
-	@Size(min=3,max=20,message="* Size must be 3 to 20")
+	@NotEmpty(message="* Header Name should not be null.")
+	@Size(min=3,max=20,message="* Size of the Header name should have minimum 3 characters and at the maximum of 20 characters.")
 	String name;
 	
 	boolean dd;
 	
-	@NotEmpty(message="* Reference should not null")
-	@Size(min=3,message="* Size minimum 3")
+	@NotEmpty(message="* Reference should not be null.")
+	@Size(min=3,message="* Size of the reference should have at the minimum of 3 Characters.")
 	String ref;
 	
 	

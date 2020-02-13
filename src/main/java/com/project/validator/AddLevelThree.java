@@ -16,8 +16,8 @@ public class AddLevelThree {
 	@Select(message="* Select level three")
 	int lvl3;
 	
-	@NotEmpty(message="* Reference should not empty")
-	@Size(min=3,message="* Size minimum 3")
+	@NotEmpty(message="* Reference should not be empty")
+	@Size(min=3,message="* Size of the reference should have at the minimum of 3 Characters.")
 	String ref;
 
 	public int getLvl1() {
