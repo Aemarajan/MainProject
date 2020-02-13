@@ -12,7 +12,7 @@
 </head>
 <body>
 	
-<div class="white-text text-center py-2 ubuntu card-head">
+<div class="white-text text-center py-1 ubuntu card-head">
 	<h5> © 2020 PSNACET. All rights reserved</h5>
 	<h6>Application best Viewed in Chrome, Firefox, Opera</h6>
 </div>

@@ -5,8 +5,6 @@ import java.util.Random;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,8 +23,6 @@ import com.project.validator.SignUp;
 
 @Controller
 public class UserController {
-
-	Logger log = LoggerFactory.getLogger(UserController.class);
 	
 	int otp;
 	User userLoc;
@@ -65,11 +61,9 @@ public class UserController {
 			mailService.sendEmail(user,otp);
 			model.setViewName("OTP");
 			mm.addAttribute("otp", new OTP());
-			log.info("OTP : "+otp+" -- sent to "+user.getEmail());
 			model.addObject("email", signup.getEmail());
 		}else {
 			model.setViewName("SignUp");
-			log.info("Existed user "+user.getEmail()+" try to register again.");
 			model.addObject("exist", "Email id already registerd");
 		}
 		return model;
@@ -86,11 +80,8 @@ public class UserController {
 			model.addObject("msg", "success");
 			mailService.sendDetails(userLoc);
 			userService.createUser(userLoc);
-			log.info("OTP verified and user creaded successfully.");
-			log.info("user info : "+userLoc.toString());
 		}else {
 			model.setViewName("OTP");
-			log.info("Invalid OTP enterd by user : "+otp);
 			model.addObject("msg", "Invalid OTP, Please try later.");
 		}
 		return model;
@@ -99,7 +90,6 @@ public class UserController {
 	@RequestMapping("Login")
 	public ModelAndView checkUser(@Valid @ModelAttribute("signin")SignIn signin,BindingResult result,HttpSession session) {
 		if(result.hasErrors()) {
-			log.info("Form error : "+result);
 			return new ModelAndView("SignIn");
 		}
 		ModelAndView model = new ModelAndView();
@@ -108,7 +98,6 @@ public class UserController {
 			if(userloc.getPassword().equals(signin.getPassword())) {
 				session.setAttribute("name", userloc.getUsername());
 				session.setAttribute("id", userloc.getUser_id());
-				log.info("User : " +session.getAttribute("name")+" - Login Succesful ");
 				if(userloc.getPrivilegeProvide() == 0) {
 					model.setViewName("redirect:/Gallery");
 				}else {
@@ -116,12 +105,10 @@ public class UserController {
 				}
 			}else {
 				model.setViewName("SignIn");
-				log.info("User : "+userloc.getEmail()+" -- Wrong password : "+signin.getPassword());
 				model.addObject("msg", "fail");
 			}
 		}catch(NullPointerException e) {
 			model.setViewName("SignIn");
-			log.info("Invalid user : "+signin.getEmail());
 			model.addObject("msg", "fail");
 		}
 		return model;
@@ -129,7 +116,6 @@ public class UserController {
 	
 	@RequestMapping("logout")
 	public String logout(HttpSession session) {
-		log.info(session.getAttribute("name")+" : Logout");
 		session.invalidate();
 		return "redirect:/SignIn";
 	}

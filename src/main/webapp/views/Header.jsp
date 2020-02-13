@@ -12,7 +12,7 @@
 </head>
 <body>
 	
-	<div class="white-text text-center py-3 ubuntu card-head">
+	<div class="white-text text-center py-1 ubuntu card-head">
 		<h2>PSNA College of Engineering And Technology</h2>
 	</div>
 

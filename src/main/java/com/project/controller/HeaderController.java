@@ -8,8 +8,6 @@ import java.util.Set;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,8 +41,6 @@ import com.project.validator.DeleteLevelTwo;
 @Controller
 public class HeaderController {
 
-	Logger log = LoggerFactory.getLogger(HeaderController.class);
-	
 	@Autowired
 	LevelOneService lvl1ss;
 
@@ -66,12 +62,10 @@ public class HeaderController {
 	@RequestMapping("LevelOneForm")
 	public String getLevelOne(HttpSession session,ModelMap model) {
 		if (session.getAttribute("id") != null) {
-			log.info("user name : "+session.getAttribute("name")+" / user id : "+session.getAttribute("id")+" / Level one form accessed");
 			model.addAttribute("levelOne", new AddLevelOne());
 			return "LevelOneForm";
 		}
 		else {
-			log.info("Level One Form accessed , but session expired...");
 			return "redirect:/logout";
 		}
 	}
@@ -79,37 +73,26 @@ public class HeaderController {
 	@RequestMapping("LevelTwoForm")
 	public ModelAndView getLevelTwo(HttpSession session,ModelMap model) {
 		if(session.getAttribute("id") == null) {
-			log.info("session expired");
 			return new ModelAndView("redirect:/logout");
 		}
 		ModelAndView m = new ModelAndView("LevelTwoForm");
 		model.addAttribute("levelTwo", new AddLevelTwo());
-		log.info("user name : "+session.getAttribute("name")+" / user id : "+session.getAttribute("id")+" / Level two form accessed");
 		return m;
 	}
 
 	@RequestMapping("LevelThreeForm")
 	public ModelAndView getLevelThree(HttpSession session,ModelMap model) {
 		if(session.getAttribute("id") == null) {
-			log.info("session expired in level three form.");
-			log.info("-------------------------------------------------------");
 			return new ModelAndView("redirect:/logout");
 		}
 		ModelAndView m = new ModelAndView("LevelThreeForm");
-		log.info("user name : "+session.getAttribute("name"));
-		log.info("user id : "+session.getAttribute("id"));
-		log.info("Level Three Form Accessed.");
 		model.addAttribute("levelThree", new AddLevelThree());
 		return m;
 	}
 
 	@PostMapping("saveLvl1")
 	public ModelAndView saveLevelOne(@Valid @ModelAttribute("levelOne") AddLevelOne levelOne,BindingResult result,Model model,HttpSession session) {
-		log.info("user name : "+session.getAttribute("name"));
-		log.info("user id : "+session.getAttribute("id"));
 		if(result.hasErrors()) {
-			log.info("Form error : "+result);
-			log.info("-------------------------------------------------------");
 			return new ModelAndView("LevelOneForm");
 		}
 		if (session.getAttribute("id") != null) {
@@ -117,9 +100,7 @@ public class HeaderController {
 			List<LevelOne> lvl1t = lvl1ss.selectAll();
 			for(LevelOne lv1:lvl1t) {
 				if(lv1.getName().equalsIgnoreCase(levelOne.getName().toLowerCase())) {
-					log.info("Level one - " +levelOne.getName()+" already exist");
 					mv.addObject("exist", "already exist");
-					log.info("-------------------------------------------------------");
 					return mv;
 				}
 			}
@@ -140,39 +121,25 @@ public class HeaderController {
 					p.setInn(0);
 					privilegeService.savePrivilege(p);
 				}
-				
-				log.info("Level one saved with menu.");
-				log.info("Level One = "+lvl1.toString());
-				log.info("Menu = "+m1.toString());
-				log.info("-------------------------------------------------------");
 				mv.addObject("added", "success");
 			} else {
 				lvl1.setName(levelOne.getName());
 				lvl1.setDd(levelOne.isDd());
 				lvl1ss.saveLevelOne(lvl1);
-				log.info("Level one save with menu.");
-				log.info("Level One = "+lvl1.toString());
-				log.info("-------------------------------------------------------");
 				mv.addObject("temp", "failed");
 			}
 			return mv;
 		} else {
-			log.info("Session expired in level one form");
-			log.info("-------------------------------------------------------");
 			return new ModelAndView("redirect:/logout");
 		}
 	}
 	
 	@RequestMapping("saveLvl2")
 	public ModelAndView saveLevelTwo(@Valid @ModelAttribute("levelTwo") AddLevelTwo levelTwo,BindingResult result,@RequestParam("lvl1")int lvl1f, HttpSession session) {
-		log.info("user name : "+session.getAttribute("name"));
-		log.info("user id : "+session.getAttribute("id"));
 		if(result.hasErrors()) {
-			log.info("Form error : "+result);
 			return new ModelAndView("LevelTwoForm");
 		}
 		if(session.getAttribute("id") == null) {
-			log.info("Session expired in level two form.");
 			return new ModelAndView("redirect:/logout");
 		}
 		ModelAndView m = new ModelAndView("LevelTwoForm");
@@ -299,7 +266,6 @@ public class HeaderController {
 	@RequestMapping("deleteLevelOne")
 	public ModelAndView deleteLevelOne(@Valid @ModelAttribute("deleteLevelOne") DeleteLevelOne deleteLevelOne,BindingResult result,HttpSession session) {
 		if(result.hasErrors()) {
-			log.info("Form error : "+result);
 			return new ModelAndView("DeleteLevelOne");
 		}
 		if(session.getAttribute("id") == null)
