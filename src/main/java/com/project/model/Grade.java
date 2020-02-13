@@ -24,7 +24,7 @@ public class Grade {
 	String word;
 	String acronym;
 	int point;
-	int marks_range;
+	String marks_range;
 	int inn;
 	
 	public int getId() {
@@ -33,10 +33,10 @@ public class Grade {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Regulation getReguation() {
+	public Regulation getRegulation() {
 		return regulation;
 	}
-	public void setReguation(Regulation reguation) {
+	public void setRegulation(Regulation reguation) {
 		this.regulation = reguation;
 	}
 	public String getWord() {
@@ -57,10 +57,10 @@ public class Grade {
 	public void setPoint(int point) {
 		this.point = point;
 	}
-	public int getMarks_range() {
+	public String getMarks_range() {
 		return marks_range;
 	}
-	public void setMarks_range(int marks_range) {
+	public void setMarks_range(String marks_range) {
 		this.marks_range = marks_range;
 	}
 	public int getInn() {
@@ -81,7 +81,7 @@ public class Grade {
 	
 	@Override
 	public String toString() {
-		return "Grade [id=" + id + ", word=" + word + ", acronym=" + acronym + ", point=" + point + ", marks_range="
-				+ marks_range + ", inn=" + inn + "]";
+		return "Grade [id=" + id + ", regulation=" + regulation + ", word=" + word + ", acronym=" + acronym + ", point="
+				+ point + ", marks_range=" + marks_range + ", inn=" + inn + "]";
 	}
 }

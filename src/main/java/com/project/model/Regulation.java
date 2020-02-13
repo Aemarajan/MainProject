@@ -15,6 +15,7 @@ public class Regulation {
 	int id;
 	
 	String name;
+	String acronym;
 	int inn;
 	
 	public int getId() {
@@ -28,6 +29,12 @@ public class Regulation {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public String getAcronym() {
+		return acronym;
+	}
+	public void setAcronym(String acronym) {
+		this.acronym = acronym;
 	}
 	public int getInn() {
 		return inn;
@@ -47,6 +54,6 @@ public class Regulation {
 	
 	@Override
 	public String toString() {
-		return "Regulation [id=" + id + ", name=" + name + ", inn=" + inn + "]";
+		return "Regulation [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn + "]";
 	}
 }
