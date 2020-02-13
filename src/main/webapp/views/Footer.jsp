@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@page import="java.util.*" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,9 +12,9 @@
 
 </head>
 <body>
-	
+<% Date date = new Date(); %>
 <div class="white-text text-center py-1 ubuntu card-head">
-	<h5> © 2020 PSNACET. All rights reserved</h5>
+	<h5> © <%=date.getYear()+1900 %> PSNACET. All rights reserved</h5>
 	<h6>Application best Viewed in Chrome, Firefox, Opera</h6>
 </div>
 
