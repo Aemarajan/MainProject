@@ -108,7 +108,7 @@ pageEncoding="ISO-8859-1"%>
 		color: #F44336;
 	}
 	table.table td i {
-		font-size: 17px !important 
+		font-size: 17px
 	}
 	table.table .avatar {
 		border-radius: 50%;
@@ -188,8 +188,8 @@ pageEncoding="ISO-8859-1"%>
 										<td>${l.to_year }</td>
 										<td>${l.no_of_years }</td>
 										<td>
-											<c:if test="${l.inn == 1 }">Active</c:if>
-											<c:if test="${l.inn != 1 }">In Active</c:if>
+											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
+											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
 											<a href="#editBatchModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
