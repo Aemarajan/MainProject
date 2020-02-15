@@ -4,7 +4,7 @@ import com.project.customvalidator.Select;
 
 public class DeleteLevelOne {
 
-	@Select(message="* Select level one")
+	@Select(message="* Please Select level one Header.")
 	int lvl1;
 
 	public int getLvl1() {

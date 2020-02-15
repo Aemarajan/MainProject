@@ -16,128 +16,6 @@ pageEncoding="ISO-8859-1"%>
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 
-<style type="text/css">
-	.table-wrapper {
-		background: #fff;
-		padding: 20px 25px;
-		margin: 30px 0;
-		border-radius: 3px;
-		box-shadow: 0 1px 1px rgba(0,0,0,.05);
-	}
-	.table-title {        
-		background: #435d7d;
-		color: #fff;
-		padding: 5px 30px;
-		margin: -20px -25px 10px;
-		border-radius: 3px 3px 0 0;
-	}
-	.table-title h2 {
-		margin: 5px 0 0;
-		font-size: 24px;
-	}
-	.table-title .btn-group {
-		float: right;
-	}
-	.table-title .btn {
-		color: #fff;
-		float: right;
-		font-size: 15px;
-		border: none;
-		min-width: 50px;
-		border-radius: 2px;
-		border: none;
-		outline: none !important;
-		margin-left: 10px;
-	}
-	.table-title .btn i {
-		float: left;
-		font-size: 21px;
-		margin-right: 5px;
-	}
-	.table-title .btn span {
-		float: left;
-		margin-top: 0px;
-	}
-	.table{
-		padding: 0px 0px ;
-	}
-	table.table tr th, table.table tr td {
-		border-color: #e9e9e9;
-		padding: 12px 15px;
-		vertical-align: middle;
-	}
-	table.table tr th:first-child {
-		width: 150px;
-	}
-	table.table tr th:last-child {
-		width: 100px;
-	}
-	table.table-striped tbody tr:nth-of-type(odd) {
-		background-color: #fcfcfc;
-	}
-	table.table-striped.table-hover tbody tr:hover {
-		background: #f5f5f5;
-	}
-	table.table th i {
-		font-size: 13px;
-		margin: 0 5px;
-		cursor: pointer;
-	}	
-	table.table td:last-child i {
-		opacity: 0.9;
-		font-size: 22px;
-		margin: 0 5px;
-	}
-	table.table td a {
-		font-weight: bold;
-		color: #566787;
-		display: inline-block;
-		text-decoration: none;
-		outline: none !important;
-	}
-	table.table td a:hover {
-		color: #2196F3;
-	}
-	table.table td a.edit {
-		color: #FFC107;
-	}
-	table.table td a.delete {
-		color: #F44336;
-	}
-	table.table td i {
-		font-size: 17px !important 
-	}
-	table.table .avatar {
-		border-radius: 50%;
-		vertical-align: middle;
-		margin-right: 10px;
-	}
-	.hint-text {
-		float: left;
-		margin-top: 10px;
-		font-size: 13px;
-	}    
-	/* Modal styles */
-	.modal .modal-dialog {
-		max-width: 400px;
-	}
-	.modal .modal-header, .modal .modal-body, .modal .modal-footer {
-		padding: 20px 30px;
-	}
-	.modal .modal-content {
-		border-radius: 3px;
-	}
-	.modal .modal-footer {
-		background: #ecf0f1;
-		border-radius: 0 0 3px 3px;
-	}
-	.modal .modal-title {
-		display: inline-block;
-	}	
-	.add-new{
-		border-radius:50px !important
-	}
-</style>
 </head>
 <body>
 
@@ -157,11 +35,19 @@ pageEncoding="ISO-8859-1"%>
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
+								
+								<c:if test="${added != null }">
+									<div class="mt-1 alert alert-success alert-dismissible">
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										Batch added Successfully...
+									</div>
+								</c:if>
+								
 								<div class="col-sm-6">
 									<h2>Manage <b>Batch</b></h2>
 								</div>
 								<div class="col-sm-6">
-									<a href="#addBatchModal" class="btn btn-info add-new" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
+									<a href="#addModal" class="btn btn-info add-new" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
 								</div>
 							</div>
 						</div>
@@ -189,8 +75,8 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }">In Active</c:if>
 										</td>
 										<td>
-											<a href="#editBatchModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteBatchModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -198,7 +84,7 @@ pageEncoding="ISO-8859-1"%>
 						</table>
 							
 						<!-- Add Modal HTML -->
-						<div id="addBatchModal" class="modal fade">
+						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<s:form action="SaveBatchMaster" method="post" modelAttribute="addBatch">
@@ -244,7 +130,7 @@ pageEncoding="ISO-8859-1"%>
 						</div>
 											
 						<!-- Edit Modal HTML -->
-						<div id="editBatchModal" class="modal fade">
+						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<s:form action="EditBatch" method="post" modelAttribute="addBatch">
@@ -268,6 +154,13 @@ pageEncoding="ISO-8859-1"%>
 												</div>
 											</c:if>		
 												
+											<c:if test="${updated != null }">
+												<div class="mt-1 alert alert-success alert-dismissible">
+													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+													Batch Details are Updated.
+												</div>
+											</c:if>
+											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
@@ -297,12 +190,12 @@ pageEncoding="ISO-8859-1"%>
 						</div>
 						
 						<!-- Delete Modal HTML -->
-						<div id="deleteBatchModal" class="modal fade">
+						<div id="deleteModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<form action="DeleteBatch" method="post">
 										<div class="modal-header">						
-											<h4 class="modal-title">Delete Employee</h4>
+											<h4 class="modal-title">Delete Batch</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										<div class="modal-body">					
@@ -341,13 +234,13 @@ pageEncoding="ISO-8859-1"%>
 
 <c:if test="${addError != null }"> 
 	<script type="text/javascript">
-		$('#addBatchModal').modal('show');
+		$('#addModal').modal('show');
 	</script>
 </c:if>
 
 <c:if test="${editError != null }"> 
 	<script type="text/javascript">
-		$('#editBatchModal').modal('show');
+		$('#editModal').modal('show');
 	</script>
 </c:if>
 
@@ -366,7 +259,7 @@ pageEncoding="ISO-8859-1"%>
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
 
-		$('#editBatchModal').on('show.bs.modal', function (event) {
+		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var from = button.data('from'); 
@@ -382,7 +275,7 @@ pageEncoding="ISO-8859-1"%>
 				modal.find('#inn').prop('checked',false);
 		});
 
-		$('#deleteBatchModal').on('show.bs.modal', function (event) {
+		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var from = button.data('from'); 

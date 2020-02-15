@@ -6,13 +6,13 @@ import com.project.customvalidator.NotEmpty;
 
 public class AddLevelOne {
 
-	@NotEmpty(message="* Header name should not be empty.")
+	@NotEmpty(message="* Please enter the Header Name.")
 	@Size(min=3,max=20,message="* Size of the Header name should have minimum 3 and maximum 20 characters.")
 	String name;
 	
 	boolean dd;
 	
-	@NotEmpty(message="* Reference should not be empty.")
+	@NotEmpty(message="* Please Enter the Reference.")
 	@Size(min=3,message="* Size of the reference should have at the minimum of 3 Characters.")
 	String ref;
 	

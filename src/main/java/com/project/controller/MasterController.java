@@ -104,8 +104,7 @@ public class MasterController {
 			return new ModelAndView("redirect:/logout");
 		}
 		ModelAndView model = new ModelAndView("BatchMaster");
-		List<Batch> list = batchService.selectAll();
-		model.addObject("list", list);
+		model.addObject("list", batchService.selectAll());
 		model.addObject("addBatch", new AddBatchMaster());
 		return model;
 	}
@@ -134,6 +133,7 @@ public class MasterController {
 		int f_year = Integer.parseInt(batch.getFrom_year());
 		int t_year = Integer.parseInt(batch.getTo_year());
 		int n_year = t_year - f_year;
+		
 		if(n_year<=4 && n_year>=2) {
 			Batch bm = new Batch();
 			bm.setFrom_year(f_year);
@@ -145,22 +145,23 @@ public class MasterController {
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
-		m.setViewName("BatchMaster");
+		m.setViewName("redirect:/GetBatchMaster");
 		m.addObject("invalidYear", "Invalid year");
 		return m;
 	}
 	
 	@PostMapping("EditBatch")
 	public ModelAndView editBatch(@Valid @ModelAttribute("addBatch")AddBatchMaster batch,BindingResult result,HttpSession session) {
-		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null)
+			return new ModelAndView("redirect:/logout");
 		if(result.hasErrors()) {
+			ModelAndView mv = new ModelAndView();
 			mv.setViewName("BatchMaster");
 			mv.addObject("list", batchService.selectAll());
 			mv.addObject("editError", "error");
 			return mv;
 		}
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
+		ModelAndView mv = new ModelAndView();
 		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()),batch.isInn()?1:0);
 		if(exist != null) {
 			mv.setViewName("BatchMaster");
@@ -176,9 +177,9 @@ public class MasterController {
 			Batch bm = new Batch();		
 			bm.setInn(batch.isInn());
 			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
-			mv.addObject("list", batchService.selectAll());
 			mv.setViewName("redirect:/GetBatchMaster");
-			mv.addObject("added", "Success Message");
+			mv.addObject("list", batchService.selectAll());
+			mv.addObject("updated", "Success Message");
 			return mv;
 		}
 		mv.setViewName("BatchMaster");
@@ -197,36 +198,86 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetBloodGroupMaster")
-	public String getBloodgroupMaster(HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
-		}
-		model.addAttribute("bloodgroup", new AddBloodGroup());
-		return "BloodgroupMaster";
-	}
-	
-	@PostMapping("SaveBloodGroupMaster")
-	public ModelAndView saveBloodgroupMaster(@Valid @ModelAttribute("bloodgroup") AddBloodGroup blood,BindingResult result,HttpSession session,ModelMap model) {
-		if(result.hasErrors()) {
-			return new ModelAndView("BloodgroupMaster");
-		}
+	public ModelAndView getBloodroupMaster(HttpSession session) {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
+		ModelAndView model = new ModelAndView();
+		model.setViewName("BloodGroupMaster");
+		model.addObject("list", bloodgroupService.selectAll());
+		model.addObject("bloodgroup", new AddBloodGroup());
+		return model;
+	}
+	
+	@PostMapping("SaveBloodGroupMaster")
+	public ModelAndView saveBloodgroupMaster(@Valid @ModelAttribute("bloodgroup") AddBloodGroup blood,BindingResult result,HttpSession session) {
+		if(session.getAttribute("id") == null) {
+			return new ModelAndView("redirect:/logout");
+		}
+		if(result.hasErrors()) {
+			ModelAndView m = new ModelAndView();
+			m.setViewName("BloodGroupMaster");
+			m.addObject("list", bloodgroupService.selectAll());
+			m.addObject("addError", "error");
+			return  m;
+		}
 		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
 		if(list.size() != 0) {
-			ModelAndView m = new ModelAndView("BloodgroupMaster");
+			ModelAndView m = new ModelAndView();
+			m.setViewName("BloodgroupMaster");
+			m.addObject("list", bloodgroupService.selectAll());
+			m.addObject("exist", "already exist");
+			return m;
+		}
+		ModelAndView mv = new ModelAndView();
+		Bloodgroup bm = new Bloodgroup();
+		bm.setName(blood.getName().toUpperCase());
+		bm.setInn(blood.isInn());
+		bloodgroupService.saveBloodgroupMaster(bm);
+			
+		mv.setViewName("redirect:/GetBloodGroupMaster");
+		mv.addObject("list", bloodgroupService.selectAll());
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("EditBloodGroup")
+	public ModelAndView editBloodGroup(@Valid @ModelAttribute("bloodgroup")AddBloodGroup blood,BindingResult result,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return new ModelAndView("redirect:/logout");
+		if(result.hasErrors()) {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("BloodGroupMaster");
+			mv.addObject("list", bloodgroupService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
+		if(list.size() != 0) {
+			ModelAndView m = new ModelAndView();
+			m.setViewName("BloodgroupMaster");
+			m.addObject("list", bloodgroupService.selectAll());
 			m.addObject("exist", "already exist");
 			return m;
 		}
 		Bloodgroup bm = new Bloodgroup();
 		bm.setName(blood.getName().toUpperCase());
 		bm.setInn(blood.isInn());
-		bloodgroupService.saveBloodgroupMaster(bm);
-			
-		ModelAndView mv = new ModelAndView("BloodgroupMaster");
-		mv.addObject("added", "Success Message");
+		bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
+		
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("BloodGroupMaster");
+		mv.addObject("list", bloodgroupService.selectAll());
+		mv.addObject("updated", "Success Message");
 		return mv;
+	}
+	
+	@PostMapping("DeleteBloodGroup")
+	public String deleteBloodGroup(@RequestParam("id") int id,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return "redirect:/logout";
+		bloodgroupService.deleteById(id);
+		return "redirect:/GetBloodGroupMaster";
 	}
 	
 	@GetMapping("GetCommunityMaster")

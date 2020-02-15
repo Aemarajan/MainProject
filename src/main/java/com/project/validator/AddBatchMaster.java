@@ -9,14 +9,14 @@ public class AddBatchMaster {
 	
 	int id;
 	
-	@NotEmpty(message="* From year should not empty")
-	@Size(max=4,message="* Size should be 4")
-	@Pattern(regexp="[0-9]+",message="* Numbers only allowed")
+	@NotEmpty(message="* Please Enter the From year...")
+	@Size(max=4,message="* Please Enter the 4 Digit Years...")
+	@Pattern(regexp="[0-9]+",message="* Please Enter the Numbers Only...")
 	String from_year;
 	
-	@NotEmpty(message="* To year should not empty")
-	@Size(max=4,message="* Size should be 4")
-	@Pattern(regexp="[0-9]+",message="* Numbers only allowed")
+	@NotEmpty(message="* Please Enter the To year...")
+	@Size(max=4,message="* Please Enter the 4 Digit Years...")
+	@Pattern(regexp="[0-9]+",message="* Please Enter the Numbers Only...")
 	String to_year;
 	
 	boolean inn;
