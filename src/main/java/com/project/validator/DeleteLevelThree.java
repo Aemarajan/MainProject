@@ -4,13 +4,13 @@ import com.project.customvalidator.Select;
 
 public class DeleteLevelThree {
 	
-	@Select(message="* Select level one")
+	@Select(message="* Please Select level one Header.")
 	int lvl1;
 	
-	@Select(message="* Select level two")
+	@Select(message="* Please Select level two Header.")
 	int lvl2;
 	
-	@Select(message="* Select level three")
+	@Select(message="* Please Select level three Header.")
 	int lvl3;
 
 	public int getLvl1() {
