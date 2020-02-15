@@ -192,7 +192,8 @@ public class MasterController {
 	public String deleteBatch(@RequestParam("id") int id,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return "redirect:/logout";
-		batchService.deleteById(id);
+		//batchService.deleteById(id);
+		batchService.updateInnZero(id);
 		return "redirect:/GetBatchMaster";
 	}
 	

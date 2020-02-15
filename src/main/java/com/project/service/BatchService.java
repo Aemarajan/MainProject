@@ -66,4 +66,8 @@ public class BatchService {
 	public void deleteById(int id) {
 		bmrepo.deleteById(id);		
 	}
+
+	public void updateInnZero(int id) {
+		bmrepo.updateBatch(id,0);
+	}
 }

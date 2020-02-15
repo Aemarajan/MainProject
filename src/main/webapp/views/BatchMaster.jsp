@@ -66,6 +66,9 @@ pageEncoding="ISO-8859-1"%>
 		padding: 12px 15px;
 		vertical-align: middle;
 	}
+	table.table thead tr th{
+		font-weight:bold;
+	}
 	table.table tr th:first-child {
 		width: 150px;
 	}
@@ -161,7 +164,7 @@ pageEncoding="ISO-8859-1"%>
 									<h2>Manage <b>Batch</b></h2>
 								</div>
 								<div class="col-sm-6">
-									<a href="#addBatchModal" class="btn btn-info add-new" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
+									<a href="#addBatchModal" class="btn btn-info add-new py-2 px-3" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
 								</div>
 							</div>
 						</div>
@@ -202,7 +205,6 @@ pageEncoding="ISO-8859-1"%>
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<s:form action="SaveBatchMaster" method="post" modelAttribute="addBatch">
-<<<<<<< HEAD
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Batch</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -235,7 +237,6 @@ pageEncoding="ISO-8859-1"%>
 												<label>In use</label>
 											</div>					
 										</div>
-<<<<<<< HEAD
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
 											<input type="submit" class="btn btn-info" value="Add">
@@ -337,8 +338,9 @@ pageEncoding="ISO-8859-1"%>
 		<!-- Container Fluid -->
 	</div>
 	<!-- Content -->
-	
-	<jsp:include page="Footer.jsp" />
+	<div class="">
+		<jsp:include page="Footer.jsp" />
+	</div>
 </div>
 
 <c:if test="${addError != null }"> 
