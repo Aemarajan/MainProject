@@ -28,21 +28,25 @@ pageEncoding="ISO-8859-1"%>
 		
 		<div class="container-fluid">
 			<div class="row">
-				
 				<div class="col col-md-1"></div>
-					
 				<div class="col col-md-10">
+					<c:if test="${added != null }">
+						<div class="mt-1 alert alert-success alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							Batch added Successfully...
+						</div>
+					</c:if>
+					
+					<c:if test="${updated != null }">
+						<div class="mt-1 alert alert-success alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							Batch Details are Updated successfully...
+						</div>
+					</c:if>
+					
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
-								
-								<c:if test="${added != null }">
-									<div class="mt-1 alert alert-success alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-										Batch added Successfully...
-									</div>
-								</c:if>
-								
 								<div class="col-sm-6">
 									<h2>Manage <b>Batch</b></h2>
 								</div>
@@ -71,8 +75,8 @@ pageEncoding="ISO-8859-1"%>
 										<td>${l.to_year }</td>
 										<td>${l.no_of_years }</td>
 										<td>
-											<c:if test="${l.inn == 1 }">Active</c:if>
-											<c:if test="${l.inn != 1 }">In Active</c:if>
+											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i> Active</span></c:if>
+											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>In Active</span></c:if>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
@@ -153,13 +157,6 @@ pageEncoding="ISO-8859-1"%>
 													Batch duration between 2 and 4.
 												</div>
 											</c:if>		
-												
-											<c:if test="${updated != null }">
-												<div class="mt-1 alert alert-success alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Batch Details are Updated.
-												</div>
-											</c:if>
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											

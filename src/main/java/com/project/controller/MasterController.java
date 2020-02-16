@@ -130,6 +130,8 @@ public class MasterController {
 			m.addObject("exist", "already exist");
 			return m;
 		}
+		ModelAndView mv = new ModelAndView();
+		
 		int f_year = Integer.parseInt(batch.getFrom_year());
 		int t_year = Integer.parseInt(batch.getTo_year());
 		int n_year = t_year - f_year;
@@ -141,11 +143,13 @@ public class MasterController {
 			bm.setNo_of_years(n_year);		
 			bm.setInn(batch.isInn());
 			batchService.saveBatchMaster(bm);
-			ModelAndView mv = new ModelAndView("redirect:/GetBatchMaster");
+			mv.setViewName("BatchMaster");
+			mv.addObject("list", batchService.selectAll());
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
-		m.setViewName("redirect:/GetBatchMaster");
+		m.setViewName("BatchMaster");
+		m.addObject("list", batchService.selectAll());
 		m.addObject("invalidYear", "Invalid year");
 		return m;
 	}
@@ -177,7 +181,7 @@ public class MasterController {
 			Batch bm = new Batch();		
 			bm.setInn(batch.isInn());
 			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
-			mv.setViewName("redirect:/GetBatchMaster");
+			mv.setViewName("BatchMaster");
 			mv.addObject("list", batchService.selectAll());
 			mv.addObject("updated", "Success Message");
 			return mv;
@@ -235,7 +239,7 @@ public class MasterController {
 		bm.setInn(blood.isInn());
 		bloodgroupService.saveBloodgroupMaster(bm);
 			
-		mv.setViewName("redirect:/GetBloodGroupMaster");
+		mv.setViewName("BloodGroupMaster");
 		mv.addObject("list", bloodgroupService.selectAll());
 		mv.addObject("added", "Success Message");
 		return mv;
