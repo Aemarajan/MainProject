@@ -16,132 +16,6 @@ pageEncoding="ISO-8859-1"%>
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 
-<<<<<<< HEAD
-<style type="text/css">
-	.table-wrapper {
-		background: #fff;
-		padding: 20px 25px;
-		margin: 30px 0;
-		border-radius: 3px;
-		box-shadow: 0 1px 1px rgba(0,0,0,.05);
-	}
-	.table-title {        
-		background: #435d7d;
-		color: #fff;
-		padding: 5px 30px;
-		margin: -20px -25px 10px;
-		border-radius: 3px 3px 0 0;
-	}
-	.table-title h2 {
-		margin: 5px 0 0;
-		font-size: 24px;
-	}
-	.table-title .btn-group {
-		float: right;
-	}
-	.table-title .btn {
-		color: #fff;
-		float: right;
-		font-size: 15px;
-		border: none;
-		min-width: 50px;
-		border-radius: 2px;
-		border: none;
-		outline: none !important;
-		margin-left: 10px;
-	}
-	.table-title .btn i {
-		float: left;
-		font-size: 21px;
-		margin-right: 5px;
-	}
-	.table-title .btn span {
-		float: left;
-		margin-top: 0px;
-	}
-	.table{
-		padding: 0px 0px ;
-	}
-	table.table tr th, table.table tr td {
-		border-color: #e9e9e9;
-		padding: 12px 15px;
-		vertical-align: middle;
-	}
-	table.table thead tr th{
-		font-weight:bold;
-	}
-	table.table tr th:first-child {
-		width: 150px;
-	}
-	table.table tr th:last-child {
-		width: 100px;
-	}
-	table.table-striped tbody tr:nth-of-type(odd) {
-		background-color: #fcfcfc;
-	}
-	table.table-striped.table-hover tbody tr:hover {
-		background: #f5f5f5;
-	}
-	table.table th i {
-		font-size: 13px;
-		margin: 0 5px;
-		cursor: pointer;
-	}	
-	table.table td:last-child i {
-		opacity: 0.9;
-		font-size: 22px;
-		margin: 0 5px;
-	}
-	table.table td a {
-		font-weight: bold;
-		color: #566787;
-		display: inline-block;
-		text-decoration: none;
-		outline: none !important;
-	}
-	table.table td a:hover {
-		color: #2196F3;
-	}
-	table.table td a.edit {
-		color: #FFC107;
-	}
-	table.table td a.delete {
-		color: #F44336;
-	}
-	table.table td i {
-		font-size: 17px
-	}
-	table.table .avatar {
-		border-radius: 50%;
-		vertical-align: middle;
-		margin-right: 10px;
-	}
-	.hint-text {
-		float: left;
-		margin-top: 10px;
-		font-size: 13px;
-	}    
-	/* Modal styles */
-	.modal .modal-dialog {
-		max-width: 400px;
-	}
-	.modal .modal-header, .modal .modal-body, .modal .modal-footer {
-		padding: 20px 30px;
-	}
-	.modal .modal-content {
-		border-radius: 3px;
-	}
-	.modal .modal-footer {
-		background: #ecf0f1;
-		border-radius: 0 0 3px 3px;
-	}
-	.modal .modal-title {
-		display: inline-block;
-	}	
-	.add-new{
-		border-radius:50px !important
-	}
-</style>
 </head>
 <body>
 
@@ -173,7 +47,7 @@ pageEncoding="ISO-8859-1"%>
 									<h2>Manage <b>Batch</b></h2>
 								</div>
 								<div class="col-sm-6">
-									<a href="#addModal" class="btn btn-info add-new" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
+									<a href="#addModal" class="btn btn-info add-new px-3 py-2" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
 								</div>
 							</div>
 						</div>
@@ -242,7 +116,7 @@ pageEncoding="ISO-8859-1"%>
 												<s:errors path="to_year" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
-												<s:checkbox path="inn"/>
+												<s:checkbox path="inn" cssClass="inn"/>
 												<label>In use</label>
 											</div>					
 										</div>
@@ -289,26 +163,26 @@ pageEncoding="ISO-8859-1"%>
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id"/>					
+											<s:hidden path="id" id="id"/>					
 											<div class="md-form mt-0">
-												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="from_year"/>
 												<label for="From Year">From Year<span class="mandatory"> *</span></label>
 												<s:errors path="from_year" cssClass="error"></s:errors>
 											</div>
 											<div class="md-form">
-												<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+												<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="to_year"/>
 												<label for="To Year">To Year<span class="mandatory"> *</span></label>
 												<s:errors path="to_year" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
-												<s:checkbox path="inn"/>
+												<s:checkbox path="inn" id="inn"/>
 												<label>In use</label>
 											</div>					
 										</div>
 										
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-											<input type="submit" class="btn btn-info" value="Save">
+											<input type="submit" class="btn btn-info" value="Update">
 										</div>
 									</s:form>
 								</div>
@@ -330,6 +204,7 @@ pageEncoding="ISO-8859-1"%>
 												<input id="name" class="form-control" readonly/>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>
+											<input type="checkbox" name="confirm" /><label class="permanent-delete">Delete this record permanently?</label>
 											<p class="text-warning"><small>This action cannot be undone.</small></p>
 										</div>
 										<div class="modal-footer">
@@ -385,7 +260,7 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
-
+		$('.inn').prop('checked',true);
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
