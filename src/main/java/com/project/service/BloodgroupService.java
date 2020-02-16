@@ -27,13 +27,5 @@ public class BloodgroupService {
 		List<Bloodgroup> list = bgmrepo.selectByName(name);
 		return list;
 	}
-
-	public void updateBloodgroup(int id,String name,int inn) {
-		bgmrepo.updateBloodgroup(id,name,inn);
-	}
-	
-	public void deleteById(int id) {
-		bgmrepo.deleteById(id);		
-	}
 	
 }

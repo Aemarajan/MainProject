@@ -33,7 +33,7 @@ pageEncoding="ISO-8859-1"%>
 					<c:if test="${added != null }">
 						<div class="mt-1 alert alert-success alert-dismissible">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Batch added Successfully...
+							Batch Details added Successfully...
 						</div>
 					</c:if>
 					
@@ -51,7 +51,7 @@ pageEncoding="ISO-8859-1"%>
 									<h2>Manage <b>Batch</b></h2>
 								</div>
 								<div class="col-sm-6">
-									<a href="#addModal" class="btn btn-info add-new" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
+									<a href="#addModal" class="btn btn-info add-new px-3 py-2" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
 								</div>
 							</div>
 						</div>
@@ -75,8 +75,8 @@ pageEncoding="ISO-8859-1"%>
 										<td>${l.to_year }</td>
 										<td>${l.no_of_years }</td>
 										<td>
-											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i> Active</span></c:if>
-											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>In Active</span></c:if>
+											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
+											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
@@ -102,7 +102,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${exist != null }">
 												<div class="mt-1 alert alert-danger alert-dismissible">
 												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Batch Already exist.
+													Batch Already exist ! 
 												</div>
 											</c:if>
 										
@@ -120,7 +120,7 @@ pageEncoding="ISO-8859-1"%>
 												<s:errors path="to_year" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
-												<s:checkbox path="inn"/>
+												<s:checkbox path="inn" cssClass="inn"/>
 												<label>In use</label>
 											</div>					
 										</div>
@@ -147,7 +147,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${exist != null }">
 												<div class="mt-1 alert alert-danger alert-dismissible">
 													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Batch Already exist.
+													Batch Already exist !
 												</div>
 											</c:if>
 											
@@ -160,26 +160,26 @@ pageEncoding="ISO-8859-1"%>
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id"/>					
+											<s:hidden path="id" id="id"/>					
 											<div class="md-form mt-0">
-												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="from_year"/>
 												<label for="From Year">From Year<span class="mandatory"> *</span></label>
 												<s:errors path="from_year" cssClass="error"></s:errors>
 											</div>
 											<div class="md-form">
-												<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+												<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="to_year"/>
 												<label for="To Year">To Year<span class="mandatory"> *</span></label>
 												<s:errors path="to_year" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
-												<s:checkbox path="inn"/>
+												<s:checkbox path="inn" id="inn"/>
 												<label>In use</label>
 											</div>					
 										</div>
 										
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-											<input type="submit" class="btn btn-info" value="Save">
+											<input type="submit" class="btn btn-info" value="Update">
 										</div>
 									</s:form>
 								</div>
@@ -201,6 +201,7 @@ pageEncoding="ISO-8859-1"%>
 												<input id="name" class="form-control" readonly/>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>
+											<input type="checkbox" name="confirm" /><label class="permanent-delete">Delete this record permanently?</label>
 											<p class="text-warning"><small>This action cannot be undone.</small></p>
 										</div>
 										<div class="modal-footer">
@@ -216,17 +217,16 @@ pageEncoding="ISO-8859-1"%>
 					<!-- Table wrapper -->
 				</div>
 				<!-- col-md-10 -->
-				
 				<div class="col col-md-1"></div>
-			
 			</div>
 			<!-- Row -->
 		</div>
 		<!-- Container Fluid -->
 	</div>
 	<!-- Content -->
-	
-	<jsp:include page="Footer.jsp" />
+	<div class="">
+		<jsp:include page="Footer.jsp" />
+	</div>
 </div>
 
 <c:if test="${addError != null }"> 
@@ -245,17 +245,14 @@ pageEncoding="ISO-8859-1"%>
 
 <!-- jQuery -->
 <script type="text/javascript" src="./views/js/jquery.min.js"></script>
-
 <script type="text/javascript" src="./views/js/popper.min.js"></script>
-
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
 
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
-
+		$('.inn').prop('checked',true);
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');

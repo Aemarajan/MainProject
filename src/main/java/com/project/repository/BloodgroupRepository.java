@@ -18,8 +18,4 @@ public interface BloodgroupRepository extends JpaRepository<Bloodgroup, Integer>
 	@Query(value="SELECT * FROM bloodgroup_master b where b.name=:name",nativeQuery=true)
 	List<Bloodgroup> selectByName(@Param("name")String name);
 
-	@Transactional
-	@Modifying
-	@Query(value="UPDATE bloodgroup_master SET name=:name,inn=:inn WHERE id=:id",nativeQuery=true)
-	void updateBloodgroup(@Param("id")int id,@Param("name") String name,@Param("inn") int inn);
 }

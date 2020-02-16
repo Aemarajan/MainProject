@@ -7,17 +7,17 @@ import com.project.customvalidator.Select;
 
 public class AddLevelThree {
 	
-	@Select(message="* Please Select level one Header.")
+	@Select(message="* Select level one")
 	int lvl1;
 	
-	@Select(message="* Please Select level two Header.")
+	@Select(message="* Select level two")
 	int lvl2;
 	
-	@Select(message="* Please Select level three Header.")
+	@Select(message="* Select level three")
 	int lvl3;
 	
-	@NotEmpty(message="* Please Enter the Reference.")
-	@Size(min=3,message="* Size of the reference should have at the minimum of 3 Characters.")
+	@NotEmpty(message="* Reference should not empty")
+	@Size(min=3,message="* Size minimum 3")
 	String ref;
 
 	public int getLvl1() {

@@ -10,7 +10,6 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Delete Level One - Header</title>
 	
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 	<link rel="stylesheet" href="./views/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./views/css/mdb.min.css">
 	<link rel="stylesheet" href="./views/css/style.css">
@@ -39,7 +38,7 @@
 	                		<div class="card-body px-lg-5 pt-0 open-sans">
 				               	<s:form style="color: #757575;" action="deleteLevelOne" modelAttribute="deleteLevelOne">
 									<c:if test="${delete != null }">
-										<div class="alert alert-danger alert-dismissible">
+										<div class="mt-2 alert alert-danger alert-dismissible">
 											<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 											Level One Header deleted successfully.
 										</div>

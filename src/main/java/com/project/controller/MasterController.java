@@ -150,6 +150,7 @@ public class MasterController {
 		}
 		m.setViewName("BatchMaster");
 		m.addObject("list", batchService.selectAll());
+		m.addObject("addError", "error");
 		m.addObject("invalidYear", "Invalid year");
 		return m;
 	}
@@ -194,10 +195,13 @@ public class MasterController {
 	}
 	
 	@PostMapping("DeleteBatch")
-	public String deleteBatch(@RequestParam("id") int id,HttpSession session) {
+	public String deleteBatch(@RequestParam("id") int id,@RequestParam(value="confirm",required=false)boolean confirm,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return "redirect:/logout";
-		batchService.deleteById(id);
+		if(confirm)
+			batchService.deleteById(id);
+		else
+			batchService.updateInnZero(id);
 		return "redirect:/GetBatchMaster";
 	}
 	
@@ -267,7 +271,7 @@ public class MasterController {
 		Bloodgroup bm = new Bloodgroup();
 		bm.setName(blood.getName().toUpperCase());
 		bm.setInn(blood.isInn());
-		bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
+		//bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("BloodGroupMaster");
@@ -280,7 +284,7 @@ public class MasterController {
 	public String deleteBloodGroup(@RequestParam("id") int id,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return "redirect:/logout";
-		bloodgroupService.deleteById(id);
+		//bloodgroupService.deleteById(id);
 		return "redirect:/GetBloodGroupMaster";
 	}
 	

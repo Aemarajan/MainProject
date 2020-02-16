@@ -7,17 +7,17 @@ import com.project.customvalidator.Select;
 
 public class AddLevelTwo {
 
-	@Select(message="* Please Select level one Header.")
+	@Select(message="* Select level one")
 	int lvl1;
 	
-	@NotEmpty(message="* Please enter the Header Name.")
-	@Size(min=3,max=20,message="* Size of the Header name should have minimum 3 characters and at the maximum of 20 characters.")
+	@NotEmpty(message="* Name should not be null")
+	@Size(min=3,max=20,message="* Size must be 3 to 20")
 	String name;
 	
 	boolean dd;
 	
-	@NotEmpty(message="* Please enter the Reference.")
-	@Size(min=3,message="* Size of the reference should have at the minimum of 3 Characters.")
+	@NotEmpty(message="* Reference should not null")
+	@Size(min=3,message="* Size minimum 3")
 	String ref;
 	
 	

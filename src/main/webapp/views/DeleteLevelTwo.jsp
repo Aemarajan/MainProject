@@ -38,7 +38,7 @@
 	                  		<!-- Form -->
 	                  		<s:form style="color: #757575;" action="deleteLevelTwo" modelAttribute="deleteLevelTwo">
 	                  			<c:if test="${delete != null }">
-									<div class="mt-1 alert alert-danger alert-dismissible">
+									<div class="mt-2 alert alert-danger alert-dismissible">
 									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 									Level Two Header deleted successfully.
 								</div>
