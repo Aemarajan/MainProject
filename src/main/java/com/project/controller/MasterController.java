@@ -145,7 +145,8 @@ public class MasterController {
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
-		m.setViewName("redirect:/GetBatchMaster");
+		m.setViewName("BatchMaster");
+		m.addObject("addError", "error");
 		m.addObject("invalidYear", "Invalid year");
 		return m;
 	}
@@ -163,7 +164,15 @@ public class MasterController {
 		}
 		ModelAndView mv = new ModelAndView();
 		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()),batch.isInn()?1:0);
+		Batch exist1 = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()), Integer.parseInt(batch.getTo_year()));
 		if(exist != null) {
+			mv.setViewName("BatchMaster");
+			mv.addObject("list",batchService.selectAll());
+			mv.addObject("editError", "error");
+			mv.addObject("exist", "already exist");
+			return mv;
+		}
+		if(exist1 != null) {
 			mv.setViewName("BatchMaster");
 			mv.addObject("list",batchService.selectAll());
 			mv.addObject("editError", "error");
@@ -288,42 +297,92 @@ public class MasterController {
 		if(session.getAttribute("id") == null) {
 			return "redirect:/logout";
 		}
+		model.addAttribute("list", communityService.selectAll());
 		model.addAttribute("community", new AddCommunity());
 		return "CommunityMaster";
 	}
 	
 	@PostMapping("SaveCommunityMaster")
 	public ModelAndView saveCommunityMaster(@Valid @ModelAttribute("community") AddCommunity comm,BindingResult result,HttpSession session,ModelMap model) {
+		ModelAndView mv = new ModelAndView();
 		if(result.hasErrors()) {
-			return new ModelAndView("CommunityMaster");
+			mv.setViewName("CommunityMaster");
+			mv.addObject("list", communityService.selectAll());
+			mv.addObject("addError", "Error in add");
+			return mv;
 		}
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		ModelAndView mv = new ModelAndView("CommunityMaster");
-		List<Community> exist1 = communityService.selectByCommunity(comm.getName().toLowerCase());
-		for(Community c : exist1) {
-			if(c.getName().equalsIgnoreCase(comm.getName())) {
-				mv.addObject("existcommunity", "already exist");
-				return mv;
-			}
+		Community exist1 = communityService.selectByCommunity(comm.getName().toLowerCase());
+		if(exist1 != null) {
+			mv.setViewName("CommunityMaster");
+			mv.addObject("list", communityService.selectAll());
+			mv.addObject("addError", "Error in add");
+			mv.addObject("existcommunity", "already exist");
+			return mv;
 		}
-		List<Community> exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
-		if(exist.size() != 0) {
-			ModelAndView m = new ModelAndView("CommunityMaster");
-			m.addObject("exist", "already exist");
-			return m;
+		Community exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
+		if(exist != null) {
+			mv.setViewName("CommunityMaster");
+			mv.addObject("list", communityService.selectAll());
+			mv.addObject("addError", "Error in add");
+			mv.addObject("existAcronym", "already exist");
+			return mv;
 		}
 		Community cm = new Community();
 		cm.setName(comm.getName().toLowerCase());
 		cm.setAcronym(comm.getAcronym().toUpperCase());
 		cm.setInn(comm.isInn());
 		communityService.saveCommunityMaster(cm);
-			
+		mv.setViewName("redirect:/GetCommunityMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
+	@PostMapping("EditCommunity")
+	public ModelAndView editCommunity(@Valid @ModelAttribute("community")AddCommunity comm,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null ) {
+			mv.addObject("expired", "Session Expired");
+			mv.setViewName("redirect:/logout");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.addObject("editError", "error");
+			mv.addObject("list", communityService.selectAll());
+			mv.setViewName("CommunityMaster");
+			return mv;
+		}
+		Community exist1 = communityService.selectByCommunity(comm.getName().toLowerCase());
+		Community exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
+		Community existAll = communityService.selectByAll(comm.getAcronym().toUpperCase(),comm.getName().toLowerCase(),comm.isInn()?1:0);
+		if(existAll != null) {
+			mv.setViewName("CommunityMaster");
+			mv.addObject("list", communityService.selectAll());
+			mv.addObject("editError", "error");
+			mv.addObject("exist", "already exist");
+			return mv;
+		}else if(exist1 != null) {
+			mv.setViewName("CommunityMaster");
+			mv.addObject("list", communityService.selectAll());
+			mv.addObject("editError", "error");
+			System.out.println("Community exist");
+			mv.addObject("existcommunity", "already exist");
+			return mv;
+		}else if(exist != null) {
+			mv.setViewName("CommunityMaster");
+			mv.addObject("list", communityService.selectAll());
+			mv.addObject("editError", "error");
+			System.out.println("Acronym exist");
+			mv.addObject("existAcronym", "already exist");
+			return mv;
+		}else {
+			communityService.updateCommunity(comm);
+			mv.setViewName("redirect:/GetCommunityMaster");
+			return mv;
+		}
+	}
 	
 	@GetMapping("GetCountryMaster")
 	public String getCountryMaster(HttpSession session,ModelMap model) {

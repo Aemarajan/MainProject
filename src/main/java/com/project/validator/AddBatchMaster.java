@@ -4,11 +4,13 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.project.customvalidator.NotEmpty;
+import com.project.customvalidator.PastYear;
 
 public class AddBatchMaster {
 	
 	int id;
 	
+	@PastYear(message="* Future year not allowed")
 	@NotEmpty(message="* From year should not empty")
 	@Size(max=4,message="* Size should be 4")
 	@Pattern(regexp="[0-9]+",message="* Numbers only allowed")

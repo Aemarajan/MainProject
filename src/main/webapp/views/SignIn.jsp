@@ -76,8 +76,6 @@
 									<div>
 										<button	class="btn btn-custom btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
 									</div>
-									<!-- Register -->
-									<p class="text-center">Not a member? <a href="SignUp">SignUp</a></p>
 								</s:form>
 								<!-- Form -->
 							</div>
