@@ -232,9 +232,10 @@ public class MasterController {
 		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
 		if(list.size() != 0) {
 			ModelAndView m = new ModelAndView();
-			m.setViewName("BloodgroupMaster");
+			m.setViewName("BloodGroupMaster");
 			m.addObject("list", bloodgroupService.selectAll());
 			m.addObject("exist", "already exist");
+			m.addObject("addError", "error");
 			return m;
 		}
 		ModelAndView mv = new ModelAndView();
@@ -263,15 +264,16 @@ public class MasterController {
 		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
 		if(list.size() != 0) {
 			ModelAndView m = new ModelAndView();
-			m.setViewName("BloodgroupMaster");
+			m.setViewName("BloodGroupMaster");
 			m.addObject("list", bloodgroupService.selectAll());
 			m.addObject("exist", "already exist");
+			m.addObject("editError", "error");
 			return m;
 		}
 		Bloodgroup bm = new Bloodgroup();
 		bm.setName(blood.getName().toUpperCase());
 		bm.setInn(blood.isInn());
-		//bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
+		bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("BloodGroupMaster");
@@ -281,10 +283,13 @@ public class MasterController {
 	}
 	
 	@PostMapping("DeleteBloodGroup")
-	public String deleteBloodGroup(@RequestParam("id") int id,HttpSession session) {
+	public String deleteBloodGroup(@RequestParam("id") int id,@RequestParam(value="confirm",required=false)boolean confirm,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return "redirect:/logout";
-		//bloodgroupService.deleteById(id);
+		if(confirm)
+			bloodgroupService.deleteById(id);
+		else
+			bloodgroupService.updateInnZero(id);
 		return "redirect:/GetBloodGroupMaster";
 	}
 	
