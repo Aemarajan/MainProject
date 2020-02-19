@@ -6,6 +6,8 @@ import com.project.customvalidator.NotEmpty;
 
 public class AddCountry {
 	
+	int id;
+	
 	@NotEmpty(message="* Name should not empty")
 	String name;
 	
@@ -15,6 +17,12 @@ public class AddCountry {
 	
 	boolean inn;
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

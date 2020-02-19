@@ -9,17 +9,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href=".views/css/bootstrap.min.css">	
-
 <link rel="stylesheet" href="./views/css/animate.min.css">
-
 <link rel="stylesheet" href="./views/css/bootnavbar.css">
-
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
 <body>	
 	<nav class="navbar navbar-expand-lg  navbar-light bg-light ubuntu py-1 mt-2" id="main_navbar">
-		<a class="navbar-brand" href="home">REPORT REPO</a>
+		<a class="navbar-brand" href="home"><i class="fa fa-home"></i></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>

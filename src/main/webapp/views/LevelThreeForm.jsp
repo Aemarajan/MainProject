@@ -9,25 +9,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Add Level Three - Header</title>
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-    <!-- Material Design Bootstrap -->
-    <link rel="stylesheet" href="./views/css/mdb.min.css">
-    <!-- Your custom styles (optional) -->
-    <link rel="stylesheet" href="./views/css/style.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+<link rel="stylesheet" href="./views/css/bootstrap.min.css">
+<link rel="stylesheet" href="./views/css/mdb.min.css">
+<link rel="stylesheet" href="./views/css/style.css">
+
 </head>
 <body>
+<!-- Start your project here-->  
+<div>
+	<jsp:include page="Header.jsp" />
+    
     <div id="header"></div>
-    <!-- Start your project here-->  
-    <div>
-        <div class="m-2 p-auto">
-            
-            <div class="header"></div> 
-            
-            <div class="content">
+     
+    <div class="content">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col col-md-3.5"></div>
