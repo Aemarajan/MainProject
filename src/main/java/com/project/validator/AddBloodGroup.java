@@ -7,12 +7,22 @@ import com.project.customvalidator.NotEmpty;
 
 public class AddBloodGroup {
 	
+	int id;
+	
 	@NotEmpty(message="* Blood group should not empty")
 	@Size(max=3,message="* Size should be 3")
 	@Blood(message="* Blood group must contain '+' or '-' ")
 	String name;
 	
 	boolean inn;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;

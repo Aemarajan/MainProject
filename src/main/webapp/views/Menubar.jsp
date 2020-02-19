@@ -8,6 +8,7 @@
 <title>Header</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href=".views/css/bootstrap.min.css">	
 
 <link rel="stylesheet" href="./views/css/animate.min.css">
@@ -19,7 +20,7 @@
 </head>
 <body>	
 	<nav class="navbar navbar-expand-lg  navbar-light bg-light ubuntu py-1 mt-2" id="main_navbar">
-		<a class="navbar-brand" href="home">REPORT REPO</a>
+		<a class="navbar-brand" href="home"><i class="fa fa-home"></i></a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -27,7 +28,7 @@
 			<ul class="navbar-nav mr-auto">
 				<c:forEach var="lvl1s" items="${lvl1 }">
 					<c:if test="${lvl1s.dd == 1 }">
-						<li class="nav-item dropdown ml-3"><a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${lvl1s.name }</a>
+						<li class="nav-item dropdown ml-2"><a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${lvl1s.name }</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<c:forEach var="lvl2s" items="${lvl2 }">
 									<c:if test="${lvl1s.lvl1_id == lvl2s.lvl1.lvl1_id }">

@@ -9,17 +9,13 @@ pageEncoding="ISO-8859-1"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Batch Master</title>
+<title>Blood Group Master</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
-<style>
-	table.table tr th:first-child {
-		width: 200px;
-	}
-</style>
+
 </head>
 <body>
 
@@ -37,14 +33,14 @@ pageEncoding="ISO-8859-1"%>
 					<c:if test="${added != null }">
 						<div class="mt-2 alert alert-success alert-dismissible">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Batch Details added Successfully...
+							Blood Group Details are added Successfully...
 						</div>
 					</c:if>
 					
 					<c:if test="${updated != null }">
 						<div class="mt-2 alert alert-success alert-dismissible">
 							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Batch Details are Updated successfully...
+							Bloodgroup Details are Updated successfully...
 						</div>
 					</c:if>
 					
@@ -52,7 +48,7 @@ pageEncoding="ISO-8859-1"%>
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6">
-									<h2>Manage <b>Batch</b></h2>
+									<h2>Manage <b>Blood Group Master</b></h2>
 								</div>
 								<div class="col-sm-6">
 									<a href="#addModal" class="btn btn-info add-new px-3 py-2" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
@@ -64,9 +60,6 @@ pageEncoding="ISO-8859-1"%>
 							<thead>
 								<tr>
 									<th>Name</th>
-									<th>From Year</th>
-									<th>To Year</th>
-									<th>Duration</th>
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
@@ -74,17 +67,14 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td>${l.from_year } - ${l.to_year }</td>
-										<td>${l.from_year }</td>
-										<td>${l.to_year }</td>
-										<td>${l.no_of_years }</td>
+										<td>${l.name }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -95,9 +85,9 @@ pageEncoding="ISO-8859-1"%>
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveBatchMaster" method="post" modelAttribute="addBatch">
+									<s:form action="SaveBloodGroupMaster" method="post" modelAttribute="bloodgroup">
 										<div class="modal-header">						
-											<h4 class="modal-title">Add Batch</h4>
+											<h4 class="modal-title">Add Blood Group</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										
@@ -106,14 +96,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${exist != null }">
 												<div class="mt-2 alert alert-danger alert-dismissible">
 												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Batch Already exist ! 
-												</div>
-											</c:if>
-											
-											<c:if test="${invalidYear != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Invalid Batch Duration. Please Enter correct Year Values...
+													Blood Group Already exist ! 
 												</div>
 											</c:if>
 											
@@ -121,14 +104,9 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id"/>					
 											<div class="md-form mt-0">
-												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
-												<label for="From Year">From Year<span class="mandatory"> *</span></label>
-												<s:errors path="from_year" cssClass="error"></s:errors>
-											</div>											
-											<div class="md-form">
-												<s:input path="to_year" maxlength="4" cssClass="form-control"/>
-												<label for="To Year">To Year<span class="mandatory"> *</span></label>
-												<s:errors path="to_year" cssClass="error"></s:errors>
+												<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+												<label for="Name">Name<span class="mandatory"> *</span></label>
+												<s:errors path="name" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" cssClass="inn"/>
@@ -148,9 +126,9 @@ pageEncoding="ISO-8859-1"%>
 						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="EditBatch" method="post" modelAttribute="addBatch">
+									<s:form action="EditBloodGroup" method="post" modelAttribute="bloodgroup">
 										<div class="modal-header">						
-											<h4 class="modal-title">Edit Batch</h4>
+											<h4 class="modal-title">Edit BloodGroup</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
@@ -158,14 +136,13 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${exist != null }">
 												<div class="mt-2 alert alert-danger alert-dismissible">
 													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Batch Already exist !
+													Blood Group Already exist !
 												</div>
 											</c:if>
-											
-											<c:if test="${invalidYear != null }">
+											<c:if test="${existName != null }">
 												<div class="mt-2 alert alert-danger alert-dismissible">
 													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Invalid Batch Duration. Please Enter correct Year Values...
+													Blood Group Already exist !
 												</div>
 											</c:if>		
 											
@@ -173,14 +150,9 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id" id="id"/>					
 											<div class="md-form mt-0">
-												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="from_year"/>
-												<label for="From Year">From Year<span class="mandatory"> *</span></label>
-												<s:errors path="from_year" cssClass="error"></s:errors>
-											</div>
-											<div class="md-form">
-												<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="to_year"/>
-												<label for="To Year">To Year<span class="mandatory"> *</span></label>
-												<s:errors path="to_year" cssClass="error"></s:errors>
+												<s:input path="name" autofocus="autofocus" cssClass="form-control" id="name"/>
+												<label for="Name">Name<span class="mandatory"> *</span></label>
+												<s:errors path="name" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
@@ -201,14 +173,14 @@ pageEncoding="ISO-8859-1"%>
 						<div id="deleteModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<form action="DeleteBatch" method="post">
+									<form action="DeleteBloodGroup" method="post">
 										<div class="modal-header">						
-											<h4 class="modal-title">Delete Batch</h4>
+											<h4 class="modal-title">Delete BloodGroup</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
-											<div class="mt-0">
+											<div class="md-form mt-0">
 												<input id="name" class="form-control" readonly/>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>
@@ -267,13 +239,11 @@ pageEncoding="ISO-8859-1"%>
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var from = button.data('from'); 
-			var to = button.data('to');
+			var name = button.data('name');
 			var inn = button.data('inn');
 			var modal = $(this);
 			modal.find('#id').val(id);
-			modal.find('#from_year').val(from);
-			modal.find('#to_year').val(to);
+			modal.find('#name').val(name);
 			if(inn == 1)
 				modal.find('#inn').prop('checked',true);
 			else
@@ -283,11 +253,10 @@ pageEncoding="ISO-8859-1"%>
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var from = button.data('from'); 
-			var to = button.data('to');
+			var name = button.data('name');
 			var modal = $(this);
 			modal.find('#id').val(id);
-			modal.find('#name').val(from+' - '+to);
+			modal.find('#name').val(name);
 		});
 	}); 
 </script>

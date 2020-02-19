@@ -130,6 +130,8 @@ public class MasterController {
 			m.addObject("exist", "already exist");
 			return m;
 		}
+		ModelAndView mv = new ModelAndView();
+		
 		int f_year = Integer.parseInt(batch.getFrom_year());
 		int t_year = Integer.parseInt(batch.getTo_year());
 		int n_year = t_year - f_year;
@@ -141,11 +143,13 @@ public class MasterController {
 			bm.setNo_of_years(n_year);		
 			bm.setInn(batch.isInn());
 			batchService.saveBatchMaster(bm);
-			ModelAndView mv = new ModelAndView("redirect:/GetBatchMaster");
+			mv.setViewName("BatchMaster");
+			mv.addObject("list", batchService.selectAll());
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
 		m.setViewName("BatchMaster");
+		m.addObject("list", batchService.selectAll());
 		m.addObject("addError", "error");
 		m.addObject("invalidYear", "Invalid year");
 		return m;
@@ -153,26 +157,27 @@ public class MasterController {
 	
 	@PostMapping("EditBatch")
 	public ModelAndView editBatch(@Valid @ModelAttribute("addBatch")AddBatchMaster batch,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
 		if(result.hasErrors()) {
-			ModelAndView mv = new ModelAndView();
 			mv.setViewName("BatchMaster");
 			mv.addObject("list", batchService.selectAll());
 			mv.addObject("editError", "error");
 			return mv;
 		}
-		ModelAndView mv = new ModelAndView();
-		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()),batch.isInn()?1:0);
-		Batch exist1 = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()), Integer.parseInt(batch.getTo_year()));
-		if(exist != null) {
-			mv.setViewName("BatchMaster");
-			mv.addObject("list",batchService.selectAll());
-			mv.addObject("editError", "error");
-			mv.addObject("exist", "already exist");
-			return mv;
+		List<Batch> list = batchService.selectAllExceptId(batch.getId());
+		for(Batch b: list) {
+			if(b.getFrom_year() == Integer.parseInt(batch.getFrom_year()) && b.getTo_year() == Integer.parseInt(batch.getTo_year())) {
+				mv.setViewName("BatchMaster");
+				mv.addObject("list",batchService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("exist", "already exist");
+				return mv;
+			}
 		}
-		if(exist1 != null) {
+		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()),batch.isInn()?1:0);
+		if(exist != null) {
 			mv.setViewName("BatchMaster");
 			mv.addObject("list",batchService.selectAll());
 			mv.addObject("editError", "error");
@@ -187,8 +192,7 @@ public class MasterController {
 			bm.setInn(batch.isInn());
 			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
 			mv.setViewName("redirect:/GetBatchMaster");
-			mv.addObject("list", batchService.selectAll());
-			mv.addObject("updated", "Success Message");
+			mv.addObject("updated", "Success");
 			return mv;
 		}
 		mv.setViewName("BatchMaster");
@@ -236,9 +240,10 @@ public class MasterController {
 		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
 		if(list.size() != 0) {
 			ModelAndView m = new ModelAndView();
-			m.setViewName("BloodgroupMaster");
+			m.setViewName("BloodGroupMaster");
 			m.addObject("list", bloodgroupService.selectAll());
 			m.addObject("exist", "already exist");
+			m.addObject("addError", "error");
 			return m;
 		}
 		ModelAndView mv = new ModelAndView();
@@ -247,7 +252,7 @@ public class MasterController {
 		bm.setInn(blood.isInn());
 		bloodgroupService.saveBloodgroupMaster(bm);
 			
-		mv.setViewName("redirect:/GetBloodGroupMaster");
+		mv.setViewName("BloodGroupMaster");
 		mv.addObject("list", bloodgroupService.selectAll());
 		mv.addObject("added", "Success Message");
 		return mv;
@@ -267,15 +272,16 @@ public class MasterController {
 		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
 		if(list.size() != 0) {
 			ModelAndView m = new ModelAndView();
-			m.setViewName("BloodgroupMaster");
+			m.setViewName("BloodGroupMaster");
 			m.addObject("list", bloodgroupService.selectAll());
 			m.addObject("exist", "already exist");
+			m.addObject("editError", "error");
 			return m;
 		}
 		Bloodgroup bm = new Bloodgroup();
 		bm.setName(blood.getName().toUpperCase());
 		bm.setInn(blood.isInn());
-		//bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
+		bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
 		
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("BloodGroupMaster");
@@ -285,10 +291,13 @@ public class MasterController {
 	}
 	
 	@PostMapping("DeleteBloodGroup")
-	public String deleteBloodGroup(@RequestParam("id") int id,HttpSession session) {
+	public String deleteBloodGroup(@RequestParam("id") int id,@RequestParam(value="confirm",required=false)boolean confirm,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return "redirect:/logout";
-		//bloodgroupService.deleteById(id);
+		if(confirm)
+			bloodgroupService.deleteById(id);
+		else
+			bloodgroupService.updateInnZero(id);
 		return "redirect:/GetBloodGroupMaster";
 	}
 	
@@ -354,35 +363,17 @@ public class MasterController {
 			mv.setViewName("CommunityMaster");
 			return mv;
 		}
-		Community exist1 = communityService.selectByCommunity(comm.getName().toLowerCase());
-		Community exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
-		Community existAll = communityService.selectByAll(comm.getAcronym().toUpperCase(),comm.getName().toLowerCase(),comm.isInn()?1:0);
-		if(existAll != null) {
-			mv.setViewName("CommunityMaster");
-			mv.addObject("list", communityService.selectAll());
-			mv.addObject("editError", "error");
-			mv.addObject("exist", "already exist");
-			return mv;
-		}else if(exist1 != null) {
-			mv.setViewName("CommunityMaster");
-			mv.addObject("list", communityService.selectAll());
-			mv.addObject("editError", "error");
-			System.out.println("Community exist");
-			mv.addObject("existcommunity", "already exist");
-			return mv;
-		}else if(exist != null) {
-			mv.setViewName("CommunityMaster");
-			mv.addObject("list", communityService.selectAll());
-			mv.addObject("editError", "error");
-			System.out.println("Acronym exist");
-			mv.addObject("existAcronym", "already exist");
-			return mv;
-		}else {
-			communityService.updateCommunity(comm);
-			mv.setViewName("redirect:/GetCommunityMaster");
-			return mv;
-		}
+		return mv;
 	}
+	
+	@PostMapping("DeleteCommunity")
+	public String deleteCommunity(@RequestParam("id") int id,@RequestParam(value="confirm",required=false)boolean confirm,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return "redirect:/logout";
+			communityService.updateInnZero(id);
+		return "redirect:/GetBloodGroupMaster";
+	}
+	
 	
 	@GetMapping("GetCountryMaster")
 	public String getCountryMaster(HttpSession session,ModelMap model) {

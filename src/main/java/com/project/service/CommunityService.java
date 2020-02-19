@@ -86,5 +86,9 @@ public class CommunityService {
 		}
 		return null;
 	}
+
+	public void updateInnZero(int id) {
+		cmrepo.updateBatch(id, 0);
+	}
 	
 }
