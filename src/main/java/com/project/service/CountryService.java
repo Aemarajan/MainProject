@@ -30,5 +30,17 @@ public class CountryService {
 	public List<Country> selectByCountry(String country){
 		return cnrepo.findByName(country);
 	}
+
+	public void updateCountry(int id, String name, String acronym, int inn) {
+		cnrepo.updateCountry(id,name,acronym,inn);
+	}
+
+	public void deleteById(int id) {
+		cnrepo.deleteById(id);		
+	}
+
+	public void updateInnZero(int id) {
+		cnrepo.updateCountry(id,0);
+	}
 	
 }

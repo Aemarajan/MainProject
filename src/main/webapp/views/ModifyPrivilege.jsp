@@ -8,31 +8,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="./views/css/mdb.min.css">
-
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
 <body class="ubuntu">
-	
+<div>
 	<jsp:include page="Header.jsp" />
 	
 	<div id="header"></div>
 	
-	<div class="container-fluid">
-		
-		<br>
-		<h3 class="text-center">Privilege</h3>
-		<br>
+	<div class="container-fluid">	
+		<h3 class="text-center py-2">Privilege</h3>
 		
 		<form action="UpdatePrivilege" method="post">
 			
 			<div style="margin-left:40px;">
 				<h5>Username</h5>
 				<input type="hidden" name="user_id" value="${user.user_id }"/>
-				<input type="text" class="form-control" value="${user.username }" style="width:250px;" readonly />
-			</div><br>
+				<div class="md-form mt-0" style="width:265px;">
+					<input type="text" class="form-control" value="${user.username }" readonly />
+				</div>
+			</div>
 				
 			<div class="row">
 				<c:forEach var="lvl1s" items="${lvl1 }">
@@ -102,19 +99,14 @@
 				<button type="submit" class="btn btn-custom w-25">Update</button>
 			</div>
 		</form>
-		<br> <br>
 	</div>
-	
 	<jsp:include page="Footer.jsp" />
+</div>
 	
 	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
-  
   	<script type="text/javascript" src="./views/js/popper.min.js"></script>
-  
   	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-  
-  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-    
+  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>    
     <script>
 		$(document).ready(function() {
 			$('#header').load("http://localhost:8080/header");

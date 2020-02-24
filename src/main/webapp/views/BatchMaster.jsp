@@ -15,11 +15,6 @@ pageEncoding="ISO-8859-1"%>
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
-<style>
-	table.table tr th:first-child {
-		width: 200px;
-	}
-</style>
 </head>
 <body>
 

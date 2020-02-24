@@ -9,12 +9,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
-<link rel="stylesheet" href=".views/css/bootstrap.min.css">	
-
+<link rel="stylesheet" href="./views/css/bootstrap.min.css">	
 <link rel="stylesheet" href="./views/css/animate.min.css">
-
 <link rel="stylesheet" href="./views/css/bootnavbar.css">
-
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
@@ -113,20 +110,16 @@
 		</c:forEach>
 	</ul>-->
 
-	<!-- jQuery -->
-  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
-  
-  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
-  
-  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-  
-  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-  	
-    <script src="./views/js/bootnavbar.js" ></script>
-    <script>
-        $(function () {
-            $('#main_navbar').bootnavbar();
-        })
-    </script>
+<!-- jQuery -->
+<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+<script type="text/javascript" src="./views/js/popper.min.js"></script>
+<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./views/js/mdb.min.js"></script>
+<script src="./views/js/bootnavbar.js" ></script>
+<script>
+	$(function () {
+    	$('#main_navbar').bootnavbar();
+    });
+</script>
 </body>
 </html>

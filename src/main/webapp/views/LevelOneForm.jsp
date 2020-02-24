@@ -99,7 +99,9 @@
         <!-- Container Fluid -->
 	</div>
 	<!-- Content -->
-	<jsp:include page="Footer.jsp" />
+	<div class="footer">
+		<jsp:include page="Footer.jsp" />
+	</div>
 </div>
 <!-- Project End -->
 

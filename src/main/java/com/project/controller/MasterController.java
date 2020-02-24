@@ -118,7 +118,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("SaveBatchMaster")
-	public ModelAndView saveBatchMaster(@Valid @ModelAttribute("addBatch") AddBatchMaster batch,BindingResult result ,HttpSession session,ModelMap model) {
+	public ModelAndView saveBatchMaster(@Valid @ModelAttribute("addBatch") AddBatchMaster batch,BindingResult result ,HttpSession session) {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
@@ -199,8 +199,9 @@ public class MasterController {
 			Batch bm = new Batch();		
 			bm.setInn(batch.isInn());
 			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
-			mv.setViewName("redirect:/GetBatchMaster");
+			mv.setViewName("BatchMaster");
 			mv.addObject("updated", "Success");
+			mv.addObject("list",batchService.selectAll());
 			return mv;
 		}
 		mv.setViewName("BatchMaster");
@@ -418,8 +419,7 @@ public class MasterController {
 	public ModelAndView getCountryMaster(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			mv.setViewName("redirect:/logout");
-			return mv;
+			return new ModelAndView("redirect:/logout");	
 		}
 		mv.setViewName("CountryMaster");
 		mv.addObject("country", new AddCountry());
@@ -428,24 +428,31 @@ public class MasterController {
 	
 	@PostMapping("SaveCountryMaster")
 	public ModelAndView saveCountryMaster(@Valid @ModelAttribute("country")AddCountry country,BindingResult result,HttpSession session,ModelMap model) {
-		if(result.hasErrors()) {
-			return new ModelAndView("CountryMaster");
-		}
-		
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
-		ModelAndView mv = new ModelAndView("CountryMaster");
+		if(result.hasErrors()) {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("CountryMaster");
+			mv.addObject("exist", "already exist");
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		ModelAndView mv = new ModelAndView();
 		List<Country> exist1 = countryService.selectByCountry(country.getName().toLowerCase());
 		for(Country c: exist1) {
 			if(country.getName().equalsIgnoreCase(c.getName())) {
-				mv.addObject("existcountry", "already exist");
+				mv.setViewName("CountryMaster");
+				mv.addObject("exist", "already exist");
+				mv.addObject("addError", "error");
 				return mv;
 			}
 		}
 		List<Country> exist = countryService.selectByAcronym(country.getAcronym().toUpperCase());
 		if(exist.size() != 0) {
+			mv.setViewName("CountryMaster");
 			mv.addObject("exist", "already exist");
+			mv.addObject("addError", "error");;
 			return mv;
 		}
 		Country cn = new Country();
@@ -453,9 +460,57 @@ public class MasterController {
 		cn.setAcronym(country.getAcronym().toUpperCase());
 		cn.setInn(country.isInn());
 		countryService.saveCountryMaster(cn);
-			
+		
+		mv.setViewName("CountryMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
+	}
+	
+	public ModelAndView editCountry(@Valid @ModelAttribute("country")AddCountry country,BindingResult result,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return new ModelAndView("redirect:/logout");
+		if(result.hasErrors()) {
+			ModelAndView mv = new ModelAndView();
+			mv.setViewName("CountryMaster");
+			mv.addObject("list", countryService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		ModelAndView mv = new ModelAndView();
+		List<Country> list1 = countryService.selectByCountry(country.getName().toLowerCase());
+		for(Country c: list1) {
+			if(country.getName().equalsIgnoreCase(c.getName())) {
+				mv.setViewName("CountryMaster");
+				mv.addObject("exist", "already exist");
+				mv.addObject("addError", "error");
+				return mv;
+			}
+		}
+		List<Country> list2 = countryService.selectByAcronym(country.getAcronym().toUpperCase());
+		if(list2.size() != 0) {
+			mv.setViewName("CountryMaster");
+			mv.addObject("exist", "already exist");
+			mv.addObject("addError", "error");;
+			return mv;
+		}
+		Country cn = new Country();
+		cn.setName(country.getName().toLowerCase());
+		cn.setAcronym(country.getAcronym().toUpperCase());
+		cn.setInn(country.isInn());
+		countryService.updateCountry(country.getId(),country.getName(),country.getAcronym(),cn.getInn());
+		
+		mv.setViewName("CountryMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("DeleteCountry")
+	public String deleteCountry(@RequestParam("id") int id,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return "redirect:/logout";
+		
+		countryService.updateInnZero(id);
+		return "redirect:/GetCountryMaster";
 	}
 	
 	@GetMapping("GetDegreeMaster")
