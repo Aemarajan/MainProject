@@ -99,14 +99,22 @@ public class MasterController {
 	ReligionService religionService;
 	
 	@GetMapping("GetBatchMaster")
-	public ModelAndView getBatchMaster(HttpSession session) {
+	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			return mv;
 		}
-		ModelAndView model = new ModelAndView("BatchMaster");
-		model.addObject("list", batchService.selectAll());
-		model.addObject("addBatch", new AddBatchMaster());
-		return model;
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.addObject("list", batchService.selectAll());
+		mv.addObject("addBatch", new AddBatchMaster());
+		mv.setViewName("BatchMaster");
+		return mv;
 	}
 	
 	@PostMapping("SaveBatchMaster")
@@ -204,11 +212,16 @@ public class MasterController {
 	}
 	
 	@PostMapping("DeleteBatch")
-	public String deleteBatch(@RequestParam("id") int id,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return "redirect:/logout";
+	public ModelAndView deleteBatch(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			return mv;
+		}
 		batchService.updateInnZero(id);
-		return "redirect:/GetBatchMaster";
+		mv.setViewName("redirect:/GetBatchMaster");
+		mv.addObject("deleted", "success");
+		return mv;
 	}
 	
 	@GetMapping("GetBloodGroupMaster")
@@ -225,28 +238,29 @@ public class MasterController {
 	
 	@PostMapping("SaveBloodGroupMaster")
 	public ModelAndView saveBloodgroupMaster(@Valid @ModelAttribute("bloodgroup") AddBloodGroup blood,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			return mv;
 		}
 		if(result.hasErrors()) {
-			ModelAndView m = new ModelAndView();
-			m.setViewName("BloodGroupMaster");
-			m.addObject("list", bloodgroupService.selectAll());
-			m.addObject("addError", "error");
-			return  m;
+			mv.setViewName("BloodGroupMaster");
+			mv.addObject("list", bloodgroupService.selectAll());
+			mv.addObject("addError", "error");
+			return  mv;
 		}
-		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
-		if(list.size() != 0) {
-			ModelAndView m = new ModelAndView();
-			m.setViewName("BloodGroupMaster");
-			m.addObject("list", bloodgroupService.selectAll());
-			m.addObject("exist", "already exist");
-			m.addObject("addError", "error");
-			return m;
+		List<Bloodgroup> list = bloodgroupService.selectAll();
+		for(Bloodgroup b : list) {
+			if(b.getName().contentEquals(blood.getName())) {
+				mv.setViewName("BloodGroupMaster");
+				mv.addObject("list", bloodgroupService.selectAll());
+				mv.addObject("exist", "error");
+				mv.addObject("addError", "error");
+				return  mv;
+			}
 		}
-		ModelAndView mv = new ModelAndView();
 		Bloodgroup bm = new Bloodgroup();
-		bm.setName(blood.getName().toUpperCase());
+		bm.setName((blood.getName().toUpperCase()).replaceAll("\\s", ""));
 		bm.setInn(blood.isInn());
 		bloodgroupService.saveBloodgroupMaster(bm);
 			
@@ -258,52 +272,59 @@ public class MasterController {
 	
 	@PostMapping("EditBloodGroup")
 	public ModelAndView editBloodGroup(@Valid @ModelAttribute("bloodgroup")AddBloodGroup blood,BindingResult result,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			return mv;
+		}
 		if(result.hasErrors()) {
-			ModelAndView mv = new ModelAndView();
 			mv.setViewName("BloodGroupMaster");
 			mv.addObject("list", bloodgroupService.selectAll());
 			mv.addObject("editError", "error");
 			return mv;
 		}
-		List<Bloodgroup> list = bloodgroupService.selectByName(blood.getName().toUpperCase());
-		if(list.size() != 0) {
-			ModelAndView m = new ModelAndView();
-			m.setViewName("BloodGroupMaster");
-			m.addObject("list", bloodgroupService.selectAll());
-			m.addObject("exist", "already exist");
-			m.addObject("editError", "error");
-			return m;
+		List<Bloodgroup> list = bloodgroupService.selectAllExceptId(blood.getId());
+		for(Bloodgroup b : list) {
+			if(b.getName().equalsIgnoreCase(blood.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("BloodGroupMaster");
+				mv.addObject("list", bloodgroupService.selectAll());
+				mv.addObject("exist", "error");
+				mv.addObject("editError", "error");
+				return mv;			
+			}
 		}
-		Bloodgroup bm = new Bloodgroup();
-		bm.setName(blood.getName().toUpperCase());
-		bm.setInn(blood.isInn());
-		bloodgroupService.updateBloodgroup(blood.getId(),blood.getName(),bm.getInn());
-		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("BloodGroupMaster");
-		mv.addObject("list", bloodgroupService.selectAll());
+		bloodgroupService.updateBloodgroup(blood.getId(), blood.getName().toUpperCase().replaceAll("\\s", ""), blood.isInn()?1:0);
+		mv.setViewName("redirect:/GetBloodGroupMaster");
 		mv.addObject("updated", "Success Message");
 		return mv;
 	}
 	
 	@PostMapping("DeleteBloodGroup")
-	public String deleteBloodGroup(@RequestParam("id") int id,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return "redirect:/logout";
-		
+	public ModelAndView deleteBloodGroup(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			return mv;
+		}
 		bloodgroupService.updateInnZero(id);
-		return "redirect:/GetBloodGroupMaster";
+		mv.setViewName("redirect:/GetBloodGroupMaster");
+		mv.addObject("deleted", "success");
+		return mv;
 	}
 	
 	@GetMapping("GetCommunityMaster")
-	public String getCommunityMaster(HttpSession session,ModelMap model) {
+	public String getCommunityMaster(@RequestParam(value="updated",required=false)String update,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,ModelMap model) {
 		if(session.getAttribute("id") == null) {
 			return "redirect:/logout";
 		}
 		model.addAttribute("list", communityService.selectAll());
 		model.addAttribute("community", new AddCommunity());
+		if(!(update == null))
+			model.addAttribute("updated", "success");
+		if(!(added == null))
+			model.addAttribute("added", "success");
+		if(!(deleted == null))
+			model.addAttribute("deleted", "success");
 		return "CommunityMaster";
 	}
 	
@@ -359,27 +380,50 @@ public class MasterController {
 			mv.setViewName("CommunityMaster");
 			return mv;
 		}
+		List<Community> list = communityService.selectAllExceptId(comm.getId());
+		for(Community c : list) {
+			if(c.getName().equalsIgnoreCase(comm.getName())) {
+				mv.addObject("editError", "error");
+				mv.addObject("list", communityService.selectAll());
+				mv.addObject("existcommunity","error");
+				mv.setViewName("CommunityMaster");
+				return mv;
+			}else if(c.getAcronym().equalsIgnoreCase(comm.getAcronym())) {
+				mv.addObject("editError", "error");
+				mv.addObject("list", communityService.selectAll());
+				mv.addObject("existAcronym","error");
+				mv.setViewName("CommunityMaster");
+				return mv;
+			}
+		}
+		communityService.updateCommunity(comm);
+		mv.setViewName("redirect:/GetCommunityMaster");
+		mv.addObject("updated", "success");
 		return mv;
 	}
 	
 	@PostMapping("DeleteCommunity")
-	public String deleteCommunity(@RequestParam("id") int id,@RequestParam(value="confirm",required=false)boolean confirm,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return "redirect:/logout";
-		
+	public ModelAndView deleteCommunity(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			return mv;
+		}
+		mv.setViewName("redirect:/GetCommunityMaster");
 		communityService.updateInnZero(id);
-		return "redirect:/GetBloodGroupMaster";
+		mv.addObject("deleted", "success");
+		return mv;
 	}
 	
 	@GetMapping("GetCountryMaster")
 	public ModelAndView getCountryMaster(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			return new ModelAndView("redirect:/logout");	
 		}
-		ModelAndView model = new ModelAndView("CountryMaster");
-		model.addObject("list", countryService.selectAll());
-		model.addObject("country", new AddCountry());
-		return model;
+		mv.setViewName("CountryMaster");
+		mv.addObject("country", new AddCountry());
+		return mv;
 	}
 	
 	@PostMapping("SaveCountryMaster")

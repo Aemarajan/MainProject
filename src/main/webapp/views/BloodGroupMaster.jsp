@@ -138,12 +138,6 @@ pageEncoding="ISO-8859-1"%>
 													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 													Blood Group Already exist !
 												</div>
-											</c:if>
-											<c:if test="${existName != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Blood Group Already exist !
-												</div>
 											</c:if>		
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>

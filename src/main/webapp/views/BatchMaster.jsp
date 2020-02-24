@@ -43,6 +43,13 @@ pageEncoding="ISO-8859-1"%>
 						</div>
 					</c:if>
 					
+					<c:if test="${deleted != null }">
+						<div class="mt-2 alert alert-success alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							Batch In activated successfully...
+						</div>
+					</c:if>
+					
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
@@ -207,7 +214,6 @@ pageEncoding="ISO-8859-1"%>
 												<input id="name" class="form-control" readonly/>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>
-											<input type="checkbox" name="confirm" /><label class="permanent-delete">Delete this record permanently?</label>
 											<p class="text-warning"><small>This action cannot be undone.</small></p>
 										</div>
 										<div class="modal-footer">
