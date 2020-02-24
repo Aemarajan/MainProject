@@ -23,12 +23,13 @@
     
 	<div class="content">
     	<div class="container-fluid">
-        	<div class="row">
+        	<div class="row mt-2 mb-2">
             	<div class="col col-md-3.5"></div>
-            	<div class="col col-md-5 mt-2 mb-2">
+            	<div class="col col-md-5">
               		<div class="card">
                 		<div class="card-head white-text text-center py-2 ubuntu">
-                  		<strong><h3 class="d-flex justify-content-end mr-5">ADD</h3><h4 class="d-flex justify-content-start ml-5">Level Two</h4></strong>
+                  			<h4 class="d-flex justify-content-end mr-5">ADD</h4>
+                  			<h5 class="d-flex justify-content-start ml-5">Level Two</h5>
                 		</div>
                 		
                 		<div class="card-body px-lg-5 pt-0 open-sans">
@@ -54,7 +55,8 @@
 									</div>
 								</c:if>
 			                    
-			                    <label class="d-flex justify-content-start mandatory mandatory-text mt-2">* must be filled</label>
+			                    <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
+			                    
 			                    <div class="mt-2">
 			                      <label class="d-flex justify-content-start">Level One <span class="mandatory pl-1"> *</span></label>
 			                      <s:select path="lvl1" cssClass="browser-default custom-select" id="lvl1" />

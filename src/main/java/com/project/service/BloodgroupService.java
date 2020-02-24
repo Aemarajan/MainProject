@@ -39,4 +39,5 @@ public class BloodgroupService {
 	public void updateInnZero(int id) {
 		bgmrepo.updateBloodgroup(id,0);
 	}
+	
 }

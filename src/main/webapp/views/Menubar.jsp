@@ -8,7 +8,8 @@
 <title>Header</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="stylesheet" href=".views/css/bootstrap.min.css">	
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
+<link rel="stylesheet" href="./views/css/bootstrap.min.css">	
 <link rel="stylesheet" href="./views/css/animate.min.css">
 <link rel="stylesheet" href="./views/css/bootnavbar.css">
 <link rel="stylesheet" href="./views/css/style.css">
@@ -24,7 +25,7 @@
 			<ul class="navbar-nav mr-auto">
 				<c:forEach var="lvl1s" items="${lvl1 }">
 					<c:if test="${lvl1s.dd == 1 }">
-						<li class="nav-item dropdown ml-3"><a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${lvl1s.name }</a>
+						<li class="nav-item dropdown ml-2"><a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${lvl1s.name }</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<c:forEach var="lvl2s" items="${lvl2 }">
 									<c:if test="${lvl1s.lvl1_id == lvl2s.lvl1.lvl1_id }">
@@ -109,20 +110,16 @@
 		</c:forEach>
 	</ul>-->
 
-	<!-- jQuery -->
-  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
-  
-  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
-  
-  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-  
-  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-  	
-    <script src="./views/js/bootnavbar.js" ></script>
-    <script>
-        $(function () {
-            $('#main_navbar').bootnavbar();
-        })
-    </script>
+<!-- jQuery -->
+<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+<script type="text/javascript" src="./views/js/popper.min.js"></script>
+<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./views/js/mdb.min.js"></script>
+<script src="./views/js/bootnavbar.js" ></script>
+<script>
+	$(function () {
+    	$('#main_navbar').bootnavbar();
+    });
+</script>
 </body>
 </html>

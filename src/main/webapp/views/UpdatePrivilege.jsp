@@ -35,14 +35,14 @@
 							<form style="color: #757575;" action="getUserPrivilege" method="post">
 										
 								<c:if test="${success != null }">
-									<div class="alert alert-success alert-dismissible">
+									<div class="mt-2 alert alert-success alert-dismissible">
 										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 											<strong>Privilege Updated</strong>
 									</div>
 								</c:if>
 										
 								<c:if test="${error != null }">
-									<div class="alert alert-success alert-dismissible">
+									<div class="mt-2 alert alert-success alert-dismissible">
 										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 										<strong>Update Error. Please try again.</strong>
 									</div>
@@ -50,11 +50,11 @@
 								
 								<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be selected</label>
 										
-								<div class="md-form">
+								<div class="md-form mt-0">
                       				<label><strong>User</strong><span class="mandatory"> *</span></label>
                     			</div><br>
 										
-								<div class="md-form">
+								<div class="md-form mt-0">
 									<select name="user_id" class="browser-default custom-select">
 										<option selected disabled>-- Select --</option>
 											<c:forEach items="${list }" var="user">

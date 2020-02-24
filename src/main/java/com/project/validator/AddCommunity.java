@@ -6,15 +6,24 @@ import com.project.customvalidator.NotEmpty;
 
 public class AddCommunity {
 	
+	int id;
+	
 	@NotEmpty(message="* Name should not empty")
 	String name;
 	
 	@NotEmpty(message="* Acronym should not empty")
-	@Size(max=3,min=2,message="* Size between 2 to 3")
+	@Size(max=3,min=2,message="* Size between 2 and 3")
 	String acronym;
 	
 	boolean inn;
 	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

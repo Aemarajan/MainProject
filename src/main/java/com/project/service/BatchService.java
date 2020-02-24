@@ -70,4 +70,8 @@ public class BatchService {
 	public void updateInnZero(int id) {
 		bmrepo.updateBatch(id,0);
 	}
+
+	public List<Batch> selectAllExceptId(int id) {
+		return bmrepo.findAllExceptId(id);
+	}
 }

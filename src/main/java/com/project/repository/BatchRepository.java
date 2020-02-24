@@ -27,4 +27,10 @@ public interface BatchRepository extends JpaRepository<Batch, Integer>{
 	@Modifying
 	@Query(value="UPDATE batch_master SET inn=:inn WHERE id=:id",nativeQuery=true)
 	void updateBatch(@Param("id")int id,@Param("inn")int inn);
+
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM batch_master WHERE id!=:id",nativeQuery=true)
+	List<Batch> findAllExceptId(int id);
+	
 }

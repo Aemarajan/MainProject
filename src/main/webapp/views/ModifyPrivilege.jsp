@@ -19,14 +19,16 @@
 	<div id="header"></div>
 	
 	<div class="container-fluid">	
-		<h3 class="text-center py-3">Privilege</h3>
+		<h3 class="text-center py-2">Privilege</h3>
 		
 		<form action="UpdatePrivilege" method="post">
 			
 			<div style="margin-left:40px;">
 				<h5>Username</h5>
 				<input type="hidden" name="user_id" value="${user.user_id }"/>
-				<input type="text" class="form-control" value="${user.username }" style="width:200px;" readonly />
+				<div class="md-form mt-0" style="width:265px;">
+					<input type="text" class="form-control" value="${user.username }" readonly />
+				</div>
 			</div>
 				
 			<div class="row">

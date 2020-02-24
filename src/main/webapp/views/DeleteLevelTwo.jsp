@@ -23,15 +23,13 @@
 		
 		<div class="content">
 			<div class="container-fluid">
-	        	<div class="row">
+	        	<div class="row  mt-2 mb-2">
 	            	<div class="col col-md-3.5"></div>
-	            	<div class="col col-md-5 mt-2 mb-2">
+	            	<div class="col col-md-5">
 	              		<div class="card">
 	                		<div class="card-head white-text text-center py-2 ubuntu">
-	                  			<strong>
-	                  				<h3 class="d-flex justify-content-end mr-5">DELETE</h3>
-	                  				<h4 class="d-flex justify-content-start ml-5">Level Two</h4>
-	                  			</strong>
+	                  				<h4 class="d-flex justify-content-end mr-5">DELETE</h4>
+	                  				<h5 class="d-flex justify-content-start ml-5">Level Two</h5>
 	                		</div>
 	                	
 	                	<div class="card-body px-lg-5 pt-0 open-sans">
@@ -39,11 +37,11 @@
 	                  		<s:form style="color: #757575;" action="deleteLevelTwo" modelAttribute="deleteLevelTwo">
 	                  			<c:if test="${delete != null }">
 									<div class="mt-2 alert alert-danger alert-dismissible">
-									<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-									Level Two Header deleted successfully.
-								</div>
+										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+										Level Two Header deleted successfully.
+									</div>
 								</c:if>
-			                    <label class="d-flex justify-content-start mandatory mandatory-text mt-2">* must be filled</label>
+			                    <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be Selected</label>
 			                    
 			                    <div class="mt-3">
 			                      <s:label path="lvl1" cssClass="d-flex justify-content-start"> Level One <span class="mandatory pl-1"> *</span></s:label>
@@ -76,7 +74,9 @@
 	        <!-- container fluid -->
 	      </div>
 	      <!-- Content -->
-	  	<jsp:include page="Footer.jsp" />
+	    <div class="footer">
+	    	<jsp:include page="Footer.jsp" /> 
+	    </div>
 	</div>
 	<!-- Project Ends Here -->
   

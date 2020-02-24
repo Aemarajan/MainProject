@@ -24,15 +24,13 @@
 		
 		<div class="content">
 	    	<div class="container-fluid">
-	        	<div class="row">
+	        	<div class="row  mt-2 mb-2">
 	            	<div class="col col-md-3.5"></div>
-	            	<div class="col col-md-5 mt-2 mb-2">
+	            	<div class="col col-md-5">
 	              		<div class="card">
 	                		<div class="card-head white-text text-center py-2 ubuntu">
-	                  			<strong>
-	                  				<h3 class="d-flex justify-content-end mr-5">DELETE</h3>
-	                  				<h4 class="d-flex justify-content-start ml-5">Level One</h4>
-	                  			</strong>
+	                  			<h4 class="d-flex justify-content-end mr-5">DELETE</h4>
+	                  			<h5 class="d-flex justify-content-start ml-5">Level One</h5>
 	                		</div>
 	              
 	                		<div class="card-body px-lg-5 pt-0 open-sans">
@@ -44,7 +42,7 @@
 										</div>
 									</c:if>
 				                   	
-				                   	<label class="d-flex justify-content-start mandatory mandatory-text mt-2">* must be filled</label>
+				                   	<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be selected</label>
 				                   	
 				                   	<div class="mt-3">
 				                   		<label class="d-flex justify-content-start">Level One <span class="mandatory pl-1"> *</span></label>
@@ -70,8 +68,9 @@
 	        <!-- Container fluid -->
 	    </div>
 	    <!-- content -->
-		
-		<jsp:include page="Footer.jsp" />
+		<div class="footer">
+			<jsp:include page="Footer.jsp" />
+		</div>
 	</div>
 	<!-- Project Ends here-->
   

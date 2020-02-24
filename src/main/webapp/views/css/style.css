@@ -118,9 +118,6 @@ input:-webkit-autofill {
 	table.table thead tr th{
 		font-weight:bold;
 	}
-	table.table tr th:first-child {
-		width: 200px;
-	}
 	table.table tr th:last-child {
 		width: 100px;
 	}
