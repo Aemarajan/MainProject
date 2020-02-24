@@ -31,5 +31,10 @@ public interface CommunityRepository extends JpaRepository<Community, Integer>{
 	@Modifying
 	@Query(value="UPDATE community_master SET inn=:inn WHERE id=:id",nativeQuery=true)
 	void updateBatch(@Param("id")int id,@Param("inn")int inn);
+	
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM community_master WHERE id!=:id",nativeQuery=true)
+	List<Community> findAllExceptId(int id);
 
 }

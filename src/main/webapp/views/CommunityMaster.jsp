@@ -31,23 +31,33 @@ pageEncoding="ISO-8859-1"%>
 	
 	<div class="content">  
 		<div id="header"></div>
-		
+				
 		<div class="container-fluid">
 			<div class="row">
-				
 				<div class="col col-md-1"></div>
 					
 				<div class="col col-md-10">
+					<c:if test="${added != null }">
+						<div class="mt-1 alert alert-success alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							Community added Successfully...
+						</div>
+					</c:if>
+					<c:if test="${updated != null }">
+						<div class="mt-1 alert alert-success alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							Community Updated Successfully...
+						</div>
+					</c:if>
+					<c:if test="${deleted != null }">
+						<div class="mt-1 alert alert-success alert-dismissible">
+							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+							Community In Activated Successfully...
+						</div>
+					</c:if>
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
-								
-								<c:if test="${added != null }">
-									<div class="mt-1 alert alert-success alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-										Community added Successfully...
-									</div>
-								</c:if>
 								
 								<div class="col-sm-6">
 									<h2>Manage <b>Community</b></h2>
@@ -70,7 +80,7 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td>${l.name }</td>
+										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
@@ -159,12 +169,6 @@ pageEncoding="ISO-8859-1"%>
 												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 													Community already exist. Please try another name.
 												</div>
-											</c:if>
-											<c:if test="${exist != null }">
-												<div class="mt-1 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Community already exist.
-												</div>
 											</c:if>	
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
@@ -199,7 +203,7 @@ pageEncoding="ISO-8859-1"%>
 						<div id="deleteModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<form action="DeleteBatch" method="post">
+									<form action="DeleteCommunity" method="post">
 										<div class="modal-header">						
 											<h4 class="modal-title">Delete Community</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -210,7 +214,6 @@ pageEncoding="ISO-8859-1"%>
 												<input id="name" class="form-control" readonly disabled/>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>
-											<input type="checkbox" name="confirm" /><label class="permanent-delete">Delete this record permanently?</label>
 											<p class="text-warning"><small>This action cannot be undone.</small></p>
 										</div>
 										<div class="modal-footer">

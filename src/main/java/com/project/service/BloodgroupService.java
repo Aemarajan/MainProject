@@ -39,5 +39,9 @@ public class BloodgroupService {
 	public void updateInnZero(int id) {
 		bgmrepo.updateBloodgroup(id,0);
 	}
+
+	public List<Bloodgroup> selectAllExceptId(int id) {
+		return bgmrepo.findAllExceptId(id);
+	}
 	
 }
