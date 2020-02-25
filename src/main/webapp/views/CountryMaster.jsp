@@ -26,23 +26,52 @@ pageEncoding="ISO-8859-1"%>
 	<div class="content">  
 		<div id="header"></div>
 		
+		<c:if test="${updated != null }">
+			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
+				<div class="toast-header white-text bg-warning pt-2">
+					<h5 class="mr-auto">Notification</h5>
+				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+				      	<span aria-hidden="true">&times;</span>
+				    </button>
+				</div>
+				<div class="toast-body py-2">
+            		<div>Updated Successfully.</div>
+        		</div>
+			</div>
+		</c:if>
+		
+		<c:if test="${added != null }">
+			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
+				<div class="toast-header white-text pt-2 bg-success">
+					<h5 class="mr-auto">Notification</h5>
+				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+				      	<span aria-hidden="true">&times;</span>
+				    </button>
+				</div>
+				<div class="toast-body py-2">
+            		<div>Updated Successfully.</div>
+        		</div>
+			</div>
+		</c:if>
+		
+		<c:if test="${deleted != null }">
+			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
+				<div class="toast-header white-text bg-danger pt-2">
+					<h5 class="mr-auto">Notification</h5>
+				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+				      	<span aria-hidden="true">&times;</span>
+				    </button>
+				</div>
+				<div class="toast-body py-2">
+            		<div>Deactivated Successfully.</div>
+        		</div>
+			</div>
+		</c:if>
+		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col col-md-1"></div>
 				<div class="col col-md-10">
-					<c:if test="${added != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Country Details are added Successfully...
-						</div>
-					</c:if>
-					
-					<c:if test="${updated != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Country Details are Updated successfully...
-						</div>
-					</c:if>
 					
 					<div class="table-wrapper">
 						<div class="table-title">
@@ -75,8 +104,8 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.name }" data-to="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -95,10 +124,17 @@ pageEncoding="ISO-8859-1"%>
 										
 										<div class="modal-body">
 											
-											<c:if test="${exist != null }">
+											<c:if test="${existAcronym != null }">
 												<div class="mt-2 alert alert-danger alert-dismissible">
 												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Country Already exist ! 
+													Acronym Already exist ! 
+												</div>
+											</c:if>
+											
+											<c:if test="${existCountry != null }">
+												<div class="mt-2 alert alert-danger alert-dismissible">
+												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+													Country Name Already exist ! 
 												</div>
 											</c:if>
 											
@@ -140,10 +176,18 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${exist != null }">
+											
+											<c:if test="${existAcronym != null }">
 												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Country Already exist !
+												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+													Acronym Already exist ! 
+												</div>
+											</c:if>
+											
+											<c:if test="${existCountry != null }">
+												<div class="mt-2 alert alert-danger alert-dismissible">
+												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+													Country Name Already exist ! 
 												</div>
 											</c:if>
 											
@@ -156,12 +200,12 @@ pageEncoding="ISO-8859-1"%>
 												<s:errors path="name" cssClass="error"></s:errors>
 											</div>											
 											<div class="md-form">
-												<s:input path="acronym" id="acronym" maxlength="3" cssClass="form-control"/>
+												<s:input path="acronym" id="acronym" maxlength="3" autofocus="autofocus" cssClass="form-control"/>
 												<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
 												<s:errors path="acronym" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
-												<s:checkbox path="inn" cssClass="inn"/>
+												<s:checkbox path="inn" id="inn"/>
 												<label>In use</label>
 											</div>								
 										</div>
@@ -186,11 +230,10 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
-											<div class="md-form mt-0">
+											<div class="mt-0">
 												<input id="name" class="form-control" readonly/>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>
-											<input type="checkbox" name="confirm" /><label class="permanent-delete">Delete this record permanently?</label>
 											<p class="text-warning"><small>This action cannot be undone.</small></p>
 										</div>
 										<div class="modal-footer">
@@ -246,8 +289,8 @@ pageEncoding="ISO-8859-1"%>
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name'); 
-			var acronym = button.data('to');
-			var inn = button.data('inn'acronym;
+			var acronym = button.data('acronym');
+			var inn = button.data('inn');
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -266,6 +309,10 @@ pageEncoding="ISO-8859-1"%>
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
 		});
+		$('#myToast').toast({
+			delay:6000
+		});
+		$('#myToast').toast('show');
 	}); 
 </script>
 </body>

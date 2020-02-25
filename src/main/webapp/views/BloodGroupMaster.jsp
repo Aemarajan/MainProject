@@ -174,7 +174,7 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
-											<div class="md-form mt-0">
+											<div class="mt-0">
 												<input id="name" class="form-control" readonly/>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>

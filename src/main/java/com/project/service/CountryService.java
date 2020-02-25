@@ -14,7 +14,11 @@ public class CountryService {
 	@Autowired
 	CountryRepository cnrepo;
 	
-	public void saveCountryMaster(Country cn) {
+	public void saveCountryMaster(String name,String acronym,boolean inn) {
+		Country cn = new Country();
+		cn.setName(name);
+		cn.setAcronym(acronym);
+		cn.setInn(inn);
 		cnrepo.save(cn);
 	}
 	
@@ -41,6 +45,10 @@ public class CountryService {
 
 	public void updateInnZero(int id) {
 		cnrepo.updateCountry(id,0);
+	}
+
+	public List<Country> selectAllExceptId(int id) {
+		return cnrepo.findAllExceptId(id);
 	}
 	
 }
