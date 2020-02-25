@@ -23,9 +23,9 @@ pageEncoding="ISO-8859-1"%>
 <div>
 	<jsp:include page="Header.jsp" />
 	
+	<div id="header"></div>
+	
 	<div class="content">  
-		<div id="header"></div>
-		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col col-md-1"></div>
@@ -75,8 +75,8 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.name }" data-to="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-from="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -247,7 +247,7 @@ pageEncoding="ISO-8859-1"%>
 			var id = button.data('id');
 			var name = button.data('name'); 
 			var acronym = button.data('to');
-			var inn = button.data('inn'acronym;
+			var inn = button.data('inn');
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
