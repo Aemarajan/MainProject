@@ -29,32 +29,14 @@ pageEncoding="ISO-8859-1"%>
 <div>
 	<jsp:include page="Header.jsp" />
 	
+	<div id="header"></div>
+	
 	<div class="content">  
-		<div id="header"></div>
-				
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col col-md-1"></div>
 					
 				<div class="col col-md-10">
-					<c:if test="${added != null }">
-						<div class="mt-1 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Community added Successfully...
-						</div>
-					</c:if>
-					<c:if test="${updated != null }">
-						<div class="mt-1 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Community Updated Successfully...
-						</div>
-					</c:if>
-					<c:if test="${deleted != null }">
-						<div class="mt-1 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Community In Activated Successfully...
-						</div>
-					</c:if>
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
@@ -84,7 +66,7 @@ pageEncoding="ISO-8859-1"%>
 										<td>${l.acronym }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
-											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
+											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  Inactive</span></c:if>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
@@ -104,19 +86,35 @@ pageEncoding="ISO-8859-1"%>
 											<h4 class="modal-title">Add Community</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
-										
 										<div class="modal-body">
 											
 											<c:if test="${existAcronym != null }">
-												<div class="mt-1 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Acronym already exist. Please try another acronym.
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Acronym Already Exist, Enter New Acronym...</div>
+													</div>
 												</div>
 											</c:if>
-											<c:if test="${existcommunity != null }">
-												<div class="mt-1 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Community already exist. Please try another name.
+											
+											<c:if test="${existCommunity != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Community Already Exist, Enter New Community...</div>
+													</div>
 												</div>
 											</c:if>
 										
@@ -158,16 +156,33 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${existAcronym != null }">
-												<div class="mt-1 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Acronym already exist. Please try another acronym.
+											<c:if test="${editExistAcronym != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Acronym Already Exist, Enter New Acronym...</div>
+													</div>
 												</div>
 											</c:if>
-											<c:if test="${existcommunity != null }">
-												<div class="mt-1 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Community already exist. Please try another name.
+											
+											<c:if test="${editExistCommunity != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Community Already Exist, Enter New Community...</div>
+													</div>
 												</div>
 											</c:if>	
 											
@@ -210,11 +225,11 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
-											<div class="mt-0">
-												<input id="name" class="form-control" readonly disabled/>
+											<div class="md-form mt-0">
+												<input id="name" autofocus="autofocus" class="form-control" readonly/>
+												<label for="Name">Name</label>
 											</div>
 											<p>Are you sure you want to delete these Records?</p>
-											<p class="text-warning"><small>This action cannot be undone.</small></p>
 										</div>
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -229,15 +244,62 @@ pageEncoding="ISO-8859-1"%>
 					<!-- Table wrapper -->
 				</div>
 				<!-- col-md-10 -->
-				
 				<div class="col col-md-1"></div>
-			
 			</div>
 			<!-- Row -->
 		</div>
 		<!-- Container Fluid -->
 	</div>
 	<!-- Content -->
+	
+	<c:if test="${added != null }">
+		<div class="toast" id="Toast" 
+			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Community Details are Added Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${updated != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-warning pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Community Details are Updated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${deleted != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-danger pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Community Deactivated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+	
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
@@ -259,11 +321,8 @@ pageEncoding="ISO-8859-1"%>
 
 <!-- jQuery -->
 <script type="text/javascript" src="./views/js/jquery.min.js"></script>
-
 <script type="text/javascript" src="./views/js/popper.min.js"></script>
-
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
 
 <script type="text/javascript">
@@ -280,6 +339,7 @@ pageEncoding="ISO-8859-1"%>
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
 			modal.find('#acronym').val(acronym);
+			modal.find('#inn').val(inn);
 			if(inn == 1)
 				modal.find('#inn').prop('checked',true);
 			else
@@ -294,8 +354,12 @@ pageEncoding="ISO-8859-1"%>
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
-			modal.find('#acronym').val(acronym);
 		});
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
 	}); 
 </script>
 </body>

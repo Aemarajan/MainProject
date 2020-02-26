@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -59,7 +60,7 @@ public class HeaderController {
 	@Autowired
 	UserService userService;
 
-	@RequestMapping("LevelOneForm")
+	@GetMapping("LevelOneForm")
 	public String getLevelOne(HttpSession session,ModelMap model) {
 		if (session.getAttribute("id") != null) {
 			model.addAttribute("levelOne", new AddLevelOne());
@@ -70,7 +71,7 @@ public class HeaderController {
 		}
 	}
 
-	@RequestMapping("LevelTwoForm")
+	@GetMapping("LevelTwoForm")
 	public ModelAndView getLevelTwo(HttpSession session,ModelMap model) {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
@@ -80,7 +81,7 @@ public class HeaderController {
 		return m;
 	}
 
-	@RequestMapping("LevelThreeForm")
+	@GetMapping("LevelThreeForm")
 	public ModelAndView getLevelThree(HttpSession session,ModelMap model) {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
@@ -134,7 +135,7 @@ public class HeaderController {
 		}
 	}
 	
-	@RequestMapping("saveLvl2")
+	@PostMapping("saveLvl2")
 	public ModelAndView saveLevelTwo(@Valid @ModelAttribute("levelTwo") AddLevelTwo levelTwo,BindingResult result,@RequestParam("lvl1")int lvl1f, HttpSession session) {
 		if(result.hasErrors()) {
 			return new ModelAndView("LevelTwoForm");
@@ -182,11 +183,10 @@ public class HeaderController {
 			lvl2ss.saveLevelTwo(lvl2);
 			m.addObject("temp", "success");
 		}
-
 		return m;
 	}
 
-	@RequestMapping("saveLvl3")
+	@PostMapping("saveLvl3")
 	public ModelAndView saveLevelThree(@Valid @ModelAttribute("levelThree") AddLevelThree levelThree,BindingResult result,HttpSession session) {
 		if(result.hasErrors()) {
 			return new ModelAndView("LevelThreeForm");
@@ -223,7 +223,7 @@ public class HeaderController {
 					p.setInn(0);
 					privilegeService.savePrivilege(p);
 				}
-				m.addObject("success", "success");
+				m.addObject("added", "success");
 			}
 		}catch(NullPointerException e) {
 			System.out.println(e);
@@ -253,30 +253,32 @@ public class HeaderController {
 		return m;
 	}
 
-	@RequestMapping("DeleteLevelOneForm")
+	@GetMapping("DeleteLevelOneForm")
 	public ModelAndView getDeleteLevelOneForm(ModelMap model,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("DeleteLevelOne");
+		ModelAndView m = new ModelAndView();
+		m.setViewName("DeleteLevelOne");
 		m.addObject("lvl1", lvl1ss.selectAll());
 		model.addAttribute("deleteLevelOne", new DeleteLevelOne());
 		return m;
 	}
 
-	@RequestMapping("deleteLevelOne")
+	@PostMapping("deleteLevelOne")
 	public ModelAndView deleteLevelOne(@Valid @ModelAttribute("deleteLevelOne") DeleteLevelOne deleteLevelOne,BindingResult result,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return new ModelAndView("redirect:/logout");
 		if(result.hasErrors()) {
 			return new ModelAndView("DeleteLevelOne");
 		}
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("DeleteLevelOne");
-		m.addObject("delete", "success");
+		ModelAndView m = new ModelAndView();
+		m.setViewName("DeleteLevelOne");
+		m.addObject("deleted", "success");
 		lvl1ss.deleteById(deleteLevelOne.getLvl1());
 		return m;
 	}
 
-	@RequestMapping("DeleteLevelTwo")
+	@GetMapping("DeleteLevelTwo")
 	public ModelAndView getDeleteLevelTwo(HttpSession session,ModelMap model) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
@@ -287,20 +289,21 @@ public class HeaderController {
 		return m;
 	}
 
-	@RequestMapping("deleteLevelTwo")
+	@PostMapping("deleteLevelTwo")
 	public ModelAndView deleteLevelTwo(@Valid @ModelAttribute("deleteLevelTwo") DeleteLevelTwo deleteLevelTwo,BindingResult result,HttpSession session) {
 		if(result.hasErrors()) {
 			return new ModelAndView("DeleteLevelTwo");
 		}
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("DeleteLevelTwo");
-		m.addObject("delete", "success");
+		ModelAndView m = new ModelAndView();
+		m.setViewName("DeleteLevelTwo");
+		m.addObject("deleted", "success");
 		lvl2ss.deleteById(deleteLevelTwo.getLvl2());
 		return m;
 	}
 
-	@RequestMapping("DeleteLevelThree")
+	@GetMapping("DeleteLevelThree")
 	public ModelAndView getDeleteLevelThree(HttpSession session,ModelMap model) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
@@ -310,15 +313,16 @@ public class HeaderController {
 		return m;
 	}
 
-	@RequestMapping("deleteLevelThree")
+	@PostMapping("deleteLevelThree")
 	public ModelAndView deleteLevelThee(@Valid DeleteLevelThree levelThree,BindingResult result,HttpSession session) {
+		if(session.getAttribute("id") == null)
+			return new ModelAndView("redirect:/logout");
 		if(result.hasErrors()) {
 			return new ModelAndView("DeleteLevelThree");
 		}
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("DeleteLevelThree");
-		m.addObject("delete", "success");
+		ModelAndView m = new ModelAndView();
+		m.setViewName("DeleteLevelThree");
+		m.addObject("deleted", "success");
 		menuService.deleteByLevelId(levelThree.getLvl1(), levelThree.getLvl2(), levelThree.getLvl3());
 		return m;
 	}

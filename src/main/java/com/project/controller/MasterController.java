@@ -184,7 +184,7 @@ public class MasterController {
 				mv.setViewName("BatchMaster");
 				mv.addObject("list",batchService.selectAll());
 				mv.addObject("editError", "error");
-				mv.addObject("exist", "already exist");
+				mv.addObject("editExist", "already exist");
 				return mv;
 			}
 		}
@@ -193,7 +193,7 @@ public class MasterController {
 			mv.setViewName("BatchMaster");
 			mv.addObject("list",batchService.selectAll());
 			mv.addObject("editError", "error");
-			mv.addObject("exist", "already exist");
+			mv.addObject("editExist", "already exist");
 			return mv;
 		}
 		int f_year = Integer.parseInt(batch.getFrom_year());
@@ -211,7 +211,7 @@ public class MasterController {
 		mv.setViewName("BatchMaster");
 		mv.addObject("list",batchService.selectAll());
 		mv.addObject("editError", "error");
-		mv.addObject("invalidYear", "Invalid year");
+		mv.addObject("editInvalidYear", "Invalid year");
 		return mv;
 	}
 	
@@ -303,7 +303,7 @@ public class MasterController {
 			if(b.getName().equalsIgnoreCase(blood.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("BloodGroupMaster");
 				mv.addObject("list", bloodgroupService.selectAll());
-				mv.addObject("exist", "error");
+				mv.addObject("edirExist", "error");
 				mv.addObject("editError", "error");
 				return mv;			
 			}
@@ -407,13 +407,13 @@ public class MasterController {
 			if(c.getName().replaceAll("\\s", "").equalsIgnoreCase(comm.getName().replaceAll("\\s", ""))) {
 				mv.addObject("editError", "error");
 				mv.addObject("list", communityService.selectAll());
-				mv.addObject("existCommunity","error");
+				mv.addObject("editExistCommunity","error");
 				mv.setViewName("CommunityMaster");
 				return mv;
 			}else if(c.getAcronym().equalsIgnoreCase(comm.getAcronym())) {
 				mv.addObject("editError", "error");
 				mv.addObject("list", communityService.selectAll());
-				mv.addObject("existAcronym","error");
+				mv.addObject("editExistAcronym","error");
 				mv.setViewName("CommunityMaster");
 				return mv;
 			}

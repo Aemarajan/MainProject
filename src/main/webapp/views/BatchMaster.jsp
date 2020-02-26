@@ -22,34 +22,13 @@ pageEncoding="ISO-8859-1"%>
 <div>
 	<jsp:include page="Header.jsp" />
 	
+	<div id="header"></div>
+	
 	<div class="content">  
-		<div id="header"></div>
-		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col col-md-1"></div>
 				<div class="col col-md-10">
-					<c:if test="${added != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Batch Details added Successfully...
-						</div>
-					</c:if>
-					
-					<c:if test="${updated != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Batch Details are Updated successfully...
-						</div>
-					</c:if>
-					
-					<c:if test="${deleted != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Batch In activated successfully...
-						</div>
-					</c:if>
-					
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
@@ -82,7 +61,7 @@ pageEncoding="ISO-8859-1"%>
 										<td>${l.no_of_years }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
-											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
+											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  Inactive</span></c:if>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-from="${l.from_year }" data-to="${l.to_year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
@@ -106,16 +85,32 @@ pageEncoding="ISO-8859-1"%>
 										<div class="modal-body">
 											
 											<c:if test="${exist != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Batch Already exist ! 
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Batch Already Exist, Enter New Batch...</div>
+													</div>
 												</div>
 											</c:if>
 											
 											<c:if test="${invalidYear != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Invalid Batch Duration. Please Enter correct Year Values...
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Invalid Batch Duration, Enter Correct Batch Details...</div>
+													</div>
 												</div>
 											</c:if>
 											
@@ -157,17 +152,33 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${exist != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Batch Already exist !
+											<c:if test="${editExist != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Batch Already Exist...</div>
+													</div>
 												</div>
 											</c:if>
 											
-											<c:if test="${invalidYear != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Invalid Batch Duration. Please Enter correct Year Values...
+											<c:if test="${editInvalidYear != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Invalid Batch Duration, Enter Correct Batch Details...</div>
+													</div>
 												</div>
 											</c:if>		
 											
@@ -210,11 +221,11 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
-											<div class="mt-0">
-												<input id="name" class="form-control" readonly/>
+											<div class="md-form mt-0">
+												<input id="name" autofocus="autofocus" class="form-control" readonly/>
+												<label for="Name">Name</label>
 											</div>
-											<p>Are you sure you want to delete these Records?</p>
-											<p class="text-warning"><small>This action cannot be undone.</small></p>
+											<p>Are you sure you want to Deactivate these Record ?</p>
 										</div>
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -236,6 +247,55 @@ pageEncoding="ISO-8859-1"%>
 		<!-- Container Fluid -->
 	</div>
 	<!-- Content -->
+	
+	<c:if test="${added != null }">
+		<div class="toast" id="Toast" 
+			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Batch Details are Added Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${updated != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-warning pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Batch Details are Updated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${deleted != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-danger pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Batch Deactivated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+	
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
@@ -290,6 +350,11 @@ pageEncoding="ISO-8859-1"%>
 			modal.find('#id').val(id);
 			modal.find('#name').val(from+' - '+to);
 		});
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
 	}); 
 </script>
 </body>
