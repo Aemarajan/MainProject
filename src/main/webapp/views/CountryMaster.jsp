@@ -24,27 +24,19 @@ pageEncoding="ISO-8859-1"%>
 	<jsp:include page="Header.jsp" />
 	
 	<div id="header"></div>
-	
+
+		
+
 	<div class="content">  
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col col-md-1"></div>
 				<div class="col col-md-10">
-					<c:if test="${added != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Country Details are added Successfully...
-						</div>
-					</c:if>
-					
-					<c:if test="${updated != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Country Details are Updated successfully...
-						</div>
-					</c:if>
 					
 					<div class="table-wrapper">
+						
+
+						
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6">
@@ -68,11 +60,11 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td>${l.name }</td>
+										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
-											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
+											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  Inactive</span></c:if>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
@@ -94,11 +86,32 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										
 										<div class="modal-body">
-											
-											<c:if test="${exist != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Country Already exist ! 
+
+											<c:if test="${existAcronym != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Acronym Already Exist. Enter New Acronym...</div>
+													</div>
+												</div>
+											</c:if>
+
+											<c:if test="${existCountry != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Country Already Exist. Enter New Country Name...</div>
+													</div>
 												</div>
 											</c:if>
 											
@@ -140,10 +153,32 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${exist != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Country Already exist !
+											
+											<c:if test="${existAcronym != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Acronym Already Exist. Enter New Acronym...</div>
+													</div>
+												</div>
+											</c:if>
+											
+											<c:if test="${existCountry != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Country Already Exist. Enter New Country Name...</div>
+													</div>
 												</div>
 											</c:if>
 											
@@ -156,12 +191,12 @@ pageEncoding="ISO-8859-1"%>
 												<s:errors path="name" cssClass="error"></s:errors>
 											</div>											
 											<div class="md-form">
-												<s:input path="acronym" id="acronym" maxlength="3" cssClass="form-control"/>
+												<s:input path="acronym" id="acronym" maxlength="3" autofocus="autofocus" cssClass="form-control"/>
 												<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
 												<s:errors path="acronym" cssClass="error"></s:errors>
 											</div>
 											<div class="form-group">
-												<s:checkbox path="inn" cssClass="inn"/>
+												<s:checkbox path="inn" id="inn"/>
 												<label>In use</label>
 											</div>								
 										</div>
@@ -189,9 +224,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="md-form mt-0">
 												<input id="name" class="form-control" readonly/>
 											</div>
-											<p>Are you sure you want to delete these Records?</p>
-											<input type="checkbox" name="confirm" /><label class="permanent-delete">Delete this record permanently?</label>
-											<p class="text-warning"><small>This action cannot be undone.</small></p>
+											<p>Are you sure you want to Deactivate these Records?</p>
 										</div>
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -213,6 +246,55 @@ pageEncoding="ISO-8859-1"%>
 		<!-- Container Fluid -->
 	</div>
 	<!-- Content -->
+
+	<c:if test="${added != null }">
+		<div class="toast" id="Toast" 
+			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Country Details are Added Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${updated != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-warning pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Country Details are Updated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${deleted != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-danger pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Country Deactivated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
@@ -246,7 +328,7 @@ pageEncoding="ISO-8859-1"%>
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name'); 
-			var acronym = button.data('to');
+			var acronym = button.data('acronym');
 			var inn = button.data('inn');
 			var modal = $(this);
 			modal.find('#id').val(id);
@@ -266,6 +348,11 @@ pageEncoding="ISO-8859-1"%>
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
 		});
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
 	}); 
 </script>
 </body>

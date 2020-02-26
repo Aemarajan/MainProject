@@ -38,20 +38,22 @@
                         <div class="card-body px-lg-5 pt-0 open-sans">
                         	<!-- Form -->
                             <s:form style="color: #757575;" action="saveLvl3" modelAttribute="levelThree">
+                            	
                             	<c:if test="${exist != null }">
-									<div class="alert mt-2 alert-danger alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-											Header Already exist.
+									<div class="toast" id="Toast">
+										<div class="toast-header white-text pt-2 bg-success">
+											<h5 class="mr-auto">Error</h5>
+											<button type="button" class="ml-2 mb-1 close white-text"
+												data-dismiss="toast">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="toast-body py-2">
+											<div>Level Three Header Already Exist. Please Enter New Header...</div>
+										</div>
 									</div>
 								</c:if>
 								
-								<c:if test="${success != null }">
-									<div class="mt-2 alert alert-success alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-											Level Three Header added successfully.
-									</div>
-								</c:if>
-                                
                                 <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
                                 
                                 <div class="mt-3">
@@ -87,6 +89,23 @@
             </div>
 		</div>
 	</div>
+	
+	<c:if test="${added != null }">
+		<div class="toast" id="Toast" 
+			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Level Three Header Added Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+	
 	<jsp:include page="Footer.jsp" /> 
 </div>
 <!-- End your project here-->
@@ -167,6 +186,10 @@
                     });
                 });
             });
+            $('#Toast').toast({
+                delay:5000
+            });
+            $('#Toast').toast('show');
         });
     </script>
     

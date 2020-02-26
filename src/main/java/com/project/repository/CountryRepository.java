@@ -26,4 +26,9 @@ public interface CountryRepository extends JpaRepository<Country, Integer>{
 	@Modifying
 	@Query(value="UPDATE country_master SET inn=:inn WHERE id=:id",nativeQuery=true)
 	void updateCountry(@Param("id")int id,@Param("inn")int inn);
+
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM country_master WHERE id!=:id",nativeQuery=true)
+	List<Country> findAllExceptId(int id);
 }

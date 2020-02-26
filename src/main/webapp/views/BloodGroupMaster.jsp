@@ -23,27 +23,13 @@ pageEncoding="ISO-8859-1"%>
 <div>
 	<jsp:include page="Header.jsp" />
 	
+	<div id="header"></div>
+	
 	<div class="content">  
-		<div id="header"></div>
-		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col col-md-1"></div>
 				<div class="col col-md-10">
-					<c:if test="${added != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Blood Group Details are added Successfully...
-						</div>
-					</c:if>
-					
-					<c:if test="${updated != null }">
-						<div class="mt-2 alert alert-success alert-dismissible">
-							<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-							Bloodgroup Details are Updated successfully...
-						</div>
-					</c:if>
-					
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
@@ -70,7 +56,7 @@ pageEncoding="ISO-8859-1"%>
 										<td>${l.name }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
-											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
+											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  Inactive</span></c:if>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
@@ -94,9 +80,17 @@ pageEncoding="ISO-8859-1"%>
 										<div class="modal-body">
 											
 											<c:if test="${exist != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-												<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Blood Group Already exist ! 
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Blood Group Already Exist, Enter New Blood Group...</div>
+													</div>
 												</div>
 											</c:if>
 											
@@ -133,10 +127,18 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${exist != null }">
-												<div class="mt-2 alert alert-danger alert-dismissible">
-													<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-													Blood Group Already exist !
+											<c:if test="${editExist != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Blood Group Already Exist, Enter New Blood Group...</div>
+													</div>
 												</div>
 											</c:if>		
 											
@@ -175,11 +177,10 @@ pageEncoding="ISO-8859-1"%>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
 											<div class="md-form mt-0">
-												<input id="name" class="form-control" readonly/>
+												<input id="name" autofocus="autofocus" class="form-control" readonly/>
+												<label for="Name">Name</label>
 											</div>
-											<p>Are you sure you want to delete these Records?</p>
-											<input type="checkbox" name="confirm" /><label class="permanent-delete">Delete this record permanently?</label>
-											<p class="text-warning"><small>This action cannot be undone.</small></p>
+											<p>Are you sure you want to delete these Record ?</p>
 										</div>
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -201,6 +202,55 @@ pageEncoding="ISO-8859-1"%>
 		<!-- Container Fluid -->
 	</div>
 	<!-- Content -->
+	
+	<c:if test="${added != null }">
+		<div class="toast" id="Toast" 
+			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Blood Group Details are Added Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${updated != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-warning pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Blood Group Details are Updated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${deleted != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-danger pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Blood Group Deactivated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+	
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
@@ -252,6 +302,11 @@ pageEncoding="ISO-8859-1"%>
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
 		});
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
 	}); 
 </script>
 </body>

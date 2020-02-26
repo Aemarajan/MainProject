@@ -33,18 +33,19 @@
 						</h5>
 						<div class="card-body px-lg-5 pt-0">
 							<form style="color: #757575;" action="getUserPrivilege" method="post">
-										
-								<c:if test="${success != null }">
-									<div class="mt-2 alert alert-success alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-											<strong>Privilege Updated</strong>
-									</div>
-								</c:if>
-										
+								
 								<c:if test="${error != null }">
-									<div class="mt-2 alert alert-success alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-										<strong>Update Error. Please try again.</strong>
+									<div class="toast" id="Toast">
+										<div class="toast-header white-text pt-2 bg-danger">
+											<h5 class="mr-auto">Error</h5>
+											<button type="button" class="ml-2 mb-1 close white-text"
+												data-dismiss="toast">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="toast-body py-2">
+											<div>Something went wrong in Updating the Privilege. Try to update Again... </div>
+										</div>
 									</div>
 								</c:if>
 								
@@ -94,6 +95,11 @@
     	$(document).ready(function(){
         	$('#header').load("http://localhost:8080/header");
     	});
+
+    	$('#Toast').toast({
+			delay:5000
+        });
+        $('#Toast').toast('show');
     </script>
 </body>
 </html>

@@ -10,12 +10,12 @@ public class AddCommunity {
 	int id;
 	
 	@NotEmpty(message="* Name should not empty")
-	@Pattern(regexp = "/^[A-Za-z]+$/",message="Enter Alphabet only")
+	@Pattern(regexp = "^[a-zA-Z]*$",message="Enter Alphabet only")
 	String name;
 	
-	@Pattern(regexp = "/^[A-Za-z]+$/",message="Enter Alphabet only")
 	@NotEmpty(message="* Acronym should not empty")
-	@Size(max=3,min=2,message="* Size between 2 and 3")
+	@Size(min=2,message="* Minimum 2 characters")
+	@Pattern(regexp = "^[a-zA-Z]*$",message="Enter Alphabet only")
 	String acronym;
 	
 	boolean inn;

@@ -100,6 +100,23 @@
 			</div>
 		</form>
 	</div>
+	
+	<c:if test="${success != null }">
+		<div class="toast" id="Toast" 
+			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Privilege Updated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+	
 	<jsp:include page="Footer.jsp" />
 </div>
 	
@@ -116,6 +133,11 @@
 				});
 			});
 		});
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
 	</script>
 </body>
 </html>

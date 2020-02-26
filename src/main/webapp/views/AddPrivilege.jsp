@@ -18,22 +18,7 @@
 	
 	<div class="content">
 		<div class="container-fluid">
-			<h3 class="text-center py-3">Privilege</h3>
-			
-			<c:if test="${added != null }">
-				<div class="mt-2 alert alert-success alert-dismissible">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					Privilege added successfully.
-				</div>
-			</c:if>
-			
-			<c:if test="${error != null }">
-				<div class="mt-2 alert alert-danger alert-dismissible">
-					<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-					Something wrong.
-				</div>
-			</c:if>
-		
+			<h3 class="text-center py-3">Privilege</h3>		
 			<form action="createPrivilege" method="post">
 				<div style="margin-left:40px;" class="mt-2 mb-2">
 					<h5>Username</h5>
@@ -107,6 +92,39 @@
 			</form>
 		</div>
 	</div>
+	
+	<c:if test="${added != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-danger pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Privilege provided to user Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+	
+	<c:if test="${error != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-danger pt-2">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Something went wrong...</div>
+			</div>
+		</div>
+	</c:if>
+	
 	<jsp:include page="Footer.jsp" />
 </div>
 	
@@ -118,6 +136,10 @@
 <script>
 	$(document).ready(function(){
     	$('#header').load("http://localhost:8080/header");
+    	$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
     });
 </script>
 </body>

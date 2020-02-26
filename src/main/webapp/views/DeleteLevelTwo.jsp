@@ -30,50 +30,59 @@
 	                		<div class="card-head white-text text-center py-2 ubuntu">
 	                  				<h4 class="d-flex justify-content-end mr-5">DELETE</h4>
 	                  				<h5 class="d-flex justify-content-start ml-5">Level Two</h5>
-	                		</div>
-	                	
-	                	<div class="card-body px-lg-5 pt-0 open-sans">
-	                  		<!-- Form -->
-	                  		<s:form style="color: #757575;" action="deleteLevelTwo" modelAttribute="deleteLevelTwo">
-	                  			<c:if test="${delete != null }">
-									<div class="mt-2 alert alert-danger alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-										Level Two Header deleted successfully.
-									</div>
-								</c:if>
-			                    <label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be Selected</label>
+	                		</div>        	
+	                		<div class="card-body px-lg-5 pt-0 open-sans">
+	                  			<!-- Form -->
+	                  			<s:form style="color: #757575;" action="deleteLevelTwo" modelAttribute="deleteLevelTwo">
+	                  				<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be Selected</label>
 			                    
-			                    <div class="mt-3">
-			                      <s:label path="lvl1" cssClass="d-flex justify-content-start"> Level One <span class="mandatory pl-1"> *</span></s:label>
-			                      <s:select path="lvl1" cssClass="browser-default custom-select" id="lvl1">
-			                      </s:select>
-			                      <s:errors path="lvl1" cssClass="error"></s:errors>
-			                    </div>
-			                    <div class="mt-3">
-			                        <s:label path="lvl2"> Level Two <span class="mandatory pl-1"> *</span></s:label>
-			                        <s:select path="lvl2" cssClass="browser-default custom-select" id="lvl2">
-			                        </s:select>
-			                        <s:errors path="lvl2" cssClass="error"></s:errors>
-			                      </div>
-			                      
-			                    <div class="mt-4">
-			                        <button type="submit" class="btn btn-custom waves-effect">DELETE</button>
-			                    </div>
-		                  </s:form> 
-		                  <!-- Form -->
-	                	</div>
-	                	<!-- Card body -->
-	              	</div>
-	              	<!-- Card -->
-	           	</div>
-	            <!-- Col-md-5 -->
-	          	<div class="col col-md-3.5"></div>
-	          </div>
-	          <!-- row -->
+			                    	<div class="mt-3">
+			                      		<s:label path="lvl1" cssClass="d-flex justify-content-start"> Level One <span class="mandatory pl-1"> *</span></s:label>
+			                      		<s:select path="lvl1" cssClass="browser-default custom-select" id="lvl1"/>
+			                      		<s:errors path="lvl1" cssClass="error"></s:errors>
+			                    	</div>
+			                    	<div class="mt-3">
+				                        <s:label path="lvl2"> Level Two <span class="mandatory pl-1"> *</span></s:label>
+				                        <s:select path="lvl2" cssClass="browser-default custom-select" id="lvl2">
+				                        </s:select>
+				                        <s:errors path="lvl2" cssClass="error"></s:errors>
+				                      </div>
+				                      
+				                    <div class="mt-4">
+				                        <button type="submit" class="btn btn-custom waves-effect">DELETE</button>
+				                    </div>
+		                  		</s:form> 
+		                  		<!-- Form -->
+	                		</div>
+	                		<!-- Card body -->
+	              		</div>
+	              		<!-- Card -->
+	           		</div>
+	            	<!-- Col-md-5 -->
+	          		<div class="col col-md-3.5"></div>
+	          	</div>
+	          	<!-- row -->
 	        </div>
 	        <!-- container fluid -->
-	      </div>
-	      <!-- Content -->
+	    </div>
+	    <!-- Content -->
+	    
+	    <c:if test="${deleted != null }">
+			<div class="toast" id="Toast"
+				style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+				<div class="toast-header white-text bg-danger pt-2">
+					<h5 class="mr-auto">Notification</h5>
+					<button type="button" class="ml-2 mb-1 close white-text"
+						data-dismiss="toast">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="toast-body py-2">
+					<div>Level Two Header Deleted Successfully.</div>
+				</div>
+			</div>
+		</c:if>  
+	      
 	    <div class="footer">
 	    	<jsp:include page="Footer.jsp" /> 
 	    </div>
@@ -124,6 +133,11 @@
 						});
 				});
 			});
+
+			$('#Toast').toast({
+				delay:5000
+			});
+			$('#Toast').toast('show');	
 		});
 	</script>
 </body>

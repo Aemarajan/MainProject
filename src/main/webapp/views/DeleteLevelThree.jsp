@@ -34,14 +34,7 @@
 		                <div class="card-body px-lg-5 pt-0 open-sans">
 		        			<!-- Form -->
 		                  	<s:form style="color: #757575;" action="deleteLevelThree" method="post" modelAttribute="deleteLevelThree">
-		                  		<c:if test="${delete != null }">
-									<div class="alert mt-2 alert-success alert-dismissible">
-										<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-										Level Three Header deleted successfully.
-									</div>
-								</c:if>
-		                    	
-		                    	<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be Selected</label>
+		                  		<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be Selected</label>
 		                    	
 		                    	<div class="mt-3">
 		                      		<s:label path="lvl1" class="d-flex justify-content-start"> Level One <span class="mandatory pl-1"> *</span></s:label>
@@ -74,6 +67,23 @@
           </div>
         </div>
       </div>
+      
+      <c:if test="${deleted != null }">
+			<div class="toast" id="Toast"
+				style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+				<div class="toast-header white-text bg-danger pt-2">
+					<h5 class="mr-auto">Notification</h5>
+					<button type="button" class="ml-2 mb-1 close white-text"
+						data-dismiss="toast">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="toast-body py-2">
+					<div>Level Three Header Deleted Successfully.</div>
+				</div>
+			</div>
+		</c:if>
+      
       <div class="footer">
       	<jsp:include page="Footer.jsp" />
       </div>
@@ -147,6 +157,10 @@
                 });
             });
         });
+        $('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
     });
 </script>
 </body>
