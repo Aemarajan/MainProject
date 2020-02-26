@@ -22,12 +22,17 @@
 <body>
 	<div>
 		<jsp:include page="Header.jsp" />
-		
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col col-md-3.5"></div>
 					<div class="col col-md-5 mt-2 mb-2">
+						<c:if test="${session != null }">
+							<div class="alert alert-danger alert-dismissible mt-1">
+								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+								Session Expired. Please login again.
+							</div>
+						</c:if>
 						<div class="card">
 							<h5 class="card-head white-text text-center py-4 ubuntu">
 								<strong>Sign in</strong>

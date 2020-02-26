@@ -49,6 +49,7 @@ import com.project.validator.AddBatchMaster;
 import com.project.validator.AddBloodGroup;
 import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
+import com.project.validator.AddDegree;
 
 @Controller
 public class MasterController {
@@ -103,6 +104,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		if(!(added == null))
@@ -119,27 +121,26 @@ public class MasterController {
 	
 	@PostMapping("SaveBatchMaster")
 	public ModelAndView saveBatchMaster(@Valid @ModelAttribute("addBatch") AddBatchMaster batch,BindingResult result ,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.addObject("session", "destroy");
+			mv.setViewName("redirect:/logout");
+			return mv;
 		}
 		if(result.hasErrors()) {
-			ModelAndView m = new ModelAndView();
-			m.setViewName("BatchMaster");
-			m.addObject("list", batchService.selectAll());
-			m.addObject("addError", "error");
-			return  m;
+			mv.setViewName("BatchMaster");
+			mv.addObject("list", batchService.selectAll());
+			mv.addObject("addError", "error");
+			return  mv;
 		}
-		ModelAndView m = new ModelAndView();
 		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
 		if(exist != null) {
-			m.setViewName("BatchMaster");
-			m.addObject("list", batchService.selectAll());
-			m.addObject("addError", "error");
-			m.addObject("exist", "already exist");
-			return m;
+			mv.setViewName("BatchMaster");
+			mv.addObject("list", batchService.selectAll());
+			mv.addObject("addError", "error");
+			mv.addObject("exist", "already exist");
+			return mv;
 		}
-		ModelAndView mv = new ModelAndView();
-		
 		int f_year = Integer.parseInt(batch.getFrom_year());
 		int t_year = Integer.parseInt(batch.getTo_year());
 		int n_year = t_year - f_year;
@@ -156,18 +157,21 @@ public class MasterController {
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
-		m.setViewName("BatchMaster");
-		m.addObject("list", batchService.selectAll());
-		m.addObject("addError", "error");
-		m.addObject("invalidYear", "Invalid year");
-		return m;
+		mv.setViewName("BatchMaster");
+		mv.addObject("list", batchService.selectAll());
+		mv.addObject("addError", "error");
+		mv.addObject("invalidYear", "Invalid year");
+		return mv;
 	}
 	
 	@PostMapping("EditBatch")
 	public ModelAndView editBatch(@Valid @ModelAttribute("addBatch")AddBatchMaster batch,BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
+		if(session.getAttribute("id") == null) {
+			mv.addObject("session", "destroy");
+			mv.setViewName("redirect:/logout");
+			return mv;
+		}
 		if(result.hasErrors()) {
 			mv.setViewName("BatchMaster");
 			mv.addObject("list", batchService.selectAll());
@@ -216,6 +220,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		batchService.updateInnZero(id);
@@ -228,7 +233,9 @@ public class MasterController {
 	public ModelAndView getBloodroupMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView model = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			model.addObject("session", "destroy");
+			model.setViewName("redirect:/logout");
+			return model;
 		}
 		if(!(added == null))
 			model.addObject("added", "success");
@@ -247,6 +254,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		if(result.hasErrors()) {
@@ -281,6 +289,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		if(result.hasErrors()) {
@@ -310,6 +319,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		bloodgroupService.updateInnZero(id);
@@ -319,19 +329,23 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetCommunityMaster")
-	public String getCommunityMaster(@RequestParam(value="updated",required=false)String update,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,ModelMap model) {
+	public ModelAndView getCommunityMaster(@RequestParam(value="updated",required=false)String update,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		model.addAttribute("list", communityService.selectAll());
-		model.addAttribute("community", new AddCommunity());
+		mv.addObject("list", communityService.selectAll());
+		mv.addObject("community", new AddCommunity());
 		if(!(update == null))
-			model.addAttribute("updated", "success");
+			mv.addObject("updated", "success");
 		if(!(added == null))
-			model.addAttribute("added", "success");
+			mv.addObject("added", "success");
 		if(!(deleted == null))
-			model.addAttribute("deleted", "success");
-		return "CommunityMaster";
+			mv.addObject("deleted", "success");
+		mv.setViewName("CommunityMaster");
+		return mv;
 	}
 	
 	@PostMapping("SaveCommunityMaster")
@@ -344,14 +358,16 @@ public class MasterController {
 			return mv;
 		}
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.addObject("session", "destroy");
+			mv.setViewName("redirect:/logout");
+			return mv;
 		}
 		Community exist1 = communityService.selectByCommunity(comm.getName().toLowerCase());
 		if(exist1 != null) {
 			mv.setViewName("CommunityMaster");
 			mv.addObject("list", communityService.selectAll());
 			mv.addObject("addError", "Error in add");
-			mv.addObject("existcommunity", "already exist");
+			mv.addObject("existCommunity", "already exist");
 			return mv;
 		}
 		Community exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
@@ -376,7 +392,7 @@ public class MasterController {
 	public ModelAndView editCommunity(@Valid @ModelAttribute("community")AddCommunity comm,BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null ) {
-			mv.addObject("expired", "Session Expired");
+			mv.addObject("session", "destroy");
 			mv.setViewName("redirect:/logout");
 			return mv;
 		}
@@ -391,7 +407,7 @@ public class MasterController {
 			if(c.getName().replaceAll("\\s", "").equalsIgnoreCase(comm.getName().replaceAll("\\s", ""))) {
 				mv.addObject("editError", "error");
 				mv.addObject("list", communityService.selectAll());
-				mv.addObject("existcommunity","error");
+				mv.addObject("existCommunity","error");
 				mv.setViewName("CommunityMaster");
 				return mv;
 			}else if(c.getAcronym().equalsIgnoreCase(comm.getAcronym())) {
@@ -413,6 +429,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		mv.setViewName("redirect:/GetCommunityMaster");
@@ -425,7 +442,9 @@ public class MasterController {
 	public ModelAndView getCountryMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");	
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;	
 		}
 		if(!(added == null))
 			mv.addObject("added", "success");
@@ -444,6 +463,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		if(result.hasErrors()) {
@@ -479,6 +499,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		if(result.hasErrors()) {
@@ -514,6 +535,7 @@ public class MasterController {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("CountryMaster");
+			mv.addObject("session", "destroy");
 			return mv;
 		}
 		countryService.updateInnZero(id);
@@ -523,22 +545,78 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetDegreeMaster")
-	public String getDegreeMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getDegreeMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,ModelMap model) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "DegreeMaster";
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.addObject("degree", new AddDegree());
+		mv.addObject("list", degreeService.selectAll());
+		mv.setViewName("DegreeMaster");
+		return mv;
 	}
 	
-	@PostMapping("SaveDegreeMaster")
-	public ModelAndView saveDegreeMaster(Degree dgm,HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+	@PostMapping("SaveDegree")
+	public ModelAndView saveDegreeMaster(@Valid @ModelAttribute("degree")AddDegree degree,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(result.hasErrors()) {
+			mv.setViewName("DegreeMaster");
+			mv.addObject("list", degreeService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
 		}
-		degreeService.saveDegreeMaster(dgm);
-			
-		ModelAndView mv = new ModelAndView("DegreeMaster");
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		List<Degree> exist = degreeService.selectAll();
+		for(Degree d : exist) {
+			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(degree.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("DegreeMaster");
+				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("addError", "error");
+				mv.addObject("addExistDegree","exist");
+				return mv;
+			}else if(d.getAcronym().equalsIgnoreCase(degree.getAcronym().replaceAll("\\s", ""))) {
+				mv.setViewName("DegreeMaster");
+				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("addError", "error");
+				mv.addObject("addExistAcronym","exist");
+				return mv;
+			}
+		}
+		degreeService.saveDegreeMaster(degree.getName().toLowerCase(),degree.getAcronym().toUpperCase(),degree.isInn());
 		mv.addObject("added", "Success Message");
+		mv.setViewName("redirect:/GetDegreeMaster");
+		return mv;
+	}
+	
+	@PostMapping("EditDegree")
+	public ModelAndView editDegree(@Valid @ModelAttribute("") AddDegree degree, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(result.hasErrors()) {
+			mv.setViewName("DegreeMaster");
+			mv.addObject("editError", "error");
+			mv.addObject("list", degreeService.selectAll());
+			return mv;
+		}
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		
+		mv.setViewName("redirect:/GetDegreeMaster");
+		mv.addObject("updated", "success");
 		return mv;
 	}
 	

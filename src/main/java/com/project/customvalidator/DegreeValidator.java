@@ -10,7 +10,7 @@ public class DegreeValidator implements ConstraintValidator<DegreeAnnotation,Obj
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		String grp = (String) value;
-		if(grp.contains(".") && grp.contains(" "))
+		if(grp.contains("."))
 			return true;
 		return false;
 	}

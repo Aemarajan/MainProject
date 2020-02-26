@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.model.User;
@@ -98,6 +99,7 @@ public class UserController {
 			if(userloc.getPassword().equals(signin.getPassword())) {
 				session.setAttribute("name", userloc.getUsername());
 				session.setAttribute("id", userloc.getUser_id());
+				System.out.println(session.getId());
 				if(userloc.getPrivilegeProvide() == 0) {
 					model.setViewName("redirect:/Gallery");
 				}else {
@@ -115,9 +117,13 @@ public class UserController {
 	}
 	
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	public ModelAndView logout(@RequestParam(value="session",required=false)String s,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(!(s == null))
+			mv.addObject("session", "destroy");
 		session.invalidate();
-		return "redirect:/SignIn";
+		mv.setViewName("redirect:/SignIn");
+		return mv;
 	}
 	
 }

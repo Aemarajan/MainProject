@@ -26,48 +26,6 @@ pageEncoding="ISO-8859-1"%>
 	<div class="content">  
 		<div id="header"></div>
 		
-		<c:if test="${updated != null }">
-			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
-				<div class="toast-header white-text bg-warning pt-2">
-					<h5 class="mr-auto">Notification</h5>
-				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      	<span aria-hidden="true">&times;</span>
-				    </button>
-				</div>
-				<div class="toast-body py-2">
-            		<div>Updated Successfully.</div>
-        		</div>
-			</div>
-		</c:if>
-		
-		<c:if test="${added != null }">
-			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
-				<div class="toast-header white-text pt-2 bg-success">
-					<h5 class="mr-auto">Notification</h5>
-				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      	<span aria-hidden="true">&times;</span>
-				    </button>
-				</div>
-				<div class="toast-body py-2">
-            		<div>Updated Successfully.</div>
-        		</div>
-			</div>
-		</c:if>
-		
-		<c:if test="${deleted != null }">
-			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
-				<div class="toast-header white-text bg-danger pt-2">
-					<h5 class="mr-auto">Notification</h5>
-				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      	<span aria-hidden="true">&times;</span>
-				    </button>
-				</div>
-				<div class="toast-body py-2">
-            		<div>Deactivated Successfully.</div>
-        		</div>
-			</div>
-		</c:if>
-		
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col col-md-1"></div>
@@ -255,6 +213,50 @@ pageEncoding="ISO-8859-1"%>
 		</div>
 		<!-- Container Fluid -->
 	</div>
+	
+		<c:if test="${updated != null }">
+			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;display:block;">
+				<div class="toast-header white-text bg-warning pt-2">
+					<h5 class="mr-auto">Notification</h5>
+				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+				      	<span aria-hidden="true">&times;</span>
+				    </button>
+				</div>
+				<div class="toast-body py-2">
+            		<div>Updated Successfully.</div>
+        		</div>
+			</div>
+		</c:if>
+		
+		<c:if test="${added != null }">
+			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
+				<div class="toast-header white-text pt-2 bg-success">
+					<h5 class="mr-auto">Notification</h5>
+				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+				      	<span aria-hidden="true">&times;</span>
+				    </button>
+				</div>
+				<div class="toast-body py-2">
+            		<div>Updated Successfully.</div>
+        		</div>
+			</div>
+		</c:if>
+		
+		<c:if test="${deleted != null }">
+			<div class="toast" id="myToast" style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+				<div class="toast-header white-text bg-danger pt-2">
+					<h5 class="mr-auto">Notification</h5>
+					<button type="button" class="ml-2 mb-1 close white-text"
+						data-dismiss="toast">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="toast-body py-2">
+					<div>Deactivated Successfully.</div>
+				</div>
+			</div>
+		</c:if>
+		
 	<!-- Content -->
 	<div class="">
 		<jsp:include page="Footer.jsp" />

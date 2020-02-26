@@ -14,8 +14,9 @@ public class DegreeService {
 	@Autowired
 	DegreeRepository dgrepo;
 
-	public void saveDegreeMaster(Degree dgm) {
-		dgrepo.save(dgm);
+	public void saveDegreeMaster(String name,String acronym,boolean inn) {
+		Degree degree = new Degree(name,acronym,inn?1:0);
+		dgrepo.save(degree);
 	}
 	
 	public List<Degree> selectAll(){
