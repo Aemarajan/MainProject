@@ -138,7 +138,7 @@ public class PrivilegeController {
 	}
 	
 	@RequestMapping("UpdatePrivilege")
-	public ModelAndView updatePrivilege(@RequestParam int user_id,@RequestParam("menu_id") int[] check,HttpSession session) {
+	public ModelAndView updatePrivilege(@RequestParam int user_id,@RequestParam(value="menu_id",required=false) int[] check,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
 		ModelAndView m = new ModelAndView("UpdatePrivilege");

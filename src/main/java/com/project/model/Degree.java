@@ -18,7 +18,7 @@ public class Degree {
 	String acronym;
 	int inn;
 	
-	Degree(){}
+	public Degree(){}
 	
 	public Degree(String name2, String acronym2, int i) {
 		name = name2;

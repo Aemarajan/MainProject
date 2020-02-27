@@ -13,14 +13,30 @@ public class DepartmentService {
 
 	@Autowired
 	DepartmentRepository  dpmrepo;
-
-	public void saveDepartmentMaster(Department dpm) {
-		dpmrepo.save(dpm);
-	}
 	
-	public List<Department> selesctAll(){
+	@Autowired
+	DegreeService degreeService;
+
+	public List<Department> selectAll(){
 		List<Department> list = dpmrepo.findAll();
 		return list;
+	}
+
+	public void saveDepartmentMaster(String name, String acronym, int degree, boolean inn) {
+		Department dept = new Department(name,acronym,degreeService.selectById(degree),inn?1:0);
+		dpmrepo.save(dept);
+	}
+
+	public void update(int id, String name, String acronym, Integer degree, boolean inn) {
+		dpmrepo.update(id,name,acronym,degreeService.selectById(degree),inn?1:0);
+	}
+
+	public List<Department> selectAllExceptId(int id) {
+		return dpmrepo.findAllExceptId(id);
+	}
+
+	public void updateInnZero(int id, int i) {
+		dpmrepo.updateInnZero(id,i);
 	}
 	
 }

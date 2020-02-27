@@ -22,5 +22,37 @@ public class DegreeService {
 	public List<Degree> selectAll(){
 		List<Degree> list = dgrepo.findAll();
 		return list;
-	}	
+	}
+
+	public void updateDegree(int id,String name, String acronym, int inn) {
+		dgrepo.updateDegree(id,name,acronym,inn);
+		
+	}
+	
+	public void updateInnZero(int id) {
+		dgrepo.updateDegree(id,0);
+	}
+
+	public List<Degree> selectAllExceptId(int id) {
+		return dgrepo.findAllExceptId(id);
+	}
+
+	public Degree selectById(Integer degree) {
+		Degree de = new Degree();
+		List<Degree> list = dgrepo.findAll();
+		for(Degree d : list) {
+			if(d.getId() == degree) {
+				de.setId(d.getId());
+				de.setName(d.getName());
+				de.setAcronym(d.getAcronym());
+				de.setInn(d.getInn() == 1?true:false);
+				return de;
+			}
+		}
+		return null;
+	}
+	
+	
+
+	
 }

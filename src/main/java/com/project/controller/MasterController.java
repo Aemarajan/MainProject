@@ -50,6 +50,7 @@ import com.project.validator.AddBloodGroup;
 import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
+import com.project.validator.AddDepartment;
 
 @Controller
 public class MasterController {
@@ -564,7 +565,7 @@ public class MasterController {
 		return mv;
 	}
 	
-	@PostMapping("SaveDegree")
+	@PostMapping("SaveDegreeMaster")
 	public ModelAndView saveDegreeMaster(@Valid @ModelAttribute("degree")AddDegree degree,BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(result.hasErrors()) {
@@ -594,14 +595,14 @@ public class MasterController {
 				return mv;
 			}
 		}
-		degreeService.saveDegreeMaster(degree.getName().toLowerCase(),degree.getAcronym().toUpperCase(),degree.isInn());
+		degreeService.saveDegreeMaster(degree.getName().toLowerCase(),degree.getAcronym().toUpperCase().replaceAll("\\s", ""),degree.isInn());
 		mv.addObject("added", "Success Message");
 		mv.setViewName("redirect:/GetDegreeMaster");
 		return mv;
 	}
 	
 	@PostMapping("EditDegree")
-	public ModelAndView editDegree(@Valid @ModelAttribute("") AddDegree degree, BindingResult result, HttpSession session) {
+	public ModelAndView editDegree(@Valid @ModelAttribute("degree") AddDegree degree, BindingResult result, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(result.hasErrors()) {
 			mv.setViewName("DegreeMaster");
@@ -615,28 +616,149 @@ public class MasterController {
 			return mv;
 		}
 		
+		List<Degree> exist = degreeService.selectAllExceptId(degree.getId());
+		for(Degree d : exist) {
+			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(degree.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("DegreeMaster");
+				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistDegree","exist");
+				return mv;
+			}else if(d.getAcronym().toUpperCase().equalsIgnoreCase(degree.getAcronym().replaceAll("\\s", ""))) {
+				mv.setViewName("DegreeMaster");
+				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistAcronym","exist");
+				return mv;
+			}
+		}
+		degreeService.updateDegree(degree.getId(),degree.getName().toLowerCase(),degree.getAcronym().toUpperCase().replaceAll("\\s", ""),degree.isInn()?1:0);
 		mv.setViewName("redirect:/GetDegreeMaster");
 		mv.addObject("updated", "success");
 		return mv;
 	}
 	
-	@GetMapping("GetDepartmentMaster")
-	public String getDepartmentMaster(HttpSession session,ModelMap model) {
+	@PostMapping("DeleteDegree")
+	public ModelAndView deleteDegree(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("DegreeMaster");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "DepartmentMaster";
+		degreeService.updateInnZero(id);
+		mv.setViewName("redirect:/GetDegreeMaster");
+		mv.addObject("deleted", "success");
+		return mv;
 	}
 	
-	@PostMapping("SaveDepartmentMaster")
-	public ModelAndView saveDepartmentMaster(Department dpm,HttpSession session,ModelMap model) {
+	@GetMapping("GetDepartmentMaster")
+	public ModelAndView getDepartmentMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		departmentService.saveDepartmentMaster(dpm);
-			
-		ModelAndView mv = new ModelAndView("DepartmentMaster");
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.setViewName("DepartmentMaster");
+		mv.addObject("list", departmentService.selectAll());
+		mv.addObject("department", new AddDepartment());
+		return mv;
+	}
+	
+	@PostMapping("SaveDepartment")
+	public ModelAndView saveDepartmentMaster(@Valid @ModelAttribute("department")AddDepartment dept,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("DepartmentMaster");
+			mv.addObject("list", departmentService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<Department> list = departmentService.selectAll();
+		for(Department d : list) {
+			if(d.getDegree().getId() == (int) dept.getDegree()) {
+				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("addError", "error");
+					mv.addObject("addExistDepartment","error");
+					return mv;
+				}else if(d.getAcronym().equalsIgnoreCase(dept.getAcronym().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("addError", "error");
+					mv.addObject("addExistAcronym","error");
+					return mv;
+				}
+			}
+		}
+		departmentService.saveDepartmentMaster(dept.getName().toLowerCase(),dept.getAcronym().toUpperCase().replaceAll("\\s", ""),dept.getDegree(),dept.isInn());
+		mv.setViewName("redirect:/GetDepartmentMaster");
 		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("EditDepartment")
+	public ModelAndView editDepartment(@Valid @ModelAttribute("department")AddDepartment dept, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:./logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("DepartmentMaster");
+			mv.addObject("list", departmentService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		List<Department> exist = departmentService.selectAllExceptId(dept.getId());
+		for(Department d : exist) {
+			if(d.getDegree().getId() == (int) dept.getDegree()) {
+				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("editError", "error");
+					mv.addObject("editExistDepartment","error");
+					return mv;
+				}else if(d.getAcronym().equalsIgnoreCase(dept.getAcronym().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("editError", "error");
+					mv.addObject("editExistAcronym","error");
+					return mv;
+				}
+			}
+		}
+		departmentService.update(dept.getId(),dept.getName(),dept.getAcronym(),dept.getDegree(),dept.isInn());
+		mv.setViewName("redirect:/GetDepartmentMaster");
+		mv.addObject("updated", "success");
+		return mv;
+	}
+	
+	@PostMapping("DeleteDepartment")
+	public ModelAndView deleteDepartment(@RequestParam("id")int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:./logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		departmentService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetDepartmentMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	
@@ -681,11 +803,15 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetStateMaster")
-	public String getStateMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getStateMaster(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "StateMaster";
+		mv.setViewName("StateMaster");
+		return mv;
 	}
 	
 	@PostMapping("SaveStateMaster")

@@ -10,10 +10,10 @@ import javax.validation.Constraint;
 import javax.validation.Payload;
 
 @Documented
-@Constraint(validatedBy = DegreeValidator.class)
+@Constraint(validatedBy = DotValidator.class)
 @Target({ElementType.METHOD,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface DegreeAnnotation {
+public @interface Dot {
 
 
     String message() default "{com.project.customvalidator.BloodGroup.message}";

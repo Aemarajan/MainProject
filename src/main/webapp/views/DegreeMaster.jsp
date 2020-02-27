@@ -55,7 +55,7 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td>${l.name }</td>
+										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
@@ -74,7 +74,7 @@ pageEncoding="ISO-8859-1"%>
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveDegree" method="post" modelAttribute="degree">
+									<s:form action="SaveDegreeMaster" method="post" modelAttribute="degree">
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Degree</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -113,16 +113,30 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
-											<div class="md-form mt-0">
-												<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-												<label for="Country name">Name<span class="mandatory"> *</span></label>
-												<s:errors path="name" cssClass="error"></s:errors>
-											</div>											
-											<div class="md-form">
-												<s:input path="acronym" id="acronym" maxlength="5" cssClass="form-control"/>
-												<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-												<s:errors path="acronym" cssClass="error"></s:errors>
-											</div>
+											
+												<div class="row">
+													<div class="col-sm-11">
+														<div class="md-form mt-0">
+															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
+															<label for="Country name">Name<span class="mandatory"> *</span></label>
+															<s:errors path="name" cssClass="error"></s:errors>
+														</div>									
+													</div>
+													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												</div>
+												
+												
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="acronym" id="acronym" maxlength="6" cssClass="form-control"/>
+														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
+														<s:errors path="acronym" cssClass="error"></s:errors>
+													</div>		
+												</div>
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+											</div>													
+											
 											<div class="form-group">
 												<s:checkbox path="inn" cssClass="inn"/>
 												<label>In use</label>
@@ -180,15 +194,27 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
-											<div class="md-form mt-0">
-												<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-												<label for="Country name">Name<span class="mandatory"> *</span></label>
-												<s:errors path="name" cssClass="error"></s:errors>
-											</div>											
-											<div class="md-form">
-												<s:input path="acronym" id="acronym" maxlength="3" autofocus="autofocus" cssClass="form-control"/>
-												<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-												<s:errors path="acronym" cssClass="error"></s:errors>
+											<div class="row">
+													<div class="col-sm-11">
+														<div class="md-form mt-0">
+															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
+															<label for="Country name">Name<span class="mandatory"> *</span></label>
+															<s:errors path="name" cssClass="error"></s:errors>
+														</div>									
+													</div>
+													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												</div>
+												
+												
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="acronym" id="acronym" maxlength="5" autofocus="autofocus" cssClass="form-control"/>
+														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
+														<s:errors path="acronym" cssClass="error"></s:errors>
+													</div>		
+												</div>
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
@@ -216,11 +242,11 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
-											<div class="mt-0">
-												<input id="name" class="form-control" readonly/>
+											<div class="md-form mt-0">
+												<input id="name" autofocus="autofocus" class="form-control text-capitalize" readonly/>
+												<label>Name</label>
 											</div>
-											<p>Are you sure you want to delete these Records?</p>
-											<p class="text-warning"><small>This action cannot be undone.</small></p>
+											<p>Are you sure you want to deactivate these Record ?</p>
 										</div>
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -241,35 +267,37 @@ pageEncoding="ISO-8859-1"%>
 		</div>
 		<!-- Container Fluid -->
 	</div>
-	
+
 		<c:if test="${updated != null }">
-			<div class="toast" id="Toast" style="position:absolute;right: 20px;bottom:20px;width:300px;display:block;">
+			<div class="toast" id="Toast" style="position: absolute; right: 20px; bottom: 20px; width: 300px; display: block;">
 				<div class="toast-header white-text bg-warning pt-2">
 					<h5 class="mr-auto">Notification</h5>
-				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      	<span aria-hidden="true">&times;</span>
-				    </button>
+					<button type="button" class="ml-2 mb-1 close white-text"
+						data-dismiss="toast">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="toast-body py-2">
-            		<div>Updated Successfully.</div>
-        		</div>
+					<div>Degree Details are Updated Successfully.</div>
+				</div>
 			</div>
 		</c:if>
-		
+
 		<c:if test="${added != null }">
-			<div class="toast" id="Toast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
+			<div class="toast" id="Toast" style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 				<div class="toast-header white-text pt-2 bg-success">
 					<h5 class="mr-auto">Notification</h5>
-				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      	<span aria-hidden="true">&times;</span>
-				    </button>
+					<button type="button" class="ml-2 mb-1 close white-text"
+						data-dismiss="toast">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
 				<div class="toast-body py-2">
-            		<div>Degree Added Successfully.</div>
-        		</div>
+					<div>Degree Details are Added Successfully.</div>
+				</div>
 			</div>
 		</c:if>
-		
+
 		<c:if test="${deleted != null }">
 			<div class="toast" id="Toast" style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 				<div class="toast-header white-text bg-danger pt-2">
@@ -280,12 +308,12 @@ pageEncoding="ISO-8859-1"%>
 					</button>
 				</div>
 				<div class="toast-body py-2">
-					<div>Deactivated Successfully.</div>
+					<div>Degree Deactivated Successfully.</div>
 				</div>
 			</div>
 		</c:if>
-		
-	<!-- Content -->
+
+		<!-- Content -->
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
@@ -343,6 +371,7 @@ pageEncoding="ISO-8859-1"%>
 			delay:5000
 		});
 		$('#Toast').toast('show');
+		$('[data-toggle="tooltip"]').tooltip();
 	}); 
 </script>
 </body>

@@ -18,6 +18,7 @@ public class Department {
 	int id;
 	
 	String name;
+	
 	String acronym;
 	
 	@ManyToOne(cascade= CascadeType.MERGE)
@@ -26,6 +27,15 @@ public class Department {
 	
 	int inn;
 
+	public Department() {}
+	
+	public Department(String name2, String acronym2, Degree degree2, int i) {
+		name = name2;
+		acronym = acronym2;
+		degree = degree2;
+		inn = i;
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -5,21 +5,24 @@ import javax.validation.constraints.Size;
 
 import com.project.customvalidator.Dot;
 import com.project.customvalidator.NotEmpty;
+import com.project.customvalidator.Select;
 
-public class AddDegree {
+public class AddDepartment {
 	
 	int id;
 	
-	@NotEmpty(message="* Enter the name")
-	@Size(min=10,message="* Enter minimum 10 characters")
+	@NotEmpty(message="* Please enter department name")
 	@Pattern(regexp = "^[a-zA-Z\\s]*$",message="Enter Alphabet only")
 	String name;
 	
 	@Dot(message="* Please enter . (Dot) at valid place")
-	@NotEmpty(message="* Enter the acronym")
-	@Size(min=2,message="* Please enter mininum 2 characters")
-	@Pattern(regexp = "^[a-zA-Z\\.]*$",message="Enter Alphabet only")
+	@NotEmpty(message="* Please enter acronym")
+	@Size(min=2,message="* Please enter minimum 2 characters")
+	@Pattern(regexp = "^[a-zA-Z\\.{3}]*$",message="Enter Alphabet only")
 	String acronym;
+	
+	@Select(message="* Please select degree")
+	Integer degree;
 	
 	boolean inn;
 
@@ -45,6 +48,14 @@ public class AddDegree {
 
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
+	}
+
+	public Integer getDegree() {
+		return degree;
+	}
+
+	public void setDegree(Integer degree) {
+		this.degree = degree;
 	}
 
 	public boolean isInn() {
