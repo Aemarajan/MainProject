@@ -20,9 +20,7 @@ public class Regulation {
 
 	public Regulation() {
 	}
-	
-	public Regulation(int id, String name, String acronym, int inn) {
-		this.id = id;
+	public Regulation(String name, String acronym, int inn) {
 		this.name = name;
 		this.acronym = acronym;
 		this.inn = inn;
