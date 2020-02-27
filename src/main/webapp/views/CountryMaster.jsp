@@ -85,7 +85,7 @@ pageEncoding="ISO-8859-1"%>
 										
 										<div class="modal-body">
 
-											<c:if test="${existAcronym != null }">
+											<c:if test="${addExistAcronym != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -99,7 +99,7 @@ pageEncoding="ISO-8859-1"%>
 												</div>
 											</c:if>
 
-											<c:if test="${existCountry != null }">
+											<c:if test="${addExistCountry != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -152,7 +152,7 @@ pageEncoding="ISO-8859-1"%>
 															
 										<div class="modal-body">
 											
-											<c:if test="${existAcronym != null }">
+											<c:if test="${editExistAcronym != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -166,7 +166,7 @@ pageEncoding="ISO-8859-1"%>
 												</div>
 											</c:if>
 											
-											<c:if test="${existCountry != null }">
+											<c:if test="${editExistCountry != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>

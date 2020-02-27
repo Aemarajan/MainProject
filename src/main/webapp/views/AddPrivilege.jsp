@@ -22,13 +22,7 @@
 			<form action="createPrivilege" method="post">
 				<div style="margin-left:40px;" class="mt-2 mb-2">
 					<h5>Username</h5>
-					
-					<select name="id" class="form-control" style="width: 270px;">
-					<option>-- select --</option>
-					<c:forEach items="${user }" var="useri">
-						<option value="${useri.user_id }">${useri.username } (${useri.email })</option>
-					</c:forEach>
-				</select>
+					<select name="id" id="users" class="browser-default custom-select" style="width: 270px;"></select>
 				</div>
 				
 				<div class="row">
@@ -136,6 +130,22 @@
 <script>
 	$(document).ready(function(){
     	$('#header').load("http://localhost:8080/header");
+
+    	var varurl = "http://localhost:8080/api/getUserPp0";
+        var users = $('#users');
+        $.ajax({
+            type: 'GET',
+            url: varurl,
+            async: true,
+            success: function(result){
+                var output = "<option value='0'> -- Select -- </option>";
+                for(var i in result){
+                    output+="<option value=" + result[i].user_id + ">" + result[i].username + "<span> [ " + result[i].email + " ] </span>" + "</option>";
+                }
+                users.html(output);
+            }
+        });
+
     	$('#Toast').toast({
 			delay:5000
 		});

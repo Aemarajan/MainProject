@@ -88,7 +88,7 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										<div class="modal-body">
 											
-											<c:if test="${existAcronym != null }">
+											<c:if test="${addExistAcronym != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -103,7 +103,7 @@ pageEncoding="ISO-8859-1"%>
 												</div>
 											</c:if>
 											
-											<c:if test="${existCommunity != null }">
+											<c:if test="${addExistCommunity != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -120,16 +120,30 @@ pageEncoding="ISO-8859-1"%>
 										
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id"/>					
-											<div class="md-form mt-0">
-												<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
-												<label for="name">Name<span class="mandatory"> *</span></label>
-												<s:errors path="name" cssClass="error"></s:errors>
-											</div>											
-											<div class="md-form">
-												<s:input path="acronym" maxlength="3" cssClass="form-control"/>
-												<label for="acronym">Acronym<span class="mandatory"> *</span></label>
-												<s:errors path="acronym" cssClass="error"></s:errors>
+											<s:hidden path="id"/>
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+														<label for="name">Name<span class="mandatory"> *</span></label>
+														<s:errors path="name" cssClass="error"></s:errors>
+													</div>		
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : Backward Class"><i class="fa fa-info mt-4"></i></a>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="acronym" maxlength="3" cssClass="form-control"/>
+														<label for="acronym">Acronym<span class="mandatory"> *</span></label>
+														<s:errors path="acronym" cssClass="error"></s:errors>
+													</div>	
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : BC"><i class="fa fa-info mt-4"></i></a>
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" cssClass="inn"/>
@@ -189,15 +203,29 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id" id="id"/>					
-											<div class="md-form mt-0">
-												<s:input path="name" autofocus="autofocus" cssClass="form-control" id="name"/>
-												<label for="name">Name<span class="mandatory"> *</span></label>
-												<s:errors path="name" cssClass="error"></s:errors>
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+														<label for="name">Name<span class="mandatory"> *</span></label>
+														<s:errors path="name" cssClass="error"></s:errors>
+													</div>		
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : Backward Class"><i class="fa fa-info mt-4"></i></a>
+												</div>
 											</div>
-											<div class="md-form">
-												<s:input path="acronym" maxlength="3" autofocus="autofocus" cssClass="form-control" id="acronym"/>
-												<label for="acronym">Acronym<span class="mandatory"> *</span></label>
-												<s:errors path="acronym" cssClass="error"></s:errors>
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="acronym" autofocus="autofocus" maxlength="3" cssClass="form-control"/>
+														<label for="acronym">Acronym<span class="mandatory"> *</span></label>
+														<s:errors path="acronym" cssClass="error"></s:errors>
+													</div>	
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : BC"><i class="fa fa-info mt-4"></i></a>
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
@@ -360,6 +388,7 @@ pageEncoding="ISO-8859-1"%>
 			delay:5000
 		});
 		$('#Toast').toast('show');
+		$('[data-toggle = "tooltip"]').tooltip();
 	}); 
 </script>
 </body>

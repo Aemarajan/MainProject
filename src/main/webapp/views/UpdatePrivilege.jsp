@@ -24,9 +24,9 @@
 	
 	<div class="content">
 		<div class="container-fluid">
-			<div class="row">
+			<div class="row mt-2 mb-2">
 				<div class="col col-md-3.5"></div>
-				<div class="col col-md-5 mt-2 mb-2">
+				<div class="col col-md-5">
 					<div class="card mt-4">
 						<h5 class="card-head info-color white-text text-center py-4">
 							<strong>Update Privilege</strong>
@@ -34,34 +34,14 @@
 						<div class="card-body px-lg-5 pt-0">
 							<form style="color: #757575;" action="getUserPrivilege" method="post">
 								
-								<c:if test="${error != null }">
-									<div class="toast" id="Toast">
-										<div class="toast-header white-text pt-2 bg-danger">
-											<h5 class="mr-auto">Error</h5>
-											<button type="button" class="ml-2 mb-1 close white-text"
-												data-dismiss="toast">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="toast-body py-2">
-											<div>Something went wrong in Updating the Privilege. Try to update Again... </div>
-										</div>
-									</div>
-								</c:if>
-								
 								<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be selected</label>
 										
-								<div class="md-form mt-0">
+								<div class="mt-0">
                       				<label><strong>User</strong><span class="mandatory"> *</span></label>
-                    			</div><br>
+                    			</div>
 										
 								<div class="md-form mt-0">
-									<select name="user_id" class="browser-default custom-select">
-										<option selected disabled>-- Select --</option>
-											<c:forEach items="${list }" var="user">
-												<option value="${user.user_id }">${user.username} [ ${user.email } ]</option>
-											</c:forEach>
-									</select>
+									<select name="user_id" id="users" class="browser-default custom-select"></select>
 								</div>
 								
 								<!-- Sign up button -->
@@ -81,7 +61,24 @@
 		<!-- container fluid -->
 	</div>
 	<!-- content -->
-	<div class="footer">
+	
+	<c:if test="${success != null }">
+		<div class="toast" id="Toast" 
+			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>User Privilege Updated Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+	
+	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
 </div>
@@ -96,6 +93,21 @@
         	$('#header').load("http://localhost:8080/header");
     	});
 
+    	var varurl = "http://localhost:8080/api/getUserPp1";
+        var users = $('#users');
+        $.ajax({
+            type: 'GET',
+            url: varurl,
+            async: true,
+            success: function(result){
+                var output = "<option value='0'> -- Select -- </option>";
+                for(var i in result){
+                    output+="<option value=" + result[i].user_id + ">" + result[i].username + "<span> [ " + result[i].email + " ] </span>" + "</option>";
+                }
+                users.html(output);
+            }
+        });
+		
     	$('#Toast').toast({
 			delay:5000
         });
