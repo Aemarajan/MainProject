@@ -138,7 +138,7 @@ public class MasterController {
 			mv.setViewName("BatchMaster");
 			mv.addObject("list", batchService.selectAll());
 			mv.addObject("addError", "error");
-			mv.addObject("exist", "already exist");
+			mv.addObject("addExist", "already exist");
 			return mv;
 		}
 		int f_year = Integer.parseInt(batch.getFrom_year());
@@ -160,7 +160,7 @@ public class MasterController {
 		mv.setViewName("BatchMaster");
 		mv.addObject("list", batchService.selectAll());
 		mv.addObject("addError", "error");
-		mv.addObject("invalidYear", "Invalid year");
+		mv.addObject("addInvalidYear", "Invalid year");
 		return mv;
 	}
 	
@@ -268,7 +268,7 @@ public class MasterController {
 			if(b.getName().contentEquals(blood.getName())) {
 				mv.setViewName("BloodGroupMaster");
 				mv.addObject("list", bloodgroupService.selectAll());
-				mv.addObject("exist", "error");
+				mv.addObject("addExist", "error");
 				mv.addObject("addError", "error");
 				return  mv;
 			}
@@ -367,7 +367,7 @@ public class MasterController {
 			mv.setViewName("CommunityMaster");
 			mv.addObject("list", communityService.selectAll());
 			mv.addObject("addError", "Error in add");
-			mv.addObject("existCommunity", "already exist");
+			mv.addObject("addExistCommunity", "already exist");
 			return mv;
 		}
 		Community exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
@@ -375,7 +375,7 @@ public class MasterController {
 			mv.setViewName("CommunityMaster");
 			mv.addObject("list", communityService.selectAll());
 			mv.addObject("addError", "Error in add");
-			mv.addObject("existAcronym", "already exist");
+			mv.addObject("addExistAcronym", "already exist");
 			return mv;
 		}
 		Community cm = new Community();
@@ -478,13 +478,13 @@ public class MasterController {
 				mv.setViewName("CountryMaster");
 				mv.addObject("list", countryService.selectAll());
 				mv.addObject("addError","error");
-				mv.addObject("existCountry", "exist");
+				mv.addObject("addExistCountry", "exist");
 				return mv;
 			}else if(country.getAcronym().equalsIgnoreCase(c.getAcronym())) {
 				mv.setViewName("CountryMaster");
 				mv.addObject("list", countryService.selectAll());
 				mv.addObject("addError","error");
-				mv.addObject("existAcronym", "exist");
+				mv.addObject("addExistAcronym", "exist");
 				return mv;
 			}
 		}
@@ -514,13 +514,13 @@ public class MasterController {
 				mv.setViewName("CountryMaster");
 				mv.addObject("list", countryService.selectAll());
 				mv.addObject("editError", "error");
-				mv.addObject("existCountry", "exist");
+				mv.addObject("edirExistCountry", "exist");
 				return mv;
 			}else if(c.getAcronym().equalsIgnoreCase(country.getAcronym())) {
 				mv.setViewName("CountryMaster");
 				mv.addObject("list", countryService.selectAll());
 				mv.addObject("editError", "error");
-				mv.addObject("existAcronym", "exist");
+				mv.addObject("editExistAcronym", "exist");
 				return mv;
 			}
 		}

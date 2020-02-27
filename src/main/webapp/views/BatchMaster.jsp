@@ -83,8 +83,7 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										
 										<div class="modal-body">
-											
-											<c:if test="${exist != null }">
+											<c:if test="${addExist != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -98,8 +97,7 @@ pageEncoding="ISO-8859-1"%>
 													</div>
 												</div>
 											</c:if>
-											
-											<c:if test="${invalidYear != null }">
+											<c:if test="${addInvalidYear != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -116,16 +114,31 @@ pageEncoding="ISO-8859-1"%>
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id"/>					
-											<div class="md-form mt-0">
-												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
-												<label for="From Year">From Year<span class="mandatory"> *</span></label>
-												<s:errors path="from_year" cssClass="error"></s:errors>
-											</div>											
-											<div class="md-form">
-												<s:input path="to_year" maxlength="4" cssClass="form-control"/>
-												<label for="To Year">To Year<span class="mandatory"> *</span></label>
-												<s:errors path="to_year" cssClass="error"></s:errors>
+											<s:hidden path="id"/>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<label for="From Year">From Year<span class="mandatory"> *</span></label>
+														<s:errors path="from_year" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="to_year" maxlength="4" cssClass="form-control"/>
+														<label for="To Year">To Year<span class="mandatory"> *</span></label>
+														<s:errors path="to_year" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>	
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" cssClass="inn"/>
@@ -183,17 +196,30 @@ pageEncoding="ISO-8859-1"%>
 											</c:if>		
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
-											
 											<s:hidden path="id" id="id"/>					
-											<div class="md-form mt-0">
-												<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="from_year"/>
-												<label for="From Year">From Year<span class="mandatory"> *</span></label>
-												<s:errors path="from_year" cssClass="error"></s:errors>
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<label for="From Year">From Year<span class="mandatory"> *</span></label>
+														<s:errors path="from_year" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+												</div>
 											</div>
-											<div class="md-form">
-												<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control" id="to_year"/>
-												<label for="To Year">To Year<span class="mandatory"> *</span></label>
-												<s:errors path="to_year" cssClass="error"></s:errors>
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<label for="To Year">To Year<span class="mandatory"> *</span></label>
+														<s:errors path="to_year" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>	
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
@@ -355,6 +381,8 @@ pageEncoding="ISO-8859-1"%>
 			delay:5000
 		});
 		$('#Toast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
 	}); 
 </script>
 </body>

@@ -129,6 +129,7 @@
                     $('.rlab').hide();
                 }
             });
+
             var varurl = "http://localhost:8080/api/getAllLevelOneByDd";
             var lvl1 = $('#lvl1');
             $.ajax({

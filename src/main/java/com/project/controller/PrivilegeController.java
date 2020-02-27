@@ -58,11 +58,10 @@ public class PrivilegeController {
 	}
 
 	@RequestMapping("createPrivilege")
-	public ModelAndView createPrivilege(@RequestParam(value = "menu_id", required = false) int[] check,
-			@RequestParam("id") int id,HttpSession session) {
+	public ModelAndView createPrivilege(@RequestParam(value = "menu_id", required = false) int[] check,@RequestParam("id") int id,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("AddPrivilege");
+		ModelAndView m = new ModelAndView();
 		List<Menu> menuList = menuService.selectAll();
 		try {
 			int menuId[] = new int[menuList.size()];
@@ -97,9 +96,10 @@ public class PrivilegeController {
 				}
 			}
 			userService.updatePrivilegeProvide(id,1);
+			m.setViewName("AddPrivilege");
 			m.addObject("added","added");
 		} catch (NullPointerException e) {
-			System.out.println(e);
+			m.setViewName("AddPrivilege");
 			m.addObject("error", e);
 		}
 		return m;
@@ -117,8 +117,9 @@ public class PrivilegeController {
 	public ModelAndView updatePrivilegeForm(HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("UpdatePrivilege");
+		ModelAndView m = new ModelAndView();
 		List<User> userList = userService.selectByPp(1);
+		m.setViewName("UpdatePrivilege");
 		m.addObject("list", userList);
 		return m;
 	}
@@ -127,7 +128,8 @@ public class PrivilegeController {
 	public ModelAndView getUserPrivilege(User user,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView model = new ModelAndView("ModifyPrivilege");
+		ModelAndView model = new ModelAndView();
+		model.setViewName("ModifyPrivilege");
 		model.addObject("pri", privilegeService.selectByUserId(user.getUser_id()));
 		model.addObject("user", userService.findById(user.getUser_id()));
 		model.addObject("menu", menuService.selectAll());
@@ -138,10 +140,10 @@ public class PrivilegeController {
 	}
 	
 	@RequestMapping("UpdatePrivilege")
-	public ModelAndView updatePrivilege(@RequestParam int user_id,@RequestParam("menu_id") int[] check,HttpSession session) {
+	public ModelAndView updatePrivilege(@RequestParam int user_id,@RequestParam(value="menu_id", required = false) int[] check,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("UpdatePrivilege");
+		ModelAndView m = new ModelAndView();
 		try {
 		List<Menu> menuList = menuService.selectAll();
 		int menuid[] = new int[menuList.size()];
@@ -159,9 +161,10 @@ public class PrivilegeController {
 			}
 		}
 		}catch(NullPointerException e) {
-			m.setViewName("UpdatePrivilege");
+			m.setViewName("ModifyPrivilege");
 			m.addObject("error", "failure");
 		}
+		m.setViewName("UpdatePrivilege");
 		m.addObject("success", "success");
 		return m;
 	}
