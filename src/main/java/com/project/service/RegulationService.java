@@ -22,5 +22,10 @@ public class RegulationService {
 		List<Regulation> list = rgrepo.findAll();
 		return list;
 	}
+
+	public void saveRegulationMaster(String name, String acronym, boolean inn) {
+		Regulation r = new Regulation();
+		
+	}
 	
 }

@@ -50,6 +50,7 @@ import com.project.validator.AddBloodGroup;
 import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
+import com.project.validator.AddRegulation;
 
 @Controller
 public class MasterController {
@@ -722,22 +723,58 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetRegulationMaster")
-	public String getRegulationMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getRegulationMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;	
 		}
-		return "RegulationMaster";
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.setViewName("RegulationMaster");
+		mv.addObject("regulation", new AddRegulation());
+		mv.addObject("list", regulationService.selectAll());
+		return mv;
 	}
 	
 	@PostMapping("SaveRegulationMaster")
-	public ModelAndView saveRegulationMaster(Regulation rg,HttpSession session,ModelMap model) {
+	public ModelAndView saveRegulationMaster(@Valid @ModelAttribute("country")AddRegulation regulation,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		regulationService.saveRegulationMaster(rg);
-			
-		ModelAndView mv = new ModelAndView("RegulationMaster");
-		mv.addObject("added", "Success Message");
+		if(result.hasErrors()) {
+			mv.setViewName("RegulationMaster");
+			mv.addObject("list", regulationService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<Regulation> exist = regulationService.selectAll();
+		for(Regulation r : exist) {
+			if(r.getName().replaceAll("\\s", "").equalsIgnoreCase(regulation.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("RegulationMaster");
+				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("addError","error");
+				mv.addObject("addExistCountry", "exist");
+				return mv;
+			}else if(r.getAcronym().equalsIgnoreCase(regulation.getAcronym())) {
+				mv.setViewName("RegulationMaster");
+				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("addError","error");
+				mv.addObject("addExistAcronym", "exist");
+				return mv;
+			}
+		}
+		regulationService.saveRegulationMaster(regulation.getName().toLowerCase(),regulation.getAcronym().toUpperCase(),regulation.isInn());
+		mv.setViewName("redirect:/GetRegulationMaster");
+		mv.addObject("added", "success");
 		return mv;
 	}
 	

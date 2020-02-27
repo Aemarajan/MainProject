@@ -17,7 +17,16 @@ public class Regulation {
 	String name;
 	String acronym;
 	int inn;
+
+	public Regulation() {
+	}
 	
+	public Regulation(int id, String name, String acronym, int inn) {
+		this.id = id;
+		this.name = name;
+		this.acronym = acronym;
+		this.inn = inn;
+	}
 	public int getId() {
 		return id;
 	}
