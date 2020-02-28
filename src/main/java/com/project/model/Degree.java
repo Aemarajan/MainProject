@@ -20,10 +20,10 @@ public class Degree {
 	
 	public Degree(){}
 	
-	public Degree(String name2, String acronym2, int i) {
+	public Degree(String name2, String acronym2, int inn2) {
 		name = name2;
 		acronym = acronym2;
-		inn = i;
+		inn = inn2;
 	}
 	
 	public int getId() {

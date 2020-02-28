@@ -124,7 +124,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
 														<label for="name">Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>		
@@ -136,7 +136,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" maxlength="3" cssClass="form-control"/>
+														<s:input path="acronym" id="acronym" maxlength="3" cssClass="form-control"/>
 														<label for="acronym">Acronym<span class="mandatory"> *</span></label>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>	
@@ -206,7 +206,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
 														<label for="name">Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>		
@@ -218,7 +218,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" autofocus="autofocus" maxlength="3" cssClass="form-control"/>
+														<s:input path="acronym" id="acronym" autofocus="autofocus" maxlength="3" cssClass="form-control"/>
 														<label for="acronym">Acronym<span class="mandatory"> *</span></label>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>	

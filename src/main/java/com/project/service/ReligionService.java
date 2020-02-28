@@ -14,12 +14,25 @@ public class ReligionService {
 	@Autowired
 	ReligionRepository rgrepo;
 
-	public void saveReligionMaster(Religion rg) {
-		rgrepo.save(rg);
-	}
-	
 	public List<Religion> selectAll(){
 		List<Religion> list = rgrepo.findAll();
 		return list;
+	}
+	
+	public void saveReligionMaster(String name,boolean inn) {
+		Religion r = new Religion(name,inn?1:0);
+		rgrepo.save(r);
+	}
+	
+	public void update(int id, String name,boolean inn) {
+		rgrepo.update(id,name,inn?1:0);
+	}
+
+	public List<Religion> selectAllExceptId(int id) {
+		return rgrepo.findAllExceptId(id);
+	}
+
+	public void updateInnZero(int id, int i) {
+		rgrepo.updateInnZero(id,i);
 	}
 }

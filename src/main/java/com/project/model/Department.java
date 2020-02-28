@@ -29,11 +29,11 @@ public class Department {
 
 	public Department() {}
 	
-	public Department(String name2, String acronym2, Degree degree2, int i) {
+	public Department(String name2, String acronym2, Degree degree2, int inn2) {
 		name = name2;
 		acronym = acronym2;
 		degree = degree2;
-		inn = i;
+		inn = inn2;
 	}
 	
 	public int getId() {

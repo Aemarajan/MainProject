@@ -100,7 +100,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
 														<label for="Name">Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>
@@ -154,7 +154,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
 														<label for="Name">Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>

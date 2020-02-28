@@ -17,6 +17,14 @@ public class Religion {
 	String name;
 	int inn;
 	
+	public Religion() {
+		super();
+	}
+	public Religion(String name, int inn) {
+		super();
+		this.name = name;
+		this.inn = inn;
+	}
 	public int getId() {
 		return id;
 	}
