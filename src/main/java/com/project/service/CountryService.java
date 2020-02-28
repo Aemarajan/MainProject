@@ -50,5 +50,15 @@ public class CountryService {
 	public List<Country> selectAllExceptId(int id) {
 		return cnrepo.findAllExceptId(id);
 	}
+
+	public Country selectById(Integer country) {
+		List<Country> list = cnrepo.findAll();
+		for(Country c1 : list) {
+			if(c1.getId() == (int) country) {
+				return c1;
+			}
+		}
+		return null;
+	}
 	
 }

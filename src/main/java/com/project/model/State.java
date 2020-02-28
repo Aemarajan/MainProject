@@ -26,6 +26,14 @@ public class State {
 	
 	int inn;
 
+	public State() {}
+	
+	public State(String name2, String acronym2, Country country2, int i) {
+		name = name2;
+		acronym = acronym2;
+		country = country2;
+		inn = i;
+	}
 	public int getId() {
 		return id;
 	}

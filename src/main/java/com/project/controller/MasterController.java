@@ -51,6 +51,7 @@ import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
 import com.project.validator.AddDepartment;
+import com.project.validator.AddState;
 
 @Controller
 public class MasterController {
@@ -803,26 +804,111 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetStateMaster")
-	public ModelAndView getStateMaster(HttpSession session) {
+	public ModelAndView getStateMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
 			mv.addObject("session", "destroy");
 			return mv;
 		}
+		if(!(added == null))
+			mv.addObject("added","success");
+		if(!(updated == null))
+			mv.addObject("updated","success");
+		if(!(deleted == null))
+			mv.addObject("deleted","success");
+		
 		mv.setViewName("StateMaster");
+		mv.addObject("state", new AddState());
+		mv.addObject("list", stateService.selectAll());
 		return mv;
 	}
 	
-	@PostMapping("SaveStateMaster")
-	public ModelAndView saveStateMaster(State st,HttpSession session,ModelMap model) {
+	@PostMapping("SaveState")
+	public ModelAndView saveStateMaster(@Valid @ModelAttribute("state")AddState state, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		stateService.saveStateMaster(st);
-			
-		ModelAndView mv = new ModelAndView("StateMaster");
+		if(result.hasErrors()) {
+			mv.setViewName("StateMaster");
+			mv.addObject("addError", "error");
+			mv.addObject("list", stateService.selectAll());
+			return mv;
+		}
+		List<State> list = stateService.selectAll();
+		for(State s : list) {
+			if(s.getName().replaceAll("\\s", "").equalsIgnoreCase(state.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("StateMaster");
+				mv.addObject("addError", "error");
+				mv.addObject("list", stateService.selectAll());
+				mv.addObject("addExistState", "exist");
+				return mv;
+			}else if(s.getAcronym().equalsIgnoreCase(state.getAcronym().replaceAll("\\s", ""))) {
+				mv.setViewName("StateMaster");
+				mv.addObject("addError", "error");
+				mv.addObject("list", stateService.selectAll());
+				mv.addObject("addExistAcronym", "exist");
+				return mv;
+			}
+		}
+		stateService.saveState(state.getName().toLowerCase(),state.getAcronym().toUpperCase().replaceAll("\\s", ""),countryService.selectById(state.getCountry()),state.isInn());
+		mv.setViewName("redirect:/GetStateMaster");
 		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("EditState")
+	public ModelAndView editState(@Valid @ModelAttribute("state") AddState state, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.addObject("editError", "error");
+			mv.addObject("list", stateService.selectAll());
+			mv.setViewName("StateMaster");
+			return mv;
+		}
+		List<State> exist = stateService.selectAllExceptId(state.getId());
+		for(State s : exist) {
+			if(s.getCountry().getId() == (int) state.getCountry()) {
+				if(s.getName().replaceAll("\\s", "").equalsIgnoreCase(state.getName().replaceAll("\\s", ""))) {
+					mv.setViewName("StateMaster");
+					mv.addObject("editError", "error");
+					mv.addObject("list", stateService.selectAll());
+					mv.addObject("editExistState", "exist");
+					return mv;
+				}else if(s.getAcronym().equalsIgnoreCase(state.getAcronym().replaceAll("\\s\\.", ""))) {
+					mv.setViewName("StateMaster");
+					mv.addObject("editError", "error");
+					mv.addObject("list", stateService.selectAll());
+					mv.addObject("editExistAcronym", "exist");
+					return mv;
+				}
+			}
+		}
+		stateService.update(state.getName().toLowerCase(), state.getAcronym().toUpperCase().replaceAll("\\s\\.", ""),state.getCountry(),state.isInn(),state.getId());
+		mv.setViewName("redirect:/GetStateMaster");
+		mv.addObject("updated", "success");
+		return mv;
+	}
+	
+	@PostMapping("DeleteState")
+	public ModelAndView deleteState(@RequestParam("id") int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		stateService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetStateMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	

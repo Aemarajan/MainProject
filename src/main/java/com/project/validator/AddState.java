@@ -1,30 +1,29 @@
 package com.project.validator;
 
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
-import com.project.customvalidator.Dot;
 import com.project.customvalidator.NotEmpty;
 import com.project.customvalidator.Select;
 
-public class AddDepartment {
-	
+public class AddState {
+
 	int id;
 	
-	@NotEmpty(message="* Please enter department name")
-	@Pattern(regexp = "^[a-zA-Z\\s]*$",message="Enter Alphabet only")
+	@Pattern(regexp = "^[a-zA-Z\\s]*$",message="* Enter Alphabet only")
+	@NotEmpty(message="* Please enter state name")
 	String name;
 	
-	@Dot(message="* Please enter . (Dot) at valid place")
-	@NotEmpty(message="* Please enter acronym")
-	@Size(min=2,message="* Please enter minimum 2 characters")
-	@Pattern(regexp = "^[a-zA-Z\\.]*$",message="Enter Alphabet only")
+	@Pattern(regexp = "^[a-zA-Z]*$",message="* Enter Alphabet only")
+	@NotEmpty(message="* Please enter acronym name")
 	String acronym;
 	
-	@Select(message="* Please select degree")
-	Integer degree;
+	@Select(message="* Please select country")
+	Integer country;
 	
 	boolean inn;
+	
+	public AddState() {
+	}
 
 	public int getId() {
 		return id;
@@ -50,12 +49,12 @@ public class AddDepartment {
 		this.acronym = acronym;
 	}
 
-	public Integer getDegree() {
-		return degree;
+	public Integer getCountry() {
+		return country;
 	}
 
-	public void setDegree(Integer degree) {
-		this.degree = degree;
+	public void setCountry(Integer country) {
+		this.country = country;
 	}
 
 	public boolean isInn() {
