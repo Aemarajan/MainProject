@@ -24,9 +24,6 @@ import com.project.model.Department;
 import com.project.model.Diploma;
 import com.project.model.District;
 import com.project.model.Grade;
-import com.project.model.Language;
-import com.project.model.MPhil;
-import com.project.model.PG;
 import com.project.model.Regulation;
 import com.project.model.Religion;
 import com.project.model.State;
@@ -51,6 +48,8 @@ import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
 import com.project.validator.AddRegulation;
+import com.project.validator.AddReligion;
+import com.project.validator.AddDepartment;
 
 @Controller
 public class MasterController {
@@ -304,7 +303,7 @@ public class MasterController {
 			if(b.getName().equalsIgnoreCase(blood.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("BloodGroupMaster");
 				mv.addObject("list", bloodgroupService.selectAll());
-				mv.addObject("edirExist", "error");
+				mv.addObject("editExist", "error");
 				mv.addObject("editError", "error");
 				return mv;			
 			}
@@ -565,7 +564,7 @@ public class MasterController {
 		return mv;
 	}
 	
-	@PostMapping("SaveDegree")
+	@PostMapping("SaveDegreeMaster")
 	public ModelAndView saveDegreeMaster(@Valid @ModelAttribute("degree")AddDegree degree,BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(result.hasErrors()) {
@@ -595,14 +594,14 @@ public class MasterController {
 				return mv;
 			}
 		}
-		degreeService.saveDegreeMaster(degree.getName().toLowerCase(),degree.getAcronym().toUpperCase(),degree.isInn());
+		degreeService.saveDegreeMaster(degree.getName().toLowerCase(),degree.getAcronym().toUpperCase().replaceAll("\\s", ""),degree.isInn());
 		mv.addObject("added", "Success Message");
 		mv.setViewName("redirect:/GetDegreeMaster");
 		return mv;
 	}
 	
 	@PostMapping("EditDegree")
-	public ModelAndView editDegree(@Valid @ModelAttribute("") AddDegree degree, BindingResult result, HttpSession session) {
+	public ModelAndView editDegree(@Valid @ModelAttribute("degree") AddDegree degree, BindingResult result, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(result.hasErrors()) {
 			mv.setViewName("DegreeMaster");
@@ -616,28 +615,149 @@ public class MasterController {
 			return mv;
 		}
 		
+		List<Degree> exist = degreeService.selectAllExceptId(degree.getId());
+		for(Degree d : exist) {
+			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(degree.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("DegreeMaster");
+				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistDegree","exist");
+				return mv;
+			}else if(d.getAcronym().toUpperCase().equalsIgnoreCase(degree.getAcronym().replaceAll("\\s", ""))) {
+				mv.setViewName("DegreeMaster");
+				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistAcronym","exist");
+				return mv;
+			}
+		}
+		degreeService.updateDegree(degree.getId(),degree.getName().toLowerCase(),degree.getAcronym().toUpperCase().replaceAll("\\s", ""),degree.isInn()?1:0);
 		mv.setViewName("redirect:/GetDegreeMaster");
 		mv.addObject("updated", "success");
 		return mv;
 	}
 	
-	@GetMapping("GetDepartmentMaster")
-	public String getDepartmentMaster(HttpSession session,ModelMap model) {
+	@PostMapping("DeleteDegree")
+	public ModelAndView deleteDegree(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("DegreeMaster");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "DepartmentMaster";
+		degreeService.updateInnZero(id);
+		mv.setViewName("redirect:/GetDegreeMaster");
+		mv.addObject("deleted", "success");
+		return mv;
 	}
 	
-	@PostMapping("SaveDepartmentMaster")
-	public ModelAndView saveDepartmentMaster(Department dpm,HttpSession session,ModelMap model) {
+	@GetMapping("GetDepartmentMaster")
+	public ModelAndView getDepartmentMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		departmentService.saveDepartmentMaster(dpm);
-			
-		ModelAndView mv = new ModelAndView("DepartmentMaster");
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.setViewName("DepartmentMaster");
+		mv.addObject("list", departmentService.selectAll());
+		mv.addObject("department", new AddDepartment());
+		return mv;
+	}
+	
+	@PostMapping("SaveDepartment")
+	public ModelAndView saveDepartmentMaster(@Valid @ModelAttribute("department")AddDepartment dept,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("DepartmentMaster");
+			mv.addObject("list", departmentService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<Department> list = departmentService.selectAll();
+		for(Department d : list) {
+			if(d.getDegree().getId() == (int) dept.getDegree()) {
+				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("addError", "error");
+					mv.addObject("addExistDepartment","error");
+					return mv;
+				}else if(d.getAcronym().equalsIgnoreCase(dept.getAcronym().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("addError", "error");
+					mv.addObject("addExistAcronym","error");
+					return mv;
+				}
+			}
+		}
+		departmentService.saveDepartmentMaster(dept.getName().toLowerCase(),dept.getAcronym().toUpperCase().replaceAll("\\s", ""),dept.getDegree(),dept.isInn());
+		mv.setViewName("redirect:/GetDepartmentMaster");
 		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("EditDepartment")
+	public ModelAndView editDepartment(@Valid @ModelAttribute("department")AddDepartment dept, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:./logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("DepartmentMaster");
+			mv.addObject("list", departmentService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		List<Department> exist = departmentService.selectAllExceptId(dept.getId());
+		for(Department d : exist) {
+			if(d.getDegree().getId() == (int) dept.getDegree()) {
+				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("editError", "error");
+					mv.addObject("editExistDepartment","error");
+					return mv;
+				}else if(d.getAcronym().equalsIgnoreCase(dept.getAcronym().replaceAll("\\s", ""))) {
+					mv.setViewName("DepartmentMaster");
+					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("editError", "error");
+					mv.addObject("editExistAcronym","error");
+					return mv;
+				}
+			}
+		}
+		departmentService.update(dept.getId(),dept.getName(),dept.getAcronym(),dept.getDegree(),dept.isInn());
+		mv.setViewName("redirect:/GetDepartmentMaster");
+		mv.addObject("updated", "success");
+		return mv;
+	}
+	
+	@PostMapping("DeleteDepartment")
+	public ModelAndView deleteDepartment(@RequestParam("id")int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:./logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		departmentService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetDepartmentMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	
@@ -670,7 +790,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("SaveDistrictMaster")
-	public ModelAndView saveDistrictMaster(District ds,HttpSession session,ModelMap model) {
+	public ModelAndView saveDistrictMaster(District ds,HttpSession session) {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
@@ -682,15 +802,19 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetStateMaster")
-	public String getStateMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getStateMaster(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "StateMaster";
+		mv.setViewName("StateMaster");
+		return mv;
 	}
 	
 	@PostMapping("SaveStateMaster")
-	public ModelAndView saveStateMaster(State st,HttpSession session,ModelMap model) {
+	public ModelAndView saveStateMaster(State st,HttpSession session) {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
@@ -710,7 +834,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("SaveGradeMaster")
-	public ModelAndView saveGradeMaster(Grade gd,HttpSession session,ModelMap model) {
+	public ModelAndView saveGradeMaster(Grade gd,HttpSession session) {
 		if(session.getAttribute("id") == null) {
 			return new ModelAndView("redirect:/logout");
 		}
@@ -743,7 +867,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("SaveRegulationMaster")
-	public ModelAndView saveRegulationMaster(@Valid @ModelAttribute("country")AddRegulation regulation,BindingResult result,HttpSession session) {
+	public ModelAndView saveRegulationMaster(@Valid @ModelAttribute("regulation")AddRegulation regulation,BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -762,7 +886,7 @@ public class MasterController {
 				mv.setViewName("RegulationMaster");
 				mv.addObject("list", regulationService.selectAll());
 				mv.addObject("addError","error");
-				mv.addObject("addExistCountry", "exist");
+				mv.addObject("addExistRegulation", "exist");
 				return mv;
 			}else if(r.getAcronym().equalsIgnoreCase(regulation.getAcronym())) {
 				mv.setViewName("RegulationMaster");
@@ -772,89 +896,153 @@ public class MasterController {
 				return mv;
 			}
 		}
-		regulationService.saveRegulationMaster(regulation.getName().toLowerCase(),regulation.getAcronym().toUpperCase(),regulation.isInn());
+		regulationService.saveRegulationMaster(regulation.getName().toLowerCase(),regulation.getAcronym().toUpperCase().replaceAll("\\s", ""),regulation.isInn());
 		mv.setViewName("redirect:/GetRegulationMaster");
 		mv.addObject("added", "success");
 		return mv;
 	}
 	
-	@GetMapping("GetLanguageMaster")
-	public String getLanguageMaster(HttpSession session,ModelMap model) {
+	@PostMapping("EditRegulation")
+	public ModelAndView editRegulation(@Valid @ModelAttribute("regulation")AddRegulation regulation,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "LanguageMaster";
-	}
-	
-	@PostMapping("SaveLanguageMaster")
-	public ModelAndView saveLanguageMaster(Language lg,HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+		if(result.hasErrors()) {
+			mv.setViewName("RegulationMaster");
+			mv.addObject("list", regulationService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
 		}
-		languageService.saveLanguageMaster(lg);
-			
-		ModelAndView mv = new ModelAndView("LanguageMaster");
-		mv.addObject("added", "Success Message");
+		List<Regulation> exist = regulationService.selectAllExceptId(regulation.getId());
+		for(Regulation r : exist) {
+			if(r.getName().equalsIgnoreCase(regulation.getName())) {
+				mv.setViewName("RegulationMaster");
+				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistRegulation", "exist");
+				return mv;
+			}else if(r.getAcronym().equalsIgnoreCase(regulation.getAcronym())) {
+				mv.setViewName("RegulationMaster");
+				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistAcronym", "exist");
+				return mv;
+			}
+		}
+		regulationService.update(regulation.getId(),regulation.getName(),regulation.getAcronym(),regulation.isInn());
+		mv.setViewName("redirect:/GetRegulationMaster");
+		mv.addObject("updated", "success");
 		return mv;
 	}
 	
-	@GetMapping("GetMPhilMaster")
-	public String getMPhilMaster(HttpSession session,ModelMap model) {
+	@PostMapping("DeleteRegulation")
+	public ModelAndView deleteRegulation(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("RegulationMaster");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "MPhilMaster";
-	}
-	
-	@PostMapping("SaveMPhilMaster")
-	public ModelAndView saveMPhilMaster(MPhil mp,HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
-		}
-		mphilService.saveMPhilMaster(mp);
-			
-		ModelAndView mv = new ModelAndView("MPhilMaster");
-		mv.addObject("added", "Success Message");
-		return mv;
-	}
-	
-	@GetMapping("GetPGMaster")
-	public String getPGMaster(HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
-		}
-		return "PGMaster";
-	}
-	
-	@PostMapping("SavePGMaster")
-	public ModelAndView savePGMaster(PG pg,HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
-		}
-		pgService.savePGMaster(pg);
-			
-		ModelAndView mv = new ModelAndView("PGMaster");
-		mv.addObject("added", "Success Message");
+		regulationService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetRegulationMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	
 	@GetMapping("GetReligionMaster")
-	public String getReligionMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getReligionMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;	
 		}
-		return "ReligionMaster";
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.setViewName("ReligionMaster");
+		mv.addObject("religion", new AddReligion());
+		mv.addObject("list", religionService.selectAll());
+		return mv;
 	}
 	
 	@PostMapping("SaveReligionMaster")
-	public ModelAndView saveReligionMaster(Religion rg,HttpSession session,ModelMap model) {
+	public ModelAndView saveReligionMaster(@Valid @ModelAttribute("religion")AddReligion religion,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		religionService.saveReligionMaster(rg);
-			
-		ModelAndView mv = new ModelAndView("ReligionMaster");
-		mv.addObject("added", "Success Message");
+		if(result.hasErrors()) {
+			mv.setViewName("ReligionMaster");
+			mv.addObject("list", religionService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<Religion> exist = religionService.selectAll();
+		for(Religion r : exist) {
+			if(r.getName().replaceAll("\\s", "").equalsIgnoreCase(religion.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("ReligionMaster");
+				mv.addObject("list", religionService.selectAll());
+				mv.addObject("addError","error");
+				mv.addObject("addExist", "exist");
+				return mv;
+			}
+		}
+		religionService.saveReligionMaster(religion.getName().toLowerCase(),religion.isInn());
+		mv.setViewName("redirect:/GetReligionMaster");
+		mv.addObject("added", "success");
+		return mv;
+	}
+
+	@PostMapping("EditReligion")
+	public ModelAndView editReligion(@Valid @ModelAttribute("religion")AddReligion religion,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("ReligionMaster");
+			mv.addObject("list", religionService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		List<Religion> list = religionService.selectAllExceptId(religion.getId());
+		for(Religion r : list) {
+			if(r.getName().equalsIgnoreCase(religion.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("ReligionMaster");
+				mv.addObject("list", religionService.selectAll());
+				mv.addObject("editExist", "error");
+				mv.addObject("editError", "error");
+				return mv;			
+			}
+		}
+		religionService.update(religion.getId(), religion.getName().toLowerCase(), religion.isInn());
+		mv.setViewName("redirect:/GetReligionMaster");
+		mv.addObject("updated", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("DeleteReligion")
+	public ModelAndView deleteReligion(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		religionService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetReligionMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 }

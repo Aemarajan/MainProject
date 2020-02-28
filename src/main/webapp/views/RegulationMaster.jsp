@@ -51,7 +51,8 @@
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td>${l.name }</td>
+										<td class="text-capitalize">${l.name }</td>
+										<td>${l.acronym }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  Inactive</span></c:if>
@@ -69,7 +70,7 @@
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveRegulationMaster" method="post" modelAttribute="bloodgroup">
+									<s:form action="SaveRegulationMaster" method="post" modelAttribute="regulation">
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Regulation</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -77,7 +78,7 @@
 										
 										<div class="modal-body">
 											
-											<c:if test="${addExist != null }">
+											<c:if test="${addExistRegulation != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -88,6 +89,21 @@
 													</div>
 													<div class="toast-body py-2">
 														<div>Regulation Already Exist, Enter New Regulation...</div>
+													</div>
+												</div>
+											</c:if>
+											
+											<c:if test="${addExistAcronym != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Acronym Already Exist, Enter New Acronym...</div>
 													</div>
 												</div>
 											</c:if>
@@ -137,14 +153,14 @@
 						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="EditRegulation" method="post" modelAttribute="bloodgroup">
+									<s:form action="EditRegulation" method="post" modelAttribute="regulation">
 										<div class="modal-header">						
 											<h4 class="modal-title">Edit Regulation</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${editExist != null }">
+											<c:if test="${editExistRegulation != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -157,14 +173,29 @@
 														<div>Regulation Already Exist, Enter New Regulation...</div>
 													</div>
 												</div>
-											</c:if>		
+											</c:if>	
+											
+											<c:if test="${editExistAcronym != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Acronym Already Exist, Enter New Acronym...</div>
+													</div>
+												</div>
+											</c:if>	
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											<s:hidden path="id" id="id"/>					
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
 														<label for="Name">Regulation Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>
@@ -176,7 +207,7 @@
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" autofocus="autofocus" maxlength="5" cssClass="form-control"/>
+														<s:input path="acronym" id="acronym" autofocus="autofocus" maxlength="5" cssClass="form-control"/>
 														<label for="acronym">Acronym<span class="mandatory"> *</span></label>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>
@@ -283,6 +314,18 @@
       
 	<jsp:include page="Footer.jsp" />
 </div>
+<c:if test="${addError != null }"> 
+	<script type="text/javascript">
+		$('#addModal').modal('show');
+	</script>
+</c:if>
+
+<c:if test="${editError != null }"> 
+	<script type="text/javascript">
+		$('#editModal').modal('show');
+	</script>
+</c:if>
+
 <!-- End your project here-->
   
 <!-- jQuery -->
@@ -290,17 +333,42 @@
 <script type="text/javascript" src="js/popper.min.js"></script>
 <script type="text/javascript" src="js/bootstrap.min.js"></script>
 <script type="text/javascript" src="js/mdb.min.js"></script>
-
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+		$('.inn').prop('checked',true);
+		$('#editModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var name = button.data('name'); 
+			var acronym = button.data('acronym');
+			var inn = button.data('inn');
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#name').val(name);
+			modal.find('#acronym').val(acronym);
+			if(inn == 1)
+				modal.find('#inn').prop('checked',true);
+			else
+				modal.find('#inn').prop('checked',false);
+		});
+		$('#deleteModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var name = button.data('name'); 
+			var to = button.data('to');
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#name').val(name);
+		});
 
-      	$('#Toast').toast({
+		$('#Toast').toast({
 			delay:5000
 		});
 		$('#Toast').toast('show');
+
 		$('[data-toggle = "tooltip"]').tooltip();
-    });
+	}); 
 </script>
 </body>
 </html>

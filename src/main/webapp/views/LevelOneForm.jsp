@@ -38,21 +38,6 @@
                 		<div class="card-body px-lg-5 pt-0 open-sans">
                   			<!-- Form -->
                   			<s:form action="saveLvl1" modelAttribute="levelOne">
-                  				<c:if test="${temp != null }">
-									<div class="toast" id="LongToast">
-										<div class="toast-header white-text pt-2 bg-success">
-											<h5 class="mr-auto">Notification</h5>
-											<button type="button" class="ml-2 mb-1 close white-text"
-												data-dismiss="toast">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="toast-body py-2">
-											<div>Level One Header added. And add Level Two To <a class="alert-link" href="LevelTwoForm">click here</a></div>
-										</div>
-									</div>
-								</c:if>
-                    			
                     			<c:if test="${exist != null }">
 									<div class="toast" id="Toast">
 										<div class="toast-header white-text pt-2 bg-success">
@@ -121,6 +106,25 @@
 			</div>
 			<div class="toast-body py-2">
 				<div>Level One Header Added Successfully.</div>
+			</div>
+		</div>
+	</c:if>
+
+	<c:if test="${temp != null }">
+		<div class="toast" id="LongToast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-success">
+				<h5 class="mr-auto">Notification</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>
+					Level One Header added. And add Level Two To <a class="alert-link"
+						href="LevelTwoForm">click here</a>
+				</div>
 			</div>
 		</div>
 	</c:if>

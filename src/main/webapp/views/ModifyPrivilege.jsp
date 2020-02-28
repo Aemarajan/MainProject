@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
-<body class="ubuntu">
+<body>
 <div>
 	<jsp:include page="Header.jsp" />
 	

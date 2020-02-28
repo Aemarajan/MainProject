@@ -118,7 +118,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="from_year" id="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
 														<label for="From Year">From Year<span class="mandatory"> *</span></label>
 														<s:errors path="from_year" cssClass="error"></s:errors>
 													</div>
@@ -130,7 +130,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="to_year" maxlength="4" cssClass="form-control"/>
+														<s:input path="to_year" id="to_year" maxlength="4" cssClass="form-control"/>
 														<label for="To Year">To Year<span class="mandatory"> *</span></label>
 														<s:errors path="to_year" cssClass="error"></s:errors>
 													</div>
@@ -199,7 +199,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="from_year" id="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
 														<label for="From Year">From Year<span class="mandatory"> *</span></label>
 														<s:errors path="from_year" cssClass="error"></s:errors>
 													</div>
@@ -211,7 +211,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="to_year" id="to_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
 														<label for="To Year">To Year<span class="mandatory"> *</span></label>
 														<s:errors path="to_year" cssClass="error"></s:errors>
 													</div>

@@ -18,12 +18,12 @@ public class Regulation {
 	String acronym;
 	int inn;
 
-	public Regulation() {
-	}
-	public Regulation(String name, String acronym, int inn) {
-		this.name = name;
-		this.acronym = acronym;
-		this.inn = inn;
+	public Regulation() {}
+	
+	public Regulation(String name2, String acronym2, int inn2) {
+		this.name = name2;
+		this.acronym = acronym2;
+		this.inn = inn2;
 	}
 	public int getId() {
 		return id;
