@@ -40,10 +40,20 @@ public class PrivilegeController {
 	PrivilegeService privilegeService;
 	
 	@RequestMapping("AddPrivilege")
-	public ModelAndView getPrivilegeForm(HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("AddPrivilege");
+	public ModelAndView getPrivilegeForm(@RequestParam(value="added",required=false)String added,@RequestParam(value="error",required=false)String error,HttpSession session) {
+		ModelAndView m = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			m.setViewName("redirect:/logout");
+			m.addObject("session", "error");
+		return m;
+		}	
+		
+		m.setViewName("AddPrivilege");
+		if(!(added == null))
+			m.addObject("added", "success");
+		if(!(error == null))
+			m.addObject("error", "error");
+		
 		List<LevelOne> levelOneList = lvl1ss.selectAll();
 		List<LevelTwo> levelTwoList = lvl2ss.selectAll();
 		List<LevelThree> levelThreeList = lvl3ss.selectAll();
@@ -54,7 +64,7 @@ public class PrivilegeController {
 		m.addObject("lvl3", levelThreeList);
 		m.addObject("menu", menuList);
 		m.addObject("user", userList);
-		return m;
+	return m;
 	}
 
 	@RequestMapping("createPrivilege")
@@ -96,11 +106,12 @@ public class PrivilegeController {
 				}
 			}
 			userService.updatePrivilegeProvide(id,1);
-			m.setViewName("AddPrivilege");
+			m.setViewName("redirect:/AddPrivilege");
 			m.addObject("added","added");
 		} catch (NullPointerException e) {
-			m.setViewName("AddPrivilege");
-			m.addObject("error", e);
+			m.setViewName("redirect:/AddPrivilege");
+			m.addObject("error", "error");
+			return m;
 		}
 		return m;
 	}
@@ -114,13 +125,19 @@ public class PrivilegeController {
 	}
 	
 	@RequestMapping("ModifyPrivilege")
-	public ModelAndView updatePrivilegeForm(HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
+	public ModelAndView updatePrivilegeForm(@RequestParam(value="added",required=false)String added,@RequestParam(value="error",required=false)String error, HttpSession session) {
 		ModelAndView m = new ModelAndView();
-		List<User> userList = userService.selectByPp(1);
+		if(session.getAttribute("id") == null) {
+			m.setViewName("redirect:/logout");
+			m.addObject("session", "destroy");
+			return m;
+		}
+		if(!(added == null))
+			m.addObject("added", "success");
+		if(!(error == null))
+			m.addObject("error", "error");
+		
 		m.setViewName("UpdatePrivilege");
-		m.addObject("list", userList);
 		return m;
 	}
 	
@@ -161,11 +178,12 @@ public class PrivilegeController {
 			}
 		}
 		}catch(NullPointerException e) {
-			m.setViewName("ModifyPrivilege");
+			m.setViewName("redirect:/ModifyPrivilege");
 			m.addObject("error", "failure");
+			return m;
 		}
-		m.setViewName("UpdatePrivilege");
-		m.addObject("success", "success");
+		m.setViewName("redirect:/ModifyPrivilege");
+		m.addObject("added", "success");
 		return m;
 	}
 	

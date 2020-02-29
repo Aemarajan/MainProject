@@ -9,7 +9,7 @@ pageEncoding="ISO-8859-1"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>State Master</title>
+<title>Year Master</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
@@ -35,7 +35,7 @@ pageEncoding="ISO-8859-1"%>
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6">
-									<h2>Manage <b>State</b></h2>
+									<h2>Manage <b>Course Year</b></h2>
 								</div>
 								<div class="col-sm-6">
 									<a href="#addModal" class="btn btn-info add-new px-3 py-2" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
@@ -46,9 +46,8 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Country</th>
-									<th>State Name</th>
-									<th>Acronym</th>
+									<th>Degree</th>
+									<th>No of years</th>
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
@@ -56,16 +55,15 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.country.name } </td>
-										<td class="text-capitalize">${l.name }</td>
-										<td>${l.acronym }</td>
+										<td class="text-capitalize">${l.degree.name }</td>
+										<td>${l.year }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }" data-country="${l.country.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-degree="${l.degree.id }" data-year="${l.year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-degree="${l.degree.id }" data-year=${l.year }><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -76,15 +74,15 @@ pageEncoding="ISO-8859-1"%>
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveState" method="post" modelAttribute="state">
+									<s:form action="SaveYear" method="post" modelAttribute="degree">
 										<div class="modal-header">						
-											<h4 class="modal-title">Add State</h4>
+											<h4 class="modal-title">Add Course Year</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										
 										<div class="modal-body">
 											
-											<c:if test="${addExistAcronym != null }">
+											<c:if test="${addExistDegree != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -93,21 +91,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Acronym already exist.</div>
-										        		</div>
-													</div>
-											</c:if>
-											
-											<c:if test="${addExistState != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-				    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      											<span aria-hidden="true">&times;</span>
-														    </button>
-														</div>
-														<div class="toast-body py-2">
-										            		<div>State already exist in this country.</div>
+										            		<div>Degree already exist.</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -116,22 +100,17 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id"/>					
 											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Country <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="country" cssClass="browser-default custom-select" id="country"/>
-						                      <s:errors path="country" cssClass="error" />
-						                    </div>
-											
-											<div class="row mt-4">
-												<div class="col-sm-11">
-													<div class="md-form mt-0">
-														<s:input path="name" id="name" cssClass="form-control"/>
-														<label for="Country name">Name<span class="mandatory"> *</span></label>
-														<s:errors path="name" cssClass="error"></s:errors>
-													</div>									
+												<div class="row">
+													<div class="col-sm-11">
+														<div class="md-form mt-0">
+															<s:input path="years" id="name" autofocus="autofocus" cssClass="form-control"/>
+															<label for="Country name">Year<span class="mandatory"> *</span></label>
+															<s:errors path="name" cssClass="error"></s:errors>
+														</div>									
+													</div>
+													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
-											</div>	
+												
 												
 											<div class="row">
 												<div class="col-sm-11">
@@ -162,9 +141,9 @@ pageEncoding="ISO-8859-1"%>
 						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="EditState" method="post" modelAttribute="state">
+									<s:form action="EditDegree" method="post" modelAttribute="degree">
 										<div class="modal-header">						
-											<h4 class="modal-title">Edit State</h4>
+											<h4 class="modal-title">Edit Country</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
@@ -174,17 +153,17 @@ pageEncoding="ISO-8859-1"%>
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
-			    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-			      											<span aria-hidden="true">&times;</span>
-													    </button>
+				    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+				      											<span aria-hidden="true">&times;</span>
+														    </button>
+														</div>
+														<div class="toast-body py-2">
+										            		<div>Acronym already exist.</div>
+										        		</div>
 													</div>
-													<div class="toast-body py-2">
-									            		<div>Acronym already exist.</div>
-									        		</div>
-												</div>
 											</c:if>
 											
-											<c:if test="${editExistState != null }">
+											<c:if test="${editExistDegree != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -193,22 +172,15 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>State already exist in this country.</div>
+										            		<div>Degree already exist.</div>
 										        		</div>
 													</div>
 											</c:if>
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id"/>
-											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Country <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="country" cssClass="browser-default custom-select" id="editCountry"/>
-						                      <s:errors path="country" cssClass="error" />
-						                    </div>
-																
-											<div class="row mt-4">
+											<s:hidden path="id"/>					
+											<div class="row">
 													<div class="col-sm-11">
 														<div class="md-form mt-0">
 															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
@@ -249,9 +221,9 @@ pageEncoding="ISO-8859-1"%>
 						<div id="deleteModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<form action="DeleteState" method="post">
+									<form action="DeleteDegree" method="post">
 										<div class="modal-header">						
-											<h4 class="modal-title">Delete State</h4>
+											<h4 class="modal-title">Delete Country</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										<div class="modal-body">					
@@ -292,7 +264,7 @@ pageEncoding="ISO-8859-1"%>
 					</button>
 				</div>
 				<div class="toast-body py-2">
-					<div>State Details are Updated Successfully.</div>
+					<div>Degree Details are Updated Successfully.</div>
 				</div>
 			</div>
 		</c:if>
@@ -307,7 +279,7 @@ pageEncoding="ISO-8859-1"%>
 					</button>
 				</div>
 				<div class="toast-body py-2">
-					<div>State Details are Added Successfully.</div>
+					<div>Degree Details are Added Successfully.</div>
 				</div>
 			</div>
 		</c:if>
@@ -322,7 +294,7 @@ pageEncoding="ISO-8859-1"%>
 					</button>
 				</div>
 				<div class="toast-body py-2">
-					<div>State Deactivated Successfully.</div>
+					<div>Degree Deactivated Successfully.</div>
 				</div>
 			</div>
 		</c:if>
@@ -356,15 +328,13 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
-		var selected = 0;
 		$('.inn').prop('checked',true);
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var name = button.data('name');
+			var name = button.data('name'); 
 			var acronym = button.data('acronym');
 			var inn = button.data('inn');
-			var country = button.data('country');
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -373,9 +343,8 @@ pageEncoding="ISO-8859-1"%>
 				modal.find('#inn').prop('checked',true);
 			else
 				modal.find('#inn').prop('checked',false);
-
-			$('#editCountry').val(country);
 		});
+
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
@@ -389,36 +358,6 @@ pageEncoding="ISO-8859-1"%>
 		});
 		$('#Toast').toast('show');
 		$('[data-toggle="tooltip"]').tooltip();
-
-		var country = $('#country');
-		var url = "http://localhost:8080/api/getAllCountry";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                country.html(output);
-            }
-		});
-		var editCountry = $('#editCountry');
-		var url = "http://localhost:8080/api/getAllCountry";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editCountry.html(output);
-            }
-		});
-				
 	}); 
 </script>
 </body>

@@ -42,15 +42,18 @@ import com.project.service.PGService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
 import com.project.service.StateService;
+import com.project.service.YearService;
 import com.project.validator.AddBatchMaster;
 import com.project.validator.AddBloodGroup;
 import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
 import com.project.validator.AddDepartment;
+import com.project.validator.AddDistrict;
 import com.project.validator.AddRegulation;
 import com.project.validator.AddReligion;
 import com.project.validator.AddState;
+import com.project.validator.AddYear;
 
 @Controller
 public class MasterController {
@@ -99,6 +102,10 @@ public class MasterController {
 	
 	@Autowired
 	ReligionService religionService;
+	
+	
+	@Autowired
+	YearService yearService;
 	
 	@GetMapping("GetBatchMaster")
 	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
@@ -783,22 +790,111 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetDistrictMaster")
-	public String getDistrictMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getDistrictMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		return "DistrictMaster";
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+
+		mv.setViewName("DistrictMaster");
+		mv.addObject("list", districtService.selectAll());
+		mv.addObject("district", new AddDistrict());
+		return mv;
 	}
 	
-	@PostMapping("SaveDistrictMaster")
-	public ModelAndView saveDistrictMaster(District ds,HttpSession session) {
+	@PostMapping("SaveDistrict")
+	public ModelAndView saveDistrictMaster(@Valid @ModelAttribute("district")AddDistrict district, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
 		}
-		districtService.saveDistrictMaster(ds);
-			
-		ModelAndView mv = new ModelAndView("DistrictMaster");
+		if(result.hasErrors()) {
+			mv.addObject("list", districtService.selectAll());
+			mv.setViewName("DistrictMaster");
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<District> exist = districtService.selectAll();
+		for(District d : exist) {
+			if(d.getState().getId() == (int) district.getState()) {
+				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(district.getName().replaceAll("\\s", ""))) {
+					mv.addObject("addError", "error");
+					mv.setViewName("DistrictMaster");
+					mv.addObject("list", districtService.selectAll());
+					mv.addObject("addExistState", "exist");
+					return mv;
+				}else if(d.getAcronym().equalsIgnoreCase(district.getAcronym().replaceAll("\\s", ""))) {
+					mv.addObject("addError", "error");
+					mv.setViewName("DistrictMaster");
+					mv.addObject("list", districtService.selectAll());
+					mv.addObject("addExistAcronym", "exist");
+					return mv;
+				}
+			}
+		}
+		districtService.saveDistrictMaster(district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),district.getState(),district.isInn()?1:0);
 		mv.addObject("added", "Success Message");
+		mv.setViewName("redirect:/GetDistrictMaster");
+		return mv;
+	}
+	
+	@PostMapping("EditDistrict")
+	public ModelAndView editDistrict(@Valid @ModelAttribute("district")AddDistrict district, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("DistrictMaster");
+			mv.addObject("list", districtService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		List<District> exist = districtService.selectAllExceptId(district.getId());
+		for(District d : exist) {
+			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(district.getName().replaceAll("\\s", ""))) {
+				mv.addObject("editError", "error");
+				mv.setViewName("DistrictMaster");
+				mv.addObject("list", districtService.selectAll());
+				mv.addObject("editExistDistrict", "exist");
+				return mv;
+			}else if(d.getAcronym().equalsIgnoreCase(district.getAcronym().replaceAll("\\s", ""))) {
+				mv.addObject("editError", "error");
+				mv.setViewName("DistrictMaster");
+				mv.addObject("list", districtService.selectAll());
+				mv.addObject("editExistAcronym", "exist");
+				return mv;
+			}
+		}
+		districtService.update(district.getId(),district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),stateService.selectById((int)district.getState()),district.isInn()?1:0);
+		mv.setViewName("redirect:/GetDistrictMaster");
+		mv.addObject("updated", "success");
+		return mv;
+	}
+
+	@PostMapping("DeleteDistrict")
+	public ModelAndView deleteDistrict(@RequestParam("id")int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		districtService.updateInnZero(id,0);
+		mv.setViewName("redirect:GetDistrictMaster");
+		mv.addObject("deleted","success");
 		return mv;
 	}
 	
@@ -1131,4 +1227,31 @@ public class MasterController {
 		mv.addObject("deleted", "success");
 		return mv;
 	}
+	
+	
+	@GetMapping("GetYearMaster")
+	public ModelAndView getYear(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		mv.setViewName("YearMaster");
+		mv.addObject("year", new AddYear());
+		return mv;
+	}
+	
+	@GetMapping("GetSectionMaster")
+	public ModelAndView getSection(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		mv.setViewName("SectionMaster");
+		return mv;
+	}
+	
 }

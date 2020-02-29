@@ -26,6 +26,15 @@ public class District {
 	
 	int inn;
 
+	public District() {}
+	
+	public District(String name2, String acronym2, State state2, int i) {
+		name = name2;
+		acronym = acronym2;
+		state = state2;
+		inn = i;
+	}
+
 	public int getId() {
 		return id;
 	}

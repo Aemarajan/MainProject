@@ -43,4 +43,13 @@ public class StateService {
 	public void updateInnZero(int id, int i) {
 		strepo.updateInn(id,i);
 	}
+
+	public State selectById(int state) {
+		List<State> list = strepo.findAll();
+		for(State s : list) {
+			if(s.getId() == state)
+				return s;
+		}
+		return null;
+	}
 }
