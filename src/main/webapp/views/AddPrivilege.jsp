@@ -6,8 +6,11 @@
 <head>
 <title>Add Privilege</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-<link rel="stylesheet" href="./views/css/bootstrap.css" />
+<link rel="stylesheet" href="./views/css/mdb.min.css">
+<link rel="stylesheet" href="./views/css/style.css">
 
 </head>
 <body>
@@ -15,7 +18,7 @@
 	<jsp:include page="Header.jsp" />
 	
 	<div id="header"></div>
-	
+
 	<div class="content">
 		<div class="container-fluid">
 			<h3 class="text-center py-3">Privilege</h3>		
@@ -86,11 +89,10 @@
 			</form>
 		</div>
 	</div>
-	
-	<c:if test="${added != null }">
+		<c:if test="${added != null }">
 		<div class="toast" id="Toast"
 			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
-			<div class="toast-header white-text bg-danger pt-2">
+			<div class="toast-header white-text bg-success pt-2">
 				<h5 class="mr-auto">Notification</h5>
 				<button type="button" class="ml-2 mb-1 close white-text"
 					data-dismiss="toast">
@@ -122,10 +124,11 @@
 	<jsp:include page="Footer.jsp" />
 </div>
 	
-<script src="./views/js/jquery.js"></script>
-<script src="./views/js/popper.js"></script>
-<script src="./views/js/jquery.min.js"></script>
-<script src="./views/js/popper.min.js"></script>
+<!-- jQuery -->
+<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+<script type="text/javascript" src="./views/js/popper.min.js"></script>
+<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./views/js/mdb.min.js"></script>
 
 <script>
 	$(document).ready(function(){

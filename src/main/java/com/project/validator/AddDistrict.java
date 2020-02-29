@@ -6,27 +6,24 @@ import javax.validation.constraints.Size;
 import com.project.customvalidator.NotEmpty;
 import com.project.customvalidator.Select;
 
-public class AddState {
+public class AddDistrict {
 
 	int id;
 	
-	@Pattern(regexp = "^[a-zA-Z\\s]*$",message="* Enter Alphabet only")
-	@NotEmpty(message="* Please enter state name")
-	@Size(min=3,message="* Please enter minimum 3 character")
+	@Pattern(regexp = "^[a-zA-Z]*$",message="* Enter Alphabet only")
+	@NotEmpty(message="* Please enter district name")
+	@Size(min=5,message="* Please enter minimum 5 character")
 	String name;
 	
+	@NotEmpty(message="* Please enter district acronym")
 	@Pattern(regexp = "^[a-zA-Z]*$",message="* Enter Alphabet only")
-	@NotEmpty(message="* Please enter acronym name")
-	@Size(min=2,message="* Please enter minimum 2 character")
+	@Size(min=2,max=5,message="* Please enter minimum 2 to maximum 5 character")
 	String acronym;
 	
-	@Select(message="* Please select country")
-	Integer country;
+	@Select(message="* Please select state")
+	Integer state;
 	
 	boolean inn;
-	
-	public AddState() {
-	}
 
 	public int getId() {
 		return id;
@@ -52,12 +49,12 @@ public class AddState {
 		this.acronym = acronym;
 	}
 
-	public Integer getCountry() {
-		return country;
+	public Integer getState() {
+		return state;
 	}
 
-	public void setCountry(Integer country) {
-		this.country = country;
+	public void setState(Integer state) {
+		this.state = state;
 	}
 
 	public boolean isInn() {

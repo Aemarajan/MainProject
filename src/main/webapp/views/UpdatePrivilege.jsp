@@ -9,10 +9,9 @@
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Update Privilege</title>
 
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="./views/css/mdb.min.css">
-
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
@@ -61,11 +60,24 @@
 		<!-- container fluid -->
 	</div>
 	<!-- content -->
-	
-	<c:if test="${success != null }">
-		<div class="toast" id="Toast" 
-			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
-			<div class="toast-header white-text pt-2 bg-success">
+		<c:if test="${error != null }">
+		<div class="toast" id="Toast" style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text pt-2 bg-danger">
+				<h5 class="mr-auto">Error</h5>
+				<button type="button" class="ml-2 mb-1 close white-text"
+					data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Something went wrong in Updating the Privilege. Try to	update Again...</div>
+			</div>
+		</div>
+	</c:if>
+			<c:if test="${added != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+			<div class="toast-header white-text bg-success pt-2">
 				<h5 class="mr-auto">Notification</h5>
 				<button type="button" class="ml-2 mb-1 close white-text"
 					data-dismiss="toast">
@@ -73,7 +85,7 @@
 				</button>
 			</div>
 			<div class="toast-body py-2">
-				<div>User Privilege Updated Successfully.</div>
+				<div>Privilege provided to user Successfully.</div>
 			</div>
 		</div>
 	</c:if>
@@ -91,6 +103,10 @@
 	<script>
     	$(document).ready(function(){
         	$('#header').load("http://localhost:8080/header");
+        	$('#Toast').toast({
+				delay:5000
+			});
+			$('#Toast').toast('show');
     	});
 
     	var varurl = "http://localhost:8080/api/getUserPp1";
@@ -108,10 +124,6 @@
             }
         });
 		
-    	$('#Toast').toast({
-			delay:5000
-        });
-        $('#Toast').toast('show');
     </script>
 </body>
 </html>
