@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,7 +54,7 @@ public class PrivilegeController {
 			m.addObject("added", "success");
 		if(!(error == null))
 			m.addObject("error", "error");
-		
+	
 		List<LevelOne> levelOneList = lvl1ss.selectAll();
 		List<LevelTwo> levelTwoList = lvl2ss.selectAll();
 		List<LevelThree> levelThreeList = lvl3ss.selectAll();
@@ -67,7 +68,7 @@ public class PrivilegeController {
 	return m;
 	}
 
-	@RequestMapping("createPrivilege")
+	@PostMapping("createPrivilege")
 	public ModelAndView createPrivilege(@RequestParam(value = "menu_id", required = false) int[] check,@RequestParam("id") int id,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");

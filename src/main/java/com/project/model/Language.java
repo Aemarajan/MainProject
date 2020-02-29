@@ -17,6 +17,14 @@ public class Language {
 	String name;
 	int inn;
 	
+	public Language() {
+		super();
+	}
+	public Language(String name, int inn) {
+		super();
+		this.name = name;
+		this.inn = inn;
+	}
 	public int getId() {
 		return id;
 	}

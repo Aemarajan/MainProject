@@ -24,6 +24,7 @@ import com.project.model.Department;
 import com.project.model.Diploma;
 import com.project.model.District;
 import com.project.model.Grade;
+import com.project.model.Language;
 import com.project.model.Regulation;
 import com.project.model.Religion;
 import com.project.model.State;
@@ -49,6 +50,7 @@ import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
 import com.project.validator.AddDepartment;
+import com.project.validator.AddLanguage;
 import com.project.validator.AddDistrict;
 import com.project.validator.AddRegulation;
 import com.project.validator.AddReligion;
@@ -768,26 +770,6 @@ public class MasterController {
 		return mv;
 	}
 	
-	@GetMapping("GetDiplomaMaster")
-	public String getDiplomaMaster(HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
-		}
-		return "DiplomaMaster";
-	}
-	
-	@PostMapping("SaveDiplomaMaster")
-	public ModelAndView saveDiplomaMaster(Diploma dm,HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
-		}
-		diplomaService.saveDiplomaMaster(dm);
-			
-		ModelAndView mv = new ModelAndView("DiplomaMaster");
-		mv.addObject("added", "Success Message");
-		return mv;
-	}
-	
 	@GetMapping("GetDistrictMaster")
 	public ModelAndView getDistrictMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
@@ -1227,6 +1209,99 @@ public class MasterController {
 		return mv;
 	}
 	
+	@GetMapping("GetLanguageMaster")
+	public ModelAndView getLanguageMaster(@RequestParam(value="added",required = false)String added ,@RequestParam(value="updated",required = false)String updated ,@RequestParam(value="deleted",required = false)String deleted ,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "session expired");
+			return mv;
+		}
+		if(!(added == null)) 
+			mv.addObject("added", "success");
+		if(!(updated == null)) 
+			mv.addObject("updated", "success");
+		if(!(deleted == null)) 
+			mv.addObject("deleted", "success");
+		mv.setViewName("LanguageMaster");
+		mv.addObject("language", new AddLanguage());
+		mv.addObject("list", languageService.selectAll());
+		return mv;
+	}
+	
+	@PostMapping("SaveLanguageMaster")
+	public ModelAndView saveLanguageMaster(@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("LanguageMaster");
+			mv.addObject("list", languageService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<Language> exist = languageService.selectAll();
+		for(Language l : exist) {
+			if(l.getName().replaceAll("\\s", "").equalsIgnoreCase(language.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("LanguageMaster");
+				mv.addObject("list", languageService.selectAll());
+				mv.addObject("addError","error");
+				mv.addObject("addExist", "exist");
+				return mv;
+			}
+		}
+		languageService.saveLanguageMaster(language.getName().toLowerCase(),language.isInn());
+		mv.setViewName("redirect:/GetLanguageMaster");
+		mv.addObject("added", "success");
+		return mv;
+	}
+	
+	@PostMapping("EditLanguage")
+	public ModelAndView editLanguage(@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("LanguageMaster");
+			mv.addObject("list", languageService.selectAll());
+			mv.addObject("editError", "error");
+			return mv;
+		}
+		List<Language> list = languageService.selectAllExceptId(language.getId());
+		for(Language l : list) {
+			if(l.getName().equalsIgnoreCase(language.getName().replaceAll("\\s", ""))) {
+				mv.setViewName("LanguageMaster");
+				mv.addObject("list", languageService.selectAll());
+				mv.addObject("editExist", "error");
+				mv.addObject("editError", "error");
+				return mv;			
+			}
+		}
+		languageService.update(language.getId(), language.getName().toLowerCase(), language.isInn());
+		mv.setViewName("redirect:/GetLanguageMaster");
+		mv.addObject("updated", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("DeleteLanguage")
+	public ModelAndView deleteLanguage(@RequestParam("id") int id,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		languageService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetLanguageMaster");
+		mv.addObject("deleted", "success");
+		return mv;
+	}
 	
 	@GetMapping("GetYearMaster")
 	public ModelAndView getYear(HttpSession session) {
@@ -1252,5 +1327,4 @@ public class MasterController {
 		mv.setViewName("SectionMaster");
 		return mv;
 	}
-	
 }
