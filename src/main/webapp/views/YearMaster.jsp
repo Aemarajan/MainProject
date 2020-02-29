@@ -74,7 +74,7 @@ pageEncoding="ISO-8859-1"%>
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveYear" method="post" modelAttribute="degree">
+									<s:form action="SaveYear" method="post" modelAttribute="year">
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Course Year</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -100,28 +100,24 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id"/>					
 											
-												<div class="row">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="years" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Year<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
-													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
-												</div>
-												
-												
+											<div class="mt-2">
+						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
+						                      <s:select path="degree" cssClass="browser-default custom-select" id="degree"/>
+						                      <s:errors path="degree" cssClass="error" />
+						                    </div>
+											
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="6" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="from_year" id="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<label for="From Year">From Year<span class="mandatory"> *</span></label>
+														<s:errors path="from_year" cssClass="error"></s:errors>
+													</div>
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
-											</div>													
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+												</div>
+											</div>
 											
 											<div class="form-group">
 												<s:checkbox path="inn" cssClass="inn"/>
@@ -141,27 +137,13 @@ pageEncoding="ISO-8859-1"%>
 						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="EditDegree" method="post" modelAttribute="degree">
+									<s:form action="EditYear" method="post" modelAttribute="year">
 										<div class="modal-header">						
 											<h4 class="modal-title">Edit Country</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
 										<div class="modal-body">
-											
-											<c:if test="${editExistAcronym != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-				    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      											<span aria-hidden="true">&times;</span>
-														    </button>
-														</div>
-														<div class="toast-body py-2">
-										            		<div>Acronym already exist.</div>
-										        		</div>
-													</div>
-											</c:if>
 											
 											<c:if test="${editExistDegree != null }">
 												<div class="toast" id="Toast">
@@ -180,27 +162,24 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
-											<div class="row">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Name<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
-													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
-												</div>
-												
-												
+											
+											<div class="mt-2">
+						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
+						                      <s:select path="degree" cssClass="browser-default custom-select" id="editDegree"/>
+						                      <s:errors path="degree" cssClass="error" />
+						                    </div>
+											
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="5" autofocus="autofocus" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="from_year" id="from_year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
+														<label for="From Year">From Year<span class="mandatory"> *</span></label>
+														<s:errors path="from_year" cssClass="error"></s:errors>
+													</div>
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>

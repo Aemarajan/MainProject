@@ -103,7 +103,6 @@ public class MasterController {
 	@Autowired
 	ReligionService religionService;
 	
-	
 	@Autowired
 	YearService yearService;
 	
