@@ -107,14 +107,14 @@
 		<div class="toast" id="Toast"
 			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 			<div class="toast-header white-text bg-danger pt-2">
-				<h5 class="mr-auto">Notification</h5>
+				<h5 class="mr-auto">Error</h5>
 				<button type="button" class="ml-2 mb-1 close white-text"
 					data-dismiss="toast">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="toast-body py-2">
-				<div>Something went wrong...</div>
+				<div>Something went wrong... Try Again.</div>
 			</div>
 		</div>
 	</c:if>

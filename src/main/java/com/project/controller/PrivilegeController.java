@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,11 +41,16 @@ public class PrivilegeController {
 	@Autowired
 	PrivilegeService privilegeService;
 	
-	@RequestMapping("AddPrivilege")
-	public ModelAndView getPrivilegeForm(HttpSession session) {
+	@GetMapping("AddPrivilege")
+	public ModelAndView getPrivilegeForm(@RequestParam(value="added",required = false)String added ,@RequestParam(value="error",required = false)String error ,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("AddPrivilege");
+		ModelAndView m = new ModelAndView();
+		m.setViewName("AddPrivilege");
+		if(!(added == null))
+			m.addObject("added", "success");
+		if(!(error == null))
+			m.addObject("error", "success");
 		List<LevelOne> levelOneList = lvl1ss.selectAll();
 		List<LevelTwo> levelTwoList = lvl2ss.selectAll();
 		List<LevelThree> levelThreeList = lvl3ss.selectAll();
@@ -57,7 +64,7 @@ public class PrivilegeController {
 		return m;
 	}
 
-	@RequestMapping("createPrivilege")
+	@PostMapping("createPrivilege")
 	public ModelAndView createPrivilege(@RequestParam(value = "menu_id", required = false) int[] check,@RequestParam("id") int id,HttpSession session) {
 		if(session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
@@ -96,10 +103,10 @@ public class PrivilegeController {
 				}
 			}
 			userService.updatePrivilegeProvide(id,1);
-			m.setViewName("AddPrivilege");
+			m.setViewName("redirect:/AddPrivilege");
 			m.addObject("added","added");
 		} catch (NullPointerException e) {
-			m.setViewName("AddPrivilege");
+			m.setViewName("redirect:/AddPrivilege");
 			m.addObject("error", e);
 		}
 		return m;
