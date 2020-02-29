@@ -60,8 +60,10 @@
 		<!-- container fluid -->
 	</div>
 	<!-- content -->
-		<c:if test="${error != null }">
-		<div class="toast" id="Toast" style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+	
+	<c:if test="${error != null }">
+		<div class="toast" id="Toast"
+			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 			<div class="toast-header white-text pt-2 bg-danger">
 				<h5 class="mr-auto">Error</h5>
 				<button type="button" class="ml-2 mb-1 close white-text"
@@ -70,11 +72,12 @@
 				</button>
 			</div>
 			<div class="toast-body py-2">
-				<div>Something went wrong in Updating the Privilege. Try to	update Again...</div>
+				<div>Something went wrong in Updating the Privilege. Try to
+					update Again...</div>
 			</div>
 		</div>
 	</c:if>
-			<c:if test="${added != null }">
+	<c:if test="${added != null }">
 		<div class="toast" id="Toast"
 			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 			<div class="toast-header white-text bg-success pt-2">
@@ -89,17 +92,16 @@
 			</div>
 		</div>
 	</c:if>
-	
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
 </div>
 		
-	<!-- jQuery -->
-  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
-  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
-  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>	
+<!-- jQuery -->
+<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+<script type="text/javascript" src="./views/js/popper.min.js"></script>
+<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./views/js/mdb.min.js"></script>	
 	<script>
     	$(document).ready(function(){
         	$('#header').load("http://localhost:8080/header");
@@ -123,7 +125,6 @@
                 users.html(output);
             }
         });
-		
     </script>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.project.validator;
 
+import javax.validation.constraints.Pattern;
+
 import com.project.customvalidator.NotEmpty;
 import com.project.customvalidator.Select;
 
@@ -7,19 +9,14 @@ public class AddSection {
 
 	int id;
 	
-	@Select(message="* Please select degree")
-	Integer degree;
+	@Select(message="* Please Select Year")
+	Integer year;
 	
-	@Select(message="* Please select department")
-	Integer department;
-	
-	@NotEmpty(message="* Please enter section name")
-	String section;
+	@NotEmpty(message="* Please enter section Name...")
+	@Pattern(regexp="^[a-zA-Z]*$",message="* Enter Alphabet Only...") 
+	String name;
 	
 	boolean inn;
-	
-	public AddSection() {
-	}
 
 	public int getId() {
 		return id;
@@ -29,28 +26,20 @@ public class AddSection {
 		this.id = id;
 	}
 
-	public Integer getDegree() {
-		return degree;
+	public Integer getYear() {
+		return year;
 	}
 
-	public void setDegree(Integer degree) {
-		this.degree = degree;
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
-	public Integer getDepartment() {
-		return department;
+	public String getName() {
+		return name;
 	}
 
-	public void setDepartment(Integer department) {
-		this.department = department;
-	}
-
-	public String getSection() {
-		return section;
-	}
-
-	public void setSection(String section) {
-		this.section = section;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public boolean isInn() {

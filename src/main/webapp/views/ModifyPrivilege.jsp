@@ -4,8 +4,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="x-ua-compatible" content="ie=edge">
 <title>Modify Privilege - Final</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
@@ -102,8 +104,6 @@
 		</form>
 	</div>
 	
-	
-
 	<jsp:include page="Footer.jsp" />
 </div>
 	
@@ -113,11 +113,10 @@
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
    
-    <script>
-		$(document).ready(function() {
-			$('#header').load("http://localhost:8080/header");
-		});
-		
-	</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#header').load("http://localhost:8080/header");
+	});
+</script>
 </body>
 </html>

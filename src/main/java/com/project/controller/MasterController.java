@@ -21,7 +21,6 @@ import com.project.model.Community;
 import com.project.model.Country;
 import com.project.model.Degree;
 import com.project.model.Department;
-import com.project.model.Diploma;
 import com.project.model.District;
 import com.project.model.Grade;
 import com.project.model.Language;
@@ -42,6 +41,7 @@ import com.project.service.MPhilService;
 import com.project.service.PGService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
+import com.project.service.SectionService;
 import com.project.service.StateService;
 import com.project.service.YearService;
 import com.project.validator.AddBatchMaster;
@@ -54,6 +54,7 @@ import com.project.validator.AddLanguage;
 import com.project.validator.AddDistrict;
 import com.project.validator.AddRegulation;
 import com.project.validator.AddReligion;
+import com.project.validator.AddSection;
 import com.project.validator.AddState;
 import com.project.validator.AddYear;
 
@@ -105,9 +106,11 @@ public class MasterController {
 	@Autowired
 	ReligionService religionService;
 	
-	
 	@Autowired
 	YearService yearService;
+	
+	@Autowired
+	SectionService sectionService;
 	
 	@GetMapping("GetBatchMaster")
 	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
@@ -1318,14 +1321,42 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetSectionMaster")
-	public ModelAndView getSection(HttpSession session) {
+	public ModelAndView getSection(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
 			mv.addObject("session", "destroy");
 			return mv;
 		}
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
 		mv.setViewName("SectionMaster");
+		mv.addObject("section", new AddSection());
+		mv.addObject("list", sectionService.selectAll());
 		return mv;
 	}
+	
+	@PostMapping("SaveSectionMaster")
+	public ModelAndView saveSectionMaster(@Valid @ModelAttribute("section") AddSection section,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("SectionMaster");
+			mv.addObject("list", sectionService.selectAll());
+			mv.addObject("addError", "Error");
+			return mv;
+		}
+		
+		//sectionService.save(section.getName(),)
+		return mv;
+	}
+	
 }
