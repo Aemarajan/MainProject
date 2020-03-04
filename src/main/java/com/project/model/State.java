@@ -1,12 +1,9 @@
 package com.project.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,21 +16,18 @@ public class State {
 	
 	String name;
 	String acronym;
-	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="country",referencedColumnName = "id")
-	Country country;
-	
 	int inn;
 
 	public State() {}
 	
-	public State(String name2, String acronym2, Country country2, int i) {
-		name = name2;
-		acronym = acronym2;
-		country = country2;
-		inn = i;
+	
+	public State(String name, String acronym, int inn) {
+		super();
+		this.name = name;
+		this.acronym = acronym;
+		this.inn = inn;
 	}
+
 	public int getId() {
 		return id;
 	}
@@ -51,12 +45,6 @@ public class State {
 	}
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
-	}
-	public Country getCountry() {
-		return country;
-	}
-	public void setCountry(Country country) {
-		this.country = country;
 	}
 	public int getInn() {
 		return inn;
@@ -76,7 +64,7 @@ public class State {
 	
 	@Override
 	public String toString() {
-		return "State [id=" + id + ", name=" + name + ", acronym=" + acronym + ", country=" + country + ", inn=" + inn
+		return "State [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn
 				+ "]";
 	}
 }

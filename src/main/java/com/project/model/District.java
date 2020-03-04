@@ -1,12 +1,9 @@
 package com.project.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,19 +16,13 @@ public class District {
 	
 	String name;
 	String acronym;
-	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="state",referencedColumnName = "id")
-	State state;
-	
 	int inn;
 
 	public District() {}
 	
-	public District(String name2, String acronym2, State state2, int i) {
+	public District(String name2, String acronym2, int i) {
 		name = name2;
 		acronym = acronym2;
-		state = state2;
 		inn = i;
 	}
 
@@ -52,12 +43,6 @@ public class District {
 	}
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
-	}
-	public State getState() {
-		return state;
-	}
-	public void setState(State state) {
-		this.state = state;
 	}
 	public int getInn() {
 		return inn;

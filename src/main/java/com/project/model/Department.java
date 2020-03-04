@@ -1,12 +1,9 @@
 package com.project.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,21 +15,14 @@ public class Department {
 	int id;
 	
 	String name;
-	
 	String acronym;
-	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="degree",referencedColumnName = "id")
-	Degree degree;
-	
 	int inn;
 
 	public Department() {}
 	
-	public Department(String name2, String acronym2, Degree degree2, int inn2) {
+	public Department(String name2, String acronym2,int inn2) {
 		name = name2;
 		acronym = acronym2;
-		degree = degree2;
 		inn = inn2;
 	}
 	
@@ -54,12 +44,6 @@ public class Department {
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
 	}
-	public Degree getDegree() {
-		return degree;
-	}
-	public void setDegree(Degree degree) {
-		this.degree = degree;
-	}
 	public int getInn() {
 		return inn;
 	}
@@ -78,8 +62,7 @@ public class Department {
 
 	@Override
 	public String toString() {
-		return "Department [id=" + id + ", name=" + name + ", acronym=" + acronym + ", degree=" + degree + ", inn="
-				+ inn + "]";
+		return "Department [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn + "]";
 	}
 
 }

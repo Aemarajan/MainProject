@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.model.District;
-import com.project.model.State;
 import com.project.repository.DistrictRepository;
 
 @Service
@@ -23,8 +22,8 @@ public class DistrictService {
 		return list;
 	}
 
-	public void saveDistrictMaster(String name, String acronym, Integer state, int i) {
-		District district = new District(name,acronym,stateService.selectById((int) state),i);
+	public void saveDistrictMaster(String name, String acronym, int i) {
+		District district = new District(name,acronym,i);
 		disrepo.save(district);
 	}
 
@@ -32,8 +31,8 @@ public class DistrictService {
 		disrepo.updateInn(id,i);
 	}
 
-	public void update(int id, String name, String acronym, State state, int i) {
-		disrepo.update(name, acronym, state, i, id);
+	public void update(int id, String name, String acronym, int i) {
+		disrepo.update(name,acronym,i, id);
 	}	
 	
 	public List<District> selectAllExceptId(int id){

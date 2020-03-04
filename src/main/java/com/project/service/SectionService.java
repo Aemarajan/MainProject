@@ -5,10 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.model.Degree;
-import com.project.model.Department;
 import com.project.model.Section;
-import com.project.model.Year;
 import com.project.repository.SectionRepository;
 
 @Service
@@ -30,8 +27,8 @@ public class SectionService {
 		return null;
 	}
 
-	public void save(Degree degree, Department department, Year year, String name, boolean inn) {
-		Section section = new Section(degree,department,year,name,inn?1:0); 
+	public void save(String name, boolean inn) {
+		Section section = new Section(name,inn?1:0); 
 		sectionRepo.save(section);
 	}
 

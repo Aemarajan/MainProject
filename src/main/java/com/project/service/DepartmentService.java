@@ -32,13 +32,13 @@ public class DepartmentService {
 		return null;
 	}
 	
-	public void saveDepartmentMaster(String name, String acronym, int degree, boolean inn) {
-		Department dept = new Department(name,acronym,degreeService.selectById(degree),inn?1:0);
+	public void saveDepartmentMaster(String name, String acronym, boolean inn) {
+		Department dept = new Department(name,acronym,inn?1:0);
 		dpmrepo.save(dept);
 	}
 
-	public void update(int id, String name, String acronym, Integer degree, boolean inn) {
-		dpmrepo.update(id,name,acronym,degreeService.selectById(degree),inn?1:0);
+	public void update(int id, String name, String acronym, boolean inn) {
+		dpmrepo.update(id,name,acronym,inn?1:0);
 	}
 
 	public List<Department> selectAllExceptId(int id) {

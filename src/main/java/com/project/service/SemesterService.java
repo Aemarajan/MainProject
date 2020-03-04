@@ -22,13 +22,13 @@ public class SemesterService {
 		return list;
 	}
 	
-	public void saveSemesterMaster(String name, Integer department, boolean inn) {
-		Semester sem = new Semester(name,departmentService.selectById(department),inn?1:0);
+	public void saveSemesterMaster(String name, boolean inn) {
+		Semester sem = new Semester(name,inn?1:0);
 		semrepo.save(sem);
 	}
 
-	public void update(int id, String name, Integer department, boolean inn) {
-		semrepo.update(id,name,departmentService.selectById(department),inn?1:0);
+	public void update(int id, String name, boolean inn) {
+		semrepo.update(id,name,inn?1:0);
 	}
 
 	public List<Semester> selectAllExceptId(int id) {

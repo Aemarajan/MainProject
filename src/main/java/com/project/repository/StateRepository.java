@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.project.model.Country;
 import com.project.model.State;
 
 public interface StateRepository extends JpaRepository<State, Integer>{
@@ -17,7 +16,7 @@ public interface StateRepository extends JpaRepository<State, Integer>{
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE state_master s SET s.name=:name,s.acronym=:acronym,s.country=:country,s.inn=:inn WHERE s.id=:id",nativeQuery=true)
-	void update(@Param("name")String name,@Param("acronym") String acronym,@Param("country") Country country,@Param("inn") int i,@Param("id") int id);
+	void update(@Param("name")String name,@Param("acronym") String acronym, @Param("inn") int i,@Param("id") int id);
 
 	@Transactional
 	@Modifying

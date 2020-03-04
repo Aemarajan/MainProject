@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.model.Country;
 import com.project.model.State;
 import com.project.repository.StateRepository;
 
@@ -27,13 +26,13 @@ public class StateService {
 		return list;
 	}
 
-	public void saveState(String name, String acronym, Country country, boolean i) {
-		State state = new State(name,acronym,country,i?1:0);
+	public void saveState(String name, String acronym, boolean i) {
+		State state = new State(name, acronym, i?1:0);
 		strepo.save(state);
 	}
 
-	public void update(String name, String acronym, Integer country, boolean inn,int id) {
-		strepo.update(name,acronym,countryService.selectById(country),inn?1:0,id);
+	public void update(String name, String acronym, boolean inn,int id) {
+		strepo.update(name,acronym,inn?1:0,id);
 	}
 
 	public List<State> selectAllExceptId(int id) {

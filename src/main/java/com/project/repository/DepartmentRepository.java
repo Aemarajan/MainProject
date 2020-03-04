@@ -9,15 +9,14 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.project.model.Degree;
 import com.project.model.Department;
 
 public interface DepartmentRepository extends JpaRepository<Department, Integer>{
 
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE department_master d SET d.name=:name, d.acronym=:acronym,d.degree=:degree,d.inn=:inn WHERE d.id=:id",nativeQuery=true)
-	void update(@Param("id")int id, @Param("name")String name, @Param("acronym")String acronym, @Param("degree")Degree degree, @Param("inn")int inn);
+	@Query(value="UPDATE department_master d SET d.name=:name, d.acronym=:acronym,d.inn=:inn WHERE d.id=:id",nativeQuery=true)
+	void update(@Param("id")int id, @Param("name")String name, @Param("acronym")String acronym, @Param("inn")int inn);
 
 	@Transactional
 	@Modifying

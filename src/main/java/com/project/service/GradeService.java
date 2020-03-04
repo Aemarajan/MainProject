@@ -17,8 +17,8 @@ public class GradeService {
 	@Autowired
 	RegulationService regulationService;
 
-	public void saveGradeMaster(int regulation,String word,String acronym,int point,String marks_range,boolean inn) {
-		Grade g = new Grade(regulationService.selectById(regulation),word,acronym,point,marks_range,inn?1:0);
+	public void saveGradeMaster(String word,String acronym,int point,String marks_range,boolean inn) {
+		Grade g = new Grade(word,acronym,point,marks_range,inn?1:0);
 		gdrepo.save(g);
 	}
 	
@@ -27,8 +27,8 @@ public class GradeService {
 		return list;
 	}
 	
-	public void update(int id, String word, String acronym,int point,String marks_range, Integer regulation, boolean inn) {
-		gdrepo.update(id,word,acronym,point,marks_range,regulationService.selectById(regulation),inn?1:0);
+	public void update(int id, String word, String acronym,int point,String marks_range, boolean inn) {
+		gdrepo.update(id,word,acronym,point,marks_range,inn?1:0);
 	}
 
 	public void updateInnZero(int id, int i) {
