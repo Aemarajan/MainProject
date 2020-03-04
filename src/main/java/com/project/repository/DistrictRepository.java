@@ -10,14 +10,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.project.model.District;
-import com.project.model.State;
 
 public interface DistrictRepository extends JpaRepository<District, Integer>{
 
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE district_master d SET d.name=:name,d.acronym=:acronym,d.state=:state,d.inn=:inn WHERE d.id=:id",nativeQuery=true)
-	void update(@Param("name")String name,@Param("acronym")String acronym,@Param("state")State state,@Param("inn")int inn,@Param("id")int id);
+	@Query(value="UPDATE district_master d SET d.name=:name,d.acronym=:acronym,d.inn=:inn WHERE d.id=:id",nativeQuery=true)
+	void update(@Param("name")String name,@Param("acronym")String acronym,@Param("inn")int inn,@Param("id")int id);
 	
 	@Transactional
 	@Modifying
@@ -28,5 +27,7 @@ public interface DistrictRepository extends JpaRepository<District, Integer>{
 	@Modifying
 	@Query(value="SELECT * FROM district_master d WHERE d.id!=:id",nativeQuery=true)
 	List<District> findAllExceptId(@Param("id")int id);
+
+	void update(int id, String name, String acronym, int i);
 
 }

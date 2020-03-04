@@ -707,8 +707,7 @@ public class MasterController {
 		}
 		List<Department> list = departmentService.selectAll();
 		for(Department d : list) {
-			if(d.getDegree().getId() == (int) dept.getDegree()) {
-				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
+			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
 					mv.setViewName("DepartmentMaster");
 					mv.addObject("list", departmentService.selectAll());
 					mv.addObject("addError", "error");
@@ -720,10 +719,9 @@ public class MasterController {
 					mv.addObject("addError", "error");
 					mv.addObject("addExistAcronym","error");
 					return mv;
-				}
 			}
 		}
-		departmentService.saveDepartmentMaster(dept.getName().toLowerCase(),dept.getAcronym().toUpperCase().replaceAll("\\s", ""),dept.getDegree(),dept.isInn());
+		departmentService.saveDepartmentMaster(dept.getName().toLowerCase(),dept.getAcronym().toUpperCase().replaceAll("\\s", ""),dept.isInn());
 		mv.setViewName("redirect:/GetDepartmentMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
@@ -745,8 +743,7 @@ public class MasterController {
 		}
 		List<Department> exist = departmentService.selectAllExceptId(dept.getId());
 		for(Department d : exist) {
-			if(d.getDegree().getId() == (int) dept.getDegree()) {
-				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
+			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
 					mv.setViewName("DepartmentMaster");
 					mv.addObject("list", departmentService.selectAll());
 					mv.addObject("editError", "error");
@@ -758,10 +755,9 @@ public class MasterController {
 					mv.addObject("editError", "error");
 					mv.addObject("editExistAcronym","error");
 					return mv;
-				}
 			}
 		}
-		departmentService.update(dept.getId(),dept.getName(),dept.getAcronym(),dept.getDegree(),dept.isInn());
+		departmentService.update(dept.getId(),dept.getName(),dept.getAcronym(),dept.isInn());
 		mv.setViewName("redirect:/GetDepartmentMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -818,8 +814,7 @@ public class MasterController {
 		}
 		List<District> exist = districtService.selectAll();
 		for(District d : exist) {
-			if(d.getState().getId() == (int) district.getState()) {
-				if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(district.getName().replaceAll("\\s", ""))) {
+			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(district.getName().replaceAll("\\s", ""))) {
 					mv.addObject("addError", "error");
 					mv.setViewName("DistrictMaster");
 					mv.addObject("list", districtService.selectAll());
@@ -831,10 +826,9 @@ public class MasterController {
 					mv.addObject("list", districtService.selectAll());
 					mv.addObject("addExistAcronym", "exist");
 					return mv;
-				}
 			}
 		}
-		districtService.saveDistrictMaster(district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),district.getState(),district.isInn()?1:0);
+		districtService.saveDistrictMaster(district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),district.isInn()?1:0);
 		mv.addObject("added", "Success Message");
 		mv.setViewName("redirect:/GetDistrictMaster");
 		return mv;
@@ -870,7 +864,7 @@ public class MasterController {
 				return mv;
 			}
 		}
-		districtService.update(district.getId(),district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),stateService.selectById((int)district.getState()),district.isInn()?1:0);
+		districtService.update(district.getId(),district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),district.isInn()?1:0);
 		mv.setViewName("redirect:/GetDistrictMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -941,7 +935,7 @@ public class MasterController {
 				return mv;
 			}
 		}
-		stateService.saveState(state.getName().toLowerCase(),state.getAcronym().toUpperCase().replaceAll("\\s", ""),countryService.selectById(state.getCountry()),state.isInn());
+		stateService.saveState(state.getName().toLowerCase(),state.getAcronym().toUpperCase().replaceAll("\\s", ""),state.isInn());
 		mv.setViewName("redirect:/GetStateMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
@@ -963,8 +957,7 @@ public class MasterController {
 		}
 		List<State> exist = stateService.selectAllExceptId(state.getId());
 		for(State s : exist) {
-			if(s.getCountry().getId() == (int) state.getCountry()) {
-				if(s.getName().replaceAll("\\s", "").equalsIgnoreCase(state.getName().replaceAll("\\s", ""))) {
+			if(s.getName().replaceAll("\\s", "").equalsIgnoreCase(state.getName().replaceAll("\\s", ""))) {
 					mv.setViewName("StateMaster");
 					mv.addObject("editError", "error");
 					mv.addObject("list", stateService.selectAll());
@@ -976,10 +969,9 @@ public class MasterController {
 					mv.addObject("list", stateService.selectAll());
 					mv.addObject("editExistAcronym", "exist");
 					return mv;
-				}
 			}
 		}
-		stateService.update(state.getName().toLowerCase(), state.getAcronym().toUpperCase().replaceAll("\\s\\.", ""),state.getCountry(),state.isInn(),state.getId());
+		stateService.update(state.getName().toLowerCase(), state.getAcronym().toUpperCase().replaceAll("\\s\\.", ""),state.isInn(),state.getId());
 		mv.setViewName("redirect:/GetStateMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -1036,8 +1028,7 @@ public class MasterController {
 		
 		List<Grade> list = gradeService.selectAll();
 		for(Grade g : list) {
-			if(g.getRegulation().getId() == (int) grade.getRegulation()) {
-				if(g.getWord().equalsIgnoreCase(grade.getWord())) {
+			if(g.getWord().equalsIgnoreCase(grade.getWord())) {
 					mv.setViewName("GradeMaster");
 					mv.addObject("list", gradeService.selectAll());
 					mv.addObject("addError", "Error");
@@ -1061,10 +1052,9 @@ public class MasterController {
 					mv.addObject("addError", "Error");
 					mv.addObject("addExistMarksRange", "Error");
 					return mv;
-				}
 			}
 		}
-		gradeService.saveGradeMaster(grade.getRegulation(),grade.getWord().toLowerCase(),grade.getAcronym().toUpperCase(),grade.getPoint(),grade.getMarks_range(),grade.isInn());
+		gradeService.saveGradeMaster(grade.getWord().toLowerCase(),grade.getAcronym().toUpperCase(),grade.getPoint(),grade.getMarks_range(),grade.isInn());
 		mv.setViewName("redirect:/GetGradeMaster");
 		mv.addObject("added", "Success");
 		return mv;
@@ -1086,8 +1076,7 @@ public class MasterController {
 		}
 		List<Grade> list = gradeService.selectAllExceptId(grade.getId());
 		for(Grade g : list) {
-			if(g.getRegulation().getId() == (int) grade.getRegulation()) {
-				if(g.getWord().equalsIgnoreCase(grade.getWord())) {
+			if(g.getWord().equalsIgnoreCase(grade.getWord())) {
 					mv.setViewName("GradeMaster");
 					mv.addObject("list", gradeService.selectAll());
 					mv.addObject("editError", "Error");
@@ -1111,10 +1100,9 @@ public class MasterController {
 					mv.addObject("editError", "Error");
 					mv.addObject("editExistMarksRange", "Error");
 					return mv;
-				}
 			}
 		}
-		gradeService.update(grade.getId(), grade.getWord(), grade.getAcronym(), grade.getPoint(), grade.getMarks_range(), grade.getRegulation(), grade.isInn());
+		gradeService.update(grade.getId(), grade.getWord(), grade.getAcronym(), grade.getPoint(), grade.getMarks_range(),grade.isInn());
 		mv.setViewName("redirect:/GetGradeMaster");
 		mv.addObject("updated", "Success");
 		return mv;
@@ -1514,17 +1502,15 @@ public class MasterController {
 		}
 		List<Semester> list = semesterService.selectAll();
 		for(Semester s : list) {
-			if(s.getDepartment().getId() == (int) sem.getDepartment()) {
-				if(s.getName().equalsIgnoreCase(sem.getName())) {
+			if(s.getName().equalsIgnoreCase(sem.getName())) {
 					mv.setViewName("SemesterMaster");
 					mv.addObject("list", semesterService.selectAll());
 					mv.addObject("addError", "error");
 					mv.addObject("addExistSemester","error");
 					return mv;
-				}
 			}
 		}
-		semesterService.saveSemesterMaster(sem.getName().toUpperCase(),sem.getDepartment(),sem.isInn());
+		semesterService.saveSemesterMaster(sem.getName().toUpperCase(),sem.isInn());
 		mv.setViewName("redirect:/GetSemesterMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
@@ -1546,17 +1532,15 @@ public class MasterController {
 		}
 		List<Semester> list = semesterService.selectAllExceptId(sem.getId());
 		for(Semester s : list) {
-			if(s.getDepartment().getId() == (int) sem.getDepartment()) {
-				if(s.getName().equalsIgnoreCase(sem.getName())) {
+			if(s.getName().equalsIgnoreCase(sem.getName())) {
 					mv.setViewName("SemesterMaster");
 					mv.addObject("list", semesterService.selectAll());
 					mv.addObject("editError", "error");
 					mv.addObject("editExistSemester","error");
 					return mv;
-				}
 			}
 		}
-		semesterService.update(sem.getId(), sem.getName().toUpperCase(),sem.getDepartment(),sem.isInn());
+		semesterService.update(sem.getId(), sem.getName().toUpperCase(),sem.isInn());
 		mv.setViewName("redirect:/GetSemesterMaster");
 		mv.addObject("updated", "Success Message");
 		return mv;

@@ -27,8 +27,8 @@ public class StateService {
 		return list;
 	}
 
-	public void saveState(String name, String acronym, Country country, boolean i) {
-		State state = new State(name,acronym,country,i?1:0);
+	public void saveState(String name, String acronym, boolean i) {
+		State state = new State(name, acronym, i);
 		strepo.save(state);
 	}
 

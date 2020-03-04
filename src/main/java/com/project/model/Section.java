@@ -1,12 +1,9 @@
 package com.project.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,10 +13,6 @@ public class Section {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
-		
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="year",referencedColumnName = "id")
-	Year year;
 	
 	String name;
 	
@@ -29,9 +22,8 @@ public class Section {
 		super();
 	}
 
-	public Section(Year year, String name, int inn) {
+	public Section( String name, int inn) {
 		super();
-		this.year = year;
 		this.name = name;
 		this.inn = inn;
 	}
@@ -43,15 +35,7 @@ public class Section {
 	public void setId(int id) {
 		this.id = id;
 	}
-
-	public Year getYear() {
-		return year;
-	}
-
-	public void setYear(Year year) {
-		this.year = year;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -70,6 +54,6 @@ public class Section {
 
 	@Override
 	public String toString() {
-		return "Section [id=" + id + ", year=" + year + ", name=" + name + ", inn=" + inn + "]";
+		return "Section [id=" + id + ", name=" + name + ", inn=" + inn + "]";
 	}
 }

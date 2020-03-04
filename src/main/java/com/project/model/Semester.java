@@ -1,12 +1,9 @@
 package com.project.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -19,10 +16,6 @@ public class Semester {
 	
 	String name;
 	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="department",referencedColumnName = "id")
-	Department department;
-	
 	int inn;
 	
 	public Semester() {
@@ -30,10 +23,9 @@ public class Semester {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Semester(String name, Department department, int inn) {
+	public Semester(String name, int inn) {
 		super();
 		this.name = name;
-		this.department = department;
 		this.inn = inn;
 	}
 	
@@ -48,12 +40,6 @@ public class Semester {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public Department getDepartment() {
-		return department;
-	}
-	public void setDepartment(Department department) {
-		this.department = department;
 	}
 	public int getInn() {
 		return inn;
@@ -73,7 +59,7 @@ public class Semester {
 
 	@Override
 	public String toString() {
-		return "Semester [id=" + id + ", name=" + name + ", department=" + department + ", inn=" + inn + "]";
+		return "Semester [id=" + id + ", name=" + name + ", inn=" + inn + "]";
 	}
 
 }

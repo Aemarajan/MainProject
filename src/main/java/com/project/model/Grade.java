@@ -1,12 +1,9 @@
 package com.project.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -17,14 +14,8 @@ public class Grade {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="regulation",referencedColumnName = "id")
-	Regulation regulation;
-	
 	String word;
-	
 	String acronym;
-	
 	int point;
 	
 	String marks_range;
@@ -35,9 +26,8 @@ public class Grade {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Grade(Regulation regulation, String word, String acronym, int point, String marks_range, int inn) {
+	public Grade(String word, String acronym, int point, String marks_range, int inn) {
 		super();
-		this.regulation = regulation;
 		this.word = word;
 		this.acronym = acronym;
 		this.point = point;
@@ -49,12 +39,6 @@ public class Grade {
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public Regulation getRegulation() {
-		return regulation;
-	}
-	public void setRegulation(Regulation reguation) {
-		this.regulation = reguation;
 	}
 	public String getWord() {
 		return word;
@@ -98,7 +82,7 @@ public class Grade {
 	
 	@Override
 	public String toString() {
-		return "Grade [id=" + id + ", regulation=" + regulation + ", word=" + word + ", acronym=" + acronym + ", point="
+		return "Grade [id=" + id + ", word=" + word + ", acronym=" + acronym + ", point="
 				+ point + ", marks_range=" + marks_range + ", inn=" + inn + "]";
 	}
 }
