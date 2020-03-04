@@ -38,21 +38,13 @@ public class DegreeService {
 	}
 
 	public Degree selectById(Integer degree) {
-		Degree de = new Degree();
 		List<Degree> list = dgrepo.findAll();
 		for(Degree d : list) {
 			if(d.getId() == degree) {
-				de.setId(d.getId());
-				de.setName(d.getName());
-				de.setAcronym(d.getAcronym());
-				de.setInn(d.getInn() == 1?true:false);
-				return de;
+				return d;
 			}
 		}
 		return null;
 	}
-	
-	
-
 	
 }

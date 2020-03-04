@@ -46,8 +46,10 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Name</th>
+									<th>Category</th>
+									<th>Degree Name</th>
 									<th>Acronym</th>
+									<th>No of Years</th>
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
@@ -55,8 +57,10 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
+										<td>${l.category }</td>
 										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
+										<td>${l.year }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>

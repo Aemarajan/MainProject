@@ -22,6 +22,16 @@ public class DepartmentService {
 		return list;
 	}
 
+	public Department selectById(Integer degree) {
+		List<Department> list = dpmrepo.findAll();
+		for(Department d : list) {
+			if(d.getId() == degree) {
+				return d;
+			}
+		}
+		return null;
+	}
+	
 	public void saveDepartmentMaster(String name, String acronym, int degree, boolean inn) {
 		Department dept = new Department(name,acronym,degreeService.selectById(degree),inn?1:0);
 		dpmrepo.save(dept);
@@ -41,16 +51,6 @@ public class DepartmentService {
 
 	public List<Department> selectDepartmentByDegree(int id) {
 		return dpmrepo.findDepartmentByDegree(id);
-	}
-
-	public Department selectById(Integer department) {
-		List<Department> list = dpmrepo.findAll();
-		for(Department d : list) {
-			if(d.getId() == (int) department) {
-				return d;
-			}
-		}
-		return null;
 	}
 	
 }

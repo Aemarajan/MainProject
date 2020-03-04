@@ -1,15 +1,17 @@
 package com.project.validator;
 
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.project.customvalidator.NotEmpty;
 
-public class AddSection {
+public class AddSemester {
 
 	int id;
 	
-	@NotEmpty(message="* Please enter section Name...")
-	@Pattern(regexp="^[a-zA-Z]*$",message="* Enter Alphabet Only...") 
+	@NotEmpty(message="* Please Enter Semester Name...")
+	@Pattern(regexp="^[IVX]*$",message="* Please Enter a  valid Semester name...")
+	@Size(min=1,max=4,message="* Please Enter Minimum 2 Characters and Maximum 4 characters...")
 	String name;
 	
 	boolean inn;

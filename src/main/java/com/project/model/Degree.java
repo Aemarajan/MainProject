@@ -16,6 +16,7 @@ public class Degree {
 	
 	String name;
 	String acronym;
+	int year;
 	int inn;
 	
 	public Degree(){}
@@ -50,7 +51,13 @@ public class Degree {
 	public void setInn(boolean inn) {
 		this.inn = Degree.check(inn);
 	}
-	
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+
 	private static int check(boolean bool) {
 		int status = 0;
 		if(bool == true)

@@ -1,5 +1,7 @@
 package com.project.validator;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -20,6 +22,11 @@ public class AddDegree {
 	@Size(min=2,message="* Please enter mininum 2 characters")
 	@Pattern(regexp = "^[a-zA-Z\\.]*$",message="Enter Alphabet only")
 	String acronym;
+	
+	@NotEmpty(message="* Please enter no of years.")
+	@Min(value=1,message="* Minimum year should be 1")
+	@Max(value=5,message="* Maximum year should be 5")
+	Integer year;
 	
 	boolean inn;
 

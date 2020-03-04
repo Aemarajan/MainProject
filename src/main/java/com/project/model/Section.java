@@ -25,8 +25,8 @@ public class Section {
 	@JoinColumn(name="department",referencedColumnName="id")
 	Department department;
 	
-	@ManyToOne(cascade=CascadeType.MERGE)
-	@JoinColumn(name="year",referencedColumnName="id")
+	@ManyToOne(cascade= CascadeType.MERGE)
+	@JoinColumn(name="year",referencedColumnName = "id")
 	Year year;
 	
 	String name;
@@ -40,9 +40,14 @@ public class Section {
 		super();
 		this.degree = degree;
 		this.department = department;
-		this.year = year;
-		this.name = name;
-		this.inn = inn;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public Degree getDegree() {
@@ -59,14 +64,6 @@ public class Section {
 
 	public void setDepartment(Department department) {
 		this.department = department;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Year getYear() {
@@ -92,5 +89,11 @@ public class Section {
 	public void setInn(int inn) {
 		this.inn = inn;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Section [id=" + id + ", degree=" + degree + ", department=" + department + ", year=" + year + ", name="
+				+ name + ", inn=" + inn + "]";
+	}
+
 }

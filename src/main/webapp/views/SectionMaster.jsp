@@ -103,29 +103,7 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
-											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="degree" cssClass="browser-default custom-select" id="degree"/>
-						                      <s:errors path="degree" cssClass="error" />
-						                    </div>
-						                    
-						                    <div class="mt-2">
-						                      <label class="d-flex justify-content-start">Department <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="department" cssClass="browser-default custom-select" id="department">
-						                      	<option value='0'> -- Select --</option>
-						                      </s:select>
-						                      <s:errors path="department" cssClass="error" />
-						                    </div>
-						                    
-						                    <div class="mt-2">
-						                      <label class="d-flex justify-content-start">Year <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="year" cssClass="browser-default custom-select" id="year">
-						                      	<option value='0'> -- Select --</option>
-						                      </s:select>
-						                      <s:errors path="year" cssClass="error" />
-						                    </div>
-											
+										
 											<div class="row mt-4">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
@@ -181,30 +159,6 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id"/>
 											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="degree" cssClass="browser-default custom-select degree" id="editDegree" readonly="true">
-						                      	<option value='0'> -- Select --</option>
-						                      </s:select>
-						                      <s:errors path="degree" cssClass="error" />
-						                    </div>
-						                    
-						                    <div class="mt-2">
-						                      <label class="d-flex justify-content-start">Department <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="department" cssClass="browser-default custom-select degree" id="editDepartment" readonly="true">
-						                      	<option value='0'> -- Select --</option>
-						                      </s:select>
-						                      <s:errors path="department" cssClass="error" />
-						                    </div>
-						                    
-						                    <div class="mt-2">
-						                      <label class="d-flex justify-content-start">Year <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="year" cssClass="browser-default custom-select degree" id="editYear" readonly="true">
-						                      	<option value='0'> -- Select --</option>
-						                      </s:select>
-						                      <s:errors path="year" cssClass="error" />
-						                    </div>
-																
 											<div class="row mt-4">
 													<div class="col-sm-11">
 														<div class="md-form mt-0">

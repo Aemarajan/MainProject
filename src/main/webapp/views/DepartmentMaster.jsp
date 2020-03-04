@@ -9,7 +9,7 @@ pageEncoding="ISO-8859-1"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Degree Master</title>
+<title>Department Master</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
@@ -116,12 +116,6 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id"/>					
 											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="degree" cssClass="browser-default custom-select" id="degree"/>
-						                      <s:errors path="degree" cssClass="error" />
-						                    </div>
-											
 											<div class="row mt-4">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
@@ -145,7 +139,7 @@ pageEncoding="ISO-8859-1"%>
 											</div>													
 											
 											<div class="form-group">
-												<s:checkbox path="inn" cssClass="inn"/>
+												<s:checkbox path="inn" id="inn" cssClass="inn"/>
 												<label>In use</label>
 											</div>					
 										</div>
@@ -201,24 +195,17 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>
-											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="degree" cssClass="browser-default custom-select degree" id="editDegree"/>
-						                      <s:errors path="degree" cssClass="error" />
-						                    </div>
-																
+															
 											<div class="row mt-4">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Name<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
-													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
+														<label for="Country name">Name<span class="mandatory"> *</span></label>
+														<s:errors path="name" cssClass="error"></s:errors>
+													</div>									
 												</div>
-												
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+											</div>
 												
 											<div class="row">
 												<div class="col-sm-11">

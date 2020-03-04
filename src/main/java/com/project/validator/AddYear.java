@@ -4,14 +4,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 import com.project.customvalidator.NotEmpty;
-import com.project.customvalidator.Select;
 
 public class AddYear {
 
 	int id;
-	
-	@Select(message="* Please select degree")
-	Integer degree;
 	
 	@NotEmpty(message="* Please enter year")
 	@Min(value=1,message="* Please enter minimum value 1")
@@ -26,14 +22,6 @@ public class AddYear {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Integer getDegree() {
-		return degree;
-	}
-
-	public void setDegree(Integer degree) {
-		this.degree = degree;
 	}
 
 	public Integer getYear() {

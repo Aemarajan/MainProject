@@ -59,6 +59,9 @@ public class ApiController {
 	DegreeService degreeService;
 	
 	@Autowired
+	DepartmentService departmentService;
+	
+	@Autowired
 	StateService stateService;
 	
 	@Autowired
@@ -72,9 +75,6 @@ public class ApiController {
 	
 	@Autowired
 	YearService yearService;
-	
-	@Autowired
-	DepartmentService departmentService;
 	
 	@RequestMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
@@ -126,6 +126,11 @@ public class ApiController {
 		return degreeService.selectAll();
 	}
 	
+	@RequestMapping("/getAllDepartment")
+	public List<Department> getAllDepartment(){
+		return departmentService.selectAll();
+	}
+	
 	@RequestMapping("/getAllState")
 	public List<State> getAllState(){
 		return stateService.selectAll();
@@ -154,11 +159,6 @@ public class ApiController {
 	@RequestMapping("getAllDepartmentByDegreeId/{id}")
 	public List<Department> getAllDepartmentByDegree(@PathVariable("id")int id){
 		return departmentService.selectDepartmentByDegree(id);
-	}
-	
-	@RequestMapping("getAllDepartment")
-	public List<Department> getAllDepartment(){
-		return departmentService.selectAll();
 	}
 	
 	@RequestMapping("getAllYear")

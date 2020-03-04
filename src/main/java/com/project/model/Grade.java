@@ -22,11 +22,28 @@ public class Grade {
 	Regulation regulation;
 	
 	String word;
+	
 	String acronym;
+	
 	int point;
+	
 	String marks_range;
+	
 	int inn;
 	
+	public Grade() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	public Grade(Regulation regulation, String word, String acronym, int point, String marks_range, int inn) {
+		super();
+		this.regulation = regulation;
+		this.word = word;
+		this.acronym = acronym;
+		this.point = point;
+		this.marks_range = marks_range;
+		this.inn = inn;
+	}
 	public int getId() {
 		return id;
 	}

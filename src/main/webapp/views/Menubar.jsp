@@ -56,7 +56,7 @@
 						<c:forEach items="${menu }" var="menus">
 							<c:if test="${menus.lvl2 == null && lvl1s.lvl1_id == menus.lvl1.lvl1_id }">
 								<li class="nav-item ml-3"><a class="nav-link" href="${menus.ref }">${lvl1s.name }</a></li>
-							</c:if>
+ 							</c:if>
 						</c:forEach>
 					</c:if>
 				</c:forEach>

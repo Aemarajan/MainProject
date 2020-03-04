@@ -18,7 +18,17 @@ public class RegulationService {
 		List<Regulation> list = rgrepo.findAll();
 		return list;
 	}
-
+	
+	public Regulation selectById(Integer regulation) {
+		List<Regulation> list = rgrepo.findAll();
+		for(Regulation r : list) {
+			if(r.getId() == regulation) {
+				return r;
+			}
+		}
+		return null;
+	}
+	
 	public void saveRegulationMaster(String name, String acronym, boolean inn) {
 		Regulation r = new Regulation(name,acronym,inn?1:0);
 		rgrepo.save(r);
