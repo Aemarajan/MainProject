@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.project.model.Degree;
 import com.project.model.Year;
 import com.project.repository.YearRepository;
 
@@ -26,6 +27,22 @@ public class YearService {
 				return y;
 		}
 		return null;
+	}
+
+
+	public void save(Degree degree, Integer year, boolean inn) {
+		Year y = new Year(degree,year,inn?1:0);
+		yearRepo.save(y);
+	}
+
+
+	public void update(int id, int i) {
+		yearRepo.update(id,i);
+	}
+
+
+	public List<Year> selectByDegreeId(int id) {
+		return yearRepo.findByDegreeId(id);
 	}
 
 }

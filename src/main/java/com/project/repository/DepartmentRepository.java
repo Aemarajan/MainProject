@@ -21,12 +21,17 @@ public interface DepartmentRepository extends JpaRepository<Department, Integer>
 
 	@Transactional
 	@Modifying
-	@Query(value="SELECT * FROM department_master d WHERE id!=:id ",nativeQuery=true)
+	@Query(value="SELECT * FROM department_master d WHERE d.id!=:id ",nativeQuery=true)
 	List<Department> findAllExceptId(@Param("id")int id);
 
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE department_master d SET d.inn=:i WHERE d.id=:id",nativeQuery=true)
 	void updateInnZero(@Param("id")int id, @Param("i")int i);
+	
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM department_master d WHERE d.degree=:id ",nativeQuery=true)
+	List<Department> findDepartmentByDegree(@Param("id")int id);
 
 }

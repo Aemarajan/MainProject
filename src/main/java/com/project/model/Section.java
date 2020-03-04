@@ -17,15 +17,17 @@ public class Section {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	int id;
 	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="degree",referencedColumnName = "id")
+	@ManyToOne(cascade=CascadeType.MERGE)
+	@JoinColumn(name="degree",referencedColumnName="id")
 	Degree degree;
 	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="department",referencedColumnName = "id")
+	@ManyToOne(cascade=CascadeType.MERGE)
+	@JoinColumn(name="department",referencedColumnName="id")
 	Department department;
 	
-	Integer year;
+	@ManyToOne(cascade=CascadeType.MERGE)
+	@JoinColumn(name="year",referencedColumnName="id")
+	Year year;
 	
 	String name;
 	
@@ -34,21 +36,13 @@ public class Section {
 	public Section() {
 	}
 	
-	public Section(Degree degree, Department department, String name, int inn) {
+	public Section(Degree degree, Department department, Year year, String name, int inn) {
 		super();
 		this.degree = degree;
 		this.department = department;
+		this.year = year;
 		this.name = name;
 		this.inn = inn;
-	}
-
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Degree getDegree() {
@@ -67,6 +61,22 @@ public class Section {
 		this.department = department;
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Year getYear() {
+		return year;
+	}
+
+	public void setYear(Year year) {
+		this.year = year;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -82,5 +92,5 @@ public class Section {
 	public void setInn(int inn) {
 		this.inn = inn;
 	}
-
+	
 }

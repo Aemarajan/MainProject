@@ -21,13 +21,14 @@ import com.project.model.Community;
 import com.project.model.Country;
 import com.project.model.Degree;
 import com.project.model.Department;
-import com.project.model.Diploma;
 import com.project.model.District;
 import com.project.model.Grade;
 import com.project.model.Language;
 import com.project.model.Regulation;
 import com.project.model.Religion;
+import com.project.model.Section;
 import com.project.model.State;
+import com.project.model.Year;
 import com.project.service.BatchService;
 import com.project.service.BloodgroupService;
 import com.project.service.CommunityService;
@@ -42,6 +43,7 @@ import com.project.service.MPhilService;
 import com.project.service.PGService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
+import com.project.service.SectionService;
 import com.project.service.StateService;
 import com.project.service.YearService;
 import com.project.validator.AddBatchMaster;
@@ -50,10 +52,11 @@ import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
 import com.project.validator.AddDepartment;
-import com.project.validator.AddLanguage;
 import com.project.validator.AddDistrict;
+import com.project.validator.AddLanguage;
 import com.project.validator.AddRegulation;
 import com.project.validator.AddReligion;
+import com.project.validator.AddSection;
 import com.project.validator.AddState;
 import com.project.validator.AddYear;
 
@@ -107,6 +110,9 @@ public class MasterController {
 	
 	@Autowired
 	YearService yearService;
+	
+	@Autowired
+	SectionService sectionService;
 	
 	@GetMapping("GetBatchMaster")
 	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
@@ -1304,27 +1310,166 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetYearMaster")
-	public ModelAndView getYear(HttpSession session) {
+	public ModelAndView getYear(@RequestParam(value="added",required = false)String added ,@RequestParam(value="updated",required = false)String updated ,@RequestParam(value="deleted",required = false)String deleted , HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
 			mv.addObject("session", "destroy");
 			return mv;
 		}
+		if(!(added == null)) 
+			mv.addObject("added", "success");
+		if(!(updated == null)) 
+			mv.addObject("updated", "success");
+		if(!(deleted == null)) 
+			mv.addObject("deleted", "success");
 		mv.setViewName("YearMaster");
 		mv.addObject("year", new AddYear());
+		mv.addObject("list", yearService.selectAll());
+		return mv;
+	}
+	
+	@PostMapping("SaveYear")
+	public ModelAndView saveYear(@Valid @ModelAttribute("year")AddYear year, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("YearMaster");
+			mv.addObject("addError", "error");
+			mv.addObject("list", yearService.selectAll());
+			return mv;
+		}
+		List<Year> list = yearService.selectAll();
+		for(Year y : list) {
+			if(y.getDegree().getId() ==(int) year.getDegree()) {
+				mv.setViewName("YearMaster");
+				mv.addObject("addError", "error");
+				mv.addObject("list", yearService.selectAll());
+				mv.addObject("addExistDegree", "exist");
+				return mv;
+			}
+		}
+		for(int i=1;i<=(int)year.getYear();i++) {
+			yearService.save(degreeService.selectById(year.getDegree()),i,year.isInn());
+		}
+		mv.setViewName("redirect:/GetYearMaster");
+		mv.addObject("added", "success");
+		return mv;
+	}
+	
+	@PostMapping("EditYear")
+	public ModelAndView editYear(@Valid @ModelAttribute("year")AddYear year, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		yearService.update(year.getId(),year.isInn()?1:0);
+		mv.setViewName("redirect:/GetYearMaster");
+		mv.addObject("updated", "success");
+		return mv;
+	}
+	
+	@PostMapping("DeleteYear")
+	public ModelAndView deleteYear(@RequestParam("id")int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		yearService.update(id, 0);
+		mv.setViewName("redirect:/GetYearMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	
 	@GetMapping("GetSectionMaster")
-	public ModelAndView getSection(HttpSession session) {
+	public ModelAndView getSection(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
 			mv.addObject("session", "destroy");
 			return mv;
 		}
+		if(!(added == null)) 
+			mv.addObject("added", "success");
+		if(!(updated == null)) 
+			mv.addObject("updated", "success");
+		if(!(deleted == null)) 
+			mv.addObject("deleted", "success");
 		mv.setViewName("SectionMaster");
+		mv.addObject("list",sectionService.selectAll());
+		mv.addObject("section", new AddSection());
 		return mv;
 	}
+	
+	@PostMapping("SaveSection")
+	public ModelAndView saveSection(@Valid @ModelAttribute("section")AddSection section, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("SectionMaster");
+			mv.addObject("addError", "error");
+			mv.addObject("list", sectionService.selectAll());
+			return mv;
+		}
+		List<Section> list = sectionService.selectAll();
+		for(Section s : list) {
+			if(s.getDegree().getId() == (int) section.getDegree() && s.getDepartment().getId() == (int) section.getDepartment() && s.getYear().getId() == (int) section.getYear()) {
+				mv.setViewName("SectionMaster");
+				mv.addObject("addError", "error");
+				mv.addObject("addExistSection", "exist");
+				mv.addObject("list", sectionService.selectAll());
+				return mv;
+			}
+		}
+		sectionService.save(degreeService.selectById(section.getDegree()),departmentService.selectById(section.getDepartment()),yearService.selectById(section.getYear()),section.getName(),section.isInn());
+		mv.setViewName("redirect:/GetSectionMaster");
+		mv.addObject("added", "success");
+		return mv;
+	}
+	
+	@PostMapping("EditSection")
+	public ModelAndView editSection(@Valid @ModelAttribute("section")AddSection section, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("SectionMaster");
+			mv.addObject("editError", "error");
+			mv.addObject("list", sectionService.selectAll());
+			return mv;
+		}
+		mv.setViewName("redirect:/GetSectionMaster");
+		mv.addObject("updated", "success");
+		return mv;
+	}
+	
+	@PostMapping("DeleteSection")
+	public ModelAndView deleteSection(@RequestParam("id") int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		sectionService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetSectionMaster");
+		mv.addObject("deleted", "success");
+		return mv;
+	}
+	
 }

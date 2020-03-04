@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.model.Country;
 import com.project.model.Degree;
+import com.project.model.Department;
 import com.project.model.District;
 import com.project.model.LevelOne;
 import com.project.model.LevelThree;
@@ -17,8 +18,10 @@ import com.project.model.Menu;
 import com.project.model.Regulation;
 import com.project.model.State;
 import com.project.model.User;
+import com.project.model.Year;
 import com.project.service.CountryService;
 import com.project.service.DegreeService;
+import com.project.service.DepartmentService;
 import com.project.service.DistrictService;
 import com.project.service.LevelOneService;
 import com.project.service.LevelThreeService;
@@ -28,6 +31,7 @@ import com.project.service.PrivilegeService;
 import com.project.service.RegulationService;
 import com.project.service.StateService;
 import com.project.service.UserService;
+import com.project.service.YearService;
 
 @RestController
 @RequestMapping("api")
@@ -65,6 +69,12 @@ public class ApiController {
 	
 	@Autowired
 	DistrictService districtService;
+	
+	@Autowired
+	YearService yearService;
+	
+	@Autowired
+	DepartmentService departmentService;
 	
 	@RequestMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
@@ -135,4 +145,25 @@ public class ApiController {
 	public List<District> getAllDistrict(){
 		return districtService.selectAll();
 	}
+	
+	@RequestMapping("getYearByDegreeId/{id}")
+	public List<Year> getYearByDegreeId(@PathVariable("id")int id){
+		return yearService.selectByDegreeId(id);
+	}
+	
+	@RequestMapping("getAllDepartmentByDegreeId/{id}")
+	public List<Department> getAllDepartmentByDegree(@PathVariable("id")int id){
+		return departmentService.selectDepartmentByDegree(id);
+	}
+	
+	@RequestMapping("getAllDepartment")
+	public List<Department> getAllDepartment(){
+		return departmentService.selectAll();
+	}
+	
+	@RequestMapping("getAllYear")
+	public List<Year> getAllYear(){
+		return yearService.selectAll();
+	}
+	
 }

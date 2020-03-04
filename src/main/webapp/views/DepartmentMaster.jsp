@@ -356,7 +356,6 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
-		var selected = 0;
 		$('.inn').prop('checked',true);
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);

@@ -38,5 +38,19 @@ public class DepartmentService {
 	public void updateInnZero(int id, int i) {
 		dpmrepo.updateInnZero(id,i);
 	}
+
+	public List<Department> selectDepartmentByDegree(int id) {
+		return dpmrepo.findDepartmentByDegree(id);
+	}
+
+	public Department selectById(Integer department) {
+		List<Department> list = dpmrepo.findAll();
+		for(Department d : list) {
+			if(d.getId() == (int) department) {
+				return d;
+			}
+		}
+		return null;
+	}
 	
 }

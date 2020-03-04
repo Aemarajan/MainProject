@@ -13,8 +13,11 @@ public class AddSection {
 	@Select(message="* Please select department")
 	Integer department;
 	
+	@Select(message="* Please select year")
+	Integer year;
+	
 	@NotEmpty(message="* Please enter section name")
-	String section;
+	String name;
 	
 	boolean inn;
 	
@@ -37,6 +40,10 @@ public class AddSection {
 		this.degree = degree;
 	}
 
+	public boolean isInn() {
+		return inn;
+	}
+
 	public Integer getDepartment() {
 		return department;
 	}
@@ -45,20 +52,24 @@ public class AddSection {
 		this.department = department;
 	}
 
-	public String getSection() {
-		return section;
+	public Integer getYear() {
+		return year;
 	}
 
-	public void setSection(String section) {
-		this.section = section;
-	}
-
-	public boolean isInn() {
-		return inn;
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 	public void setInn(boolean inn) {
 		this.inn = inn;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }
