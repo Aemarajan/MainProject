@@ -26,6 +26,7 @@ import com.project.model.Grade;
 import com.project.model.Language;
 import com.project.model.Regulation;
 import com.project.model.Religion;
+import com.project.model.Semester;
 import com.project.model.State;
 import com.project.service.BatchService;
 import com.project.service.BloodgroupService;
@@ -42,6 +43,7 @@ import com.project.service.PGService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
 import com.project.service.SectionService;
+import com.project.service.SemesterService;
 import com.project.service.StateService;
 import com.project.service.YearService;
 import com.project.validator.AddBatchMaster;
@@ -50,11 +52,13 @@ import com.project.validator.AddCommunity;
 import com.project.validator.AddCountry;
 import com.project.validator.AddDegree;
 import com.project.validator.AddDepartment;
-import com.project.validator.AddLanguage;
 import com.project.validator.AddDistrict;
+import com.project.validator.AddGrade;
+import com.project.validator.AddLanguage;
 import com.project.validator.AddRegulation;
 import com.project.validator.AddReligion;
 import com.project.validator.AddSection;
+import com.project.validator.AddSemester;
 import com.project.validator.AddState;
 import com.project.validator.AddYear;
 
@@ -111,6 +115,9 @@ public class MasterController {
 	
 	@Autowired
 	SectionService sectionService;
+	
+	@Autowired
+	SemesterService semesterService;
 	
 	@GetMapping("GetBatchMaster")
 	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
@@ -993,23 +1000,137 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetGradeMaster")
-	public String getGradeMaster(HttpSession session,ModelMap model) {
+	public ModelAndView getGradeMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return "redirect:/logout";
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;	
 		}
-		return "GradeMaster";
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.setViewName("GradeMaster");
+		mv.addObject("grade", new AddGrade());
+		mv.addObject("list", gradeService.selectAll());
+		return mv;
 	}
 	
 	@PostMapping("SaveGradeMaster")
-	public ModelAndView saveGradeMaster(Grade gd,HttpSession session) {
+	public ModelAndView saveGradeMaster(@Valid @ModelAttribute("grade")AddGrade grade,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Destroyed");
+			return mv;
 		}
-		System.out.println(gd.toString());
-		gradeService.saveGradeMaster(gd);
-			
-		ModelAndView mv = new ModelAndView("GradeMaster");
-		mv.addObject("added", "Success Message");
+		if(result.hasErrors()) {
+			mv.setViewName("GradeMaster");
+			mv.addObject("list", gradeService.selectAll());
+			mv.addObject("addError", "Error");
+			return mv;
+		}
+		
+		List<Grade> list = gradeService.selectAll();
+		for(Grade g : list) {
+			if(g.getRegulation().getId() == (int) grade.getRegulation()) {
+				if(g.getWord().equalsIgnoreCase(grade.getWord())) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("addError", "Error");
+					mv.addObject("addExistWord", "Error");
+					return mv;
+				}else if(g.getAcronym().equalsIgnoreCase(grade.getAcronym())) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("addError", "Error");
+					mv.addObject("addExistAcronym", "Error");
+					return mv;
+				}else if(g.getPoint() == (int) grade.getPoint()) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("addError", "Error");
+					mv.addObject("addExistPoint", "Error");
+					return mv;
+				}else if(g.getMarks_range().equalsIgnoreCase(grade.getMarks_range())) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("addError", "Error");
+					mv.addObject("addExistMarksRange", "Error");
+					return mv;
+				}
+			}
+		}
+		gradeService.saveGradeMaster(grade.getRegulation(),grade.getWord().toLowerCase(),grade.getAcronym().toUpperCase(),grade.getPoint(),grade.getMarks_range(),grade.isInn());
+		mv.setViewName("redirect:/GetGradeMaster");
+		mv.addObject("added", "Success");
+		return mv;
+	}
+	
+	@PostMapping("EditGrade")
+	public ModelAndView editGrade(@Valid @ModelAttribute("grade")AddGrade grade,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("GradeMaster");
+			mv.addObject("list", gradeService.selectAll());
+			mv.addObject("editError", "Error");
+			return mv;
+		}
+		List<Grade> list = gradeService.selectAllExceptId(grade.getId());
+		for(Grade g : list) {
+			if(g.getRegulation().getId() == (int) grade.getRegulation()) {
+				if(g.getWord().equalsIgnoreCase(grade.getWord())) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("editError", "Error");
+					mv.addObject("editExistWord", "Error");
+					return mv;
+				}else if(g.getAcronym().equalsIgnoreCase(grade.getAcronym())) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("editError", "Error");
+					mv.addObject("editExistAcronym", "Error");
+					return mv;
+				}else if(g.getPoint() == (int) grade.getPoint()) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("editError", "Error");
+					mv.addObject("editExistPoint", "Error");
+					return mv;
+				}else if(g.getMarks_range().equalsIgnoreCase(grade.getMarks_range())) {
+					mv.setViewName("GradeMaster");
+					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("editError", "Error");
+					mv.addObject("editExistMarksRange", "Error");
+					return mv;
+				}
+			}
+		}
+		gradeService.update(grade.getId(), grade.getWord(), grade.getAcronym(), grade.getPoint(), grade.getMarks_range(), grade.getRegulation(), grade.isInn());
+		mv.setViewName("redirect:/GetGradeMaster");
+		mv.addObject("updated", "Success");
+		return mv;
+	}
+	
+	@PostMapping("DeleteGrade")
+	public ModelAndView deleteGrade(@RequestParam("id")int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		gradeService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetGradeMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	
@@ -1354,8 +1475,104 @@ public class MasterController {
 			mv.addObject("addError", "Error");
 			return mv;
 		}
-		
-		//sectionService.save(section.getName(),)
+		return mv;
+	}
+	
+	@GetMapping("GetSemesterMaster")
+	public ModelAndView getSemesterMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.setViewName("SemesterMaster");
+		mv.addObject("list", semesterService.selectAll());
+		mv.addObject("semester", new AddSemester());
+		return mv;
+	}
+	
+	@PostMapping("SaveSemester")
+	public ModelAndView saveSemesterMaster(@Valid @ModelAttribute("semester")AddSemester sem,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("SemesterMaster");
+			mv.addObject("list", semesterService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<Semester> list = semesterService.selectAll();
+		for(Semester s : list) {
+			if(s.getDepartment().getId() == (int) sem.getDepartment()) {
+				if(s.getName().equalsIgnoreCase(sem.getName())) {
+					mv.setViewName("SemesterMaster");
+					mv.addObject("list", semesterService.selectAll());
+					mv.addObject("addError", "error");
+					mv.addObject("addExistSemester","error");
+					return mv;
+				}
+			}
+		}
+		semesterService.saveSemesterMaster(sem.getName().toUpperCase(),sem.getDepartment(),sem.isInn());
+		mv.setViewName("redirect:/GetSemesterMaster");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("EditSemester")
+	public ModelAndView editSemester(@Valid @ModelAttribute("semester")AddSemester sem,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("SemesterMaster");
+			mv.addObject("list", semesterService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		List<Semester> list = semesterService.selectAllExceptId(sem.getId());
+		for(Semester s : list) {
+			if(s.getDepartment().getId() == (int) sem.getDepartment()) {
+				if(s.getName().equalsIgnoreCase(sem.getName())) {
+					mv.setViewName("SemesterMaster");
+					mv.addObject("list", semesterService.selectAll());
+					mv.addObject("editError", "error");
+					mv.addObject("editExistSemester","error");
+					return mv;
+				}
+			}
+		}
+		semesterService.update(sem.getId(), sem.getName().toUpperCase(),sem.getDepartment(),sem.isInn());
+		mv.setViewName("redirect:/GetSemesterMaster");
+		mv.addObject("updated", "Success Message");
+		return mv;
+	}
+	
+	@PostMapping("DeleteSemester")
+	public ModelAndView deleteSemester(@RequestParam("id")int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:./logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		semesterService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetSemesterMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	

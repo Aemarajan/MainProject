@@ -9,7 +9,7 @@ pageEncoding="ISO-8859-1"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Department Master</title>
+<title>Semester Master</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
@@ -35,7 +35,7 @@ pageEncoding="ISO-8859-1"%>
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6">
-									<h2>Manage <b>Department</b></h2>
+									<h2>Manage <b>Semester</b></h2>
 								</div>
 								<div class="col-sm-6">
 									<a href="#addModal" class="btn btn-info add-new px-3 py-2" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
@@ -46,9 +46,8 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Degree</th>
+									<th>Department</th>
 									<th>Name</th>
-									<th>Acronym</th>
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
@@ -56,15 +55,14 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.degree.name } </td>
+										<td class="text-capitalize"> ${l.department.acronym } </td>
 										<td class="text-capitalize">${l.name }</td>
-										<td>${l.acronym }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }" data-degree="${l.degree.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }" data-degree="${l.department.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -76,15 +74,15 @@ pageEncoding="ISO-8859-1"%>
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveDepartment" method="post" modelAttribute="department">
+									<s:form action="SaveSemester" method="post" modelAttribute="semester">
 										<div class="modal-header">						
-											<h4 class="modal-title">Add Degree</h4>
+											<h4 class="modal-title">Add Semester</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										
 										<div class="modal-body">
 											
-											<c:if test="${addExistAcronym != null }">
+											<c:if test="${addExistSemester != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -93,21 +91,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Acronym already exist.</div>
-										        		</div>
-													</div>
-											</c:if>
-											
-											<c:if test="${addExistDepartment != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-				    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      											<span aria-hidden="true">&times;</span>
-														    </button>
-														</div>
-														<div class="toast-body py-2">
-										            		<div>Department already exist in this degree.</div>
+										            		<div>Semester already exist in this Department.</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -117,32 +101,21 @@ pageEncoding="ISO-8859-1"%>
 											<s:hidden path="id"/>					
 											
 											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="degree" cssClass="browser-default custom-select" id="degree"/>
-						                      <s:errors path="degree" cssClass="error" />
+						                      <label class="d-flex justify-content-start">Department <span class="mandatory pl-1"> *</span></label>
+						                      <s:select path="department" cssClass="browser-default custom-select" id="department"/>
+						                      <s:errors path="department" cssClass="error" />
 						                    </div>
 											
 											<div class="row mt-4">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" id="name" cssClass="form-control"/>
+														<s:input path="name" id="name" maxlength="4" cssClass="form-control"/>
 														<label for="Country name">Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="I II III ... X" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
 											</div>	
-												
-											<div class="row">
-												<div class="col-sm-11">
-													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="6" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
-												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
-											</div>													
 											
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn" cssClass="inn"/>
@@ -162,29 +135,15 @@ pageEncoding="ISO-8859-1"%>
 						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="EditDepartment" method="post" modelAttribute="department">
+									<s:form action="EditSemester" method="post" modelAttribute="semester">
 										<div class="modal-header">						
-											<h4 class="modal-title">Edit Country</h4>
+											<h4 class="modal-title">Edit Semester</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
 										<div class="modal-body">
 											
-											<c:if test="${editExistAcronym != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-			    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-			      											<span aria-hidden="true">&times;</span>
-													    </button>
-													</div>
-													<div class="toast-body py-2">
-									            		<div>Acronym already exist.</div>
-									        		</div>
-												</div>
-											</c:if>
-											
-											<c:if test="${editExistDepartment != null }">
+											<c:if test="${editExistSemester != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -193,7 +152,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Department already exist in this degree.</div>
+										            		<div>Semester already exist in this Department.</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -203,33 +162,24 @@ pageEncoding="ISO-8859-1"%>
 											<s:hidden path="id"/>
 											
 											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Degree <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="degree" cssClass="browser-default custom-select degree" id="editDegree"/>
-						                      <s:errors path="degree" cssClass="error" />
+						                      <label class="d-flex justify-content-start">Department <span class="mandatory pl-1"> *</span></label>
+						                      <s:select path="department" cssClass="browser-default custom-select degree" id="editDepartment"/>
+						                      <s:errors path="department" cssClass="error" />
 						                    </div>
-																
+
 											<div class="row mt-4">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Name<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
-													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
-												</div>
-												
-												
-											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="5" autofocus="autofocus" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="name" id="name" maxlength="4" autofocus="autofocus" cssClass="form-control" />
+														<label for="Country name">Name<span class="mandatory"> *</span></label>
+														<s:errors path="name" cssClass="error"></s:errors>
+													</div>
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" title="I II III ... X" data-placement="bottom"><i class="fa fa-info mt-4"></i></a>
+												</div>
 											</div>
+
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
 												<label>In use</label>
@@ -249,9 +199,9 @@ pageEncoding="ISO-8859-1"%>
 						<div id="deleteModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<form action="DeleteDepartment" method="post">
+									<form action="DeleteSemester" method="post">
 										<div class="modal-header">						
-											<h4 class="modal-title">Delete Country</h4>
+											<h4 class="modal-title">Delete Semester</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										<div class="modal-body">					
@@ -292,7 +242,7 @@ pageEncoding="ISO-8859-1"%>
 					</button>
 				</div>
 				<div class="toast-body py-2">
-					<div>Department Details are Updated Successfully.</div>
+					<div>Semester Details are Updated Successfully.</div>
 				</div>
 			</div>
 		</c:if>
@@ -307,7 +257,7 @@ pageEncoding="ISO-8859-1"%>
 					</button>
 				</div>
 				<div class="toast-body py-2">
-					<div>Department Details are Added Successfully.</div>
+					<div>Semester Details are Added Successfully.</div>
 				</div>
 			</div>
 		</c:if>
@@ -322,7 +272,7 @@ pageEncoding="ISO-8859-1"%>
 					</button>
 				</div>
 				<div class="toast-body py-2">
-					<div>Department Deactivated Successfully.</div>
+					<div>Semester Deactivated Successfully.</div>
 				</div>
 			</div>
 		</c:if>
@@ -362,19 +312,17 @@ pageEncoding="ISO-8859-1"%>
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
-			var acronym = button.data('acronym');
 			var inn = button.data('inn');
-			var degree = button.data('degree');
+			var department = button.data('department');
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
-			modal.find('#acronym').val(acronym);
 			if(inn == 1)
 				modal.find('#inn').prop('checked',true);
 			else
 				modal.find('#inn').prop('checked',false);
 
-			$('#editDegree').val(degree);
+			$('#editDepartment').val(department);
 		});
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
@@ -390,8 +338,8 @@ pageEncoding="ISO-8859-1"%>
 		$('#Toast').toast('show');
 		$('[data-toggle="tooltip"]').tooltip();
 
-		var degree = $('#degree');
-		var url = "http://localhost:8080/api/getAllDegree";
+		var department = $('#department');
+		var url = "http://localhost:8080/api/getAllDepartment";
 		$.ajax({
 			type: 'GET',
             url: url,
@@ -401,11 +349,11 @@ pageEncoding="ISO-8859-1"%>
                 for(var i in result){
                     output+="<option value="+result[i].id+">"+result[i].name+"</option>";
                 }
-                degree.html(output);
+                department.html(output);
             }
 		});
-		var editDegree = $('#editDegree');
-		var url = "http://localhost:8080/api/getAllDegree";
+		var editDepartment = $('#editDepartment');
+		var url = "http://localhost:8080/api/getAllDepartment";
 		$.ajax({
 			type: 'GET',
             url: url,
@@ -415,7 +363,7 @@ pageEncoding="ISO-8859-1"%>
                 for(var i in result){
                     output+="<option value="+result[i].id+">"+result[i].name+"</option>";
                 }
-                editDegree.html(output);
+                editDepartment.html(output);
             }
 		});
 				

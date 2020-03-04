@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project.model.Country;
 import com.project.model.Degree;
+import com.project.model.Department;
 import com.project.model.District;
 import com.project.model.LevelOne;
 import com.project.model.LevelThree;
@@ -19,6 +20,7 @@ import com.project.model.State;
 import com.project.model.User;
 import com.project.service.CountryService;
 import com.project.service.DegreeService;
+import com.project.service.DepartmentService;
 import com.project.service.DistrictService;
 import com.project.service.LevelOneService;
 import com.project.service.LevelThreeService;
@@ -53,6 +55,9 @@ public class ApiController {
 	
 	@Autowired
 	DegreeService degreeService;
+	
+	@Autowired
+	DepartmentService departmentService;
 	
 	@Autowired
 	StateService stateService;
@@ -114,6 +119,11 @@ public class ApiController {
 	@RequestMapping("/getAllDegree")
 	public List<Degree> getAllDegree(){
 		return degreeService.selectAll();
+	}
+	
+	@RequestMapping("/getAllDepartment")
+	public List<Department> getAllDepartment(){
+		return departmentService.selectAll();
 	}
 	
 	@RequestMapping("/getAllState")

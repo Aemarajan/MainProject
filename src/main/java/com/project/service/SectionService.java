@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.model.Section;
+import com.project.model.Year;
 import com.project.repository.SectionRepository;
 
 @Service

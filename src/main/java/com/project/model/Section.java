@@ -27,12 +27,10 @@ public class Section {
 	
 	public Section() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public Section(int id, Year year, String name, int inn) {
+	public Section(Year year, String name, int inn) {
 		super();
-		this.id = id;
 		this.year = year;
 		this.name = name;
 		this.inn = inn;
