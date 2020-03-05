@@ -32,7 +32,7 @@ public class StateService {
 		strepo.save(state);
 	}
 
-	public void update(String name, String acronym, Integer country, boolean inn,int id) {
+	public void update(String name, String acronym, boolean inn,int id) {
 		strepo.update(name,acronym,countryService.selectById(country),inn?1:0,id);
 	}
 

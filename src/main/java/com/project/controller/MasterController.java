@@ -38,8 +38,6 @@ import com.project.service.DiplomaService;
 import com.project.service.DistrictService;
 import com.project.service.GradeService;
 import com.project.service.LanguageService;
-import com.project.service.MPhilService;
-import com.project.service.PGService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
 import com.project.service.SectionService;
@@ -100,12 +98,6 @@ public class MasterController {
 	
 	@Autowired
 	LanguageService languageService;
-	
-	@Autowired
-	MPhilService mphilService;
-	
-	@Autowired
-	PGService pgService;
 	
 	@Autowired
 	ReligionService religionService;
