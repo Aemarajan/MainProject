@@ -46,9 +46,6 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Degree</th>
-									<th>Department</th>
-									<th>Year</th>
 									<th>Section Name</th>
 									<th>In Use</th>
 									<th>Actions</th>
@@ -57,17 +54,14 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.degree.name } </td>
-										<td>${l.department.name }</td>
-										<td>${l.year.year }</td>
 										<td class="text-capitalize">${l.name }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" id="editRef" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }" data-degree="${l.degree.id }" data-department="${l.department.id }" data-year="${l.year.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-degree="${ l.degree.acronym }" data-department="${l.department.acronym }" ><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" id="editRef" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" ><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -95,7 +89,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Section already exist in this year and department.</div>
+										            		<div>Section already exist.</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -112,7 +106,7 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="A,B,C,D....." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
 											</div>	
 											
 											<div class="form-group">
@@ -150,7 +144,7 @@ pageEncoding="ISO-8859-1"%>
 													    </button>
 													</div>
 													<div class="toast-body py-2">
-									            		<div>Department already exist in this degree.</div>
+									            		<div>Section already exist.</div>
 									        		</div>
 												</div>
 											</c:if>
@@ -167,7 +161,7 @@ pageEncoding="ISO-8859-1"%>
 															<s:errors path="name" cssClass="error"></s:errors>
 														</div>									
 													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="A,B,C,D....." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
 												</div>
 													
 											<div class="form-group">
@@ -303,9 +297,6 @@ pageEncoding="ISO-8859-1"%>
 			var id = button.data('id');
 			var name = button.data('name');
 			var inn = button.data('inn');
-			var degree = button.data('degree');
-			var department = button.data('department');
-			var year = button.data('year');
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -314,118 +305,20 @@ pageEncoding="ISO-8859-1"%>
 			else
 				modal.find('#inn').prop('checked',false);
 
-			$('#editDegree').val(degree);
-			$('#editDepartment').val(department);
-			$('#editYear').val(year);
-			
 		});
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
-			var degree = button.data('degree');
-			var department = button.data('department');
 			var modal = $(this);
 			modal.find('#id').val(id);
-			modal.find('#name').val(degree+" "+department+" ( "+name+" Section )");
+			modal.find('#name').val(name+" Section ");
 		});
 		$('#Toast').toast({
 			delay:5000
 		});
 		$('#Toast').toast('show');
-		$('[data-toggle="tooltip"]').tooltip();
-
-		
-		var degree = $('#degree');
-		var url = "http://localhost:8080/api/getAllDegree";
-		$.ajax({ 
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                degree.html(output);
-            }
-		});
-		var editDegree = $('#editDegree');
-		var url = "http://localhost:8080/api/getAllDegree";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editDegree.html(output);
-            }
-		});
-		var editdepartment = $('#editDepartment');
-		$.ajax({
-			type:'GET',
-			url: "http://localhost:8080/api/getAllDepartment",
-			async: true,
-			success : function(result){
-				console.log(result);
-				var output = "<option value='0'> -- Select -- </option> ";
-				for(var i in result){
-					output+="<option value="+result[i].id+">"+result[i].name+"</option>" 
-				}
-				editdepartment.html(output);
-			}
-		});
-		var editYear = $('#editYear');
-		$.ajax({
-			type:'GET',
-			url: "http://localhost:8080/api/getAllYear",
-			async: true,
-			success : function(result){
-				console.log(result);
-				var output = "<option value='0'> -- Select -- </option> ";
-				for(var i in result){
-					output+="<option value="+result[i].id+">"+result[i].year+"</option>" 
-				}
-				editYear.html(output);
-			}
-		});
-		
-		var year = $('#year')
-		var dept = $('#department');
-		$('#degree').change(function(){
-			$(this).find("option:selected").each(function(){
-				var deg = $(this).attr('value');
-				var url = "http://localhost:8080/api/getYearByDegreeId/";
-				$.ajax({
-					type:'GET',
-					url: url+deg,
-					async: true,
-					success : function(result){
-						var output = "<option value='0'> -- Select -- </option> ";
-						for(var i in result){
-							output+="<option value="+result[i].id+">"+result[i].year+" Year </option>" 
-						}
-						year.html(output);
-					}
-				});
-				var depturl = "http://localhost:8080/api/getAllDepartmentByDegreeId/"
-				$.ajax({
-					type:'GET',
-					url: depturl+deg,
-					async:true,
-					success: function(result){
-						var output = "<option value='0'> -- Select -- </option>";
-						for(var i in result){
-							output += "<option value="+result[i].id+">"+result[i].name+"</option>";
-						}
-						dept.html(output);
-					}
-				});
-			});
-		});		
+		$('[data-toggle="tooltip"]').tooltip();		
 	}); 
 </script>
 </body>

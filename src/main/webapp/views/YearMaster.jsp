@@ -46,7 +46,6 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Degree</th>
 									<th>Year</th>
 									<th>In Use</th>
 									<th>Actions</th>
@@ -55,15 +54,14 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize">${l.degree.name }</td>
 										<td>${l.year }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-degree="${l.degree.id }" data-year="${l.year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-degreeid="${l.degree.id }" data-degreename="${l.degree.name }" data-year=${l.year }><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-year="${l.year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-year=${l.year }><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -82,20 +80,6 @@ pageEncoding="ISO-8859-1"%>
 										
 										<div class="modal-body">
 											
-											<c:if test="${addExistDegree != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-				    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      											<span aria-hidden="true">&times;</span>
-														    </button>
-														</div>
-														<div class="toast-body py-2">
-										            		<div>Degree already exist.</div>
-										        		</div>
-													</div>
-											</c:if>
-											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
@@ -109,7 +93,7 @@ pageEncoding="ISO-8859-1"%>
 													</div>
 												</div>
 												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="1,2,3,4...."><i class="fa fa-info mt-4"></i></a>
 												</div>
 											</div>
 											
@@ -139,20 +123,6 @@ pageEncoding="ISO-8859-1"%>
 															
 										<div class="modal-body">
 											
-											<c:if test="${editExistDegree != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-				    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      											<span aria-hidden="true">&times;</span>
-														    </button>
-														</div>
-														<div class="toast-body py-2">
-										            		<div>Degree already exist.</div>
-										        		</div>
-													</div>
-											</c:if>
-											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
@@ -166,7 +136,7 @@ pageEncoding="ISO-8859-1"%>
 													</div>
 												</div>
 												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="1,2,3,4....."><i class="fa fa-info mt-4"></i></a>
 												</div>
 											</div>
 											<div class="form-group">
@@ -299,7 +269,6 @@ pageEncoding="ISO-8859-1"%>
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var degree = button.data('degree');
 			var year = button.data('year');
 			var inn = button.data('inn');
 			var modal = $(this);
@@ -310,52 +279,20 @@ pageEncoding="ISO-8859-1"%>
 			else
 				modal.find('#inn').prop('checked',false);
 
-			$('#editDegree').val(degree);
 		});
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var degreeid = button.data('degreeid');
-			var degreename = button.data('degreename')
 			var year = button.data('year');
 			var modal = $(this);
 			modal.find('#id').val(id);
-			modal.find('#name').val(degreename+" ( "+year+" Year )");
+			modal.find('#name').val(year);
 		});
 		$('#Toast').toast({
 			delay:5000
 		});
 		$('#Toast').toast('show');
-		$('[data-toggle="tooltip"]').tooltip();
-
-		var degree = $('#degree');
-		var url = "http://localhost:8080/api/getAllDegree";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                degree.html(output);
-            }
-		});
-		var editDegree = $('#editDegree');
-		var url = "http://localhost:8080/api/getAllDegree";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editDegree.html(output);
-            }
-		});				
+		$('[data-toggle="tooltip"]').tooltip();				
 	}); 
 </script>
 </body>

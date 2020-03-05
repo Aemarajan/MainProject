@@ -46,7 +46,6 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Department</th>
 									<th>Name</th>
 									<th>In Use</th>
 									<th>Actions</th>
@@ -55,14 +54,13 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.department.acronym } </td>
 										<td class="text-capitalize">${l.name }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }" data-degree="${l.department.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }" ><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -91,7 +89,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Semester already exist in this Department.</div>
+										            		<div>Semester already exist.</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -301,7 +299,6 @@ pageEncoding="ISO-8859-1"%>
 			var id = button.data('id');
 			var name = button.data('name');
 			var inn = button.data('inn');
-			var department = button.data('department');
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -310,7 +307,6 @@ pageEncoding="ISO-8859-1"%>
 			else
 				modal.find('#inn').prop('checked',false);
 
-			$('#editDepartment').val(department);
 		});
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
@@ -325,35 +321,6 @@ pageEncoding="ISO-8859-1"%>
 		});
 		$('#Toast').toast('show');
 		$('[data-toggle="tooltip"]').tooltip();
-
-		var department = $('#department');
-		var url = "http://localhost:8080/api/getAllDepartment";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                department.html(output);
-            }
-		});
-		var editDepartment = $('#editDepartment');
-		var url = "http://localhost:8080/api/getAllDepartment";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editDepartment.html(output);
-            }
-		});
 				
 	}); 
 </script>

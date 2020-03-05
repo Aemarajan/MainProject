@@ -46,7 +46,6 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Country</th>
 									<th>State Name</th>
 									<th>Acronym</th>
 									<th>In Use</th>
@@ -56,7 +55,6 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.country.name } </td>
 										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
 										<td>
@@ -64,7 +62,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }" data-country="${l.country.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -124,7 +122,7 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Tamil Nadu" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
 											</div>	
 												
 											<div class="row">
@@ -135,7 +133,7 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="TN" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
 											</div>													
 											
 											<div class="form-group">
@@ -204,7 +202,7 @@ pageEncoding="ISO-8859-1"%>
 															<s:errors path="name" cssClass="error"></s:errors>
 														</div>									
 													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Tamil Nadu" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
 												</div>
 												
 												
@@ -216,7 +214,7 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="TN" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
@@ -352,7 +350,6 @@ pageEncoding="ISO-8859-1"%>
 			var name = button.data('name');
 			var acronym = button.data('acronym');
 			var inn = button.data('inn');
-			var country = button.data('country');
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -361,8 +358,7 @@ pageEncoding="ISO-8859-1"%>
 				modal.find('#inn').prop('checked',true);
 			else
 				modal.find('#inn').prop('checked',false);
-
-			$('#editCountry').val(country);
+			
 		});
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
@@ -376,37 +372,7 @@ pageEncoding="ISO-8859-1"%>
 			delay:5000
 		});
 		$('#Toast').toast('show');
-		$('[data-toggle="tooltip"]').tooltip();
-
-		var country = $('#country');
-		var url = "http://localhost:8080/api/getAllCountry";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                country.html(output);
-            }
-		});
-		var editCountry = $('#editCountry');
-		var url = "http://localhost:8080/api/getAllCountry";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editCountry.html(output);
-            }
-		});
-				
+		$('[data-toggle="tooltip"]').tooltip();				
 	}); 
 </script>
 </body>
