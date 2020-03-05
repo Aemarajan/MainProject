@@ -44,6 +44,7 @@ import com.project.service.ReligionService;
 import com.project.service.SectionService;
 import com.project.service.SemesterService;
 import com.project.service.StateService;
+import com.project.service.SyllabusService;
 import com.project.service.YearService;
 import com.project.validator.AddBatchMaster;
 import com.project.validator.AddBloodGroup;
@@ -59,6 +60,7 @@ import com.project.validator.AddReligion;
 import com.project.validator.AddSection;
 import com.project.validator.AddSemester;
 import com.project.validator.AddState;
+import com.project.validator.AddSyllabus;
 import com.project.validator.AddYear;
 
 @Controller
@@ -108,6 +110,9 @@ public class MasterController {
 	
 	@Autowired
 	SemesterService semesterService;
+	
+	@Autowired
+	SyllabusService syllabusService;
 	
 	@GetMapping("GetBatchMaster")
 	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
@@ -498,7 +503,7 @@ public class MasterController {
 				return mv;
 			}
 		}
-		countryService.saveCountryMaster(country.getName().toLowerCase(),country.getAcronym().toUpperCase(),country.isInn());
+		countryService.saveCountryMaster(country.getName().toLowerCase(),country.getAcronym().toUpperCase().replaceAll("\\s", ""),country.isInn());
 		mv.setViewName("redirect:/GetCountryMaster");
 		mv.addObject("added", "success");
 		return mv;
@@ -534,7 +539,7 @@ public class MasterController {
 				return mv;
 			}
 		}
-		countryService.updateCountry(country.getId(),country.getName(),country.getAcronym(),country.isInn()?1:0);
+		countryService.updateCountry(country.getId(),country.getName().toLowerCase(),country.getAcronym().toUpperCase().replaceAll("\\s", ""),country.isInn()?1:0);
 		mv.setViewName("redirect:/GetCountryMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -1015,35 +1020,6 @@ public class MasterController {
 			mv.addObject("addError", "Error");
 			return mv;
 		}
-		
-		List<Grade> list = gradeService.selectAll();
-		for(Grade g : list) {
-			if(g.getWord().equalsIgnoreCase(grade.getWord())) {
-					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
-					mv.addObject("addError", "Error");
-					mv.addObject("addExistWord", "Error");
-					return mv;
-				}else if(g.getAcronym().equalsIgnoreCase(grade.getAcronym())) {
-					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
-					mv.addObject("addError", "Error");
-					mv.addObject("addExistAcronym", "Error");
-					return mv;
-				}else if(g.getPoint() == (int) grade.getPoint()) {
-					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
-					mv.addObject("addError", "Error");
-					mv.addObject("addExistPoint", "Error");
-					return mv;
-				}else if(g.getMarks_range().equalsIgnoreCase(grade.getMarks_range())) {
-					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
-					mv.addObject("addError", "Error");
-					mv.addObject("addExistMarksRange", "Error");
-					return mv;
-			}
-		}
 		gradeService.saveGradeMaster(grade.getWord().toLowerCase(),grade.getAcronym().toUpperCase().replaceAll("\\s", ""),grade.getPoint(),grade.getMarks_range(),grade.isInn());
 		mv.setViewName("redirect:/GetGradeMaster");
 		mv.addObject("added", "Success");
@@ -1445,7 +1421,7 @@ public class MasterController {
 			if(y.getYear() == (int) year.getYear()) {
 				mv.setViewName("YearMaster");
 				mv.addObject("list", yearService.selectAll());
-				mv.addObject("addExist", "error");
+				mv.addObject("addExistYear", "error");
 				mv.addObject("addError", "error");
 				return mv;
 			}
@@ -1469,7 +1445,7 @@ public class MasterController {
 			if(y.getYear() == (int) year.getYear()) {
 				mv.setViewName("YearMaster");
 				mv.addObject("list", yearService.selectAll());
-				mv.addObject("editExist", "error");
+				mv.addObject("editExistYear", "error");
 				mv.addObject("editError", "error");
 				return mv;
 			}
@@ -1568,6 +1544,7 @@ public class MasterController {
 				return mv;
 			}
 		}
+		sectionService.update(section.getId(),section.getName().toUpperCase(),section.isInn()?1:0);
 		mv.setViewName("redirect:/GetSectionMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -1678,6 +1655,65 @@ public class MasterController {
 		semesterService.updateInnZero(id,0);
 		mv.setViewName("redirect:/GetSemesterMaster");
 		mv.addObject("deleted", "success");
+		return mv;
+	}
+	
+	@GetMapping("GetSyllabusMaster")
+	public ModelAndView getSyllabus(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(!(added == null))
+			mv.addObject("added", "success");
+		if(!(updated == null))
+			mv.addObject("updated", "success");
+		if(!(deleted == null))
+			mv.addObject("deleted", "success");
+		mv.setViewName("SyllabusMaster");
+		mv.addObject("list", syllabusService.selectAll());
+		mv.addObject("syllabus", new AddSyllabus());
+		return mv;
+	}
+	
+	@PostMapping("SaveSyllabus")
+	public ModelAndView saveSyllabus(@Valid @ModelAttribute("syllabus")AddSyllabus syl, BindingResult result, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("SyllabusMaster");
+			mv.addObject("list", syllabusService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		syllabusService.save(syl.getSubject_code().replaceAll("\\s", ""),syl.getSubject_name(),(int)syl.getCredit(),syl.isInn()?1:0);
+		mv.setViewName("redirect:/GetSyllabusMaster");
+		mv.addObject("added", "success");
+		return mv;
+	}
+	
+	@PostMapping("EditSyllabus")
+	public ModelAndView editSyllabus(@Valid @ModelAttribute("syllabus")AddSyllabus syl, BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		if(result.hasErrors()) {
+			mv.setViewName("SyllabusMaster");
+			mv.addObject("list", syllabusService.selectAll());
+			mv.addObject("addError", "error");
+			return mv;
+		}
+		mv.setViewName("redirect:/GetSyllabusMaster");
+		mv.addObject("updated", "success");
 		return mv;
 	}
 	

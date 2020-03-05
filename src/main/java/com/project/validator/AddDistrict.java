@@ -16,7 +16,7 @@ public class AddDistrict {
 	
 	@NotEmpty(message="* Please enter district acronym")
 	@Pattern(regexp = "^[a-zA-Z]*$",message="* Enter Alphabet only")
-	@Size(min=2,max=5,message="* Please enter minimum 2 to maximum 5 character")
+	@Size(min=2,max=3,message="* Please enter minimum 2 to maximum 3 character")
 	String acronym;
 	
 	boolean inn;

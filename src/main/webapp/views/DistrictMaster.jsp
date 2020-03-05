@@ -128,7 +128,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="6" cssClass="form-control"/>
+														<s:input path="acronym" id="acronym" maxlength="3" cssClass="form-control"/>
 														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
@@ -209,7 +209,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="5" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="acronym" id="acronym" maxlength="3" autofocus="autofocus" cssClass="form-control"/>
 														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		

@@ -1,7 +1,6 @@
 package com.project.validator;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
+import org.hibernate.validator.constraints.Range;
 
 import com.project.customvalidator.NotEmpty;
 
@@ -10,8 +9,7 @@ public class AddYear {
 	int id;
 	
 	@NotEmpty(message="* Please enter year")
-	@Min(value=1,message="* Please enter minimum value 1")
-	@Max(value=5,message="* Please enter maximum value 6")
+	@Range(min=1,max=6,message="* Enter the number 1 to 6.")
 	Integer year;
 	
 	boolean inn;

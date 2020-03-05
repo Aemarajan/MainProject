@@ -3,7 +3,6 @@ package com.project.validator;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.project.customvalidator.Dot;
 import com.project.customvalidator.NotEmpty;
 
 public class AddDepartment {
@@ -14,10 +13,9 @@ public class AddDepartment {
 	@Pattern(regexp = "^[a-zA-Z\\s]*$",message="Enter Alphabet only")
 	String name;
 	
-	@Dot(message="* Please enter . (Dot) at valid place")
 	@NotEmpty(message="* Please enter acronym")
 	@Size(min=2,message="* Please enter minimum 2 characters")
-	@Pattern(regexp = "^[a-zA-Z\\.]*$",message="Enter Alphabet only")
+	@Pattern(regexp = "^[a-zA-Z]*$",message="Enter Alphabet only")
 	String acronym;
 	
 	boolean inn;

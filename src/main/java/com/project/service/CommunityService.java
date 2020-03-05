@@ -71,7 +71,7 @@ public class CommunityService {
 	}
 
 	public void updateCommunity( AddCommunity comm) {
-		cmrepo.update(comm.getName().toLowerCase(),comm.getAcronym(),comm.isInn()?1:0,comm.getId());
+		cmrepo.update(comm.getName().toLowerCase(),comm.getAcronym().toUpperCase().replaceAll("\\s", ""),comm.isInn()?1:0,comm.getId());
 	}
 	
 	public Community selectByNames(String acronym,String name) {

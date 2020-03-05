@@ -40,5 +40,8 @@ public class SectionService {
 		return sectionRepo.findAllExceptId(id);
 	}
 
+	public void update(int id,String name, int i) {
+		sectionRepo.updateInn(id,name,i);
+	}
 	
 }

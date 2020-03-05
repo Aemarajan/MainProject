@@ -17,6 +17,7 @@ public class AddGrade {
 	String word;
 	
 	@NotEmpty(message="* Please Enter the Acronym...")
+	@Pattern(regexp="^[a-zA-Z]*$",message="* Please Enter Alphabet Only...")
 	@Size(min=1,max=2,message="* Please Enter Minimum 1 Character and Maximum 2 Characters...")
 	String acronym;
 	

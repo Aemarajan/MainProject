@@ -23,4 +23,9 @@ public interface SectionRepository extends JpaRepository<Section,Integer>  {
 	@Query(value="SELECT * FROM section_master s WHERE s.id!=:id",nativeQuery=true)
 	List<Section> findAllExceptId(int id);
 
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE section_master s SET s.inn=:inn,s.name=:name WHERE s.id=:id",nativeQuery=true)
+	void updateInn(@Param("id")int id,@Param("name") String name,@Param("inn") int i);
+
 }

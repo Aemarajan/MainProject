@@ -20,7 +20,7 @@ public interface GradeRepository extends JpaRepository<Grade, Integer>{
 	
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE grade_master g SET g.word=:word, g.acronym=:acronym, g.point=:point, g.marks_range=:marks_range, g.regulation=:regulation, g.inn=:inn WHERE g.id=:id",nativeQuery=true)
+	@Query(value="UPDATE grade_master g SET g.word=:word, g.acronym=:acronym, g.point=:point, g.marks_range=:marks_range, g.inn=:inn WHERE g.id=:id",nativeQuery=true)
 	void update(@Param("id")int id, @Param("word")String word, @Param("acronym")String acronym, @Param("point")int point, @Param("marks_range")String marks_range, @Param("inn")int inn);
 	
 	@Transactional
