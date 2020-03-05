@@ -34,7 +34,7 @@ pageEncoding="ISO-8859-1"%>
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6">
-									<h2>Manage <b>Language Master</b></h2>
+									<h2>Manage <b>Language</b></h2>
 								</div>
 								<div class="col-sm-6">
 									<a href="#addModal" class="btn btn-info add-new px-3 py-2" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
@@ -292,7 +292,16 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+
 		$('.inn').prop('checked',true);
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
+		
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
@@ -315,13 +324,6 @@ pageEncoding="ISO-8859-1"%>
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
 		});
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-
-		$('[data-toggle = "tooltip"]').tooltip();
 	}); 
 </script>
 </body>

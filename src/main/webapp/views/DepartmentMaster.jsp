@@ -46,7 +46,6 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Degree</th>
 									<th>Name</th>
 									<th>Acronym</th>
 									<th>In Use</th>
@@ -56,7 +55,6 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.degree.name } </td>
 										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
 										<td>
@@ -64,7 +62,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }" data-degree="${l.degree.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -107,7 +105,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Department already exist in this degree.</div>
+										            		<div>Department already exist.</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -158,7 +156,7 @@ pageEncoding="ISO-8859-1"%>
 								<div class="modal-content">
 									<s:form action="EditDepartment" method="post" modelAttribute="department">
 										<div class="modal-header">						
-											<h4 class="modal-title">Edit Country</h4>
+											<h4 class="modal-title">Edit Department</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
@@ -238,7 +236,7 @@ pageEncoding="ISO-8859-1"%>
 								<div class="modal-content">
 									<form action="DeleteDepartment" method="post">
 										<div class="modal-header">						
-											<h4 class="modal-title">Delete Country</h4>
+											<h4 class="modal-title">Delete Department</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										<div class="modal-body">					
@@ -343,14 +341,23 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+
 		$('.inn').prop('checked',true);
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
+
+		$('[data-toggle="tooltip"]').tooltip();
+		
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
 			var acronym = button.data('acronym');
 			var inn = button.data('inn');
-			var degree = button.data('degree');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -359,52 +366,17 @@ pageEncoding="ISO-8859-1"%>
 				modal.find('#inn').prop('checked',true);
 			else
 				modal.find('#inn').prop('checked',false);
-
-			$('#editDegree').val(degree);
 		});
+
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
-		});
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-		$('[data-toggle="tooltip"]').tooltip();
-
-		var degree = $('#degree');
-		var url = "http://localhost:8080/api/getAllDegree";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                degree.html(output);
-            }
-		});
-		var editDegree = $('#editDegree');
-		var url = "http://localhost:8080/api/getAllDegree";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editDegree.html(output);
-            }
-		});
-				
+		});	
 	}); 
 </script>
 </body>

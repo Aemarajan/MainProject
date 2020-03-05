@@ -808,7 +808,7 @@ public class MasterController {
 					mv.addObject("addError", "error");
 					mv.setViewName("DistrictMaster");
 					mv.addObject("list", districtService.selectAll());
-					mv.addObject("addExistState", "exist");
+					mv.addObject("addExistDistrict", "exist");
 					return mv;
 				}else if(d.getAcronym().equalsIgnoreCase(district.getAcronym().replaceAll("\\s", ""))) {
 					mv.addObject("addError", "error");

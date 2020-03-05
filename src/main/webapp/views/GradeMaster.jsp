@@ -46,7 +46,6 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Regulation</th>
 									<th>Grade Word</th>
 									<th>Grade Acronym</th>
 									<th>Grade Point</th>
@@ -58,7 +57,6 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.regulation.name } </td>
 										<td class="text-capitalize">${l.word }</td>
 										<td>${l.acronym }</td>
 										<td>${l.point }</td>
@@ -68,7 +66,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-regulation="${l.regulation.id }" data-word="${l.word }" data-acronym="${l.acronym }" data-point="${l.point }" data-marks_range="${l.marks_range }" data-inn="${l.inn }" ><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-word="${l.word }" data-acronym="${l.acronym }" data-point="${l.point }" data-marks_range="${l.marks_range }" data-inn="${l.inn }" ><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-word="${l.word }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -97,7 +95,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Grade Word already exist in this Regulation.</div>
+										            		<div>Grade Word already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -125,7 +123,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Grade Point already exist in this Regulation.</div>
+										            		<div>Grade Point already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -139,7 +137,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Grade's Mark Range already exist in this Regulation.</div>
+										            		<div>Grade's Mark Range already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -226,7 +224,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Grade Word already exist in this Regulation.</div>
+										            		<div>Grade Word already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -254,7 +252,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Grade Point already exist in this Regulation.</div>
+										            		<div>Grade Point already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -268,7 +266,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>Grade's Mark Range already exist in this Regulation.</div>
+										            		<div>Grade's Mark Range already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -465,7 +463,6 @@ pageEncoding="ISO-8859-1"%>
 			var point = button.data('point');
 			var marks_range = button.data('marks_range');
 			var inn = button.data('inn');
-			var regulation = button.data('regulation');
 
 			var modal = $(this);
 			modal.find('#id').val(id);
@@ -477,48 +474,17 @@ pageEncoding="ISO-8859-1"%>
 				modal.find('#inn').prop('checked',true);
 			else
 				modal.find('#inn').prop('checked',false);
-
-			$('#editRegulation').val(regulation);
 		});
 		
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var word = button.data('word');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#word').val(word);
 		});
-
-		var regulation = $('#regulation');
-		var url = "http://localhost:8080/api/getAllRegulation";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                regulation.html(output);
-            }
-		});
-
-		var editRegulation = $('#editRegulation');
-		var url = "http://localhost:8080/api/getAllRegulation";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editRegulation.html(output);
-            }
-		});				
 	}); 
 </script>
 </body>
