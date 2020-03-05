@@ -3,14 +3,10 @@ package com.project.validator;
 import javax.validation.constraints.Pattern;
 
 import com.project.customvalidator.NotEmpty;
-import com.project.customvalidator.Select;
 
 public class AddSection {
 
 	int id;
-	
-	@Select(message="* Please Select Year")
-	Integer year;
 	
 	@NotEmpty(message="* Please enter section Name...")
 	@Pattern(regexp="^[a-zA-Z]*$",message="* Enter Alphabet Only...") 
@@ -24,14 +20,6 @@ public class AddSection {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Integer getYear() {
-		return year;
-	}
-
-	public void setYear(Integer year) {
-		this.year = year;
 	}
 
 	public String getName() {
@@ -49,5 +37,5 @@ public class AddSection {
 	public void setInn(boolean inn) {
 		this.inn = inn;
 	}
-
+	
 }

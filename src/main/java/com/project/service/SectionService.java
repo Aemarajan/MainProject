@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.project.model.Section;
-import com.project.model.Year;
 import com.project.repository.SectionRepository;
 
 @Service
@@ -27,5 +26,15 @@ public class SectionService {
 		}
 		return null;
 	}
+
+	public void save(String name, boolean inn) {
+		Section section = new Section(name,inn?1:0); 
+		sectionRepo.save(section);
+	}
+
+	public void updateInnZero(int id, int i) {
+		sectionRepo.updateInn(id,i);
+	}
+
 	
 }

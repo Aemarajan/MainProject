@@ -19,7 +19,6 @@ public class Section {
 	int inn;
 	
 	public Section() {
-		super();
 	}
 
 	public Section( String name, int inn) {
@@ -35,7 +34,6 @@ public class Section {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
 	public String getName() {
 		return name;
 	}
@@ -56,4 +54,5 @@ public class Section {
 	public String toString() {
 		return "Section [id=" + id + ", name=" + name + ", inn=" + inn + "]";
 	}
+
 }

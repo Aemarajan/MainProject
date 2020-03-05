@@ -28,4 +28,20 @@ public class YearService {
 		return null;
 	}
 
+
+	public void save(Integer year, boolean inn) {
+		Year y = new Year(year,inn?1:0);
+		yearRepo.save(y);
+	}
+
+
+	public void update(int id, int i) {
+		yearRepo.update(id,i);
+	}
+
+
+	public List<Year> selectByDegreeId(int id) {
+		return yearRepo.findByDegreeId(id);
+	}
+
 }

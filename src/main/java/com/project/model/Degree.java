@@ -14,18 +14,21 @@ public class Degree {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
+	String category;
 	String name;
 	String acronym;
 	int inn;
 	
 	public Degree(){}
 	
-	public Degree(String name2, String acronym2, int inn2) {
-		name = name2;
-		acronym = acronym2;
-		inn = inn2;
+	public Degree( String category, String name, String acronym, int inn) {
+		super();
+		this.category = category;
+		this.name = name;
+		this.acronym = acronym;
+		this.inn = inn;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -47,19 +50,15 @@ public class Degree {
 	public int getInn() {
 		return inn;
 	}
-	public void setInn(boolean inn) {
-		this.inn = Degree.check(inn);
+	public void setInn(int inn) {
+		this.inn = inn;
 	}
-	
-	private static int check(boolean bool) {
-		int status = 0;
-		if(bool == true)
-			status = 1;
-		else
-			status = 0;
-		return status;
+	public String getCategory() {
+		return category;
 	}
-	
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	@Override
 	public String toString() {
 		return "DegreeMaster [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn + "]";

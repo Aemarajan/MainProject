@@ -4,7 +4,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.project.customvalidator.NotEmpty;
-import com.project.customvalidator.Select;
 
 public class AddState {
 
@@ -19,9 +18,6 @@ public class AddState {
 	@NotEmpty(message="* Please enter acronym name")
 	@Size(min=2,message="* Please enter minimum 2 character")
 	String acronym;
-	
-	@Select(message="* Please select country")
-	Integer country;
 	
 	boolean inn;
 	
@@ -50,14 +46,6 @@ public class AddState {
 
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
-	}
-
-	public Integer getCountry() {
-		return country;
-	}
-
-	public void setCountry(Integer country) {
-		this.country = country;
 	}
 
 	public boolean isInn() {

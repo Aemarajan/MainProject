@@ -60,7 +60,7 @@ pageEncoding="ISO-8859-1"%>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-inn="${l.inn }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -292,12 +292,22 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+
 		$('.inn').prop('checked',true);
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
+		
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
 			var inn = button.data('inn');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -311,17 +321,11 @@ pageEncoding="ISO-8859-1"%>
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
 		});
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-
-		$('[data-toggle = "tooltip"]').tooltip();
 	}); 
 </script>
 </body>

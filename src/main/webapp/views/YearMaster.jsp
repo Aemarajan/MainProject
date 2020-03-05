@@ -47,7 +47,7 @@ pageEncoding="ISO-8859-1"%>
 							<thead>
 								<tr>
 									<th>Degree</th>
-									<th>No of years</th>
+									<th>Year</th>
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
@@ -63,7 +63,7 @@ pageEncoding="ISO-8859-1"%>
 										</td>
 										<td>
 											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-degree="${l.degree.id }" data-year="${l.year }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-degree="${l.degree.id }" data-year=${l.year }><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-degreeid="${l.degree.id }" data-degreename="${l.degree.name }" data-year=${l.year }><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -74,7 +74,7 @@ pageEncoding="ISO-8859-1"%>
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveYear" method="post" modelAttribute="degree">
+									<s:form action="SaveYear" method="post" modelAttribute="year">
 										<div class="modal-header">						
 											<h4 class="modal-title">Add Course Year</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -100,28 +100,18 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id"/>					
 											
-												<div class="row">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="years" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Year<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
-													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
-												</div>
-												
-												
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="6" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="year" id="year" maxlength="4" cssClass="form-control"/>
+														<label for="Year">Year<span class="mandatory"> *</span></label>
+														<s:errors path="year" cssClass="error"></s:errors>
+													</div>
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
-											</div>													
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+												</div>
+											</div>
 											
 											<div class="form-group">
 												<s:checkbox path="inn" cssClass="inn"/>
@@ -141,27 +131,13 @@ pageEncoding="ISO-8859-1"%>
 						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="EditDegree" method="post" modelAttribute="degree">
+									<s:form action="EditYear" method="post" modelAttribute="year">
 										<div class="modal-header">						
 											<h4 class="modal-title">Edit Country</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
 										<div class="modal-body">
-											
-											<c:if test="${editExistAcronym != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-				    										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      											<span aria-hidden="true">&times;</span>
-														    </button>
-														</div>
-														<div class="toast-body py-2">
-										            		<div>Acronym already exist.</div>
-										        		</div>
-													</div>
-											</c:if>
 											
 											<c:if test="${editExistDegree != null }">
 												<div class="toast" id="Toast">
@@ -180,27 +156,18 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
-											<div class="row">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Name<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
-													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
-												</div>
-												
-												
+										
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="5" autofocus="autofocus" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="year" id="year" maxlength="4" autofocus="autofocus" cssClass="form-control" readonly="true"/>
+														<label for="year">Year<span class="mandatory"> *</span></label>
+														<s:errors path="year" cssClass="error"></s:errors>
+													</div>
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Year Format : yyyy"><i class="fa fa-info mt-4"></i></a>
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
@@ -221,7 +188,7 @@ pageEncoding="ISO-8859-1"%>
 						<div id="deleteModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<form action="DeleteDegree" method="post">
+									<form action="DeleteYear" method="post">
 										<div class="modal-header">						
 											<h4 class="modal-title">Delete Country</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -332,32 +299,63 @@ pageEncoding="ISO-8859-1"%>
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var name = button.data('name'); 
-			var acronym = button.data('acronym');
+			var degree = button.data('degree');
+			var year = button.data('year');
 			var inn = button.data('inn');
 			var modal = $(this);
 			modal.find('#id').val(id);
-			modal.find('#name').val(name);
-			modal.find('#acronym').val(acronym);
+			modal.find('#year').val(year);
 			if(inn == 1)
 				modal.find('#inn').prop('checked',true);
 			else
 				modal.find('#inn').prop('checked',false);
-		});
 
+			$('#editDegree').val(degree);
+		});
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var name = button.data('name');
+			var degreeid = button.data('degreeid');
+			var degreename = button.data('degreename')
+			var year = button.data('year');
 			var modal = $(this);
 			modal.find('#id').val(id);
-			modal.find('#name').val(name);
+			modal.find('#name').val(degreename+" ( "+year+" Year )");
 		});
 		$('#Toast').toast({
 			delay:5000
 		});
 		$('#Toast').toast('show');
 		$('[data-toggle="tooltip"]').tooltip();
+
+		var degree = $('#degree');
+		var url = "http://localhost:8080/api/getAllDegree";
+		$.ajax({
+			type: 'GET',
+            url: url,
+            async: true,
+            success: function(result){
+                var output = "<option value='0'> -- Select -- </option>";
+                for(var i in result){
+                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
+                }
+                degree.html(output);
+            }
+		});
+		var editDegree = $('#editDegree');
+		var url = "http://localhost:8080/api/getAllDegree";
+		$.ajax({
+			type: 'GET',
+            url: url,
+            async: true,
+            success: function(result){
+                var output = "<option value='0'> -- Select -- </option>";
+                for(var i in result){
+                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
+                }
+                editDegree.html(output);
+            }
+		});				
 	}); 
 </script>
 </body>

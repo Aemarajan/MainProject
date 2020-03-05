@@ -32,7 +32,7 @@ public class DistrictService {
 	}
 
 	public void update(int id, String name, String acronym, int i) {
-		disrepo.update(id,name, acronym, i);
+		disrepo.update(name,acronym,i, id);
 	}	
 	
 	public List<District> selectAllExceptId(int id){

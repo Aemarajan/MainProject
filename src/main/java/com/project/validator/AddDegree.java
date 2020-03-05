@@ -3,7 +3,6 @@ package com.project.validator;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.project.customvalidator.Dot;
 import com.project.customvalidator.NotEmpty;
 
 public class AddDegree {
@@ -15,11 +14,13 @@ public class AddDegree {
 	@Pattern(regexp = "^[a-zA-Z\\s]*$",message="Enter Alphabet only")
 	String name;
 	
-	@Dot(message="* Please enter . (Dot) at valid place")
 	@NotEmpty(message="* Enter the acronym")
 	@Size(min=2,message="* Please enter mininum 2 characters")
-	@Pattern(regexp = "^[a-zA-Z\\.]*$",message="Enter Alphabet only")
+	@Pattern(regexp = "^[a-zA-Z]*$",message="Enter Alphabet only")
 	String acronym;
+	
+	@NotEmpty(message="* Please select category")
+	String category;
 	
 	boolean inn;
 
@@ -45,6 +46,14 @@ public class AddDegree {
 
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public boolean isInn() {

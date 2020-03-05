@@ -46,7 +46,6 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>State</th>
 									<th>District Name</th>
 									<th>Acronym</th>
 									<th>In Use</th>
@@ -56,7 +55,6 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
-										<td class="text-capitalize"> ${l.state.name } </td>
 										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
 										<td>
@@ -64,7 +62,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }" data-state="${l.state.id }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -98,7 +96,7 @@ pageEncoding="ISO-8859-1"%>
 													</div>
 											</c:if>
 											
-											<c:if test="${addExistState != null }">
+											<c:if test="${addExistDistrict != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -107,7 +105,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>District already exist in this state.</div>
+										            		<div>District already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -115,13 +113,7 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>					
-											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">State <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="state" cssClass="browser-default custom-select" id="state"/>
-						                      <s:errors path="state" cssClass="error" />
-						                    </div>
-											
+										
 											<div class="row mt-4">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
@@ -193,7 +185,7 @@ pageEncoding="ISO-8859-1"%>
 														    </button>
 														</div>
 														<div class="toast-body py-2">
-										            		<div>District already exist in this state.</div>
+										            		<div>District already exist...</div>
 										        		</div>
 													</div>
 											</c:if>
@@ -201,13 +193,7 @@ pageEncoding="ISO-8859-1"%>
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>
-											
-											<div class="mt-2">
-						                      <label class="d-flex justify-content-start">Country <span class="mandatory pl-1"> *</span></label>
-						                      <s:select path="state" cssClass="browser-default custom-select" id="editState"/>
-						                      <s:errors path="state" cssClass="error" />
-						                    </div>
-																
+													
 											<div class="row mt-4">
 													<div class="col-sm-11">
 														<div class="md-form mt-0">
@@ -356,14 +342,23 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+
 		$('.inn').prop('checked',true);
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
+
+		$('[data-toggle="tooltip"]').tooltip();
+		
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
 			var acronym = button.data('acronym');
 			var inn = button.data('inn');
-			var state = button.data('state');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
@@ -372,52 +367,17 @@ pageEncoding="ISO-8859-1"%>
 				modal.find('#inn').prop('checked',true);
 			else
 				modal.find('#inn').prop('checked',false);
-
-			$('#editState').val(state);
 		});
+		
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var name = button.data('name');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(name);
-		});
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-		$('[data-toggle="tooltip"]').tooltip();
-
-		var state = $('#state');
-		var url = "http://localhost:8080/api/getAllState";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                state.html(output);
-            }
-		});
-		var editState = $('#editState');
-		var url = "http://localhost:8080/api/getAllState";
-		$.ajax({
-			type: 'GET',
-            url: url,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value="+result[i].id+">"+result[i].name+"</option>";
-                }
-                editState.html(output);
-            }
-		});
-				
+		});		
 	}); 
 </script>
 </body>

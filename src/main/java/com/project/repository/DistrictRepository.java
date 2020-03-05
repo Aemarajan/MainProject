@@ -28,6 +28,4 @@ public interface DistrictRepository extends JpaRepository<District, Integer>{
 	@Query(value="SELECT * FROM district_master d WHERE d.id!=:id",nativeQuery=true)
 	List<District> findAllExceptId(@Param("id")int id);
 
-	void update(int id, String name, String acronym, int i);
-
 }

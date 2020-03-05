@@ -4,7 +4,6 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.project.customvalidator.NotEmpty;
-import com.project.customvalidator.Select;
 
 public class AddDistrict {
 
@@ -19,9 +18,6 @@ public class AddDistrict {
 	@Pattern(regexp = "^[a-zA-Z]*$",message="* Enter Alphabet only")
 	@Size(min=2,max=5,message="* Please enter minimum 2 to maximum 5 character")
 	String acronym;
-	
-	@Select(message="* Please select state")
-	Integer state;
 	
 	boolean inn;
 
@@ -47,14 +43,6 @@ public class AddDistrict {
 
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
-	}
-
-	public Integer getState() {
-		return state;
-	}
-
-	public void setState(Integer state) {
-		this.state = state;
 	}
 
 	public boolean isInn() {

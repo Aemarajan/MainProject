@@ -6,14 +6,10 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.project.customvalidator.NotEmpty;
-import com.project.customvalidator.Select;
 
 public class AddGrade {
 
 	int id;
-	
-	@Select(message="* Please Select Any Regulation...")
-	Integer regulation;
 	
 	@NotEmpty(message="* Please Enter Grade Word...")
 	@Pattern(regexp="^[a-zA-Z]*$",message="* Please Enter Alphabet Only...")
@@ -41,14 +37,6 @@ public class AddGrade {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public Integer getRegulation() {
-		return regulation;
-	}
-
-	public void setRegulation(Integer regulation) {
-		this.regulation = regulation;
 	}
 
 	public String getWord() {

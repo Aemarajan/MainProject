@@ -5,7 +5,6 @@ import javax.validation.constraints.Size;
 
 import com.project.customvalidator.Dot;
 import com.project.customvalidator.NotEmpty;
-import com.project.customvalidator.Select;
 
 public class AddDepartment {
 	
@@ -20,9 +19,6 @@ public class AddDepartment {
 	@Size(min=2,message="* Please enter minimum 2 characters")
 	@Pattern(regexp = "^[a-zA-Z\\.]*$",message="Enter Alphabet only")
 	String acronym;
-	
-	@Select(message="* Please select degree")
-	Integer degree;
 	
 	boolean inn;
 
@@ -48,14 +44,6 @@ public class AddDepartment {
 
 	public void setAcronym(String acronym) {
 		this.acronym = acronym;
-	}
-
-	public Integer getDegree() {
-		return degree;
-	}
-
-	public void setDegree(Integer degree) {
-		this.degree = degree;
 	}
 
 	public boolean isInn() {

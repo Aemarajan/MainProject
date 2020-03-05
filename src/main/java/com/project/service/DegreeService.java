@@ -14,8 +14,8 @@ public class DegreeService {
 	@Autowired
 	DegreeRepository dgrepo;
 
-	public void saveDegreeMaster(String name,String acronym,boolean inn) {
-		Degree degree = new Degree(name,acronym,inn?1:0);
+	public void saveDegreeMaster(String category, String name,String acronym,boolean inn) {
+		Degree degree = new Degree(category,name,acronym,inn?1:0);
 		dgrepo.save(degree);
 	}
 	
@@ -46,8 +46,5 @@ public class DegreeService {
 		}
 		return null;
 	}
-	
-	
-
 	
 }

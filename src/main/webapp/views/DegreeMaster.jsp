@@ -46,7 +46,8 @@ pageEncoding="ISO-8859-1"%>
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Name</th>
+									<th>Category</th>
+									<th>Degree Name</th>
 									<th>Acronym</th>
 									<th>In Use</th>
 									<th>Actions</th>
@@ -55,6 +56,7 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${list }">
 									<tr>
+										<td>${l.category }</td>
 										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
 										<td>
@@ -62,7 +64,7 @@ pageEncoding="ISO-8859-1"%>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  In Active</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-category="${l.category }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
 											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
@@ -114,16 +116,27 @@ pageEncoding="ISO-8859-1"%>
 											
 											<s:hidden path="id"/>					
 											
-												<div class="row">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Name<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
-													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+											<div class="mt-2">
+												<label class="d-flex justify-content-start" for="Category">Category<span class="mandatory"> *</span></label>
+												<s:select path="category" id="category" cssClass="browser-default custom-select">
+													<option value="" selected>-- Select --</option>
+													<option value="UG">UG</option>
+													<option value="PG">PG</option>
+													<option value="P.hd">P.hd</option>
+												</s:select>
+												<s:errors path="category" cssClass="error"></s:errors>
+											</div>
+											
+											<div class="row mt-3">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
+														<label for="Country name">Name<span class="mandatory"> *</span></label>
+														<s:errors path="name" cssClass="error"></s:errors>
+													</div>									
 												</div>
+												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+											</div>
 												
 												
 											<div class="row">
@@ -157,7 +170,7 @@ pageEncoding="ISO-8859-1"%>
 								<div class="modal-content">
 									<s:form action="EditDegree" method="post" modelAttribute="degree">
 										<div class="modal-header">						
-											<h4 class="modal-title">Edit Country</h4>
+											<h4 class="modal-title">Edit Degree</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
@@ -193,19 +206,33 @@ pageEncoding="ISO-8859-1"%>
 											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id"/>					
-											<div class="row">
-													<div class="col-sm-11">
-														<div class="md-form mt-0">
-															<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-															<label for="Country name">Name<span class="mandatory"> *</span></label>
-															<s:errors path="name" cssClass="error"></s:errors>
-														</div>									
+											<s:hidden path="id"/>
+											
+											<div class="mt-2">
+												<label class="d-flex justify-content-start" for="Category">Category<span class="mandatory"> *</span></label>
+												<s:select path="category" id="category" cssClass="browser-default custom-select">
+													<option value="0" selected>-- Select --</option>
+													<option value="UG">UG</option>
+													<option value="PG">PG</option>
+													<option value="P.hd">P.hd</option>
+												</s:select>
+												<s:errors path="category" cssClass="error"></s:errors>
+											</div>
+
+											<div class="row mt-3">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control" />
+														<label for="Country name">Name<span class="mandatory"> *</span></label>
+														<s:errors path="name" cssClass="error"></s:errors>
 													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
 												</div>
-												
-												
+												<div class="col-sm-1">
+													<a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a>
+												</div>
+											</div>
+
+
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
@@ -346,11 +373,14 @@ pageEncoding="ISO-8859-1"%>
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
+			var category = button.data('category');
 			var name = button.data('name'); 
 			var acronym = button.data('acronym');
 			var inn = button.data('inn');
+			
 			var modal = $(this);
 			modal.find('#id').val(id);
+			modal.find('#category').val(category);
 			modal.find('#name').val(name);
 			modal.find('#acronym').val(acronym);
 			if(inn == 1)
