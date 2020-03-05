@@ -721,7 +721,7 @@ public class MasterController {
 	public ModelAndView editDepartment(@Valid @ModelAttribute("department")AddDepartment dept, BindingResult result, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
-			mv.setViewName("redirect:./logout");
+			mv.setViewName("redirect:/logout");
 			mv.addObject("session", "destroy");
 			return mv;
 		}
@@ -747,7 +747,7 @@ public class MasterController {
 					return mv;
 			}
 		}
-		departmentService.update(dept.getId(),dept.getName(),dept.getAcronym(),dept.isInn());
+		departmentService.update(dept.getId(),dept.getName().toLowerCase(),dept.getAcronym().toUpperCase().replaceAll("\\s", ""),dept.isInn());
 		mv.setViewName("redirect:/GetDepartmentMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -1044,7 +1044,7 @@ public class MasterController {
 					return mv;
 			}
 		}
-		gradeService.saveGradeMaster(grade.getWord().toLowerCase(),grade.getAcronym().toUpperCase(),grade.getPoint(),grade.getMarks_range(),grade.isInn());
+		gradeService.saveGradeMaster(grade.getWord().toLowerCase(),grade.getAcronym().toUpperCase().replaceAll("\\s", ""),grade.getPoint(),grade.getMarks_range(),grade.isInn());
 		mv.setViewName("redirect:/GetGradeMaster");
 		mv.addObject("added", "Success");
 		return mv;
@@ -1092,7 +1092,7 @@ public class MasterController {
 					return mv;
 			}
 		}
-		gradeService.update(grade.getId(), grade.getWord(), grade.getAcronym(), grade.getPoint(), grade.getMarks_range(),grade.isInn());
+		gradeService.update(grade.getId(), grade.getWord().toLowerCase(), grade.getAcronym().toUpperCase().replaceAll("\\s", ""), grade.getPoint(), grade.getMarks_range(),grade.isInn());
 		mv.setViewName("redirect:/GetGradeMaster");
 		mv.addObject("updated", "Success");
 		return mv;
@@ -1442,10 +1442,13 @@ public class MasterController {
 		}
 		List<Year> list = yearService.selectAll();
 		for(Year y : list) {
-			
-		}
-		for(int i=1;i<=(int)year.getYear();i++) {
-			
+			if(y.getYear() == (int) year.getYear()) {
+				mv.setViewName("YearMaster");
+				mv.addObject("list", yearService.selectAll());
+				mv.addObject("addExist", "error");
+				mv.addObject("addError", "error");
+				return mv;
+			}
 		}
 		yearService.save(year.getYear(),year.isInn());
 		mv.setViewName("redirect:/GetYearMaster");
@@ -1460,6 +1463,16 @@ public class MasterController {
 			mv.setViewName("redirect:/logout");
 			mv.addObject("session", "destroy");
 			return mv;
+		}
+		List<Year> list = yearService.selectAllExceptId(year.getId());
+		for(Year y : list) {
+			if(y.getYear() == (int) year.getYear()) {
+				mv.setViewName("YearMaster");
+				mv.addObject("list", yearService.selectAll());
+				mv.addObject("editExist", "error");
+				mv.addObject("editError", "error");
+				return mv;
+			}
 		}
 		yearService.update(year.getId(),year.isInn()?1:0);
 		mv.setViewName("redirect:/GetYearMaster");
@@ -1517,7 +1530,13 @@ public class MasterController {
 		}
 		List<Section> list = sectionService.selectAll();
 		for(Section s : list) {
-			
+			if(s.getName().equalsIgnoreCase(section.getName())) {
+				mv.setViewName("SectionMaster");
+				mv.addObject("list", sectionService.selectAll());
+				mv.addObject("addExist", "error");
+				mv.addObject("addError", "error");
+				return mv;
+			}
 		}
 		sectionService.save(section.getName(),section.isInn());
 		mv.setViewName("redirect:/GetSectionMaster");
@@ -1538,6 +1557,16 @@ public class MasterController {
 			mv.addObject("editError", "error");
 			mv.addObject("list", sectionService.selectAll());
 			return mv;
+		}
+		List<Section> list = sectionService.selectAllExceptId(section.getId());
+		for(Section s : list) {
+			if(s.getName().equalsIgnoreCase(section.getName())) {
+				mv.setViewName("SectionMaster");
+				mv.addObject("list", sectionService.selectAll());
+				mv.addObject("editExist", "error");
+				mv.addObject("editError", "error");
+				return mv;
+			}
 		}
 		mv.setViewName("redirect:/GetSectionMaster");
 		mv.addObject("updated", "success");

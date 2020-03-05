@@ -36,5 +36,9 @@ public class SectionService {
 		sectionRepo.updateInn(id,i);
 	}
 
+	public List<Section> selectAllExceptId(int id) {
+		return sectionRepo.findAllExceptId(id);
+	}
+
 	
 }

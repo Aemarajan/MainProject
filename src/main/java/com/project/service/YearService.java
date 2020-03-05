@@ -44,4 +44,9 @@ public class YearService {
 		return yearRepo.findByDegreeId(id);
 	}
 
+
+	public List<Year> selectAllExceptId(int id) {
+		return yearRepo.findAllExceptId(id);
+	}
+
 }

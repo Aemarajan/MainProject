@@ -23,4 +23,9 @@ public interface YearRepository extends JpaRepository<Year,Integer> {
 	@Query(value="SELECT * FROM year_master y WHERE y.degree=:id",nativeQuery=true)
 	List<Year> findByDegreeId(@Param("id")int id);
 
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM year_master y WHERE y.id!=:id",nativeQuery=true)
+	List<Year> findAllExceptId(int id);
+
 }

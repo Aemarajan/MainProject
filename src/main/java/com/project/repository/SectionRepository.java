@@ -1,5 +1,7 @@
 package com.project.repository;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,5 +17,10 @@ public interface SectionRepository extends JpaRepository<Section,Integer>  {
 	@Modifying
 	@Query(value="UPDATE section_master s SET s.inn=:inn WHERE s.id=:id",nativeQuery=true)
 	void updateInn(@Param("id")int id,@Param("inn") int i);
+
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM section_master s WHERE s.id!=:id",nativeQuery=true)
+	List<Section> findAllExceptId(int id);
 
 }
