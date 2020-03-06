@@ -18,4 +18,13 @@ public interface SyllabusRepository extends JpaRepository<Syllabus,Integer> {
 	@Query(value="SELECT * FROM syllabus_master s WHERE s.id!=:id",nativeQuery=true)
 	List<Syllabus> findAllExceptId(@Param("id")int id);	
 	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE syllabus_master s SET s.subject_name=:subject_name,s.subject_code=:subject_code,s.credit=:credit,s.inn=:inn WHERE s.id=:id",nativeQuery=true)
+	void update(@Param("id") int id,@Param("subject_name")String name,@Param("subject_code") String code,@Param("credit") int credit, @Param("inn") int i);
+	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE syllabus_master s SET s.inn=:inn WHERE s.id=:id",nativeQuery=true)
+	void updateInn(@Param("id")int id, @Param("inn")int i);
 }

@@ -37,4 +37,13 @@ public class SyllabusService {
 		sylRepo.save(s);
 	}
 
+	public void update(int id, String name, String code, int credit, boolean inn) {
+		sylRepo.update(id,name,code,credit,inn?1:0);
+	}
+
+	public void updateInnZero(int id, int i) {
+		sylRepo.updateInn(id, i);
+	}
+	
+	
 }

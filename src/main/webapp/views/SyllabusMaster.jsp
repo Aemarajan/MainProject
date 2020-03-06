@@ -80,7 +80,7 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										
 										<div class="modal-body">
-											<c:if test="${addExist != null }">
+											<c:if test="${addExistSubjectName != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -90,7 +90,22 @@ pageEncoding="ISO-8859-1"%>
 														</button>
 													</div>
 													<div class="toast-body py-2">
-														<div>Batch Already Exist, Enter New Batch...</div>
+														<div>Subject Name Already Exist. Please Enter New Subject Name...</div>
+													</div>
+												</div>
+											</c:if>
+											
+											<c:if test="${addExistSubjectCode != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Subject Code Already Exist. Please Enter New Subject Code...</div>
 													</div>
 												</div>
 											</c:if>
@@ -163,7 +178,7 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${editExistCode != null }">
+											<c:if test="${editExistSubjectName != null }">
 												<div class="toast" id="Toast">
 													<div class="toast-header white-text bg-danger pt-2">
 														<h5 class="mr-auto">Error</h5>
@@ -173,7 +188,22 @@ pageEncoding="ISO-8859-1"%>
 														</button>
 													</div>
 													<div class="toast-body py-2">
-														<div>Batch Already Exist...</div>
+														<div>Subject Name Already Exist. Please Enter New Subject Name...</div>
+													</div>
+												</div>
+											</c:if>
+											
+											<c:if test="${editExistSubjectCode != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>Subject Code Already Exist. Please Enter New Subject Code...</div>
 													</div>
 												</div>
 											</c:if>
@@ -211,7 +241,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="credit" cssClass="form-control" maxlength="1" id="credit" pattern="\d*"/>
+														<s:input path="credit" autofocus="autofocus" maxlength="1" id="credit" pattern="\d*"  cssClass="form-control"/>
 														<label for="credit">Credit<span class="mandatory"> *</span></label>
 														<s:errors path="credit" cssClass="error"></s:errors>
 													</div>
@@ -350,7 +380,16 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+		
 		$('.inn').prop('checked',true);
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
+		
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
@@ -358,6 +397,7 @@ pageEncoding="ISO-8859-1"%>
 			var name = button.data('name');
 			var credit = button.data('credit');
 			var inn = button.data('inn');
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#subject_code').val(code);
@@ -374,17 +414,11 @@ pageEncoding="ISO-8859-1"%>
 			var id = button.data('id');
 			var code = button.data('code');
 			var name = button.data('name'); 
+
 			var modal = $(this);
 			modal.find('#id').val(id);
 			modal.find('#name').val(code+" - "+name);
 		});
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-
-		$('[data-toggle = "tooltip"]').tooltip();
 	}); 
 </script>
 </body>

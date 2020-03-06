@@ -29,6 +29,7 @@ import com.project.model.Religion;
 import com.project.model.Section;
 import com.project.model.Semester;
 import com.project.model.State;
+import com.project.model.Syllabus;
 import com.project.model.Year;
 import com.project.service.BatchService;
 import com.project.service.BloodgroupService;
@@ -1692,6 +1693,22 @@ public class MasterController {
 			mv.addObject("addError", "error");
 			return mv;
 		}
+		List<Syllabus> list = syllabusService.selectAll();
+		for(Syllabus s : list) {
+			if(s.getSubject_code().equalsIgnoreCase(syl.getSubject_code())) {
+				mv.setViewName("SyllabusMaster");
+				mv.addObject("list", syllabusService.selectAll());
+				mv.addObject("addError", "error");
+				mv.addObject("addExistSubjectCode", "Error");
+				return mv;
+			}else if(s.getSubject_name().equalsIgnoreCase(syl.getSubject_name())) {
+				mv.setViewName("SyllabusMaster");
+				mv.addObject("list", syllabusService.selectAll());
+				mv.addObject("addError", "error");
+				mv.addObject("addExistSubjectName", "Error");
+				return mv;
+			}
+		}
 		syllabusService.save(syl.getSubject_code().replaceAll("\\s", ""),syl.getSubject_name(),(int)syl.getCredit(),syl.isInn()?1:0);
 		mv.setViewName("redirect:/GetSyllabusMaster");
 		mv.addObject("added", "success");
@@ -1712,8 +1729,39 @@ public class MasterController {
 			mv.addObject("addError", "error");
 			return mv;
 		}
+		List<Syllabus> list = syllabusService.selectAllExceptId(syl.getId());
+		for(Syllabus s : list) {
+			if(s.getSubject_code().equalsIgnoreCase(syl.getSubject_code())) {
+				mv.setViewName("SyllabusMaster");
+				mv.addObject("list", syllabusService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistSubjectCode", "Error");
+				return mv;
+			}else if(s.getSubject_name().equalsIgnoreCase(syl.getSubject_name())) {
+				mv.setViewName("SyllabusMaster");
+				mv.addObject("list", syllabusService.selectAll());
+				mv.addObject("editError", "error");
+				mv.addObject("editExistSubjectName", "Error");
+				return mv;
+			}
+		}
+		syllabusService.update(syl.getId(),syl.getSubject_code().replaceAll("\\s", ""),syl.getSubject_name().toLowerCase(),(int)syl.getCredit(),syl.isInn());
 		mv.setViewName("redirect:/GetSyllabusMaster");
 		mv.addObject("updated", "success");
+		return mv;
+	}
+	
+	@PostMapping("DeleteSyllabus")
+	public ModelAndView deleteSyllabus(@RequestParam("id")int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:./logout");
+			mv.addObject("session", "destroy");
+			return mv;
+		}
+		syllabusService.updateInnZero(id,0);
+		mv.setViewName("redirect:/GetSyllabusMaster");
+		mv.addObject("deleted", "success");
 		return mv;
 	}
 	
