@@ -1745,7 +1745,7 @@ public class MasterController {
 				return mv;
 			}
 		}
-		syllabusService.update(syl.getId(),syl.getSubject_code().replaceAll("\\s", ""),syl.getSubject_name().toLowerCase(),(int)syl.getCredit(),syl.isInn());
+		syllabusService.update(syl.getId(),syl.getSubject_name().toLowerCase(),syl.getSubject_code().replaceAll("\\s", ""),(int)syl.getCredit(),syl.isInn());
 		mv.setViewName("redirect:/GetSyllabusMaster");
 		mv.addObject("updated", "success");
 		return mv;
