@@ -24,7 +24,7 @@
 			<h3 class="text-center py-3">Privilege</h3>		
 			<form action="createPrivilege" method="post">
 				<div style="margin-left:40px;" class="mt-2 mb-2">
-					<h5>Username</h5>
+					<h5>Username<span class="mandatory"> *</span></h5>
 					<select name="id" id="users" class="browser-default custom-select" style="width: 270px;"></select>
 				</div>
 				

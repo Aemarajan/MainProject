@@ -31,7 +31,7 @@
 							<strong>Update Privilege</strong>
 						</h5>
 						<div class="card-body px-lg-5 pt-0">
-							<form style="color: #757575;" action="getUserPrivilege" method="post">
+							<form action="getUserPrivilege" method="post">
 								
 								<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be selected</label>
 										
