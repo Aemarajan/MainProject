@@ -14,6 +14,13 @@
 <link rel="stylesheet" href="./views/css/bootnavbar.css">
 <link rel="stylesheet" href="./views/css/style.css">
 
+<style>
+	.dropdown-header{
+		font-size:15px !important;
+		margin-left:-15px;
+	}
+</style>
+
 </head>
 <body>	
 	<nav class="navbar navbar-expand-lg  navbar-light bg-light ubuntu py-1 mt-2" id="main_navbar">
@@ -63,10 +70,19 @@
 				
 			</ul>
 			<ul class="ml-auto navbar-nav">
-				<li class="nav-item ml-3"><a class="nav-link" href="logout">Logout</a></li>
+				<li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+			          aria-haspopup="true" aria-expanded="false">
+			          <i class="fas fa-user"></i></a>
+			        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+			          <h4 class="dropdown-header">Hi <%=session.getAttribute("name") %>.</h4>
+			          <a class="dropdown-item" href="logout">Log out</a>
+			        </div>
+			    </li>
 			</ul>
 		</div>
 	</nav>
+	
 	<!-- <ul>
 		<c:forEach var="lvl1s" items="${lvl1 }">
 			<c:if test="${lvl1s.dd == 1 }">

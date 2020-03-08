@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -164,6 +165,11 @@ public class ApiController {
 	@RequestMapping("getAllYear")
 	public List<Year> getAllYear(){
 		return yearService.selectAll();
+	}
+	
+	@RequestMapping("saveUser")
+	public void saveUser(@RequestBody User user1) {
+		userService.createUser(user1);
 	}
 	
 }

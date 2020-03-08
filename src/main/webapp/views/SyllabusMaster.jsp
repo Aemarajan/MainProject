@@ -54,7 +54,7 @@ pageEncoding="ISO-8859-1"%>
 									<c:forEach var="l" items="${list }">
 									<tr>
 										<td>${l.subject_code }</td>
-										<td>${l.subject_name }</td>
+										<td class="text-capitalize">${l.subject_name }</td>
 										<td>${l.credit }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
@@ -80,20 +80,6 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 										
 										<div class="modal-body">
-											<c:if test="${addExistSubjectName != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-														<button type="button" class="ml-2 mb-1 close white-text"
-															data-dismiss="toast">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="toast-body py-2">
-														<div>Subject Name Already Exist. Please Enter New Subject Name...</div>
-													</div>
-												</div>
-											</c:if>
 											
 											<c:if test="${addExistSubjectCode != null }">
 												<div class="toast" id="Toast">
@@ -130,7 +116,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="subject_name" cssClass="form-control"/>
+														<s:input path="subject_name" cssClass="form-control text-capitalize"/>
 														<label for="Subjectname">Subject Name<span class="mandatory"> *</span></label>
 														<s:errors path="subject_name" cssClass="error"></s:errors>
 													</div>
@@ -178,20 +164,6 @@ pageEncoding="ISO-8859-1"%>
 										</div>
 															
 										<div class="modal-body">
-											<c:if test="${editExistSubjectName != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-														<button type="button" class="ml-2 mb-1 close white-text"
-															data-dismiss="toast">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="toast-body py-2">
-														<div>Subject Name Already Exist. Please Enter New Subject Name...</div>
-													</div>
-												</div>
-											</c:if>
 											
 											<c:if test="${editExistSubjectCode != null }">
 												<div class="toast" id="Toast">
@@ -228,7 +200,7 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="subject_name" id="subject_name" autofocus="autofocus" cssClass="form-control"/>
+														<s:input path="subject_name" id="subject_name" autofocus="autofocus" cssClass="form-control text-capitalize"/>
 														<label for="Subject name">Subject Name<span class="mandatory"> *</span></label>
 														<s:errors path="subject_name" cssClass="error"></s:errors>
 													</div>
