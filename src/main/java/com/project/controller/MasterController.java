@@ -1695,21 +1695,15 @@ public class MasterController {
 		}
 		List<Syllabus> list = syllabusService.selectAll();
 		for(Syllabus s : list) {
-			if(s.getSubject_code().equalsIgnoreCase(syl.getSubject_code())) {
+			if(s.getSubject_code().equalsIgnoreCase(syl.getSubject_code().replaceAll("\\s", ""))) {
 				mv.setViewName("SyllabusMaster");
 				mv.addObject("list", syllabusService.selectAll());
 				mv.addObject("addError", "error");
 				mv.addObject("addExistSubjectCode", "Error");
 				return mv;
-			}else if(s.getSubject_name().equalsIgnoreCase(syl.getSubject_name())) {
-				mv.setViewName("SyllabusMaster");
-				mv.addObject("list", syllabusService.selectAll());
-				mv.addObject("addError", "error");
-				mv.addObject("addExistSubjectName", "Error");
-				return mv;
 			}
 		}
-		syllabusService.save(syl.getSubject_code().replaceAll("\\s", ""),syl.getSubject_name(),(int)syl.getCredit(),syl.isInn()?1:0);
+		syllabusService.save(syl.getSubject_code().replaceAll("\\s", ""),syl.getSubject_name().toLowerCase(),(int)syl.getCredit(),syl.isInn()?1:0);
 		mv.setViewName("redirect:/GetSyllabusMaster");
 		mv.addObject("added", "success");
 		return mv;
@@ -1737,15 +1731,9 @@ public class MasterController {
 				mv.addObject("editError", "error");
 				mv.addObject("editExistSubjectCode", "Error");
 				return mv;
-			}else if(s.getSubject_name().equalsIgnoreCase(syl.getSubject_name())) {
-				mv.setViewName("SyllabusMaster");
-				mv.addObject("list", syllabusService.selectAll());
-				mv.addObject("editError", "error");
-				mv.addObject("editExistSubjectName", "Error");
-				return mv;
 			}
 		}
-		syllabusService.update(syl.getId(),syl.getSubject_code().replaceAll("\\s", ""),syl.getSubject_name().toLowerCase(),(int)syl.getCredit(),syl.isInn());
+		syllabusService.update(syl.getId(),syl.getSubject_name().toLowerCase(),syl.getSubject_code().replaceAll("\\s", ""),(int)syl.getCredit(),syl.isInn());
 		mv.setViewName("redirect:/GetSyllabusMaster");
 		mv.addObject("updated", "success");
 		return mv;
