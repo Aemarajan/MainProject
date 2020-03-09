@@ -2,6 +2,8 @@
 pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="s"%>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,9 +34,6 @@ pageEncoding="ISO-8859-1"%>
 				<div class="col col-md-10">
 					
 					<div class="table-wrapper">
-						
-
-						
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6">
@@ -46,6 +45,12 @@ pageEncoding="ISO-8859-1"%>
 							</div>
 						</div>
 						
+						<jsp:useBean id="pagedListHolder" scope="request" type="org.springframework.beans.support.PagedListHolder" />
+						
+						<c:url value="/GetCountryMaster" var="pagedLink">
+							<c:param name="p" value="~" />
+						</c:url>
+						
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
@@ -56,7 +61,7 @@ pageEncoding="ISO-8859-1"%>
 								</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="l" items="${list }">
+									<c:forEach var="l" items="${pagedListHolder.pageList }">
 									<tr>
 										<td class="text-capitalize">${l.name }</td>
 										<td>${l.acronym }</td>
@@ -72,6 +77,8 @@ pageEncoding="ISO-8859-1"%>
 								</c:forEach>
 							</tbody>
 						</table>
+						
+						<tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}" />
 							
 						<!-- Add Modal HTML -->
 						<div id="addModal" class="modal fade">

@@ -2,13 +2,16 @@ package com.project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.support.PagedListHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -116,7 +119,7 @@ public class MasterController {
 	SyllabusService syllabusService;
 	
 	@GetMapping("GetBatchMaster")
-	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -129,9 +132,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
-		mv.addObject("list", batchService.selectAll());
-		mv.addObject("addBatch", new AddBatchMaster());
+		
+		PagedListHolder<Batch> pagedListHolder = new PagedListHolder<Batch>(batchService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("BatchMaster");
+		mv.addObject("addBatch", new AddBatchMaster());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -168,8 +178,7 @@ public class MasterController {
 			bm.setNo_of_years(n_year);		
 			bm.setInn(batch.isInn());
 			batchService.saveBatchMaster(bm);
-			mv.setViewName("BatchMaster");
-			mv.addObject("list", batchService.selectAll());
+			mv.setViewName("redirect:/GetBatchMaster");
 			mv.addObject("added", "Success Message");
 			return mv;
 		}
@@ -219,9 +228,8 @@ public class MasterController {
 			Batch bm = new Batch();		
 			bm.setInn(batch.isInn());
 			batchService.updateBatchMaster(batch.getId(),f_year,t_year,n_year,bm.getInn());
-			mv.setViewName("BatchMaster");
+			mv.setViewName("redirect:/GetBatchMaster");
 			mv.addObject("updated", "Success");
-			mv.addObject("list",batchService.selectAll());
 			return mv;
 		}
 		mv.setViewName("BatchMaster");
@@ -246,7 +254,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetBloodGroupMaster")
-	public ModelAndView getBloodroupMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getBloodroupMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			model.addObject("session", "destroy");
@@ -259,9 +267,16 @@ public class MasterController {
 			model.addObject("updated", "success");
 		if(!(deleted == null))
 			model.addObject("deleted", "success");
+		
+		PagedListHolder<Bloodgroup> pagedListHolder = new PagedListHolder<Bloodgroup>(bloodgroupService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+
 		model.setViewName("BloodGroupMaster");
-		model.addObject("list", bloodgroupService.selectAll());
 		model.addObject("bloodgroup", new AddBloodGroup());
+		model.addObject("pagedListHolder", pagedListHolder);
 		return model;
 	}
 	
@@ -294,8 +309,7 @@ public class MasterController {
 		bm.setInn(blood.isInn());
 		bloodgroupService.saveBloodgroupMaster(bm);
 			
-		mv.setViewName("BloodGroupMaster");
-		mv.addObject("list", bloodgroupService.selectAll());
+		mv.setViewName("redirect:/GetBloodGroupMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
@@ -345,7 +359,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetCommunityMaster")
-	public ModelAndView getCommunityMaster(@RequestParam(value="updated",required=false)String update,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getCommunityMaster(HttpServletRequest request,@RequestParam(value="updated",required=false)String update,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -360,7 +374,16 @@ public class MasterController {
 			mv.addObject("added", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Community> pagedListHolder = new PagedListHolder<Community>(communityService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+
 		mv.setViewName("CommunityMaster");
+		mv.addObject("community", new AddCommunity());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -455,7 +478,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetCountryMaster")
-	public ModelAndView getCountryMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getCountryMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -468,9 +491,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Country> pagedListHolder = new PagedListHolder<Country>(countryService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+
 		mv.setViewName("CountryMaster");
 		mv.addObject("country", new AddCountry());
-		mv.addObject("list", countryService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -561,7 +591,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetDegreeMaster")
-	public ModelAndView getDegreeMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,ModelMap model) {
+	public ModelAndView getDegreeMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,ModelMap model) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -574,9 +604,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
-		mv.addObject("degree", new AddDegree());
-		mv.addObject("list", degreeService.selectAll());
+		
+		PagedListHolder<Degree> pagedListHolder = new PagedListHolder<Degree>(degreeService.selectAll()); 
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("DegreeMaster");
+		mv.addObject("degree", new AddDegree());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -611,8 +648,8 @@ public class MasterController {
 			}
 		}
 		degreeService.saveDegreeMaster(degree.getCategory(),degree.getName().toLowerCase(),degree.getAcronym().toUpperCase().replaceAll("\\s", ""),degree.isInn());
-		mv.addObject("added", "Success Message");
 		mv.setViewName("redirect:/GetDegreeMaster");
+		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
@@ -668,7 +705,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetDepartmentMaster")
-	public ModelAndView getDepartmentMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+	public ModelAndView getDepartmentMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -681,9 +718,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Department> pagedListHolder = new PagedListHolder<Department>(departmentService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("DepartmentMaster");
-		mv.addObject("list", departmentService.selectAll());
 		mv.addObject("department", new AddDepartment());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -774,7 +818,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetDistrictMaster")
-	public ModelAndView getDistrictMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+	public ModelAndView getDistrictMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -787,9 +831,15 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
-
+		
+		PagedListHolder<District> pagedListHolder = new PagedListHolder<District>(districtService.selectAll()); 
+		
+		int page=ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("DistrictMaster");
-		mv.addObject("list", districtService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		mv.addObject("district", new AddDistrict());
 		return mv;
 	}
@@ -825,8 +875,8 @@ public class MasterController {
 			}
 		}
 		districtService.saveDistrictMaster(district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),district.isInn()?1:0);
-		mv.addObject("added", "Success Message");
 		mv.setViewName("redirect:/GetDistrictMaster");
+		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
@@ -881,7 +931,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetStateMaster")
-	public ModelAndView getStateMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getStateMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -895,9 +945,15 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted","success");
 		
+		PagedListHolder<State> pagedListHolder = new PagedListHolder<State>(stateService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("StateMaster");
 		mv.addObject("state", new AddState());
-		mv.addObject("list", stateService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 
@@ -988,7 +1044,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetGradeMaster")
-	public ModelAndView getGradeMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getGradeMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1001,9 +1057,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Grade> pagedListHolder = new PagedListHolder<Grade>(gradeService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("GradeMaster");
 		mv.addObject("grade", new AddGrade());
-		mv.addObject("list", gradeService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -1090,7 +1153,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetRegulationMaster")
-	public ModelAndView getRegulationMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getRegulationMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1103,9 +1166,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Regulation> pagedListHolder = new PagedListHolder<Regulation>(regulationService.selectAll());		
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("RegulationMaster");
 		mv.addObject("regulation", new AddRegulation());
-		mv.addObject("list", regulationService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -1196,7 +1266,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetReligionMaster")
-	public ModelAndView getReligionMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getReligionMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1209,9 +1279,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Religion> pagedListHolder = new PagedListHolder<Religion>(religionService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+				
 		mv.setViewName("ReligionMaster");
 		mv.addObject("religion", new AddReligion());
-		mv.addObject("list", religionService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -1290,7 +1367,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetLanguageMaster")
-	public ModelAndView getLanguageMaster(@RequestParam(value="added",required = false)String added ,@RequestParam(value="updated",required = false)String updated ,@RequestParam(value="deleted",required = false)String deleted ,HttpSession session) {
+	public ModelAndView getLanguageMaster(@RequestParam(value="added",required = false)String added ,@RequestParam(value="updated",required = false)String updated ,@RequestParam(value="deleted",required = false)String deleted ,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1303,9 +1380,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null)) 
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Language> pagedListHolder = new PagedListHolder<Language>(languageService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("LanguageMaster");
+		mv.addObject("pagedListHolder", pagedListHolder);
 		mv.addObject("language", new AddLanguage());
-		mv.addObject("list", languageService.selectAll());
 		return mv;
 	}
 	
@@ -1384,7 +1468,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetYearMaster")
-	public ModelAndView getYear(@RequestParam(value="added",required = false)String added ,@RequestParam(value="updated",required = false)String updated ,@RequestParam(value="deleted",required = false)String deleted , HttpSession session) {
+	public ModelAndView getYear(HttpServletRequest request,@RequestParam(value="added",required = false)String added ,@RequestParam(value="updated",required = false)String updated ,@RequestParam(value="deleted",required = false)String deleted , HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1397,9 +1481,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null)) 
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Year> pagedListHolder = new PagedListHolder<Year>(yearService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("YearMaster");
 		mv.addObject("year", new AddYear());
-		mv.addObject("list", yearService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -1472,7 +1563,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetSectionMaster")
-	public ModelAndView getSection(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getSection(HttpServletRequest request,@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1485,9 +1576,16 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Section> pagedListHolder = new PagedListHolder<Section>(sectionService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("SectionMaster");
-		mv.addObject("list",sectionService.selectAll());
 		mv.addObject("section", new AddSection());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		return mv;
 	}
 	
@@ -1566,7 +1664,7 @@ public class MasterController {
 	}
 		
 	@GetMapping("GetSemesterMaster")
-	public ModelAndView getSemesterMaster(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+	public ModelAndView getSemesterMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1579,8 +1677,15 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Semester> pagedListHolder = new PagedListHolder<Semester>(semesterService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("SemesterMaster");
-		mv.addObject("list", semesterService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		mv.addObject("semester", new AddSemester());
 		return mv;
 	}
@@ -1660,7 +1765,7 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetSyllabusMaster")
-	public ModelAndView getSyllabus(@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
+	public ModelAndView getSyllabus(HttpServletRequest request,@RequestParam(value="added",required=false)String added, @RequestParam(value="updated",required=false)String updated, @RequestParam(value="deleted",required=false)String deleted, HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1673,8 +1778,15 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
+		
+		PagedListHolder<Syllabus> pagedListHolder = new PagedListHolder<Syllabus>(syllabusService.selectAll());
+		
+		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+		pagedListHolder.setPage(page);
+		pagedListHolder.setPageSize(3);
+		
 		mv.setViewName("SyllabusMaster");
-		mv.addObject("list", syllabusService.selectAll());
+		mv.addObject("pagedListHolder", pagedListHolder);
 		mv.addObject("syllabus", new AddSyllabus());
 		return mv;
 	}

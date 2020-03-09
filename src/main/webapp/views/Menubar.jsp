@@ -75,8 +75,8 @@
 			          aria-haspopup="true" aria-expanded="false">
 			          <i class="fas fa-user"></i></a>
 			        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-			          <h4 class="dropdown-header">Hi <%=session.getAttribute("name") %>.</h4>
-			          <a class="dropdown-item" href="logout">Log out</a>
+			          <h4 class="dropdown-header">Hi <%= session.getAttribute("name") %></h4>
+			          <a class="dropdown-item" href="logout">Logout</a>
 			        </div>
 			    </li>
 			</ul>
