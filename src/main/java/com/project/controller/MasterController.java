@@ -118,8 +118,17 @@ public class MasterController {
 	@Autowired
 	SyllabusService syllabusService;
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public PagedListHolder pagination(List<?> list,HttpServletRequest request) {
+		PagedListHolder pageListHolder = new PagedListHolder(list);
+		int page = ServletRequestUtils.getIntParameter(request,"p",0);
+		pageListHolder.setPage(page);
+		pageListHolder.setPageSize(3);
+		return pageListHolder;
+	}
+	
 	@GetMapping("GetBatchMaster")
-	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,HttpServletRequest request) {
+	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,HttpServletRequest request) throws ClassNotFoundException {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -132,21 +141,15 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
-		
-		PagedListHolder<Batch> pagedListHolder = new PagedListHolder<Batch>(batchService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
+	
 		mv.setViewName("BatchMaster");
 		mv.addObject("addBatch", new AddBatchMaster());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveBatchMaster")
-	public ModelAndView saveBatchMaster(@Valid @ModelAttribute("addBatch") AddBatchMaster batch,BindingResult result ,HttpSession session) {
+	public ModelAndView saveBatchMaster(@Valid @ModelAttribute("addBatch") AddBatchMaster batch,BindingResult result ,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.addObject("session", "destroy");
@@ -155,14 +158,14 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("BatchMaster");
-			mv.addObject("list", batchService.selectAll());
+			mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return  mv;
 		}
 		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()));
 		if(exist != null) {
 			mv.setViewName("BatchMaster");
-			mv.addObject("list", batchService.selectAll());
+			mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 			mv.addObject("addError", "error");
 			mv.addObject("addExist", "already exist");
 			return mv;
@@ -183,14 +186,14 @@ public class MasterController {
 			return mv;
 		}
 		mv.setViewName("BatchMaster");
-		mv.addObject("list", batchService.selectAll());
 		mv.addObject("addError", "error");
+		mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 		mv.addObject("addInvalidYear", "Invalid year");
 		return mv;
 	}
 	
 	@PostMapping("EditBatch")
-	public ModelAndView editBatch(@Valid @ModelAttribute("addBatch")AddBatchMaster batch,BindingResult result,HttpSession session) {
+	public ModelAndView editBatch(@Valid @ModelAttribute("addBatch")AddBatchMaster batch,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.addObject("session", "destroy");
@@ -199,7 +202,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("BatchMaster");
-			mv.addObject("list", batchService.selectAll());
+			mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 			mv.addObject("editError", "error");
 			return mv;
 		}
@@ -207,7 +210,7 @@ public class MasterController {
 		for(Batch b: list) {
 			if(b.getFrom_year() == Integer.parseInt(batch.getFrom_year()) && b.getTo_year() == Integer.parseInt(batch.getTo_year())) {
 				mv.setViewName("BatchMaster");
-				mv.addObject("list",batchService.selectAll());
+				mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("editExist", "already exist");
 				return mv;
@@ -216,7 +219,7 @@ public class MasterController {
 		Batch exist = batchService.selectBatchByFromTo(Integer.parseInt(batch.getFrom_year()),Integer.parseInt(batch.getTo_year()),batch.isInn()?1:0);
 		if(exist != null) {
 			mv.setViewName("BatchMaster");
-			mv.addObject("list",batchService.selectAll());
+			mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 			mv.addObject("editError", "error");
 			mv.addObject("editExist", "already exist");
 			return mv;
@@ -233,7 +236,7 @@ public class MasterController {
 			return mv;
 		}
 		mv.setViewName("BatchMaster");
-		mv.addObject("list",batchService.selectAll());
+		mv.addObject("pagedListHolder", pagination(batchService.selectAll(),request));
 		mv.addObject("editError", "error");
 		mv.addObject("editInvalidYear", "Invalid year");
 		return mv;
@@ -1058,20 +1061,14 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Grade> pagedListHolder = new PagedListHolder<Grade>(gradeService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("GradeMaster");
 		mv.addObject("grade", new AddGrade());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(gradeService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveGradeMaster")
-	public ModelAndView saveGradeMaster(@Valid @ModelAttribute("grade")AddGrade grade,BindingResult result,HttpSession session) {
+	public ModelAndView saveGradeMaster(@Valid @ModelAttribute("grade")AddGrade grade,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1080,7 +1077,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("GradeMaster");
-			mv.addObject("list", gradeService.selectAll());
+			mv.addObject("pagedListHolder", pagination(gradeService.selectAll(),request));
 			mv.addObject("addError", "Error");
 			return mv;
 		}
@@ -1091,7 +1088,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditGrade")
-	public ModelAndView editGrade(@Valid @ModelAttribute("grade")AddGrade grade,BindingResult result,HttpSession session) {
+	public ModelAndView editGrade(@Valid @ModelAttribute("grade")AddGrade grade,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1100,7 +1097,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("GradeMaster");
-			mv.addObject("list", gradeService.selectAll());
+			mv.addObject("pagedListHolder", pagination(gradeService.selectAll(),request));
 			mv.addObject("editError", "Error");
 			return mv;
 		}
@@ -1108,25 +1105,25 @@ public class MasterController {
 		for(Grade g : list) {
 			if(g.getWord().equalsIgnoreCase(grade.getWord())) {
 					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("pagedListHolder", pagination(gradeService.selectAll(),request));
 					mv.addObject("editError", "Error");
 					mv.addObject("editExistWord", "Error");
 					return mv;
 				}else if(g.getAcronym().equalsIgnoreCase(grade.getAcronym())) {
 					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("pagedListHolder", pagination(gradeService.selectAll(),request));
 					mv.addObject("editError", "Error");
 					mv.addObject("editExistAcronym", "Error");
 					return mv;
 				}else if(g.getPoint() == (int) grade.getPoint()) {
 					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("pagedListHolder", pagination(gradeService.selectAll(),request));
 					mv.addObject("editError", "Error");
 					mv.addObject("editExistPoint", "Error");
 					return mv;
 				}else if(g.getMarks_range().equalsIgnoreCase(grade.getMarks_range())) {
 					mv.setViewName("GradeMaster");
-					mv.addObject("list", gradeService.selectAll());
+					mv.addObject("pagedListHolder", pagination(gradeService.selectAll(),request));
 					mv.addObject("editError", "Error");
 					mv.addObject("editExistMarksRange", "Error");
 					return mv;
@@ -1167,20 +1164,14 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Regulation> pagedListHolder = new PagedListHolder<Regulation>(regulationService.selectAll());		
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("RegulationMaster");
 		mv.addObject("regulation", new AddRegulation());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(regulationService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveRegulationMaster")
-	public ModelAndView saveRegulationMaster(@Valid @ModelAttribute("regulation")AddRegulation regulation,BindingResult result,HttpSession session) {
+	public ModelAndView saveRegulationMaster(@Valid @ModelAttribute("regulation")AddRegulation regulation,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1189,7 +1180,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("RegulationMaster");
-			mv.addObject("list", regulationService.selectAll());
+			mv.addObject("pagedListHolder", pagination(regulationService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -1197,13 +1188,13 @@ public class MasterController {
 		for(Regulation r : exist) {
 			if(r.getName().replaceAll("\\s", "").equalsIgnoreCase(regulation.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("RegulationMaster");
-				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("pagedListHolder", pagination(regulationService.selectAll(),request));
 				mv.addObject("addError","error");
 				mv.addObject("addExistRegulation", "exist");
 				return mv;
 			}else if(r.getAcronym().equalsIgnoreCase(regulation.getAcronym())) {
 				mv.setViewName("RegulationMaster");
-				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("pagedListHolder", pagination(regulationService.selectAll(),request));
 				mv.addObject("addError","error");
 				mv.addObject("addExistAcronym", "exist");
 				return mv;
@@ -1216,7 +1207,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditRegulation")
-	public ModelAndView editRegulation(@Valid @ModelAttribute("regulation")AddRegulation regulation,BindingResult result,HttpSession session) {
+	public ModelAndView editRegulation(@Valid @ModelAttribute("regulation")AddRegulation regulation,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1233,13 +1224,13 @@ public class MasterController {
 		for(Regulation r : exist) {
 			if(r.getName().equalsIgnoreCase(regulation.getName())) {
 				mv.setViewName("RegulationMaster");
-				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("pagedListHolder", pagination(regulationService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("editExistRegulation", "exist");
 				return mv;
 			}else if(r.getAcronym().equalsIgnoreCase(regulation.getAcronym())) {
 				mv.setViewName("RegulationMaster");
-				mv.addObject("list", regulationService.selectAll());
+				mv.addObject("pagedListHolder", pagination(regulationService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("editExistAcronym", "exist");
 				return mv;
@@ -1280,20 +1271,14 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Religion> pagedListHolder = new PagedListHolder<Religion>(religionService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-				
 		mv.setViewName("ReligionMaster");
 		mv.addObject("religion", new AddReligion());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(religionService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveReligionMaster")
-	public ModelAndView saveReligionMaster(@Valid @ModelAttribute("religion")AddReligion religion,BindingResult result,HttpSession session) {
+	public ModelAndView saveReligionMaster(@Valid @ModelAttribute("religion")AddReligion religion,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1302,7 +1287,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("ReligionMaster");
-			mv.addObject("list", religionService.selectAll());
+			mv.addObject("pagedListHolder", pagination(religionService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -1310,7 +1295,7 @@ public class MasterController {
 		for(Religion r : exist) {
 			if(r.getName().replaceAll("\\s", "").equalsIgnoreCase(religion.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("ReligionMaster");
-				mv.addObject("list", religionService.selectAll());
+				mv.addObject("pagedListHolder", pagination(religionService.selectAll(),request));
 				mv.addObject("addError","error");
 				mv.addObject("addExist", "exist");
 				return mv;
@@ -1323,7 +1308,7 @@ public class MasterController {
 	}
 
 	@PostMapping("EditReligion")
-	public ModelAndView editReligion(@Valid @ModelAttribute("religion")AddReligion religion,BindingResult result,HttpSession session) {
+	public ModelAndView editReligion(@Valid @ModelAttribute("religion")AddReligion religion,BindingResult result,HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1332,7 +1317,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("ReligionMaster");
-			mv.addObject("list", religionService.selectAll());
+			mv.addObject("pagedListHolder", pagination(religionService.selectAll(),request));
 			mv.addObject("editError", "error");
 			return mv;
 		}
@@ -1340,7 +1325,7 @@ public class MasterController {
 		for(Religion r : list) {
 			if(r.getName().equalsIgnoreCase(religion.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("ReligionMaster");
-				mv.addObject("list", religionService.selectAll());
+				mv.addObject("pagedListHolder", pagination(religionService.selectAll(),request));
 				mv.addObject("editExist", "error");
 				mv.addObject("editError", "error");
 				return mv;			
@@ -1381,20 +1366,14 @@ public class MasterController {
 		if(!(deleted == null)) 
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Language> pagedListHolder = new PagedListHolder<Language>(languageService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("LanguageMaster");
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 		mv.addObject("language", new AddLanguage());
 		return mv;
 	}
 	
 	@PostMapping("SaveLanguageMaster")
-	public ModelAndView saveLanguageMaster(@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session) {
+	public ModelAndView saveLanguageMaster(@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1403,7 +1382,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("LanguageMaster");
-			mv.addObject("list", languageService.selectAll());
+			mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -1411,7 +1390,7 @@ public class MasterController {
 		for(Language l : exist) {
 			if(l.getName().replaceAll("\\s", "").equalsIgnoreCase(language.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("LanguageMaster");
-				mv.addObject("list", languageService.selectAll());
+				mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 				mv.addObject("addError","error");
 				mv.addObject("addExist", "exist");
 				return mv;
@@ -1424,7 +1403,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditLanguage")
-	public ModelAndView editLanguage(@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session) {
+	public ModelAndView editLanguage(@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1433,7 +1412,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("LanguageMaster");
-			mv.addObject("list", languageService.selectAll());
+			mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 			mv.addObject("editError", "error");
 			return mv;
 		}
@@ -1441,7 +1420,7 @@ public class MasterController {
 		for(Language l : list) {
 			if(l.getName().equalsIgnoreCase(language.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("LanguageMaster");
-				mv.addObject("list", languageService.selectAll());
+				mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 				mv.addObject("editExist", "error");
 				mv.addObject("editError", "error");
 				return mv;			
@@ -1482,20 +1461,14 @@ public class MasterController {
 		if(!(deleted == null)) 
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Year> pagedListHolder = new PagedListHolder<Year>(yearService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("YearMaster");
 		mv.addObject("year", new AddYear());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(yearService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveYear")
-	public ModelAndView saveYear(@Valid @ModelAttribute("year")AddYear year, BindingResult result, HttpSession session) {
+	public ModelAndView saveYear(@Valid @ModelAttribute("year")AddYear year, BindingResult result, HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1505,14 +1478,14 @@ public class MasterController {
 		if(result.hasErrors()) {
 			mv.setViewName("YearMaster");
 			mv.addObject("addError", "error");
-			mv.addObject("list", yearService.selectAll());
+			mv.addObject("pagedListHolder", pagination(yearService.selectAll(),request));
 			return mv;
 		}
 		List<Year> list = yearService.selectAll();
 		for(Year y : list) {
 			if(y.getYear() == (int) year.getYear()) {
 				mv.setViewName("YearMaster");
-				mv.addObject("list", yearService.selectAll());
+				mv.addObject("pagedListHolder", pagination(yearService.selectAll(),request));
 				mv.addObject("addExistYear", "error");
 				mv.addObject("addError", "error");
 				return mv;
@@ -1525,7 +1498,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditYear")
-	public ModelAndView editYear(@Valid @ModelAttribute("year")AddYear year, HttpSession session) {
+	public ModelAndView editYear(@Valid @ModelAttribute("year")AddYear year, HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1536,7 +1509,7 @@ public class MasterController {
 		for(Year y : list) {
 			if(y.getYear() == (int) year.getYear()) {
 				mv.setViewName("YearMaster");
-				mv.addObject("list", yearService.selectAll());
+				mv.addObject("pagedListHolder", pagination(yearService.selectAll(),request));
 				mv.addObject("editExistYear", "error");
 				mv.addObject("editError", "error");
 				return mv;
@@ -1577,20 +1550,14 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Section> pagedListHolder = new PagedListHolder<Section>(sectionService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("SectionMaster");
 		mv.addObject("section", new AddSection());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(sectionService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveSection")
-	public ModelAndView saveSection(@Valid @ModelAttribute("section")AddSection section, BindingResult result, HttpSession session) {
+	public ModelAndView saveSection(@Valid @ModelAttribute("section")AddSection section, BindingResult result, HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1600,14 +1567,14 @@ public class MasterController {
 		if(result.hasErrors()) {
 			mv.setViewName("SectionMaster");
 			mv.addObject("addError", "error");
-			mv.addObject("list", sectionService.selectAll());
+			mv.addObject("pagedListHolder", pagination(sectionService.selectAll(),request));
 			return mv;
 		}
 		List<Section> list = sectionService.selectAll();
 		for(Section s : list) {
 			if(s.getName().equalsIgnoreCase(section.getName())) {
 				mv.setViewName("SectionMaster");
-				mv.addObject("list", sectionService.selectAll());
+				mv.addObject("pagedListHolder", pagination(sectionService.selectAll(),request));
 				mv.addObject("addExist", "error");
 				mv.addObject("addError", "error");
 				return mv;
@@ -1620,7 +1587,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditSection")
-	public ModelAndView editSection(@Valid @ModelAttribute("section")AddSection section, BindingResult result, HttpSession session) {
+	public ModelAndView editSection(@Valid @ModelAttribute("section")AddSection section, BindingResult result, HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1637,7 +1604,7 @@ public class MasterController {
 		for(Section s : list) {
 			if(s.getName().equalsIgnoreCase(section.getName())) {
 				mv.setViewName("SectionMaster");
-				mv.addObject("list", sectionService.selectAll());
+				mv.addObject("pagedListHolder", pagination(sectionService.selectAll(),request));
 				mv.addObject("editExist", "error");
 				mv.addObject("editError", "error");
 				return mv;
@@ -1678,20 +1645,14 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Semester> pagedListHolder = new PagedListHolder<Semester>(semesterService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("SemesterMaster");
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(semesterService.selectAll(),request));
 		mv.addObject("semester", new AddSemester());
 		return mv;
 	}
 	
 	@PostMapping("SaveSemester")
-	public ModelAndView saveSemesterMaster(@Valid @ModelAttribute("semester")AddSemester sem,BindingResult result,HttpSession session) {
+	public ModelAndView saveSemesterMaster(@Valid @ModelAttribute("semester")AddSemester sem,BindingResult result,HttpSession session, HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1700,7 +1661,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("SemesterMaster");
-			mv.addObject("list", semesterService.selectAll());
+			mv.addObject("pagedListHolder", pagination(semesterService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -1708,7 +1669,7 @@ public class MasterController {
 		for(Semester s : list) {
 			if(s.getName().equalsIgnoreCase(sem.getName())) {
 					mv.setViewName("SemesterMaster");
-					mv.addObject("list", semesterService.selectAll());
+					mv.addObject("pagedListHolder", pagination(semesterService.selectAll(),request));
 					mv.addObject("addError", "error");
 					mv.addObject("addExistSemester","error");
 					return mv;
@@ -1721,7 +1682,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditSemester")
-	public ModelAndView editSemester(@Valid @ModelAttribute("semester")AddSemester sem,BindingResult result,HttpSession session) {
+	public ModelAndView editSemester(@Valid @ModelAttribute("semester")AddSemester sem,BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1730,7 +1691,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("SemesterMaster");
-			mv.addObject("list", semesterService.selectAll());
+			mv.addObject("pagedListHolder", pagination(semesterService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -1738,7 +1699,7 @@ public class MasterController {
 		for(Semester s : list) {
 			if(s.getName().equalsIgnoreCase(sem.getName())) {
 					mv.setViewName("SemesterMaster");
-					mv.addObject("list", semesterService.selectAll());
+					mv.addObject("pagedListHolder", pagination(semesterService.selectAll(),request));
 					mv.addObject("editError", "error");
 					mv.addObject("editExistSemester","error");
 					return mv;
@@ -1778,21 +1739,15 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
-		
-		PagedListHolder<Syllabus> pagedListHolder = new PagedListHolder<Syllabus>(syllabusService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
+
 		mv.setViewName("SyllabusMaster");
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(syllabusService.selectAll(),request));
 		mv.addObject("syllabus", new AddSyllabus());
 		return mv;
 	}
 	
 	@PostMapping("SaveSyllabus")
-	public ModelAndView saveSyllabus(@Valid @ModelAttribute("syllabus")AddSyllabus syl, BindingResult result, HttpSession session) {
+	public ModelAndView saveSyllabus(@Valid @ModelAttribute("syllabus")AddSyllabus syl, BindingResult result, HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1801,7 +1756,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("SyllabusMaster");
-			mv.addObject("list", syllabusService.selectAll());
+			mv.addObject("pagedListHolder", pagination(syllabusService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -1809,7 +1764,7 @@ public class MasterController {
 		for(Syllabus s : list) {
 			if(s.getSubject_code().equalsIgnoreCase(syl.getSubject_code().replaceAll("\\s", ""))) {
 				mv.setViewName("SyllabusMaster");
-				mv.addObject("list", syllabusService.selectAll());
+				mv.addObject("pagedListHolder", pagination(syllabusService.selectAll(),request));
 				mv.addObject("addError", "error");
 				mv.addObject("addExistSubjectCode", "Error");
 				return mv;
@@ -1822,7 +1777,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditSyllabus")
-	public ModelAndView editSyllabus(@Valid @ModelAttribute("syllabus")AddSyllabus syl, BindingResult result,HttpSession session) {
+	public ModelAndView editSyllabus(@Valid @ModelAttribute("syllabus")AddSyllabus syl, BindingResult result,HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1831,7 +1786,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("SyllabusMaster");
-			mv.addObject("list", syllabusService.selectAll());
+			mv.addObject("pagedListHolder", pagination(syllabusService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -1839,7 +1794,7 @@ public class MasterController {
 		for(Syllabus s : list) {
 			if(s.getSubject_code().equalsIgnoreCase(syl.getSubject_code())) {
 				mv.setViewName("SyllabusMaster");
-				mv.addObject("list", syllabusService.selectAll());
+				mv.addObject("pagedListHolder", pagination(syllabusService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("editExistSubjectCode", "Error");
 				return mv;
