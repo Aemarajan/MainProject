@@ -128,7 +128,11 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetBatchMaster")
-	public ModelAndView getBatchMaster(@RequestParam(value="updated",required=false)String updated,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,HttpServletRequest request) throws ClassNotFoundException {
+	public ModelAndView getBatchMaster(
+			HttpSession session,HttpServletRequest request,
+			@RequestParam(value="updated",required=false)String updated,
+			@RequestParam(value="added",required=false)String added,
+			@RequestParam(value="deleted",required=false)String deleted) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -257,7 +261,11 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetBloodGroupMaster")
-	public ModelAndView getBloodroupMaster(@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session,HttpServletRequest request) {
+	public ModelAndView getBloodroupMaster(
+			@RequestParam(value="added",required=false)String added,
+			@RequestParam(value="updated",required=false)String updated,
+			@RequestParam(value="deleted",required=false)String deleted,
+			HttpSession session,HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			model.addObject("session", "destroy");
@@ -271,20 +279,18 @@ public class MasterController {
 		if(!(deleted == null))
 			model.addObject("deleted", "success");
 		
-		PagedListHolder<Bloodgroup> pagedListHolder = new PagedListHolder<Bloodgroup>(bloodgroupService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-
 		model.setViewName("BloodGroupMaster");
 		model.addObject("bloodgroup", new AddBloodGroup());
-		model.addObject("pagedListHolder", pagedListHolder);
+		model.addObject("pagedListHolder", pagination(bloodgroupService.selectAll(),request));
 		return model;
 	}
 	
 	@PostMapping("SaveBloodGroupMaster")
-	public ModelAndView saveBloodgroupMaster(@Valid @ModelAttribute("bloodgroup") AddBloodGroup blood,BindingResult result,HttpSession session) {
+	public ModelAndView saveBloodgroupMaster(
+			@Valid @ModelAttribute("bloodgroup") AddBloodGroup blood,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -293,7 +299,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("BloodGroupMaster");
-			mv.addObject("list", bloodgroupService.selectAll());
+			mv.addObject("pagedListHolder", pagination(bloodgroupService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return  mv;
 		}
@@ -301,7 +307,7 @@ public class MasterController {
 		for(Bloodgroup b : list) {
 			if(b.getName().contentEquals(blood.getName())) {
 				mv.setViewName("BloodGroupMaster");
-				mv.addObject("list", bloodgroupService.selectAll());
+				mv.addObject("pagedListHolder", pagination(bloodgroupService.selectAll(),request));
 				mv.addObject("addExist", "error");
 				mv.addObject("addError", "error");
 				return  mv;
@@ -318,7 +324,11 @@ public class MasterController {
 	}
 	
 	@PostMapping("EditBloodGroup")
-	public ModelAndView editBloodGroup(@Valid @ModelAttribute("bloodgroup")AddBloodGroup blood,BindingResult result,HttpSession session) {
+	public ModelAndView editBloodGroup(
+			@Valid @ModelAttribute("bloodgroup")AddBloodGroup blood,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -327,7 +337,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("BloodGroupMaster");
-			mv.addObject("list", bloodgroupService.selectAll());
+			mv.addObject("pagedListHolder", pagination(bloodgroupService.selectAll(),request));
 			mv.addObject("editError", "error");
 			return mv;
 		}
@@ -335,7 +345,7 @@ public class MasterController {
 		for(Bloodgroup b : list) {
 			if(b.getName().equalsIgnoreCase(blood.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("BloodGroupMaster");
-				mv.addObject("list", bloodgroupService.selectAll());
+				mv.addObject("pagedListHolder", pagination(bloodgroupService.selectAll(),request));
 				mv.addObject("editExist", "error");
 				mv.addObject("editError", "error");
 				return mv;			
@@ -362,15 +372,18 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetCommunityMaster")
-	public ModelAndView getCommunityMaster(HttpServletRequest request,@RequestParam(value="updated",required=false)String update,@RequestParam(value="added",required=false)String added,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getCommunityMaster(
+			HttpServletRequest request,
+			HttpSession session,
+			@RequestParam(value="updated",required=false)String update,
+			@RequestParam(value="added",required=false)String added,
+			@RequestParam(value="deleted",required=false)String deleted) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
 			mv.addObject("session", "destroy");
 			return mv;
 		}
-		mv.addObject("list", communityService.selectAll());
-		mv.addObject("community", new AddCommunity());
 		if(!(update == null))
 			mv.addObject("updated", "success");
 		if(!(added == null))
@@ -378,44 +391,46 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Community> pagedListHolder = new PagedListHolder<Community>(communityService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-
 		mv.setViewName("CommunityMaster");
 		mv.addObject("community", new AddCommunity());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(communityService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveCommunityMaster")
-	public ModelAndView saveCommunityMaster(@Valid @ModelAttribute("community") AddCommunity comm,BindingResult result,HttpSession session,ModelMap model) {
+	public ModelAndView saveCommunityMaster(
+			@Valid @ModelAttribute("community") AddCommunity comm,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
-		if(result.hasErrors()) {
-			mv.setViewName("CommunityMaster");
-			mv.addObject("list", communityService.selectAll());
-			mv.addObject("addError", "Error in add");
-			return mv;
-		}
 		if(session.getAttribute("id") == null) {
 			mv.addObject("session", "destroy");
 			mv.setViewName("redirect:/logout");
 			return mv;
 		}
+		if(result.hasErrors()) {
+			mv.setViewName("CommunityMaster");
+			mv.addObject("pagedListHolder", pagination(communityService.selectAll(),request));
+			mv.addObject("addError", "Error");
+			return mv;
+		}
+		
 		Community exist1 = communityService.selectByCommunity(comm.getName().toLowerCase());
+		
 		if(exist1 != null) {
 			mv.setViewName("CommunityMaster");
-			mv.addObject("list", communityService.selectAll());
+			mv.addObject("pagedListHolder", pagination(communityService.selectAll(),request));
 			mv.addObject("addError", "Error in add");
 			mv.addObject("addExistCommunity", "already exist");
 			return mv;
 		}
+		
 		Community exist = communityService.selectByAcronym(comm.getAcronym().toUpperCase());
+		
 		if(exist != null) {
 			mv.setViewName("CommunityMaster");
-			mv.addObject("list", communityService.selectAll());
+			mv.addObject("pagedListHolder", pagination(communityService.selectAll(),request));
 			mv.addObject("addError", "Error in add");
 			mv.addObject("addExistAcronym", "already exist");
 			return mv;
@@ -424,14 +439,20 @@ public class MasterController {
 		cm.setName(comm.getName().toLowerCase());
 		cm.setAcronym(comm.getAcronym().toUpperCase());
 		cm.setInn(comm.isInn());
+		
 		communityService.saveCommunityMaster(cm);
+		
 		mv.setViewName("redirect:/GetCommunityMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
 	@PostMapping("EditCommunity")
-	public ModelAndView editCommunity(@Valid @ModelAttribute("community")AddCommunity comm,BindingResult result,HttpSession session) {
+	public ModelAndView editCommunity(
+			@Valid @ModelAttribute("community")AddCommunity comm,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null ) {
 			mv.addObject("session", "destroy");
@@ -439,28 +460,31 @@ public class MasterController {
 			return mv;
 		}
 		if(result.hasErrors()) {
-			mv.addObject("editError", "error");
-			mv.addObject("list", communityService.selectAll());
 			mv.setViewName("CommunityMaster");
+			mv.addObject("editError", "error");
+			mv.addObject("pagedListHolder", pagination(communityService.selectAll(),request));
 			return mv;
 		}
+		
 		List<Community> list = communityService.selectAllExceptId(comm.getId());
+		
 		for(Community c : list) {
 			if(c.getName().replaceAll("\\s", "").equalsIgnoreCase(comm.getName().replaceAll("\\s", ""))) {
-				mv.addObject("editError", "error");
-				mv.addObject("list", communityService.selectAll());
-				mv.addObject("editExistCommunity","error");
 				mv.setViewName("CommunityMaster");
+				mv.addObject("editError", "error");
+				mv.addObject("pagedListHolder", pagination(communityService.selectAll(),request));
+				mv.addObject("editExistCommunity","error");
 				return mv;
 			}else if(c.getAcronym().equalsIgnoreCase(comm.getAcronym())) {
-				mv.addObject("editError", "error");
-				mv.addObject("list", communityService.selectAll());
-				mv.addObject("editExistAcronym","error");
 				mv.setViewName("CommunityMaster");
+				mv.addObject("editError", "error");
+				mv.addObject("pagedListHolder", pagination(communityService.selectAll(),request));
+				mv.addObject("editExistAcronym","error");
 				return mv;
 			}
 		}
 		communityService.updateCommunity(comm);
+		
 		mv.setViewName("redirect:/GetCommunityMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -481,7 +505,12 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetCountryMaster")
-	public ModelAndView getCountryMaster(HttpServletRequest request,@RequestParam(value="added",required=false)String added,@RequestParam(value="updated",required=false)String updated,@RequestParam(value="deleted",required=false)String deleted,HttpSession session) {
+	public ModelAndView getCountryMaster(
+			HttpServletRequest request,
+			@RequestParam(value="added",required=false)String added,
+			@RequestParam(value="updated",required=false)String updated,
+			@RequestParam(value="deleted",required=false)String deleted,
+			HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -495,20 +524,18 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Country> pagedListHolder = new PagedListHolder<Country>(countryService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-
 		mv.setViewName("CountryMaster");
 		mv.addObject("country", new AddCountry());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(countryService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveCountryMaster")
-	public ModelAndView saveCountryMaster(@Valid @ModelAttribute("country")AddCountry country,BindingResult result,HttpSession session,ModelMap model) {
+	public ModelAndView saveCountryMaster(
+			@Valid @ModelAttribute("country")AddCountry country,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -517,34 +544,40 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("CountryMaster");
-			mv.addObject("list", countryService.selectAll());
+			mv.addObject("pagedListHolder", pagination(countryService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
 		List<Country> exist = countryService.selectAll();
+		
 		for(Country c : exist) {
 			if(country.getName().replaceAll("\\s", "").equalsIgnoreCase(c.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("CountryMaster");
-				mv.addObject("list", countryService.selectAll());
+				mv.addObject("pagedListHolder", pagination(countryService.selectAll(),request));
 				mv.addObject("addError","error");
 				mv.addObject("addExistCountry", "exist");
 				return mv;
 			}else if(country.getAcronym().equalsIgnoreCase(c.getAcronym())) {
 				mv.setViewName("CountryMaster");
-				mv.addObject("list", countryService.selectAll());
+				mv.addObject("pagedListHolder", pagination(countryService.selectAll(),request));
 				mv.addObject("addError","error");
 				mv.addObject("addExistAcronym", "exist");
 				return mv;
 			}
 		}
 		countryService.saveCountryMaster(country.getName().toLowerCase(),country.getAcronym().toUpperCase().replaceAll("\\s", ""),country.isInn());
+		
 		mv.setViewName("redirect:/GetCountryMaster");
 		mv.addObject("added", "success");
 		return mv;
 	}
 	
 	@PostMapping("EditCountry")
-	public ModelAndView editCountry(@Valid @ModelAttribute("country")AddCountry country,BindingResult result,HttpSession session) {
+	public ModelAndView editCountry(
+			@Valid @ModelAttribute("country")AddCountry country,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -553,7 +586,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("CountryMaster");
-			mv.addObject("list", countryService.selectAll());
+			mv.addObject("pagedListHolder", pagination(countryService.selectAll(),request));
 			mv.addObject("editError", "error");
 			return mv;
 		}
@@ -561,19 +594,20 @@ public class MasterController {
 		for(Country c : exist) {
 			if(c.getName().equalsIgnoreCase(country.getName())) {
 				mv.setViewName("CountryMaster");
-				mv.addObject("list", countryService.selectAll());
+				mv.addObject("pagedListHolder", pagination(countryService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("edirExistCountry", "exist");
 				return mv;
 			}else if(c.getAcronym().equalsIgnoreCase(country.getAcronym())) {
 				mv.setViewName("CountryMaster");
-				mv.addObject("list", countryService.selectAll());
+				mv.addObject("pagedListHolder", pagination(countryService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("editExistAcronym", "exist");
 				return mv;
 			}
 		}
 		countryService.updateCountry(country.getId(),country.getName().toLowerCase(),country.getAcronym().toUpperCase().replaceAll("\\s", ""),country.isInn()?1:0);
+		
 		mv.setViewName("redirect:/GetCountryMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -608,24 +642,22 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Degree> pagedListHolder = new PagedListHolder<Degree>(degreeService.selectAll()); 
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("DegreeMaster");
 		mv.addObject("degree", new AddDegree());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(degreeService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveDegreeMaster")
-	public ModelAndView saveDegreeMaster(@Valid @ModelAttribute("degree")AddDegree degree,BindingResult result,HttpSession session) {
+	public ModelAndView saveDegreeMaster(
+			@Valid @ModelAttribute("degree")AddDegree degree,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(result.hasErrors()) {
 			mv.setViewName("DegreeMaster");
-			mv.addObject("list", degreeService.selectAll());
+			mv.addObject("pagedListHolder", pagination(degreeService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -638,31 +670,36 @@ public class MasterController {
 		for(Degree d : exist) {
 			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(degree.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("DegreeMaster");
-				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("pagedListHolder", pagination(degreeService.selectAll(),request));
 				mv.addObject("addError", "error");
 				mv.addObject("addExistDegree","exist");
 				return mv;
 			}else if(d.getAcronym().equalsIgnoreCase(degree.getAcronym().replaceAll("\\s", ""))) {
 				mv.setViewName("DegreeMaster");
-				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("pagedListHolder", pagination(degreeService.selectAll(),request));
 				mv.addObject("addError", "error");
 				mv.addObject("addExistAcronym","exist");
 				return mv;
 			}
 		}
 		degreeService.saveDegreeMaster(degree.getCategory(),degree.getName().toLowerCase(),degree.getAcronym().toUpperCase().replaceAll("\\s", ""),degree.isInn());
+		
 		mv.setViewName("redirect:/GetDegreeMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
 	@PostMapping("EditDegree")
-	public ModelAndView editDegree(@Valid @ModelAttribute("degree") AddDegree degree, BindingResult result, HttpSession session) {
+	public ModelAndView editDegree(
+			@Valid @ModelAttribute("degree") AddDegree degree,
+			BindingResult result, 
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(result.hasErrors()) {
 			mv.setViewName("DegreeMaster");
 			mv.addObject("editError", "error");
-			mv.addObject("list", degreeService.selectAll());
+			mv.addObject("pagedListHolder", pagination(degreeService.selectAll(),request));
 			return mv;
 		}
 		if(session.getAttribute("id") == null) {
@@ -675,19 +712,20 @@ public class MasterController {
 		for(Degree d : exist) {
 			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(degree.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("DegreeMaster");
-				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("pagedListHolder", pagination(degreeService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("editExistDegree","exist");
 				return mv;
 			}else if(d.getAcronym().toUpperCase().equalsIgnoreCase(degree.getAcronym().replaceAll("\\s", ""))) {
 				mv.setViewName("DegreeMaster");
-				mv.addObject("list", degreeService.selectAll());
+				mv.addObject("pagedListHolder", pagination(degreeService.selectAll(),request));
 				mv.addObject("editError", "error");
 				mv.addObject("editExistAcronym","exist");
 				return mv;
 			}
 		}
 		degreeService.updateDegree(degree.getId(),degree.getName().toLowerCase(),degree.getAcronym().toUpperCase().replaceAll("\\s", ""),degree.isInn()?1:0);
+		
 		mv.setViewName("redirect:/GetDegreeMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -722,20 +760,18 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<Department> pagedListHolder = new PagedListHolder<Department>(departmentService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("DepartmentMaster");
 		mv.addObject("department", new AddDepartment());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(departmentService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveDepartment")
-	public ModelAndView saveDepartmentMaster(@Valid @ModelAttribute("department")AddDepartment dept,BindingResult result,HttpSession session) {
+	public ModelAndView saveDepartmentMaster(
+			@Valid @ModelAttribute("department")AddDepartment dept,
+			BindingResult result,
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -744,7 +780,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("DepartmentMaster");
-			mv.addObject("list", departmentService.selectAll());
+			mv.addObject("pagedListHolder", pagination(departmentService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -752,26 +788,31 @@ public class MasterController {
 		for(Department d : list) {
 			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
 					mv.setViewName("DepartmentMaster");
-					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("pagedListHolder", pagination(departmentService.selectAll(),request));
 					mv.addObject("addError", "error");
 					mv.addObject("addExistDepartment","error");
 					return mv;
 				}else if(d.getAcronym().equalsIgnoreCase(dept.getAcronym().replaceAll("\\s", ""))) {
 					mv.setViewName("DepartmentMaster");
-					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("pagedListHolder", pagination(departmentService.selectAll(),request));
 					mv.addObject("addError", "error");
 					mv.addObject("addExistAcronym","error");
 					return mv;
 			}
 		}
 		departmentService.saveDepartmentMaster(dept.getName().toLowerCase(),dept.getAcronym().toUpperCase().replaceAll("\\s", ""),dept.isInn());
+		
 		mv.setViewName("redirect:/GetDepartmentMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
 	@PostMapping("EditDepartment")
-	public ModelAndView editDepartment(@Valid @ModelAttribute("department")AddDepartment dept, BindingResult result, HttpSession session) {
+	public ModelAndView editDepartment(
+			@Valid @ModelAttribute("department")AddDepartment dept, 
+			BindingResult result, 
+			HttpSession session,
+			HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -780,7 +821,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("DepartmentMaster");
-			mv.addObject("list", departmentService.selectAll());
+			mv.addObject("pagedListHolder", pagination(departmentService.selectAll(),request));
 			mv.addObject("editError", "error");
 			return mv;
 		}
@@ -788,19 +829,20 @@ public class MasterController {
 		for(Department d : exist) {
 			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(dept.getName().replaceAll("\\s", ""))) {
 					mv.setViewName("DepartmentMaster");
-					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("pagedListHolder", pagination(departmentService.selectAll(),request));
 					mv.addObject("editError", "error");
 					mv.addObject("editExistDepartment","error");
 					return mv;
 				}else if(d.getAcronym().equalsIgnoreCase(dept.getAcronym().replaceAll("\\s", ""))) {
 					mv.setViewName("DepartmentMaster");
-					mv.addObject("list", departmentService.selectAll());
+					mv.addObject("pagedListHolder", pagination(departmentService.selectAll(),request));
 					mv.addObject("editError", "error");
 					mv.addObject("editExistAcronym","error");
 					return mv;
 			}
 		}
 		departmentService.update(dept.getId(),dept.getName().toLowerCase(),dept.getAcronym().toUpperCase().replaceAll("\\s", ""),dept.isInn());
+		
 		mv.setViewName("redirect:/GetDepartmentMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -835,20 +877,14 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted", "success");
 		
-		PagedListHolder<District> pagedListHolder = new PagedListHolder<District>(districtService.selectAll()); 
-		
-		int page=ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("DistrictMaster");
-		mv.addObject("pagedListHolder", pagedListHolder);
 		mv.addObject("district", new AddDistrict());
+		mv.addObject("pagedListHolder", pagination(districtService.selectAll(),request));
 		return mv;
 	}
 	
 	@PostMapping("SaveDistrict")
-	public ModelAndView saveDistrictMaster(@Valid @ModelAttribute("district")AddDistrict district, BindingResult result, HttpSession session) {
+	public ModelAndView saveDistrictMaster(@Valid @ModelAttribute("district")AddDistrict district, BindingResult result, HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -856,8 +892,8 @@ public class MasterController {
 			return mv;
 		}
 		if(result.hasErrors()) {
-			mv.addObject("list", districtService.selectAll());
 			mv.setViewName("DistrictMaster");
+			mv.addObject("pagedListHolder", pagination(districtService.selectAll(),request));
 			mv.addObject("addError", "error");
 			return mv;
 		}
@@ -866,25 +902,26 @@ public class MasterController {
 			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(district.getName().replaceAll("\\s", ""))) {
 					mv.addObject("addError", "error");
 					mv.setViewName("DistrictMaster");
-					mv.addObject("list", districtService.selectAll());
+					mv.addObject("pagedListHolder", pagination(districtService.selectAll(),request));
 					mv.addObject("addExistDistrict", "exist");
 					return mv;
 				}else if(d.getAcronym().equalsIgnoreCase(district.getAcronym().replaceAll("\\s", ""))) {
 					mv.addObject("addError", "error");
 					mv.setViewName("DistrictMaster");
-					mv.addObject("list", districtService.selectAll());
+					mv.addObject("pagedListHolder", pagination(districtService.selectAll(),request));
 					mv.addObject("addExistAcronym", "exist");
 					return mv;
 			}
 		}
 		districtService.saveDistrictMaster(district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),district.isInn()?1:0);
+		
 		mv.setViewName("redirect:/GetDistrictMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
 	@PostMapping("EditDistrict")
-	public ModelAndView editDistrict(@Valid @ModelAttribute("district")AddDistrict district, BindingResult result, HttpSession session) {
+	public ModelAndView editDistrict(@Valid @ModelAttribute("district")AddDistrict district, BindingResult result, HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -893,7 +930,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.setViewName("DistrictMaster");
-			mv.addObject("list", districtService.selectAll());
+			mv.addObject("pagedListHolder", pagination(districtService.selectAll(),request));
 			mv.addObject("editError", "error");
 			return mv;
 		}
@@ -902,18 +939,19 @@ public class MasterController {
 			if(d.getName().replaceAll("\\s", "").equalsIgnoreCase(district.getName().replaceAll("\\s", ""))) {
 				mv.addObject("editError", "error");
 				mv.setViewName("DistrictMaster");
-				mv.addObject("list", districtService.selectAll());
+				mv.addObject("pagedListHolder", pagination(districtService.selectAll(),request));
 				mv.addObject("editExistDistrict", "exist");
 				return mv;
 			}else if(d.getAcronym().equalsIgnoreCase(district.getAcronym().replaceAll("\\s", ""))) {
 				mv.addObject("editError", "error");
 				mv.setViewName("DistrictMaster");
-				mv.addObject("list", districtService.selectAll());
+				mv.addObject("pagedListHolder", pagination(districtService.selectAll(),request));
 				mv.addObject("editExistAcronym", "exist");
 				return mv;
 			}
 		}
 		districtService.update(district.getId(),district.getName().toLowerCase(),district.getAcronym().toUpperCase().replaceAll("\\s", ""),district.isInn()?1:0);
+
 		mv.setViewName("redirect:/GetDistrictMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -948,20 +986,14 @@ public class MasterController {
 		if(!(deleted == null))
 			mv.addObject("deleted","success");
 		
-		PagedListHolder<State> pagedListHolder = new PagedListHolder<State>(stateService.selectAll());
-		
-		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
-		pagedListHolder.setPage(page);
-		pagedListHolder.setPageSize(3);
-		
 		mv.setViewName("StateMaster");
 		mv.addObject("state", new AddState());
-		mv.addObject("pagedListHolder", pagedListHolder);
+		mv.addObject("pagedListHolder", pagination(stateService.selectAll(),request));
 		return mv;
 	}
 
 	@PostMapping("SaveState")
-	public ModelAndView saveStateMaster(@Valid @ModelAttribute("state")AddState state, BindingResult result, HttpSession session) {
+	public ModelAndView saveStateMaster(@Valid @ModelAttribute("state")AddState state, BindingResult result, HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -971,7 +1003,7 @@ public class MasterController {
 		if(result.hasErrors()) {
 			mv.setViewName("StateMaster");
 			mv.addObject("addError", "error");
-			mv.addObject("list", stateService.selectAll());
+			mv.addObject("pagedListHolder", pagination(stateService.selectAll(),request));
 			return mv;
 		}
 		List<State> list = stateService.selectAll();
@@ -979,25 +1011,26 @@ public class MasterController {
 			if(s.getName().replaceAll("\\s", "").equalsIgnoreCase(state.getName().replaceAll("\\s", ""))) {
 				mv.setViewName("StateMaster");
 				mv.addObject("addError", "error");
-				mv.addObject("list", stateService.selectAll());
+				mv.addObject("pagedListHolder", pagination(stateService.selectAll(),request));
 				mv.addObject("addExistState", "exist");
 				return mv;
 			}else if(s.getAcronym().equalsIgnoreCase(state.getAcronym().replaceAll("\\s", ""))) {
 				mv.setViewName("StateMaster");
 				mv.addObject("addError", "error");
-				mv.addObject("list", stateService.selectAll());
+				mv.addObject("pagedListHolder", pagination(stateService.selectAll(),request));
 				mv.addObject("addExistAcronym", "exist");
 				return mv;
 			}
 		}
 		stateService.saveState(state.getName().toLowerCase(),state.getAcronym().toUpperCase().replaceAll("\\s", ""),state.isInn());
+		
 		mv.setViewName("redirect:/GetStateMaster");
 		mv.addObject("added", "Success Message");
 		return mv;
 	}
 	
 	@PostMapping("EditState")
-	public ModelAndView editState(@Valid @ModelAttribute("state") AddState state, BindingResult result, HttpSession session) {
+	public ModelAndView editState(@Valid @ModelAttribute("state") AddState state, BindingResult result, HttpSession session,HttpServletRequest request) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1006,7 +1039,7 @@ public class MasterController {
 		}
 		if(result.hasErrors()) {
 			mv.addObject("editError", "error");
-			mv.addObject("list", stateService.selectAll());
+			mv.addObject("pagedListHolder", pagination(stateService.selectAll(),request));
 			mv.setViewName("StateMaster");
 			return mv;
 		}
@@ -1015,18 +1048,19 @@ public class MasterController {
 			if(s.getName().replaceAll("\\s", "").equalsIgnoreCase(state.getName().replaceAll("\\s", ""))) {
 					mv.setViewName("StateMaster");
 					mv.addObject("editError", "error");
-					mv.addObject("list", stateService.selectAll());
+					mv.addObject("pagedListHolder", pagination(stateService.selectAll(),request));
 					mv.addObject("editExistState", "exist");
 					return mv;
 				}else if(s.getAcronym().equalsIgnoreCase(state.getAcronym().replaceAll("\\s\\.", ""))) {
 					mv.setViewName("StateMaster");
 					mv.addObject("editError", "error");
-					mv.addObject("list", stateService.selectAll());
+					mv.addObject("pagedListHolder", pagination(stateService.selectAll(),request));
 					mv.addObject("editExistAcronym", "exist");
 					return mv;
 			}
 		}
 		stateService.update(state.getName().toLowerCase(), state.getAcronym().toUpperCase().replaceAll("\\s\\.", ""),state.isInn(),state.getId());
+		
 		mv.setViewName("redirect:/GetStateMaster");
 		mv.addObject("updated", "success");
 		return mv;
@@ -1352,7 +1386,12 @@ public class MasterController {
 	}
 	
 	@GetMapping("GetLanguageMaster")
-	public ModelAndView getLanguageMaster(@RequestParam(value="added",required = false)String added ,@RequestParam(value="updated",required = false)String updated ,@RequestParam(value="deleted",required = false)String deleted ,HttpSession session,HttpServletRequest request) {
+	public ModelAndView getLanguageMaster(
+			HttpSession session,HttpServletRequest request,
+			@RequestParam(value="added",required = false)String added ,
+			@RequestParam(value="updated",required = false)String updated ,
+			@RequestParam(value="deleted",required = false)String deleted ) {
+		
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1365,7 +1404,6 @@ public class MasterController {
 			mv.addObject("updated", "success");
 		if(!(deleted == null)) 
 			mv.addObject("deleted", "success");
-		
 		mv.setViewName("LanguageMaster");
 		mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 		mv.addObject("language", new AddLanguage());
@@ -1373,7 +1411,7 @@ public class MasterController {
 	}
 	
 	@PostMapping("SaveLanguageMaster")
-	public ModelAndView saveLanguageMaster(@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session, HttpServletRequest request) {
+	public ModelAndView saveLanguageMaster(HttpServletRequest request,@Valid @ModelAttribute("language")AddLanguage language,BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if(session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
@@ -1381,6 +1419,13 @@ public class MasterController {
 			return mv;
 		}
 		if(result.hasErrors()) {
+			
+			PagedListHolder<Language> pagedListHolder = new PagedListHolder<Language>(languageService.selectAll());
+			
+			int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+			pagedListHolder.setPage(page);
+			pagedListHolder.setPageSize(3);
+			
 			mv.setViewName("LanguageMaster");
 			mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 			mv.addObject("addError", "error");
@@ -1389,6 +1434,14 @@ public class MasterController {
 		List<Language> exist = languageService.selectAll();
 		for(Language l : exist) {
 			if(l.getName().replaceAll("\\s", "").equalsIgnoreCase(language.getName().replaceAll("\\s", ""))) {
+				
+				PagedListHolder<Language> pagedListHolder = new PagedListHolder<Language>(languageService.selectAll());
+				
+				int page = ServletRequestUtils.getIntParameter(request, "p", 0);
+				pagedListHolder.setPage(page);
+				pagedListHolder.setPageSize(3);
+				
+				
 				mv.setViewName("LanguageMaster");
 				mv.addObject("pagedListHolder", pagination(languageService.selectAll(),request));
 				mv.addObject("addError","error");

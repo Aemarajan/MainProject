@@ -23,6 +23,7 @@
 	transition: 5s;
 	font-size: 16px;
 	width: 100%;
+	border-radius:100px;
 }
 .btn-custom:hover{
 	background: linear-gradient(90deg,#3498db,#8e10ad);

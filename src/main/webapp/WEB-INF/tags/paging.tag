@@ -1,10 +1,8 @@
 <%@ tag language="java" pageEncoding="ISO-8859-1"%>
 <%@ tag import="org.springframework.util.StringUtils"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ attribute name="pagedListHolder" required="true"
-	type="org.springframework.beans.support.PagedListHolder"%>
+<%@ attribute name="pagedListHolder" required="true" type="org.springframework.beans.support.PagedListHolder"%>
 <%@ attribute name="pagedLink" required="true" type="java.lang.String"%>
-
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
