@@ -11,29 +11,46 @@
 <title>Sign In</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
-
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
-
 <link rel="stylesheet" href="./views/css/mdb.min.css">
-
 <link rel="stylesheet" href="./views/css/style.css">
 
+<style type="text/css">
+	.row{
+		background-image: url('./views/Images/bg-login7.jpg');
+    	background-size: cover;
+      	background-repeat:   no-repeat;
+      	background-position: justif;
+      	overflow-y: hidden ! important;
+      	overflow-x: hidden ! important;
+	}
+</style>
 </head>
 <body>
 	<div>
 		<jsp:include page="Header.jsp" />
 		<div class="content">
 			<div class="container-fluid">
-				<div class="row">
-					<div class="col col-md-3.5"></div>
-					<div class="col col-md-5 mt-2 mb-2">
+				<div class="row mt-3 mb-3">
+					<div class="col col-md-1"></div>
+					<div class="col col-md-6"></div>
+					<div class="col col-md-4">
 						<c:if test="${session != null }">
-							<div class="alert alert-danger alert-dismissible mt-1">
-								<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-								Session Expired. Please login again.
+							<div class="toast" id="Toast">
+								<div class="toast-header white-text bg-warning pt-2">
+									<h5 class="mr-auto">Notification</h5>
+									<button type="button" class="ml-2 mb-1 close white-text"
+										data-dismiss="toast">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="toast-body py-2">
+									<div>Oops! Your Session time has been Expired. Please Sign in Again...</div>
+								</div>
 							</div>
 						</c:if>
-						<div class="card">
+						
+						<div class="card mt-5 mb-5">
 							<h5 class="card-head white-text text-center py-4 ubuntu">
 								<strong>Sign in</strong>
 							</h5>
@@ -44,9 +61,17 @@
 								<s:form cssClass="login-form" style="color: #757575;" action="Login" method="post" modelAttribute="signin">
 									
 									<c:if test="${msg != null }">
-										<div class="alert alert-danger alert-dismissible mt-1">
-											<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-											Invalid Email or password.
+										<div class="toast" id="Toast">
+											<div class="toast-header white-text bg-danger pt-2">
+												<h5 class="mr-auto">Error</h5>
+												<button type="button" class="ml-2 mb-1 close white-text"
+													data-dismiss="toast">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="toast-body py-2">
+												<div>Invalid Email Or Password. Try Again...</div>
+											</div>
 										</div>
 									</c:if>
 									
@@ -73,20 +98,20 @@
 										</div>
 										<div>
 											<!-- Forgot password -->
-											<a href="">Forgot password ?</a>
+											<a href="#">Forgot password ?</a>
 										</div>
 									</div>
 
 									<!-- Sign in button -->
 									<div>
-										<button	class="btn btn-custom btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+										<button	class="btn btn-custom btn-block my-4 py-3 waves-effect z-depth-0" type="submit">Sign in</button>
 									</div>
 								</s:form>
 								<!-- Form -->
 							</div>
 						</div>
 					</div>
-					<div class="col col-md-3.5"></div>
+					<div class="col-md-1"></div>
 				</div>
 			</div>
 		</div>
@@ -113,7 +138,17 @@
 		  } else {
 		    x.type = "password";
 		  }
-		} 
+		}
+
+	$(document).ready(function() {
+		$('#Toast').toast({
+			delay:10000
+		});
+		$('#Toast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
+	}); 
+	 
 	</script>
 
 </body>
