@@ -37,139 +37,138 @@ import com.project.service.YearService;
 @RestController
 @RequestMapping("api")
 public class ApiController {
-	
+
 	@Autowired
 	LevelTwoService lvl2s;
-	
+
 	@Autowired
 	LevelOneService lvl1s;
-	
+
 	@Autowired
 	LevelThreeService lvl3s;
-	
+
 	@Autowired
 	PrivilegeService privilegeService;
-	
+
 	@Autowired
 	MenuService menuService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	DegreeService degreeService;
-	
+
 	@Autowired
 	DepartmentService departmentService;
-	
+
 	@Autowired
 	StateService stateService;
-	
+
 	@Autowired
 	CountryService countryService;
-	
+
 	@Autowired
 	RegulationService regulationService;
-	
+
 	@Autowired
 	DistrictService districtService;
-	
+
 	@Autowired
 	YearService yearService;
-	
+
 	@RequestMapping("/getAllLevelOneByDd")
-	public List<LevelOne> getAllLevelOneByDd(){
+	public List<LevelOne> getAllLevelOneByDd() {
 		return lvl1s.selectByDd(1);
 	}
-	
+
 	@RequestMapping("/getAllLevelOne")
-	public List<LevelOne> getAllLevelOne(){
+	public List<LevelOne> getAllLevelOne() {
 		return lvl1s.selectAll();
 	}
-	
+
 	@RequestMapping("/getAllLevelThree")
-	public List<LevelThree> getAllLevelThree(){
+	public List<LevelThree> getAllLevelThree() {
 		return lvl3s.selectAll();
 	}
-	
+
 	@RequestMapping("/getLvl2/{id}")
-	public List<LevelTwo> getLevelTwoById(@PathVariable("id") int id){
+	public List<LevelTwo> getLevelTwoById(@PathVariable("id") int id) {
 		List<LevelTwo> list = lvl2s.selectById(id);
 		return list;
 	}
-	
+
 	@RequestMapping("/getLevelThree/{lvl1}/{lvl2}")
-	public List<Menu> getLevelThree(@PathVariable("lvl1") int lvl1,@PathVariable("lvl2") int lvl2){
+	public List<Menu> getLevelThree(@PathVariable("lvl1") int lvl1, @PathVariable("lvl2") int lvl2) {
 		List<Menu> list = menuService.selectByLevelOneAndLevelTwoId(lvl1, lvl2);
 		return list;
 	}
-	
+
 	@RequestMapping("/getLvl2DD/{id}")
-	public List<LevelTwo> getLevelTwoByDd(@PathVariable("id") int id){
+	public List<LevelTwo> getLevelTwoByDd(@PathVariable("id") int id) {
 		List<LevelTwo> list = lvl2s.selectByLevelOneAndDD(id, 1);
 		return list;
 	}
-	
+
 	@RequestMapping("/getUserPp1")
-	public List<User> getUser(){
+	public List<User> getUser() {
 		List<User> list = userService.selectByPp(1);
 		return list;
 	}
-	
+
 	@RequestMapping("/getUserPp0")
-	public List<User> getUserPpZero(){
+	public List<User> getUserPpZero() {
 		List<User> list = userService.selectByPp(0);
 		return list;
 	}
-	
+
 	@RequestMapping("/getAllDegree")
-	public List<Degree> getAllDegree(){
+	public List<Degree> getAllDegree() {
 		return degreeService.selectAll();
 	}
-	
+
 	@RequestMapping("/getAllDepartment")
-	public List<Department> getAllDepartment(){
+	public List<Department> getAllDepartment() {
 		return departmentService.selectAll();
 	}
-	
+
 	@RequestMapping("/getAllState")
-	public List<State> getAllState(){
+	public List<State> getAllState() {
 		return stateService.selectAll();
 	}
-	
+
 	@RequestMapping("/getAllCountry")
-	public List<Country> getAllCountry(){
+	public List<Country> getAllCountry() {
 		return countryService.selectAll();
 	}
-	
+
 	@RequestMapping("/getAllRegulation")
-	public List<Regulation> getAllRegulation(){
+	public List<Regulation> getAllRegulation() {
 		return regulationService.selectAll();
 	}
-	
+
 	@RequestMapping("getAllDistrict")
-	public List<District> getAllDistrict(){
+	public List<District> getAllDistrict() {
 		return districtService.selectAll();
 	}
-	
+
 	@RequestMapping("getYearByDegreeId/{id}")
-	public List<Year> getYearByDegreeId(@PathVariable("id")int id){
+	public List<Year> getYearByDegreeId(@PathVariable("id") int id) {
 		return yearService.selectByDegreeId(id);
 	}
-	
+
 	@RequestMapping("getAllDepartmentByDegreeId/{id}")
-	public List<Department> getAllDepartmentByDegree(@PathVariable("id")int id){
+	public List<Department> getAllDepartmentByDegree(@PathVariable("id") int id) {
 		return departmentService.selectDepartmentByDegree(id);
 	}
-	
+
 	@RequestMapping("getAllYear")
-	public List<Year> getAllYear(){
+	public List<Year> getAllYear() {
 		return yearService.selectAll();
 	}
-	
+
 	@RequestMapping("saveUser")
 	public void saveUser(@RequestBody User user1) {
 		userService.createUser(user1);
 	}
-	
 }

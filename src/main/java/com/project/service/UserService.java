@@ -27,8 +27,16 @@ public class UserService {
 		return userRepo.findAll();
 	}
 	
+	public User findByUsername(String username) {
+		return userRepo.findByUsername(username);
+	}
+	
 	public User findByEmail(String email) {
 		return userRepo.findByEmail(email);
+	}
+	
+	public List<User> findByPassword(String password) {
+		return userRepo.findByPassword(password);
 	}
 	
 	public User findById(int id) {
@@ -37,9 +45,9 @@ public class UserService {
 		for(User u:list) {
 			if(u.getUser_id() == id) {
 				user.setUser_id(u.getUser_id());
-				user.setEmail(u.getEmail());
-				user.setPassword(u.getPassword());
+				user.setName(u.getName());
 				user.setUsername(u.getUsername());
+				user.setPassword(u.getPassword());			
 				user.setPrivilegeProvide(u.getPrivilegeProvide());
 			}
 		}
@@ -49,5 +57,8 @@ public class UserService {
 	public void updatePrivilegeProvide(int id, int i) {
 		userRepo.updatePrivilegeProvide(id,i);
 	}
-	
+
+	public void updatePassword(String password, User user) {
+		userRepo.updatePassword(password,user);
+	}
 }

@@ -24,11 +24,14 @@
 
     <div id="header"></div> 
       
-    <div class="content">
-    	<div class="container-fluid">
+    <div class="wrapper d-flex align-items-stretch">
+    	
+    	<jsp:include page="Sidebar.jsp" />
+    	
+    	<div class="container-fluid pl-5">
         	<div class="row mt-2 mb-2">
-            	<div class="col col-md-1"></div>
-            	<div class="col col-md-10">
+            	<div class="col col-sm-1 col-md-1 col-lg-1"></div>
+            	<div class="col col-sm-10 col-md-10 col-lg-10">
               		<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
@@ -269,7 +272,7 @@
 					</div>
 					<!-- Table wrapper -->
             	</div>
-            	<div class="col col-md-3.5"></div>
+            	<div class="col col-sm-1 col-md-1 col-lg-1"></div>
           	</div>
         </div>
     </div>

@@ -10,31 +10,34 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Add Level Two - Header</title>
   
+  <link rel="stylesheet" href="./views/font-awesome/css/all.css">
   <link rel="stylesheet" href="./views/css/bootstrap.min.css">
   <link rel="stylesheet" href="./views/css/mdb.min.css">
   <link rel="stylesheet" href="./views/css/style.css">
 </head>
 <body>
-<!-- Start your project here-->  
-<div>
+
 	<jsp:include page="Header.jsp" />
   	
     <div id="header"></div>
     
-	<div class="content">
-    	<div class="container-fluid">
+	<div class="wrapper d-flex align-items-stretch">
+		
+		<jsp:include page="Sidebar.jsp" />
+		
+    	<div class="container-fluid pl-5">
         	<div class="row mt-2 mb-2">
-            	<div class="col col-md-3.5"></div>
-            	<div class="col col-md-5">
+            	<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
+            	<div class="col col-sm-5 col-md-5 col-lg-5">
               		<div class="card">
                 		<div class="card-head white-text text-center py-2 ubuntu">
                   			<h4 class="d-flex justify-content-end mr-5">ADD</h4>
-                  			<h5 class="d-flex justify-content-start ml-5">Level Two</h5>
+                  			<h4 class="d-flex justify-content-start ml-5">Level Two</h4>
                 		</div>
                 		
                 		<div class="card-body px-lg-5 pt-0 open-sans">
                   			<!-- Form -->
-                  			<s:form style="color: #757575;" action="saveLvl2" modelAttribute="levelTwo">
+                  			<s:form style="color: #757575;" action="saveLvl2" method="post" modelAttribute="levelTwo">
                   				<c:if test="${exist != null }">
 									<div class="toast" id="Toast">
 										<div class="toast-header white-text pt-2 bg-success">
@@ -90,7 +93,7 @@
               		<!-- Card -->
               	</div>
               	<!-- col-md-5 -->
-            <div class="col col-md-3.5"></div>
+            <div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
           </div>
           <!-- row -->
         </div>
@@ -99,12 +102,10 @@
     <!-- content -->
     
     <c:if test="${added != null }">
-		<div class="toast" id="Toast" 
-			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
+		<div class="toast" id="Toast" style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
 			<div class="toast-header white-text pt-2 bg-success">
 				<h5 class="mr-auto">Notification</h5>
-				<button type="button" class="ml-2 mb-1 close white-text"
-					data-dismiss="toast">
+				<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -115,27 +116,22 @@
 	</c:if>
 
 	<c:if test="${temp != null }">
-		<div class="toast" id="LongToast" 
-			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
+		<div class="toast" id="LongToast" style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 			<div class="toast-header white-text pt-2 bg-success">
 				<h5 class="mr-auto">Notification</h5>
-				<button type="button" class="ml-2 mb-1 close white-text"
-					data-dismiss="toast">
+				<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="toast-body py-2">
 				<div>
-					Level Two Header added. And add Level Three To <a
-						class="alert-link" href="LevelThreeForm">click here</a>
+					Level Two Header added. And add Level Three To <a class="alert-link" href="LevelThreeForm">click here</a>
 				</div>
 			</div>
 		</div>
 	</c:if>
 
 	<jsp:include page="Footer.jsp" />
-</div>
-<!-- End your project here-->
   
 <script type="text/javascript" src="./views/js/jquery.min.js"></script>
 <script type="text/javascript" src="./views/js/popper.min.js"></script>

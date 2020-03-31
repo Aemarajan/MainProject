@@ -11,7 +11,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -59,279 +58,17 @@ public class HeaderController {
 
 	@Autowired
 	UserService userService;
-
-	@GetMapping("LevelOneForm")
-	public String getLevelOne(HttpSession session,ModelMap model) {
-		if (session.getAttribute("id") != null) {
-			model.addAttribute("levelOne", new AddLevelOne());
-			return "LevelOneForm";
-		}
-		else {
-			return "redirect:/logout";
-		}
-	}
-
-	@GetMapping("LevelTwoForm")
-	public ModelAndView getLevelTwo(HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
-		}
-		ModelAndView m = new ModelAndView("LevelTwoForm");
-		model.addAttribute("levelTwo", new AddLevelTwo());
-		return m;
-	}
-
-	@GetMapping("LevelThreeForm")
-	public ModelAndView getLevelThree(HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
-		}
-		ModelAndView m = new ModelAndView("LevelThreeForm");
-		model.addAttribute("levelThree", new AddLevelThree());
-		return m;
-	}
-
-	@PostMapping("saveLvl1")
-	public ModelAndView saveLevelOne(@Valid @ModelAttribute("levelOne") AddLevelOne levelOne,BindingResult result,Model model,HttpSession session) {
-		if(result.hasErrors()) {
-			return new ModelAndView("LevelOneForm");
-		}
-		if (session.getAttribute("id") != null) {
-			ModelAndView mv = new ModelAndView("LevelOneForm");
-			List<LevelOne> lvl1t = lvl1ss.selectAll();
-			for(LevelOne lv1:lvl1t) {
-				if(lv1.getName().equalsIgnoreCase(levelOne.getName().toLowerCase())) {
-					mv.addObject("exist", "already exist");
-					return mv;
-				}
-			}
-			LevelOne lvl1 = new LevelOne();
-			if (levelOne.isDd() == false) {
-				lvl1.setName(levelOne.getName());
-				lvl1.setDd(levelOne.isDd());
-				lvl1ss.saveLevelOne(lvl1);
-				Menu m1 = new Menu();
-				m1.setLvl1(lvl1);
-				m1.setRef(levelOne.getRef());
-				menuService.save(m1);
-				List<User> userList = userService.selectAllUser();
-				for (User u : userList) {
-					Privilege p = new Privilege();
-					p.setUser(u);
-					p.setMenu_id(m1);
-					p.setInn(0);
-					privilegeService.savePrivilege(p);
-				}
-				mv.addObject("added", "success");
-			} else {
-				lvl1.setName(levelOne.getName());
-				lvl1.setDd(levelOne.isDd());
-				lvl1ss.saveLevelOne(lvl1);
-				mv.addObject("temp", "failed");
-			}
-			return mv;
-		} else {
-			return new ModelAndView("redirect:/logout");
-		}
-	}
-	
-	@PostMapping("saveLvl2")
-	public ModelAndView saveLevelTwo(@Valid @ModelAttribute("levelTwo") AddLevelTwo levelTwo,BindingResult result,@RequestParam("lvl1")int lvl1f, HttpSession session) {
-		if(result.hasErrors()) {
-			return new ModelAndView("LevelTwoForm");
-		}
-		if(session.getAttribute("id") == null) {
-			return new ModelAndView("redirect:/logout");
-		}
-		ModelAndView m = new ModelAndView("LevelTwoForm");
-		List<LevelTwo> lvl2List = lvl2ss.selectByLevelOneAndDD(lvl1f, 1);
-		for(LevelTwo lv2 : lvl2List) {
-			if(lv2.getName().equalsIgnoreCase(levelTwo.getName().toLowerCase())) {
-				m.addObject("exist", "alredy exist");
-				return m;
-			}
-		}
-		if (levelTwo.isDd() == false) {
-			LevelOne lvl1 = new LevelOne();
-			lvl1.setLvl1_id(lvl1f);
-			LevelTwo lvl2 = new LevelTwo();
-			lvl2.setLvl1(lvl1);
-			lvl2.setName(levelTwo.getName());
-			lvl2.setDd(levelTwo.isDd());
-			lvl2ss.saveLevelTwo(lvl2);
-			Menu m1 = new Menu();
-			m1.setLvl1(lvl2.getLvl1());
-			m1.setLvl2(lvl2);
-			m1.setRef(levelTwo.getRef());
-			menuService.save(m1);
-			List<User> userList = userService.selectAllUser();
-			for (User u : userList) {
-				Privilege p = new Privilege();
-				p.setUser(u);
-				p.setMenu_id(m1);
-				p.setInn(0);
-				privilegeService.savePrivilege(p);
-			}
-			m.addObject("added", "success");
-		} else {
-			LevelOne lvl1 = new LevelOne();
-			lvl1.setLvl1_id(lvl1f);
-			LevelTwo lvl2 = new LevelTwo();
-			lvl2.setLvl1(lvl1);
-			lvl2.setName(levelTwo.getName());
-			lvl2.setDd(levelTwo.isDd());
-			lvl2ss.saveLevelTwo(lvl2);
-			m.addObject("temp", "success");
-		}
-		return m;
-	}
-
-	@PostMapping("saveLvl3")
-	public ModelAndView saveLevelThree(@Valid @ModelAttribute("levelThree") AddLevelThree levelThree,BindingResult result,HttpSession session) {
-		if(result.hasErrors()) {
-			return new ModelAndView("LevelThreeForm");
-		}
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		
-		ModelAndView m = new ModelAndView("LevelThreeForm");
-		List<Menu> exist = new ArrayList<Menu>();
-		try {
-			exist = menuService.selectByLevelOnTwoThreeId(levelThree.getLvl1(), levelThree.getLvl2(),levelThree.getLvl3());
-			if(exist.size() == 1) {
-				System.out.println("exist");
-				m.addObject("exist", "already exist");
-				return m;
-			}else {
-				LevelOne lvl1 = new LevelOne();
-				LevelTwo lvl2 = new LevelTwo();
-				LevelThree lvl3 = new LevelThree();
-				lvl1.setLvl1_id(levelThree.getLvl1());
-				lvl2.setLvl2_id(levelThree.getLvl2());
-				lvl3.setLvl3_id(levelThree.getLvl3());
-				Menu m1 = new Menu();
-				m1.setLvl3(lvl3);
-				m1.setLvl1(lvl1);
-				m1.setLvl2(lvl2);
-				m1.setRef(levelThree.getRef());
-				menuService.save(m1);
-				List<User> userList = userService.selectAllUser();
-				for (User u : userList) {
-					Privilege p = new Privilege();
-					p.setUser(u);
-					p.setMenu_id(m1);
-					p.setInn(0);
-					privilegeService.savePrivilege(p);
-				}
-				m.addObject("added", "success");
-			}
-		}catch(NullPointerException e) {
-			System.out.println(e);
-		}
-		return m;
-	}
-
-	@RequestMapping("home")
-	public String getHome(HttpSession session) {
-		if (session.getAttribute("name") != null)
-			return "Home";
-		return "redirect:/logout";
-	}
-	
-	@RequestMapping("Gallery")
-	public String getGallery(HttpSession session) {
-		if(session.getAttribute("id") != null)
-			return "Gallery";
-		return "redirect:/logout";
-	}
-
-	@RequestMapping("show")
-	public ModelAndView viewShow(HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("show");
-		return m;
-	}
-
-	@GetMapping("DeleteLevelOneForm")
-	public ModelAndView getDeleteLevelOneForm(ModelMap model,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView();
-		m.setViewName("DeleteLevelOne");
-		m.addObject("lvl1", lvl1ss.selectAll());
-		model.addAttribute("deleteLevelOne", new DeleteLevelOne());
-		return m;
-	}
-
-	@PostMapping("deleteLevelOne")
-	public ModelAndView deleteLevelOne(@Valid @ModelAttribute("deleteLevelOne") DeleteLevelOne deleteLevelOne,BindingResult result,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		if(result.hasErrors()) {
-			return new ModelAndView("DeleteLevelOne");
-		}
-		ModelAndView m = new ModelAndView();
-		m.setViewName("DeleteLevelOne");
-		m.addObject("deleted", "success");
-		lvl1ss.deleteById(deleteLevelOne.getLvl1());
-		return m;
-	}
-
-	@GetMapping("DeleteLevelTwo")
-	public ModelAndView getDeleteLevelTwo(HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView();
-		List<LevelOne> lvl1 = lvl1ss.selectByDd(1);
-		m.addObject("lvl1i", lvl1);
-		model.addAttribute("deleteLevelTwo", new DeleteLevelTwo());
-		return m;
-	}
-
-	@PostMapping("deleteLevelTwo")
-	public ModelAndView deleteLevelTwo(@Valid @ModelAttribute("deleteLevelTwo") DeleteLevelTwo deleteLevelTwo,BindingResult result,HttpSession session) {
-		if(result.hasErrors()) {
-			return new ModelAndView("DeleteLevelTwo");
-		}
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView();
-		m.setViewName("DeleteLevelTwo");
-		m.addObject("deleted", "success");
-		lvl2ss.deleteById(deleteLevelTwo.getLvl2());
-		return m;
-	}
-
-	@GetMapping("DeleteLevelThree")
-	public ModelAndView getDeleteLevelThree(HttpSession session,ModelMap model) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("DeleteLevelThree");
-		m.addObject("lvl1i", lvl1ss.selectByDd(1));
-		model.addAttribute("deleteLevelThree", new DeleteLevelThree());
-		return m;
-	}
-
-	@PostMapping("deleteLevelThree")
-	public ModelAndView deleteLevelThee(@Valid DeleteLevelThree levelThree,BindingResult result,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		if(result.hasErrors()) {
-			return new ModelAndView("DeleteLevelThree");
-		}
-		ModelAndView m = new ModelAndView();
-		m.setViewName("DeleteLevelThree");
-		m.addObject("deleted", "success");
-		menuService.deleteByLevelId(levelThree.getLvl1(), levelThree.getLvl2(), levelThree.getLvl3());
-		return m;
-	}
 	
 	@RequestMapping("header")
 	public ModelAndView getHeader(HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView("Menubar");
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		mv.setViewName("Menubar");
 		List<Menu> menuList = new ArrayList<Menu>();
 		List<LevelOne> lvl1p = new ArrayList<LevelOne>();
 		List<LevelTwo> lvl2p = new ArrayList<LevelTwo>();
@@ -360,11 +97,331 @@ public class HeaderController {
 					lvl2p.add(l2);
 			}
 		}
-		m.addObject("menu", menuList);
-		m.addObject("lvl1", lvl1p);
-		m.addObject("lvl2", lvl2p);
-		m.addObject("lvl3", lvl3ss.selectAll());
-		return m;
+		mv.addObject("menu", menuList);
+		mv.addObject("lvl1", lvl1p);
+		mv.addObject("lvl2", lvl2p);
+		mv.addObject("lvl3", lvl3ss.selectAll());
+		return mv;
 	}
 	
+	@GetMapping("LevelOneForm")
+	public ModelAndView getLevelOne(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+		return mv;
+		}
+		
+		mv.setViewName("LevelOneForm");
+		mv.addObject("levelOne", new AddLevelOne());
+		return mv;
+	}
+
+	@PostMapping("saveLvl1")
+	public ModelAndView saveLevelOne(@Valid @ModelAttribute("levelOne") AddLevelOne levelOne,BindingResult result,Model model,HttpSession session) {
+		
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(result.hasErrors()) {
+			mv.setViewName("LevelOneForm");
+			return mv;
+		}
+
+		mv.setViewName("LevelOneForm");
+		List<LevelOne> lvl1t = lvl1ss.selectAll();
+		for (LevelOne lv1 : lvl1t) {
+			if (lv1.getName().equalsIgnoreCase(levelOne.getName().toLowerCase())) {
+				mv.addObject("exist", "already exist");
+				return mv;
+			}
+		}
+		LevelOne lvl1 = new LevelOne();
+		if (levelOne.isDd() == false) {
+			lvl1.setName(levelOne.getName());
+			lvl1.setDd(levelOne.isDd());
+			lvl1ss.saveLevelOne(lvl1);
+			Menu m1 = new Menu();
+			m1.setLvl1(lvl1);
+			m1.setRef(levelOne.getRef());
+			menuService.save(m1);
+			List<User> userList = userService.selectAllUser();
+			for (User u : userList) {
+				Privilege p = new Privilege();
+				p.setUser(u);
+				p.setMenu_id(m1);
+				p.setInn(0);
+				privilegeService.savePrivilege(p);
+			}
+			mv.addObject("added", "success");
+		} else {
+			lvl1.setName(levelOne.getName());
+			lvl1.setDd(levelOne.isDd());
+			lvl1ss.saveLevelOne(lvl1);
+			mv.addObject("temp", "failed");
+		}
+		return mv;
+	}
+	
+	@GetMapping("LevelTwoForm")
+	public ModelAndView getLevelTwo(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+		return mv;
+		}
+		
+		mv.setViewName("LevelTwoForm");
+		mv.addObject("levelTwo", new AddLevelTwo());
+		return mv;
+	}
+
+	@PostMapping("saveLvl2")
+	public ModelAndView saveLevelTwo(@Valid @ModelAttribute("levelTwo") AddLevelTwo levelTwo,BindingResult result,@RequestParam("lvl1")int lvl1f, HttpSession session) {
+		
+		ModelAndView mv = new ModelAndView();
+	
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(result.hasErrors()) {
+			mv.setViewName("LevelTwoForm");
+			return mv;
+		}
+
+		mv.setViewName("LevelTwoForm");
+		List<LevelTwo> lvl2List = lvl2ss.selectByLevelOneAndDD(lvl1f, 1);
+		for(LevelTwo lv2 : lvl2List) {
+			if(lv2.getName().equalsIgnoreCase(levelTwo.getName().toLowerCase())) {
+				mv.addObject("exist", "alredy exist");
+				return mv;
+			}
+		}
+		if (levelTwo.isDd() == false) {
+			LevelOne lvl1 = new LevelOne();
+			lvl1.setLvl1_id(lvl1f);
+			LevelTwo lvl2 = new LevelTwo();
+			lvl2.setLvl1(lvl1);
+			lvl2.setName(levelTwo.getName());
+			lvl2.setDd(levelTwo.isDd());
+			lvl2ss.saveLevelTwo(lvl2);
+			Menu m1 = new Menu();
+			m1.setLvl1(lvl2.getLvl1());
+			m1.setLvl2(lvl2);
+			m1.setRef(levelTwo.getRef());
+			menuService.save(m1);
+			List<User> userList = userService.selectAllUser();
+			for (User u : userList) {
+				Privilege p = new Privilege();
+				p.setUser(u);
+				p.setMenu_id(m1);
+				p.setInn(0);
+				privilegeService.savePrivilege(p);
+			}
+			mv.addObject("added", "success");
+		} else {
+			LevelOne lvl1 = new LevelOne();
+			lvl1.setLvl1_id(lvl1f);
+			LevelTwo lvl2 = new LevelTwo();
+			lvl2.setLvl1(lvl1);
+			lvl2.setName(levelTwo.getName());
+			lvl2.setDd(levelTwo.isDd());
+			lvl2ss.saveLevelTwo(lvl2);
+			mv.addObject("temp", "success");
+		}
+		return mv;
+	}
+	
+	@GetMapping("LevelThreeForm")
+	public ModelAndView getLevelThree(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+		return mv;
+		}
+		
+		mv.setViewName("LevelThreeForm");
+		mv.addObject("levelThree", new AddLevelThree());
+		return mv;
+	}
+	
+	@PostMapping("saveLvl3")
+	public ModelAndView saveLevelThree(@Valid @ModelAttribute("levelThree") AddLevelThree levelThree,BindingResult result,HttpSession session) {
+		
+		ModelAndView mv = new ModelAndView();
+
+		if (session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+
+		if (result.hasErrors()) {
+			mv.setViewName("LevelThreeForm");
+			return mv;
+		}
+
+		mv.setViewName("LevelThreeForm");
+		List<Menu> exist = new ArrayList<Menu>();
+		try {
+			exist = menuService.selectByLevelOnTwoThreeId(levelThree.getLvl1(), levelThree.getLvl2(),
+					levelThree.getLvl3());
+			if (exist.size() == 1) {
+				System.out.println("exist");
+				mv.addObject("exist", "already exist");
+				return mv;
+			} else {
+				LevelOne lvl1 = new LevelOne();
+				LevelTwo lvl2 = new LevelTwo();
+				LevelThree lvl3 = new LevelThree();
+				lvl1.setLvl1_id(levelThree.getLvl1());
+				lvl2.setLvl2_id(levelThree.getLvl2());
+				lvl3.setLvl3_id(levelThree.getLvl3());
+				Menu m1 = new Menu();
+				m1.setLvl3(lvl3);
+				m1.setLvl1(lvl1);
+				m1.setLvl2(lvl2);
+				m1.setRef(levelThree.getRef());
+				menuService.save(m1);
+				List<User> userList = userService.selectAllUser();
+				for (User u : userList) {
+					Privilege p = new Privilege();
+					p.setUser(u);
+					p.setMenu_id(m1);
+					p.setInn(0);
+					privilegeService.savePrivilege(p);
+				}
+				mv.addObject("added", "success");
+			}
+		} catch (NullPointerException e) {
+			System.out.println(e);
+		}
+		return mv;
+	}
+
+	@GetMapping("DeleteLevelOneForm")
+	public ModelAndView getDeleteLevelOneForm(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		mv.setViewName("DeleteLevelOne");
+		mv.addObject("lvl1", lvl1ss.selectAll());
+		mv.addObject("deleteLevelOne", new DeleteLevelOne());
+		return mv;
+	}
+
+	@PostMapping("deleteLevelOne")
+	public ModelAndView deleteLevelOne(@Valid @ModelAttribute("deleteLevelOne") DeleteLevelOne deleteLevelOne,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+
+		if(result.hasErrors()) {
+			mv.setViewName("DeleteLevelOne");
+			return mv;
+		}
+		
+		mv.setViewName("DeleteLevelOne");
+		mv.addObject("deleted", "success");
+		lvl1ss.deleteById(deleteLevelOne.getLvl1());
+		return mv;
+	}
+
+	@GetMapping("DeleteLevelTwo")
+	public ModelAndView getDeleteLevelTwo(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		mv.setViewName("DeleteLevelTwo");
+		List<LevelOne> lvl1 = lvl1ss.selectByDd(1);
+		mv.addObject("lvl1i", lvl1);
+		mv.addObject("deleteLevelTwo", new DeleteLevelTwo());
+		return mv;
+	}
+
+	@PostMapping("deleteLevelTwo")
+	public ModelAndView deleteLevelTwo(@Valid @ModelAttribute("deleteLevelTwo") DeleteLevelTwo deleteLevelTwo,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(result.hasErrors()) {
+			mv.setViewName("DeleteLevelTwo");
+			return mv;
+		}
+		
+		mv.setViewName("DeleteLevelTwo");
+		lvl2ss.deleteById(deleteLevelTwo.getLvl2());
+		mv.addObject("deleted", "success");
+		return mv;
+	}
+
+	@GetMapping("DeleteLevelThree")
+	public ModelAndView getDeleteLevelThree(HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+		return mv;
+		}
+		
+		mv.setViewName("DeleteLevelThree");
+		mv.addObject("lvl1i", lvl1ss.selectByDd(1));
+		mv.addObject("deleteLevelThree", new DeleteLevelThree());
+		return mv;
+	}
+
+	@PostMapping("deleteLevelThree")
+	public ModelAndView deleteLevelThee(@Valid DeleteLevelThree levelThree,BindingResult result,HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(result.hasErrors()) {
+			mv.setViewName("DeleteLevelThree");
+			return mv;
+		}
+		
+		mv.setViewName("DeleteLevelThree");
+		mv.addObject("deleted", "success");
+		menuService.deleteByLevelId(levelThree.getLvl1(), levelThree.getLvl2(), levelThree.getLvl3());
+		return mv;
+	}
 }

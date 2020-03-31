@@ -19,9 +19,10 @@ public class MailService {
 	@Autowired
 	JavaMailSender mailSender;
 	
+	/*
 	public void sendEmail(User user, int otp) {
 		MimeMessage msg = mailSender.createMimeMessage();
-		String msg1 = "Hi, "+user.getUsername()+"<br>Your verification code is :<b> "+otp+"</b>";
+		String msg1 = "Hi, "+user.getName()+"<br>Your verification code is :<b> "+otp+"</b>";
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(msg,true);
 			helper.setSubject("OTP");
@@ -35,11 +36,15 @@ public class MailService {
             e.printStackTrace();
         }
 	}
-
+	*/
+	
 	public void sendDetails(User user) {
 		MimeMessage msg  = mailSender.createMimeMessage();
-		String msg1="Hi, "+user.getUsername()+"<br> Your account has been successfully verified and created.<br><b>Account Details:</b><br>"
-				+ "<b>Mail id :</b>"+user.getEmail()+"<br><b>User name :</b>"+user.getUsername()+"<br><b>Password :</b>"+user.getPassword()+"<br><br>Thank you.";
+		String msg1="Hi, " + user.getName() + 
+				"<br> Your account has been successfully verified and created.<br><b>Account Details:</b><br>" + 
+				"<b>Mail id :</b>" + user.getEmail() + "<br>" + 
+				"<b>User name :</b>" + user.getUsername() + "<br>" + 
+				"<b>Password :</b>" + user.getPassword() + "<br><br>Thank you.";
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(msg,true);
 			helper.setSubject("Account Created");
@@ -52,6 +57,5 @@ public class MailService {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-		
 	}
 }

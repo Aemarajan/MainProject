@@ -11,6 +11,7 @@ pageEncoding="ISO-8859-1"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
+
 <title>Batch Master</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
@@ -21,16 +22,19 @@ pageEncoding="ISO-8859-1"%>
 <body>
 
 <!-- Project Start --> 
-<div>
+
 	<jsp:include page="Header.jsp" />
 	
 	<div id="header"></div>
 	
-	<div class="content">  
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col col-md-1"></div>
-				<div class="col col-md-10">
+	<div class="wrapper d-flex align-items-stretch">  
+
+		<jsp:include page="Sidebar.jsp" />
+		
+		<div class="container-fluid pl-5">
+			<div class="row mt-2 mb-2">
+				<div class="col col-sm-1 col-md-1 col-lg-1"></div>
+				<div class="col col-sm-10 col-md-10 col-lg-10">
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
@@ -275,14 +279,14 @@ pageEncoding="ISO-8859-1"%>
 					</div>
 					<!-- Table wrapper -->
 				</div>
-				<!-- col-md-10 -->
-				<div class="col col-md-1"></div>
+				<!-- col-md-12 -->
+				<div class="col col-sm-1 col-md-1 col-lg-1"></div>
 			</div>
 			<!-- Row -->
 		</div>
 		<!-- Container Fluid -->
 	</div>
-	<!-- Content -->
+	<!-- Wrapper -->
 	
 	<c:if test="${added != null }">
 		<div class="toast" id="Toast" 
@@ -335,7 +339,7 @@ pageEncoding="ISO-8859-1"%>
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
-</div>
+
 
 <c:if test="${addError != null }"> 
 	<script type="text/javascript">
@@ -360,14 +364,18 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+
 		$('.inn').prop('checked',true);
+
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var from = button.data('from'); 
 			var to = button.data('to');
 			var inn = button.data('inn');
+
 			var modal = $(this);
+
 			modal.find('#id').val(id);
 			modal.find('#from_year').val(from);
 			modal.find('#to_year').val(to);
@@ -382,7 +390,9 @@ pageEncoding="ISO-8859-1"%>
 			var id = button.data('id');
 			var from = button.data('from'); 
 			var to = button.data('to');
+
 			var modal = $(this);
+
 			modal.find('#id').val(id);
 			modal.find('#name').val(from+' - '+to);
 		});
@@ -393,6 +403,7 @@ pageEncoding="ISO-8859-1"%>
 		$('#Toast').toast('show');
 
 		$('[data-toggle = "tooltip"]').tooltip();
+
 	}); 
 </script>
 </body>

@@ -3,9 +3,13 @@ package com.project.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,7 +21,14 @@ import com.project.model.LevelTwo;
 import com.project.model.Menu;
 import com.project.model.Privilege;
 import com.project.model.User;
-import com.project.service.*;
+import com.project.service.LevelOneService;
+import com.project.service.LevelThreeService;
+import com.project.service.LevelTwoService;
+import com.project.service.MenuService;
+import com.project.service.PrivilegeService;
+import com.project.service.UserService;
+import com.project.validator.AddPrivilege;
+import com.project.validator.ModifyPrivilege;
 
 @Controller
 public class PrivilegeController {
@@ -39,22 +50,25 @@ public class PrivilegeController {
 
 	@Autowired
 	PrivilegeService privilegeService;
-	
+
 	@RequestMapping("AddPrivilege")
-	public ModelAndView getPrivilegeForm(@RequestParam(value="added",required=false)String added,@RequestParam(value="error",required=false)String error,HttpSession session) {
+	public ModelAndView getPrivilegeForm(HttpSession session,
+			@RequestParam(value = "added", required = false) String added,
+			@RequestParam(value = "error", required = false) String error) {
 		ModelAndView m = new ModelAndView();
-		if(session.getAttribute("id") == null) {
+		if (session.getAttribute("id") == null) {
 			m.setViewName("redirect:/logout");
 			m.addObject("session", "error");
-		return m;
-		}	
-		
-		m.setViewName("AddPrivilege");
-		if(!(added == null))
+			return m;
+		}
+		if (!(added == null))
 			m.addObject("added", "success");
-		if(!(error == null))
+		if (!(error == null))
 			m.addObject("error", "error");
-	
+
+		m.setViewName("AddPrivilege");
+		m.addObject("addPrivilege", new AddPrivilege());
+
 		List<LevelOne> levelOneList = lvl1ss.selectAll();
 		List<LevelTwo> levelTwoList = lvl2ss.selectAll();
 		List<LevelThree> levelThreeList = lvl3ss.selectAll();
@@ -65,14 +79,37 @@ public class PrivilegeController {
 		m.addObject("lvl3", levelThreeList);
 		m.addObject("menu", menuList);
 		m.addObject("user", userList);
-	return m;
+		return m;
 	}
 
 	@PostMapping("createPrivilege")
-	public ModelAndView createPrivilege(@RequestParam(value = "menu_id", required = false) int[] check,@RequestParam("id") int id,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView m = new ModelAndView();
+	public ModelAndView createPrivilege(@Valid @ModelAttribute("addPrivilege") AddPrivilege addPrivilege,
+			BindingResult result, @RequestParam(value = "menu_id", required = false) int[] check,
+			@RequestParam("id") int id, HttpSession session) {
+
+		ModelAndView mv = new ModelAndView();
+
+		if (session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		if (result.hasErrors()) {
+			mv.setViewName("AddPrivilege");
+
+			List<LevelOne> levelOneList = lvl1ss.selectAll();
+			List<LevelTwo> levelTwoList = lvl2ss.selectAll();
+			List<LevelThree> levelThreeList = lvl3ss.selectAll();
+			List<Menu> menuList = menuService.selectAll();
+			List<User> userList = userService.selectByPp(0);
+
+			mv.addObject("lvl1", levelOneList);
+			mv.addObject("lvl2", levelTwoList);
+			mv.addObject("lvl3", levelThreeList);
+			mv.addObject("menu", menuList);
+			mv.addObject("user", userList);
+			return mv;
+		}
 		List<Menu> menuList = menuService.selectAll();
 		try {
 			int menuId[] = new int[menuList.size()];
@@ -93,8 +130,7 @@ public class PrivilegeController {
 					p.setUser(user);
 					p.setInn(1);
 					privilegeService.savePrivilege(p);
-				}
-				else {
+				} else {
 					Menu me = new Menu();
 					me.setMenu_id(i);
 					User user = new User();
@@ -106,15 +142,15 @@ public class PrivilegeController {
 					privilegeService.savePrivilege(p);
 				}
 			}
-			userService.updatePrivilegeProvide(id,1);
-			m.setViewName("redirect:/AddPrivilege");
-			m.addObject("added","added");
+			userService.updatePrivilegeProvide(id, 1);
+			mv.setViewName("redirect:/AddPrivilege");
+			mv.addObject("added", "added");
 		} catch (NullPointerException e) {
-			m.setViewName("redirect:/AddPrivilege");
-			m.addObject("error", "error");
-			return m;
+			mv.setViewName("redirect:/AddPrivilege");
+			mv.addObject("error", "error");
+			return mv;
 		}
-		return m;
+		return mv;
 	}
 
 	boolean is(int i, int arr[]) {
@@ -124,68 +160,81 @@ public class PrivilegeController {
 		}
 		return false;
 	}
-	
-	@RequestMapping("ModifyPrivilege")
-	public ModelAndView updatePrivilegeForm(@RequestParam(value="added",required=false)String added,@RequestParam(value="error",required=false)String error, HttpSession session) {
+
+	@GetMapping("ModifyPrivilege")
+	public ModelAndView updatePrivilegeForm(HttpSession session,
+			@RequestParam(value = "updated", required = false) String updated,
+			@RequestParam(value = "error", required = false) String error) {
 		ModelAndView m = new ModelAndView();
-		if(session.getAttribute("id") == null) {
+		if (session.getAttribute("id") == null) {
 			m.setViewName("redirect:/logout");
 			m.addObject("session", "destroy");
 			return m;
 		}
-		if(!(added == null))
-			m.addObject("added", "success");
-		if(!(error == null))
+		if (!(updated == null))
+			m.addObject("updated", "success");
+		if (!(error == null))
 			m.addObject("error", "error");
-		
-		m.setViewName("UpdatePrivilege");
+
+		m.setViewName("ModifyPrivilege");
+		m.addObject("modifyPrivilege", new ModifyPrivilege());
 		return m;
 	}
-	
-	@RequestMapping("getUserPrivilege")
-	public ModelAndView getUserPrivilege(User user,HttpSession session) {
-		if(session.getAttribute("id") == null)
-			return new ModelAndView("redirect:/logout");
-		ModelAndView model = new ModelAndView();
-		model.setViewName("ModifyPrivilege");
-		model.addObject("pri", privilegeService.selectByUserId(user.getUser_id()));
-		model.addObject("user", userService.findById(user.getUser_id()));
-		model.addObject("menu", menuService.selectAll());
-		model.addObject("lvl1", lvl1ss.selectAll());
-		model.addObject("lvl2", lvl2ss.selectAll());
-		model.addObject("lvl3", lvl3ss.selectAll());
-		return model;
+
+	@PostMapping("getUserPrivilege")
+	public ModelAndView getUserPrivilege(@Valid @ModelAttribute("modifyPrivilege") ModifyPrivilege modifyPrivilege,
+			BindingResult result, User user, HttpSession session) {
+
+		ModelAndView mv = new ModelAndView();
+
+		if (session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		if (result.hasErrors()) {
+			mv.setViewName("ModifyPrivilege");
+			return mv;
+		}
+		mv.setViewName("UpdatePrivilege");
+		mv.addObject("pri", privilegeService.selectByUserId(user.getUser_id()));
+		mv.addObject("user", userService.findById(user.getUser_id()));
+		mv.addObject("menu", menuService.selectAll());
+		mv.addObject("lvl1", lvl1ss.selectAll());
+		mv.addObject("lvl2", lvl2ss.selectAll());
+		mv.addObject("lvl3", lvl3ss.selectAll());
+		return mv;
 	}
-	
-	@RequestMapping("UpdatePrivilege")
-	public ModelAndView updatePrivilege(@RequestParam int user_id,@RequestParam(value="menu_id",required=false) int[] check,HttpSession session) {
-		if(session.getAttribute("id") == null)
+
+	@PostMapping("UpdatePrivilege")
+	public ModelAndView updatePrivilege(HttpSession session, @RequestParam int user_id,
+			@RequestParam(value = "menu_id", required = false) int[] check) {
+		if (session.getAttribute("id") == null)
 			return new ModelAndView("redirect:/logout");
 		ModelAndView m = new ModelAndView();
 		try {
-		List<Menu> menuList = menuService.selectAll();
-		int menuid[] = new int[menuList.size()];
-		int c=0;
-		for(Menu menu : menuList) {
-			menuid[c] = menu.getMenu_id();
-			c+=1;
-		}
-		for(int i:menuid) {
-			boolean b = is(i,check);
-			if(b) {
-				privilegeService.updatePrivilege(user_id, i, 1);
-			}else {
-				privilegeService.updatePrivilege(user_id, i, 0);
+			List<Menu> menuList = menuService.selectAll();
+			int menuid[] = new int[menuList.size()];
+			int c = 0;
+			for (Menu menu : menuList) {
+				menuid[c] = menu.getMenu_id();
+				c += 1;
 			}
-		}
-		}catch(NullPointerException e) {
+			for (int i : menuid) {
+				boolean b = is(i, check);
+				if (b) {
+					privilegeService.updatePrivilege(user_id, i, 1);
+				} else {
+					privilegeService.updatePrivilege(user_id, i, 0);
+				}
+			}
+		} catch (NullPointerException e) {
 			m.setViewName("redirect:/ModifyPrivilege");
-			m.addObject("error", "failure");
+			m.addObject("error", "Error");
 			return m;
 		}
 		m.setViewName("redirect:/ModifyPrivilege");
-		m.addObject("added", "success");
+		m.addObject("updated", "success");
 		return m;
 	}
-	
 }

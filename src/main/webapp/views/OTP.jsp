@@ -22,11 +22,14 @@
 	
 	<div id="header"></div>
 	
-	<div class="content">  
-    	<div class="container-fluid">
+	<div class="wrapper d-flex align-items-stretch">
+		
+	  	<jsp:include page="Sidebar.jsp" />
+	  	
+    	<div class="container-fluid pl-5">
         	<div class="row mt-2 mb-2">
-            	<div class="col col-md-3.5"></div>
-              	<div class="col col-md-5">
+            	<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
+              	<div class="col col-sm-5 col-md-5 col-lg-5">
                 	<div class="card">
 						<h5 class="card-header info-color white-text text-center py-4">
                     		OTP Verification
@@ -53,7 +56,7 @@
                 	<!-- Card -->
               	</div>
               	<!-- col-md-5 -->
-             	<div class="col col-md-3.5"></div>
+             	<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
             </div>
             <!-- row -->
         </div>

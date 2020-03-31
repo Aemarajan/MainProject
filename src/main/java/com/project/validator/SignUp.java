@@ -1,65 +1,55 @@
 package com.project.validator;
 
-import java.io.Serializable;
-
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 
-import com.project.customvalidator.AlphabetsOnly;
-import com.project.customvalidator.*;
+import com.project.customvalidator.NotEmpty;
 
-public final class SignUp implements Serializable {
+public class SignUp {
+		
+	@NotEmpty(message="* Please Select Any Role...")
+	String role;
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@AlphabetsOnly(message="* Numeric value not allowed")
-	@NotEmpty(message="* Username should not empty")
-	String username;
+	//@AlphabetsOnly(message="* Please Enter the Characters only")
+	@NotEmpty(message="* Please Enter the Name")
+	String name;
 	
-	@NotEmpty(message="* Password should not empty")
-	@Size(min=8,max=15,message="* Size must be 8 to 15")
-	String password;
-	
-	@NotEmpty(message="* Email should not empty")
-	@Email(message="* Invalid email")
+	@NotEmpty(message="* Please Enter the Email.")
+	@Email(message="* Please Enter Valid Email.")
 	String email;
 	
-	@NotEmpty(message="* Confirm password should not empty")
-	String confirmpassword;
+	@NotEmpty(message="* Please Enter the Username")
+	String username;
+	
+	String password;
 
-	public String getUsername() {
-		return username;
+	public String getRole() {
+		return role;
 	}
-
-	public void setUsername(String username) {
-		this.username = username;
+	public void setRole(String role) {
+		this.role = role;
 	}
-
-	public String getPassword() {
-		return password;
+	public String getName() {
+		return name;
 	}
-
-	public void setPassword(String password) {
-		this.password = password;
+	public void setName(String name) {
+		this.name = name;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getConfirmpassword() {
-		return confirmpassword;
+	public String getUsername() {
+		return username;
 	}
-
-	public void setConfirmpassword(String confirmpassword) {
-		this.confirmpassword = confirmpassword;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }
