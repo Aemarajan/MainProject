@@ -35,7 +35,7 @@ public class UserService {
 		return userRepo.findByEmail(email);
 	}
 	
-	public List<User> findByPassword(String password) {
+	public User findByPassword(String password) {
 		return userRepo.findByPassword(password);
 	}
 	
@@ -58,7 +58,7 @@ public class UserService {
 		userRepo.updatePrivilegeProvide(id,i);
 	}
 
-	public void updatePassword(String password, User user) {
-		userRepo.updatePassword(password,user);
+	public void updatePassword(String password, int i) {
+		userRepo.updatePassword(password,i);
 	}
 }

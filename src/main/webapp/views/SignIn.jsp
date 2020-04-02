@@ -24,7 +24,6 @@
 </style>
 </head>
 <body>
-
 	<jsp:include page="Header.jsp" />
 	<div class="content">
 		<div class="container-fluid">
@@ -34,9 +33,9 @@
 				<div class="col col-md-4">
 					<div class="card mt-5 mb-5">
 						<div class="card-head white-text text-center py-4 ubuntu">
-							<strong><h4>Sign in</h4></strong>
+							<h4>Sign in</h4>
 						</div>
-						<div class="card-body px-lg-5 pt-0 open-sans">
+						<div class="card-body px-sm-5 px-md-5 px-lg-5 mt-1 open-sans">
 							<s:form cssClass="login-form" style="color: #757575;" action="Login" method="post" modelAttribute="signin">
 								
 								<c:if test="${msg != null }">
@@ -49,24 +48,40 @@
 											</button>
 										</div>
 										<div class="toast-body py-2">
-											<div>Invalid Username Or Password. Try Again...</div>
+											<div>Invalid Username or Password. Try Again...</div>
 										</div>
 									</div>
 								</c:if>
 								
-								<!-- Email -->
-								<div class="md-form">
-									<s:input path="username" id="username" autofocus="autofocus" class="form-control text-lowercase"></s:input> 
-									<s:label for="username" path="username">Username</s:label>
-									<s:errors path="username" cssClass="error"></s:errors>
+								<!-- Username -->
+								<div class="row">
+									<div class="col-sm-11 col-md-11 col-lg-11">
+										<div class="md-form mt-0">
+											<s:input path="username" id="username" autofocus="autofocus" cssClass="form-control" />
+											<label for="username">Username</label>
+											<s:errors path="username" cssClass="error"></s:errors>
+										</div>
+									</div>
+									<div class="col-sm-1 col-md-1 col-lg-1 p-0 mt-0">
+										<a href="#" data-toggle="tooltip" data-placement="top" title="20mcale1"><i class="fa fa-info-circle mt-4"></i></a>
+									</div>
 								</div>
-									<!-- Password -->
-								<div class="md-form">
-									<s:password path="password" id="password" class="form-control"></s:password> 
-									<s:label path="password" for="password">Password</s:label>
-									<s:errors path="password" cssClass="error"></s:errors>
+								
+								<!-- Password -->
+								<div class="row">
+									<div class="col-sm-11 col-md-11 col-lg-11">
+										<div class="md-form mt-0">
+											<s:password path="password" id="password" cssClass="form-control" />
+											<label for="password">Password</label>
+											<s:errors path="password" cssClass="error"></s:errors>
+										</div>
+									</div>
+									<div class="col-sm-1 col-md-1 col-lg-1 p-0 mt-0">
+										<a href="#" data-toggle="tooltip" data-placement="top" title="xxxxxxx"><i class="fa fa-info-circle mt-4"></i></a>
+									</div>
 								</div>
-									<div class="d-flex justify-content-between">
+								
+								<div class="d-flex justify-content-between">
 									<div>
  										<input type="checkbox" onclick="showPassword()" >
 										<label>Show Password</label>
@@ -76,7 +91,8 @@
 										<a href="#forgotModal" data-toggle="modal">Forgot password ?</a>
 									</div>
 								</div>
-									<!-- Sign in button -->
+								
+								<!-- Sign in button -->
 								<div>
 									<button	class="btn btn-custom btn-block my-3 py-2 waves-effect z-depth-0" type="submit">Sign in</button>
 								</div>
@@ -95,7 +111,7 @@
 											
 											<div class="modal-body">
 
-												<c:if test="${usernameError != null }">
+												<c:if test="${emailError != null }">
 													<div class="toast" id="Toast">
 														<div class="toast-header white-text bg-danger pt-2">
 															<h5 class="mr-auto">Error</h5>
@@ -115,13 +131,13 @@
 												<div class="row">
 													<div class="col-sm-11">
 														<div class="md-form mt-0">
-															<s:input path="username" id="username" autofocus="autofocus" cssClass="form-control"/>
-															<label for="username">Username<span class="mandatory"> *</span></label>
-															<s:errors path="username" cssClass="error"></s:errors>
+															<s:input path="email" id="email" autofocus="autofocus" cssClass="form-control text-lowercase"/>
+															<label for="email">Email<span class="mandatory"> *</span></label>
+															<s:errors path="email" cssClass="error"></s:errors>
 														</div>
 													</div>
 													<div class="col-sm-1">
-														<a href="#" data-toggle="tooltip" data-placement="top" title="18mcale1"><i class="fa fa-info mt-4"></i></a>
+														<a href="#" data-toggle="tooltip" data-placement="top" title="abc@gmail.com"><i class="fa fa-info mt-4"></i></a>
 													</div>
 												</div>					
 											</div>
@@ -147,8 +163,28 @@
 											
 											<div class="modal-body">
 												
-												<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
+												<c:if test="${otpError != null }">
+													<div class="toast" id="Toast">
+														<div class="toast-header white-text bg-danger pt-2">
+															<h5 class="mr-auto">Error</h5>
+															<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="toast-body py-2">
+															<div>Invalid OTP. Please Try Again Later...</div>
+														</div>
+													</div>
+												</c:if>
 												
+												<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
+
+												<c:if test="${email != null }">
+													<div class="d-flex justify-content-start">
+														<label>OTP has been Sent to this Email ID [ email ]...</label>
+													</div>
+												</c:if>
+
 												<s:hidden path="id"/>					
 												<div class="row">
 													<div class="col-sm-11">
@@ -195,22 +231,23 @@
 		</div>
 	</c:if>
 
-	<c:if test="${forgotError != null }">
+	<div class="">
+		<jsp:include page="Footer.jsp" />
+	</div>
+
+	
+	<c:if test="${forgotModal != null }">
 		<script type="text/javascript">
 			$('#forgotModal').modal('show');
 		</script>
 	</c:if>
 	
-	<c:if test="${otpError != null }">
+	<c:if test="${otpModal != null }">
 		<script type="text/javascript">
 			$('#otpModal').modal('show');
 		</script>
 	</c:if>
-
-	<div class="">
-		<jsp:include page="Footer.jsp" />
-	</div>
-
+	
 	<!-- jQuery -->
   	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
   	<script type="text/javascript" src="./views/js/popper.min.js"></script>

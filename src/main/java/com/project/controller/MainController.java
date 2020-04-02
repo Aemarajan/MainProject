@@ -1,6 +1,5 @@
 package com.project.controller;
 
-import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
@@ -33,6 +32,9 @@ public class MainController {
 	@Autowired
 	MailService mailService;
 	
+	User userExist;
+	int otp;
+	
 	@RequestMapping("/")
 	public ModelAndView getHome() {
 		ModelAndView mv = new ModelAndView();
@@ -44,12 +46,14 @@ public class MainController {
 	@RequestMapping("SignIn")
 	public ModelAndView getSignInForm(@RequestParam(value = "session", required = false) String session) {
 		ModelAndView mv = new ModelAndView();
+		
 		if (!(session == null))
 			mv.addObject("session", "expired");
+	
+		mv.setViewName("SignIn");
 		mv.addObject("signin", new SignIn());
 		mv.addObject("forgotPassword", new ForgotPassword());
 		mv.addObject("otp", new OTP());
-		mv.setViewName("SignIn");
 		return mv;
 	}
 	
@@ -88,34 +92,68 @@ public class MainController {
 	}
 	
 	@PostMapping("SendOTP")
-	public ModelAndView getOtpVerification(@Valid @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,BindingResult result,HttpSession session) {
+	public ModelAndView getOtpVerification(@Valid @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,BindingResult result) {
 		ModelAndView mv = new ModelAndView();
-		if(session.getAttribute("id") == null) {
-			mv.setViewName("redirect:/logout");
-			mv.addObject("session", "Expired");
-		return mv;
-		}
+		
 		if(result.hasErrors()) {
 			mv.setViewName("SignIn");
-			mv.addObject("forgotError", "Error");
+			mv.addObject("forgotModal", "Error");
 		return mv;
 		}
-		Random rand = new Random();
-		long otp = 100000 + rand.nextInt(900000);
 		
-		User userExist = userService.findByUsername(forgotPassword.getUsername());
+		Random rand = new Random();
+		otp = 100000 + rand.nextInt(900000);
+		
+		//If The Below code appears This place The warning is coming ...
+		User userExist = userService.findByEmail(forgotPassword.getEmail());
+		
+		User user = new User();
+		user.setEmail(forgotPassword.getEmail());
+		user.setName(userExist.getName());
 
-		if (userExist != null) {
-			//mailService.sendEmail(user, otp);
+		//If The Below code appears This place The warning does not coming ...
+		// And one more thing if we use this type then there an error occur null pointer exception... Because of 
+		//user.setName(userExist.getName()); i think so...
+		//User userExist = userService.findByEmail(forgotPassword.getEmail());
+
+		
+		if (user != null) {
+			mailService.sendEmail(user, otp);
 			mv.setViewName("SignIn");
-			mv.addObject("otp", new OTP());
-			//mv.addObject("email", signup.getEmail());
+			mv.addObject("otpModal", "Message");
+			mv.addObject("email", forgotPassword.getEmail());
+		return mv;
 		} else {
 			mv.setViewName("SignIn");
-			mv.addObject("forgotError", "Error");
+			mv.addObject("forgotModal", "Error");
 			mv.addObject("emailError", "Oops! This Email id is not Registerd...");
-		}
 		return mv;
+		}
+	}
+	
+	@PostMapping("VerifyOTP")
+	public ModelAndView verifyOTP(@Valid @ModelAttribute("otp") OTP useotp,BindingResult result) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(result.hasErrors()) {
+			mv.setViewName("SignIn");
+			mv.addObject("otpModal", "Message");
+		return mv;
+		}
+		
+		if(otp == useotp.getOtp()) {
+			mv.setViewName("SignIn");
+			//mv.addObject("resetPassword", new ResetPassword());
+			//mv.addObject("msg", "success");
+			//mailService.sendDetails(userLoc); 
+			//userService.createUser(userLoc);
+		return mv;
+		}else {
+			mv.setViewName("SignIn");
+			mv.addObject("otpModal", "Error");
+			mv.addObject("otpError","Invalid OTP, Please try later");
+		return mv;
+		}
 	}
 	
 //	@RequestMapping("VerificationForm")
@@ -237,9 +275,9 @@ public class MainController {
 			return mv;
 		}
 	
-		List<User> exist = userService.findByPassword(changePassword.getOld_pwd());
+		User exist = userService.findByPassword(changePassword.getOld_pwd());
 		
-		if(exist.isEmpty()) {	
+		if(!(exist.getPassword().equalsIgnoreCase(changePassword.getOld_pwd()))) {	
 			mv.setViewName("ChangePassword");
 			mv.addObject("passwordError", "Error");
 			return mv;
@@ -249,7 +287,7 @@ public class MainController {
 			return mv;
 		}
 		
-		userService.updatePassword(changePassword.getNew_pwd(),exist.get(0));
+		userService.updatePassword(changePassword.getNew_pwd(),exist.getUser_id());
 		
 		mv.setViewName("redirect:/ChangePassword");
 		mv.addObject("updated", "Success");

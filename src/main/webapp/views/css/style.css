@@ -53,8 +53,7 @@ p{
 	background: linear-gradient(145deg,#3498db,#8e10ad);
 }
 
-.btn-custom{
-	
+.btn-custom{	
 	background: linear-gradient(225deg,#3498db,#8e10ad);
 	color: #fff;
 	font-size: 16px;
@@ -82,7 +81,6 @@ p{
 
 @keyframes autofill {
 	to {
-		
 		color: #666;
 		background: transparent; 
 	} 
@@ -91,21 +89,21 @@ p{
 @-webkit-keyframes autofill {
 	to {
 		color: #666;
-		background: transparent; 
+		background: transparent;
 	} 
 }
 
 @-o-keyframes autofill {
 	to {
 		color: #666;
-		background: transparent; 
+		background: transparent;
 	} 
 }
 
 @-moz-keyframes autofill {
 	to {
 		color: #666;
-		background: transparent; 
+		background: transparent;
 	} 
 }
 

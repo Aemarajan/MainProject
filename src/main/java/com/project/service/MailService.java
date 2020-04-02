@@ -19,14 +19,14 @@ public class MailService {
 	@Autowired
 	JavaMailSender mailSender;
 	
-	/*
+	
 	public void sendEmail(User user, int otp) {
 		MimeMessage msg = mailSender.createMimeMessage();
 		String msg1 = "Hi, "+user.getName()+"<br>Your verification code is :<b> "+otp+"</b>";
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(msg,true);
 			helper.setSubject("OTP");
-			helper.setFrom(new InternetAddress("aemarjn@gmail.com","Report Repo Verification"));
+			helper.setFrom(new InternetAddress("greenaro1997@gmail.com","Report Repo Verification"));
 			helper.setTo(user.getEmail());
 			helper.setText(msg1,true);
 			mailSender.send(helper.getMimeMessage());
@@ -36,7 +36,6 @@ public class MailService {
             e.printStackTrace();
         }
 	}
-	*/
 	
 	public void sendDetails(User user) {
 		MimeMessage msg  = mailSender.createMimeMessage();
@@ -48,7 +47,7 @@ public class MailService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(msg,true);
 			helper.setSubject("Account Created");
-			helper.setFrom(new InternetAddress("aemarjn@gmail.com","Report Repo Account Created"));
+			helper.setFrom(new InternetAddress("greenaro1997@gmail.com","Report Repo Account Created"));
 			helper.setTo(user.getEmail());
 			helper.setText(msg1,true);
 			mailSender.send(helper.getMimeMessage());
