@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -10,6 +11,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Delete Level Three - Header</title>
 
+  <link rel="stylesheet" href="./views/font-awesome/css/all.css">
   <link rel="stylesheet" href="./views/css/bootstrap.min.css">
   <link rel="stylesheet" href="./views/css/mdb.min.css">
   <link rel="stylesheet" href="./views/css/style.css">
@@ -20,15 +22,17 @@
 	<jsp:include page="Header.jsp" />
 	<div id="header"></div>
 	
-    <div class="content">
-    	<div class="container-fluid">
+    <div class="wrapper d-flex align-items-stretch">
+    	<jsp:include page="Sidebar.jsp" />
+    	
+    	<div class="container-fluid pl-5">
         	<div class="row mt-2 mb-2">
-            	<div class="col col-md-3.5"></div>
-            	<div class="col col-md-5">
+            	<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
+            	<div class="col col-sm-5 col-md-5 col-lg-5">
               		<div class="card">
               			<div class="card-head white-text text-center py-2 ubuntu">
                   			<h4 class="d-flex justify-content-end mr-5">DELETE</h4>
-                  			<h5 class="d-flex justify-content-start ml-5">Level Three</h5>
+                  			<h4 class="d-flex justify-content-start ml-5">Level Three</h4>
                 		</div>
                 
 		                <div class="card-body px-lg-5 pt-0 open-sans">
@@ -63,7 +67,7 @@
               		<!-- Card -->
             </div>
             <!-- col-md-5 -->
-            <div class="col col-md-3.5"></div>
+            <div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
           </div>
         </div>
       </div>
@@ -84,7 +88,7 @@
 			</div>
 		</c:if>
       
-      <div class="footer">
+      <div class="">
       	<jsp:include page="Footer.jsp" />
       </div>
     </div>

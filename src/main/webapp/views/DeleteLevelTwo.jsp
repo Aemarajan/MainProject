@@ -10,6 +10,7 @@
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Delete Level Two - Header</title>
 	
+	<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 	<link rel="stylesheet" href="./views/css/bootstrap.min.css">
 	<link rel="stylesheet" href="./views/css/mdb.min.css">
 	<link rel="stylesheet" href="./views/css/style.css">
@@ -21,19 +22,22 @@
 		
 		<div id="header"></div>
 		
-		<div class="content">
-			<div class="container-fluid">
+		<div class="wrapper d-flex align-items-stretch">
+			
+			<jsp:include page="Sidebar.jsp" />
+			
+			<div class="container-fluid pl-5">
 	        	<div class="row  mt-2 mb-2">
-	            	<div class="col col-md-3.5"></div>
-	            	<div class="col col-md-5">
+	            	<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
+	            	<div class="col col-sm-5 col-md-5 col-lg-5">
 	              		<div class="card">
 	                		<div class="card-head white-text text-center py-2 ubuntu">
 	                  				<h4 class="d-flex justify-content-end mr-5">DELETE</h4>
-	                  				<h5 class="d-flex justify-content-start ml-5">Level Two</h5>
+	                  				<h4 class="d-flex justify-content-start ml-5">Level Two</h4>
 	                		</div>        	
 	                		<div class="card-body px-lg-5 pt-0 open-sans">
 	                  			<!-- Form -->
-	                  			<s:form style="color: #757575;" action="deleteLevelTwo" modelAttribute="deleteLevelTwo">
+	                  			<s:form style="color: #757575;" action="deleteLevelTwo" method="post" modelAttribute="deleteLevelTwo">
 	                  				<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be Selected</label>
 			                    
 			                    	<div class="mt-3">
@@ -59,7 +63,7 @@
 	              		<!-- Card -->
 	           		</div>
 	            	<!-- Col-md-5 -->
-	          		<div class="col col-md-3.5"></div>
+	          		<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
 	          	</div>
 	          	<!-- row -->
 	        </div>
@@ -83,7 +87,7 @@
 			</div>
 		</c:if>  
 	      
-	    <div class="footer">
+	    <div class="">
 	    	<jsp:include page="Footer.jsp" /> 
 	    </div>
 	</div>

@@ -23,13 +23,16 @@ pageEncoding="ISO-8859-1"%>
 <div>
 	<jsp:include page="Header.jsp" />
 	
-	<div class="content">  
-		<div id="header"></div>
+	<div id="header"></div>
+	
+	<div class="wrapper d-flex align-items-stretch">  
 		
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col col-md-1"></div>
-				<div class="col col-md-10">
+		<jsp:include page="Sidebar.jsp" />
+		
+		<div class="container-fluid pl-5">
+			<div class="row mt-2 mb-2">
+				<div class="col col-sm-1 col-md-1 col-lg-1"></div>
+				<div class="col col-sm-10 col-md-10 col-lg-10">
 					
 					<div class="table-wrapper">
 						<div class="table-title">
@@ -211,7 +214,7 @@ pageEncoding="ISO-8859-1"%>
 					<!-- Table wrapper -->
 				</div>
 				<!-- col-md-10 -->
-				<div class="col col-md-1"></div>
+				<div class="col col-sm-1 col-md-1 col-lg-1"></div>
 			</div>
 			<!-- Row -->
 		</div>

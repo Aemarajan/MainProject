@@ -43,43 +43,43 @@ import com.project.validator.Personal;
 @RestController
 @RequestMapping("api")
 public class ApiController {
-	
+
 	@Autowired
 	LevelTwoService lvl2s;
-	
+
 	@Autowired
 	LevelOneService lvl1s;
-	
+
 	@Autowired
 	LevelThreeService lvl3s;
-	
+
 	@Autowired
 	PrivilegeService privilegeService;
-	
+
 	@Autowired
 	MenuService menuService;
-	
+
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	DegreeService degreeService;
-	
+
 	@Autowired
 	DepartmentService departmentService;
-	
+
 	@Autowired
 	StateService stateService;
-	
+
 	@Autowired
 	CountryService countryService;
-	
+
 	@Autowired
 	RegulationService regulationService;
-	
+
 	@Autowired
 	DistrictService districtService;
-	
+
 	@Autowired
 	YearService yearService;
 	

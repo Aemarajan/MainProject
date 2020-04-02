@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -8,36 +9,39 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
+
 <title>Add Level Three - Header</title>
 
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
 <body>
-<!-- Start your project here-->  
-<div>
+
 	<jsp:include page="Header.jsp" />
     
     <div id="header"></div>
      
-    <div class="content">
-    	<div class="container-fluid">
-        	<div class="row">
-            	<div class="col col-md-3.5"></div>
-                	<div class="col col-md-5 mt-2 mb-2">
+    <div class="wrapper d-flex align-items-stretch">
+    
+    	<jsp:include page="Sidebar.jsp" />
+    	
+    	<div class="container-fluid pl-5">
+        	<div class="row mt-2 mb-2">
+            	<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
+                	<div class="col col-sm-5 col-md-5 col-lg-5">
                     	<div class="card">
                                 
                         <div class="card-head white-text text-center py-2 ubuntu">
                         	<h4 class="d-flex justify-content-end mr-5">ADD</h4>
-                        	<h5 class="d-flex justify-content-start ml-5">Level Three</h5>
+                        	<h4 class="d-flex justify-content-start ml-5">Level Three</h4>
                         </div>
                         
                         <div class="card-body px-lg-5 pt-0 open-sans">
                         	<!-- Form -->
-                            <s:form style="color: #757575;" action="saveLvl3" modelAttribute="levelThree">
+                            <s:form style="color: #757575;" action="saveLvl3" method="post" modelAttribute="levelThree">
                             	
                             	<c:if test="${exist != null }">
 									<div class="toast" id="Toast">
@@ -85,7 +89,7 @@
                         </div>
 					</div>
                 </div>
-            	<div class="col col-md-3.5"></div>
+            	<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
             </div>
 		</div>
 	</div>
@@ -107,15 +111,14 @@
 	</c:if>
 	
 	<jsp:include page="Footer.jsp" /> 
-</div>
-<!-- End your project here-->
     
-<!-- jQuery -->
-<script type="text/javascript" src="./views/js/jquery.min.js"></script>
-<script type="text/javascript" src="./views/js/popper.min.js"></script>
-<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-<script type="text/javascript">
+	<!-- jQuery -->
+	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+	<script type="text/javascript" src="./views/js/popper.min.js"></script>
+	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
+
+	<script type="text/javascript">
         $(document).ready(function() {
             $('#header').load("http://localhost:8080/header");
             $('#dd').click(function() {
@@ -193,6 +196,5 @@
             $('#Toast').toast('show');
         });
     </script>
-    
 </body>
 </html>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="s"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,13 +20,17 @@
 	
 	<div id="header"></div>
 
-	<div class="content">
-		<div class="container-fluid">
+	<div class="wrapper d-flex align-items-stretch">
+		
+		<jsp:include page="Sidebar.jsp" />
+		
+		<div class="container-fluid pl-5">
 			<h3 class="text-center py-3">Privilege</h3>		
-			<form action="createPrivilege" method="post">
+			<s:form action="createPrivilege" method="post" modelAttribute="addPrivilege">
 				<div style="margin-left:40px;" class="mt-2 mb-2">
 					<h5>Username<span class="mandatory"> *</span></h5>
-					<select name="id" id="users" class="browser-default custom-select" style="width: 270px;"></select>
+					<s:select path="id" id="users" cssClass="browser-default custom-select" style="width: 270px;" /><br />
+					<s:errors path="id" cssClass="error" />
 				</div>
 				
 				<div class="row">
@@ -86,7 +91,7 @@
 				<div class="text-center">
 					<button type="submit" class="btn btn-custom w-25">Create</button>
 				</div>
-			</form>
+			</s:form>
 		</div>
 	</div>
 		<c:if test="${added != null }">
@@ -143,7 +148,7 @@
             success: function(result){
                 var output = "<option value='0'> -- Select -- </option>";
                 for(var i in result){
-                    output+="<option value=" + result[i].user_id + ">" + result[i].username + "<span> [ " + result[i].email + " ] </span>" + "</option>";
+                    output+="<option value=" + result[i].user_id + ">" + result[i].name + "<span> [ " + result[i].email + " ] </span>" + "</option>";
                 }
                 users.html(output);
             }
