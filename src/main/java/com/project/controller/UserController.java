@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.config.PasswordGenerator;
+import com.project.customvalidator.SignUp;
 import com.project.model.User;
 import com.project.service.MailService;
 import com.project.service.PrivilegeService;
 import com.project.service.UserService;
-import com.project.validator.SignUp;
 
 @Controller
 public class UserController {

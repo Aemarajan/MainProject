@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.customvalidator.ChangePassword;
+import com.project.customvalidator.ForgotPassword;
+import com.project.customvalidator.OTP;
+import com.project.customvalidator.SignIn;
 import com.project.model.User;
 import com.project.service.MailService;
 import com.project.service.UserService;
-import com.project.validator.ChangePassword;
-import com.project.validator.ForgotPassword;
-import com.project.validator.OTP;
-import com.project.validator.SignIn;
 
 @Controller
 public class MainController {

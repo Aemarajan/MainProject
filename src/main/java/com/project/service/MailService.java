@@ -26,7 +26,7 @@ public class MailService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(msg,true);
 			helper.setSubject("OTP");
-			helper.setFrom(new InternetAddress("greenaro1997@gmail.com","Report Repo Verification"));
+			helper.setFrom(new InternetAddress("aemarjn@gmail.com","Report Repo Verification"));
 			helper.setTo(user.getEmail());
 			helper.setText(msg1,true);
 			mailSender.send(helper.getMimeMessage());
@@ -47,7 +47,7 @@ public class MailService {
 		try {
 			MimeMessageHelper helper = new MimeMessageHelper(msg,true);
 			helper.setSubject("Account Created");
-			helper.setFrom(new InternetAddress("greenaro1997@gmail.com","Report Repo Account Created"));
+			helper.setFrom(new InternetAddress("aemarjn@gmail.com","Report Repo Account Created"));
 			helper.setTo(user.getEmail());
 			helper.setText(msg1,true);
 			mailSender.send(helper.getMimeMessage());
