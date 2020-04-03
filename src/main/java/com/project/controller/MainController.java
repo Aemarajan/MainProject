@@ -92,62 +92,55 @@ public class MainController {
 	}
 	
 	@PostMapping("SendOTP")
-	public ModelAndView getOtpVerification(@Valid @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,BindingResult result) {
+	public ModelAndView getOtpVerification(@Valid @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,BindingResult result, @ModelAttribute("signin")SignIn signin,@ModelAttribute("otp")OTP otpObj) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(result.hasErrors()) {
 			mv.setViewName("SignIn");
 			mv.addObject("forgotModal", "Error");
-		return mv;
+			return mv;
 		}
 		
 		Random rand = new Random();
 		otp = 100000 + rand.nextInt(900000);
 		
-		//If The Below code appears This place The warning is coming ...
-		User userExist = userService.findByEmail(forgotPassword.getEmail());
-		
-		User user = new User();
-		user.setEmail(forgotPassword.getEmail());
-		user.setName(userExist.getName());
-
-		//If The Below code appears This place The warning does not coming ...
-		// And one more thing if we use this type then there an error occur null pointer exception... Because of 
-		//user.setName(userExist.getName()); i think so...
-		//User userExist = userService.findByEmail(forgotPassword.getEmail());
-
-		
-		if (user != null) {
+		try {
+			User userExist = userService.findByEmail(forgotPassword.getEmail());
+			
+			User user = new User();
+			user.setEmail(forgotPassword.getEmail());
+			user.setName(userExist.getName());
+	
 			mailService.sendEmail(user, otp);
 			mv.setViewName("SignIn");
 			mv.addObject("otpModal", "Message");
 			mv.addObject("email", forgotPassword.getEmail());
-		return mv;
-		} else {
+			return mv;
+		}catch(NullPointerException e) {
 			mv.setViewName("SignIn");
 			mv.addObject("forgotModal", "Error");
 			mv.addObject("emailError", "Oops! This Email id is not Registerd...");
-		return mv;
+			return mv;
 		}
 	}
 	
 	@PostMapping("VerifyOTP")
-	public ModelAndView verifyOTP(@Valid @ModelAttribute("otp") OTP useotp,BindingResult result) {
+	public ModelAndView verifyOTP(@Valid @ModelAttribute("otp") OTP useotp,BindingResult result,@ModelAttribute("signin")SignIn signin,@ModelAttribute("forgotPassword")ForgotPassword forgot) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(result.hasErrors()) {
 			mv.setViewName("SignIn");
 			mv.addObject("otpModal", "Message");
-		return mv;
+			return mv;
 		}
 		
 		if(otp == useotp.getOtp()) {
 			mv.setViewName("SignIn");
 			//mv.addObject("resetPassword", new ResetPassword());
 			//mv.addObject("msg", "success");
-			//mailService.sendDetails(userLoc); 
+			//mailService.sendDetails(userLoc);
 			//userService.createUser(userLoc);
-		return mv;
+			return mv;
 		}else {
 			mv.setViewName("SignIn");
 			mv.addObject("otpModal", "Error");

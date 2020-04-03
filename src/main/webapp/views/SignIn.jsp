@@ -110,7 +110,6 @@
 											</div>
 											
 											<div class="modal-body">
-
 												<c:if test="${emailError != null }">
 													<div class="toast" id="Toast">
 														<div class="toast-header white-text bg-danger pt-2">
@@ -126,8 +125,7 @@
 												</c:if>
 
 												<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
-												
-												<s:hidden path="id"/>					
+																	
 												<div class="row">
 													<div class="col-sm-11">
 														<div class="md-form mt-0">
@@ -181,7 +179,7 @@
 
 												<c:if test="${email != null }">
 													<div class="d-flex justify-content-start">
-														<label>OTP has been Sent to this Email ID [ email ]...</label>
+														<label>OTP has been Sent to this Email ID [ ${email } ]...</label>
 													</div>
 												</c:if>
 
@@ -235,7 +233,12 @@
 		<jsp:include page="Footer.jsp" />
 	</div>
 
-	
+	<!-- jQuery -->
+  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
+  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
+  
 	<c:if test="${forgotModal != null }">
 		<script type="text/javascript">
 			$('#forgotModal').modal('show');
@@ -248,12 +251,6 @@
 		</script>
 	</c:if>
 	
-	<!-- jQuery -->
-  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
-  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
-  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-  
   	<script type="text/javascript">
 		function showPassword() {
 			var x = document.getElementById("password");
