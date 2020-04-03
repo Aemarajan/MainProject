@@ -1,18 +1,19 @@
 package com.project.validator;
 
+import java.util.Date;
+
 public class Personal {
 	
-	String id;
+	int id;
 	String username;
-	String dob;
-	String blood;
-	String religion;
-	String community;
-	
-	public String getId() {
+	Date dob;
+	int blood;
+	int religion;
+	int community;
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getUsername() {
@@ -21,35 +22,35 @@ public class Personal {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public String getDob() {
+	public Date getDob() {
 		return dob;
 	}
-	public void setDob(String dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
-	public String getBlood() {
+	public int getBlood() {
 		return blood;
 	}
-	public void setBlood(String blood) {
+	public void setBlood(int blood) {
 		this.blood = blood;
 	}
-	public String getReligion() {
+	public int getReligion() {
 		return religion;
 	}
-	public void setReligion(String religion) {
+	public void setReligion(int religion) {
 		this.religion = religion;
 	}
-	public String getCommunity() {
+	public int getCommunity() {
 		return community;
 	}
-	public void setCommunity(String community) {
+	public void setCommunity(int community) {
 		this.community = community;
 	}
 	
 	@Override
 	public String toString() {
-		return "Personal [username=" + username + ", dob=" + dob + ", blood=" + blood + ", religion=" + religion
-				+ ", community=" + community + "]";
+		return "Personal [id=" + id + ", username=" + username + ", dob=" + dob + ", blood=" + blood + ", religion="
+				+ religion + ", community=" + community + "]";
 	}
-
+	
 }

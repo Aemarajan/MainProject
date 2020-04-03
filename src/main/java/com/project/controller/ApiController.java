@@ -3,15 +3,17 @@ package com.project.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.model.Bloodgroup;
+import com.project.model.Community;
 import com.project.model.Country;
 import com.project.model.Degree;
 import com.project.model.Department;
@@ -21,9 +23,12 @@ import com.project.model.LevelThree;
 import com.project.model.LevelTwo;
 import com.project.model.Menu;
 import com.project.model.Regulation;
+import com.project.model.Religion;
 import com.project.model.State;
 import com.project.model.User;
 import com.project.model.Year;
+import com.project.service.BloodgroupService;
+import com.project.service.CommunityService;
 import com.project.service.CountryService;
 import com.project.service.DegreeService;
 import com.project.service.DepartmentService;
@@ -34,7 +39,9 @@ import com.project.service.LevelThreeService;
 import com.project.service.LevelTwoService;
 import com.project.service.MenuService;
 import com.project.service.PrivilegeService;
+import com.project.service.ProfileService;
 import com.project.service.RegulationService;
+import com.project.service.ReligionService;
 import com.project.service.StateService;
 import com.project.service.UserService;
 import com.project.service.YearService;
@@ -69,6 +76,9 @@ public class ApiController {
 	DepartmentService departmentService;
 
 	@Autowired
+	CommunityService communityService;
+	
+	@Autowired
 	StateService stateService;
 
 	@Autowired
@@ -78,6 +88,9 @@ public class ApiController {
 	RegulationService regulationService;
 
 	@Autowired
+	ReligionService religionService;
+	
+	@Autowired
 	DistrictService districtService;
 
 	@Autowired
@@ -85,6 +98,12 @@ public class ApiController {
 	
 	@Autowired
 	LanguageService languageService;
+	
+	@Autowired
+	BloodgroupService bloodService;
+	
+	@Autowired
+	ProfileService profileService;
 	
 	@GetMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
@@ -176,10 +195,26 @@ public class ApiController {
 		return yearService.selectAll();
 	}
 	
-	@RequestMapping(value="savePersonalJson",method=RequestMethod.POST)
-	public ResponseEntity<Object> savePersonal(@RequestBody Personal personal) {
-		System.out.println(personal.getUsername());
-		return new ResponseEntity<>("Success",HttpStatus.OK);
+	@GetMapping("getAllBlood")
+	public List<Bloodgroup> getAllBlood(){
+		return bloodService.selectAll();
+	}
+	
+	@GetMapping("getAllReligion")
+	public List<Religion> getAllReligion(){
+		return religionService.selectAll();
+	}
+	
+	@GetMapping("getAllCommunity")
+	public List<Community> getAllCommunity(){
+		return communityService.selectAll();
+	}
+	
+	@PostMapping(value="savePersonalJson",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public Personal savePersonal(@RequestBody Personal personal) {
+		profileService.updatePersonal(personal.getDob(),personal.getBlood(),personal.getReligion(),personal.getCommunity(),personal.getId());
+		return personal;
 	}
 	
 }

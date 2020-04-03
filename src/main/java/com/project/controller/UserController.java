@@ -17,7 +17,6 @@ import com.project.model.User;
 import com.project.service.MailService;
 import com.project.service.PrivilegeService;
 import com.project.service.UserService;
-import com.project.validator.SignIn;
 import com.project.validator.SignUp;
 
 @Controller
