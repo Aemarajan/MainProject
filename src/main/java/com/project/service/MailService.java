@@ -19,7 +19,6 @@ public class MailService {
 	@Autowired
 	JavaMailSender mailSender;
 	
-	
 	public void sendEmail(User user, int otp) {
 		MimeMessage msg = mailSender.createMimeMessage();
 		String msg1 = "Hi, "+user.getName()+"<br>Your verification code is :<b> "+otp+"</b>";

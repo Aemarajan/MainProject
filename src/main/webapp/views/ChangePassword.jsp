@@ -36,19 +36,19 @@
 
 						<div class="card-body px-5 pt-0 open-sans">
 
-							<c:if test="${passwordError != null }">
-								<div class="toast mt-2" id="Toast">
-									<div class="toast-header white-text bg-danger pt-2">
-										<h5 class="mr-auto">Error</h5>
-										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="toast-body py-2">
-										<div>Incorrect Old Password...</div>
-									</div>
-								</div>
-							</c:if>
+<%-- 							<c:if test="${passwordError != null }"> --%>
+<!-- 								<div class="toast mt-2" id="Toast"> -->
+<!-- 									<div class="toast-header white-text bg-danger pt-2"> -->
+<!-- 										<h5 class="mr-auto">Error</h5> -->
+<!-- 										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast"> -->
+<%-- 											<span aria-hidden="true">&times;</span> --%>
+<!-- 										</button> -->
+<!-- 									</div> -->
+<!-- 									<div class="toast-body py-2"> -->
+<!-- 										<div>Incorrect Old Password...</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<%-- 							</c:if> --%>
 							
 							<c:if test="${passwordMismatch != null }">
 								<div class="toast mt-2" id="Toast">
@@ -67,20 +67,20 @@
 							<s:form action="UpdatePassword" method="post" modelAttribute="changePassword">
 								<label class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled </label>
 								
-								<s:hidden path="id" id="id"/>
+								<s:hidden path="id" id="id" value='<%= session.getAttribute("id") %>' />
 
-								<div class="row">
-									<div class="col-sm-11 col-md-11 col-lg-11">
-										<div class="md-form mt-0">
-											<s:input path="old_pwd" id="old_pwd" autofocus="autofocus" maxlength="15" cssClass="form-control" />
-											<s:label path="old_pwd" for="Old Password">Old Password<span class="mandatory"> *</span></s:label>
-											<s:errors path="old_pwd" cssClass="error"></s:errors>
-										</div>
-									</div>
-									<div class="col col-sm-1 col-md-1 col-lg-1 pl-0">
-										<a href="#" data-toggle="tooltip" data-placement="top" title="Abc@123"><i class="fa fa-info mt-4"></i></a>
-									</div>
-								</div>
+<!-- 								<div class="row"> -->
+<!-- 									<div class="col-sm-11 col-md-11 col-lg-11"> -->
+<!-- 										<div class="md-form mt-0"> -->
+<%-- 											<s:input path="old_pwd" id="old_pwd" autofocus="autofocus" maxlength="15" cssClass="form-control" /> --%>
+<%-- 											<s:label path="old_pwd" for="Old Password">Old Password<span class="mandatory"> *</span></s:label> --%>
+<%-- 											<s:errors path="old_pwd" cssClass="error"></s:errors> --%>
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 									<div class="col col-sm-1 col-md-1 col-lg-1 pl-0"> -->
+<!-- 										<a href="#" data-toggle="tooltip" data-placement="top" title="Abc@123"><i class="fa fa-info mt-4"></i></a> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
 
 								<div class="row">
 									<div class="col-sm-11 col-md-11 col-lg-11">
@@ -90,8 +90,8 @@
 											<s:errors path="new_pwd" cssClass="error"></s:errors>
 										</div>
 									</div>
-									<div class="col col-sm-1 col-md-1 col-lg-1 pl-0">
-										<a href="#" data-toggle="tooltip" data-placement="top" title="Abc@123"><i class="fa fa-info mt-4"></i></a>
+									<div class="col col-sm-1 col-md-1 col-lg-1 p-0">
+										<a href="#" data-toggle="tooltip" data-placement="top" title="Abc@123"><i class="fa fa-info-circle mt-4"></i></a>
 									</div>
 								</div>
 								
@@ -103,8 +103,8 @@
 											<s:errors path="confirm_pwd" cssClass="error"></s:errors>
 										</div>
 									</div>
-									<div class="col col-sm-1 col-md-1 col-lg-1 pl-0">
-										<a href="#" data-toggle="tooltip" data-placement="top" title="Abc@123"><i class="fa fa-info mt-4"></i></a>
+									<div class="col col-sm-1 col-md-1 col-lg-1 p-0">
+										<a href="#" data-toggle="tooltip" data-placement="top" title="Abc@123"><i class="fa fa-info-circle mt-4"></i></a>
 									</div>
 								</div>
 							
@@ -129,7 +129,7 @@
 	<c:if test="${updated != null }">
 		<div class="toast" id="Toast"
 			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
-			<div class="toast-header white-text bg-warning pt-2">
+			<div class="toast-header white-text bg-success pt-2">
 				<h5 class="mr-auto">Notification</h5>
 				<button type="button" class="ml-2 mb-1 close white-text"
 					data-dismiss="toast">

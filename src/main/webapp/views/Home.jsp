@@ -45,28 +45,28 @@
 
 				<h4>Introduction</h4>
 				
-				<p>
+				<p class="indent">
 					Master of Computer Applications (MCA) focus on the design and application of information systems and provides a solid background in programming for Information Technology and covers recent applications in the area of computing field. MCA students acquire strength in principles, concepts and foundations of computer science, information technology and various applications. They would also have good programming skills, developing software applications over a wide variety of platforms. The course was designed to meet the growing demand for qualified professionals in the field of Information Technology. The MCA programme is inclined more toward Application Development and thus has more emphasis on latest programming language and tools to develop better and faster applications.
 	            </p>
-	            <p>
+	            <p class="indent">
 	            	As the IT and the software industry are dynamic and fast growing, MCA programme is designed keeping in view the requirements of industry. The programme aims at the understanding of the fundamentals of computing among the students so that they can compete in the present-day global situation. Students are trained in the fields of Systems Designing, Application Software Development, Computer Networks, System Administration, Web Designing and Development, Database Administration, Data Mining and Warehousing, etc., This course  covers various aspects of  Computational Theory, Programming, Algorithm Design and Optimization, Network and Database Management, Mobile Technologies etc.,
 	            </p>
 	            
 	            <h4>Mission</h4>
 	            
-	            <p>
+	            <p class="indent">
 	            	To impart high quality computer education, develop their technical and problem solving skills, broaden their mental horizon and transform them into competent and talented software professionals.
 	           	</p>
-	           	<p>
+	           	<p class="indent">
 	           		To develop the knowledge in fundamental computing principles, evolve with the recent trends in industry, devise and implement innovative systems through research and in collaboration with other stake holders.
 	           	</p>
-	           	<p>
+	           	<p class="indent">
 	           		To serve the society and the Nation with good ethical standards and social concern.
 	            </p>
 	            
 	            <h4>Vision</h4>
 	            
-	            <p>
+	            <p class="indent">
 	            	To provide world class education on computer applications for individuals to develop as technologically superior, socially conscious and nationally responsible citizens.
 	            </p>
 			</div>

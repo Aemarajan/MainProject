@@ -40,25 +40,29 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		mv.setViewName("redirect:/SignIn");
 		return mv;
-		// return "redirect:/show";
 	}
 
 	@RequestMapping("SignIn")
-	public ModelAndView getSignInForm(@RequestParam(value = "session", required = false) String session) {
+	public ModelAndView getSignInForm(@RequestParam(value = "session", required = false) String session,
+			@RequestParam(value = "updated", required = false) String updated) {
 		ModelAndView mv = new ModelAndView();
 		
 		if (!(session == null))
 			mv.addObject("session", "expired");
+		if(!(updated == null))
+			mv.addObject("updated", "Success");
 	
 		mv.setViewName("SignIn");
 		mv.addObject("signin", new SignIn());
 		mv.addObject("forgotPassword", new ForgotPassword());
 		mv.addObject("otp", new OTP());
+		mv.addObject("changePassword", new ChangePassword());
 		return mv;
 	}
 	
 	@PostMapping("Login")
-	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin, BindingResult result,HttpSession session) {
+	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin,
+			BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if (result.hasErrors()) {
 			mv.setViewName("SignIn");
@@ -92,135 +96,94 @@ public class MainController {
 	}
 	
 	@PostMapping("SendOTP")
-	public ModelAndView getOtpVerification(@Valid @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,BindingResult result) {
+	public ModelAndView getOtpVerification(@Valid @ModelAttribute("forgotPassword") ForgotPassword forgotPassword,
+			BindingResult result, 
+			@ModelAttribute("signin")SignIn signin,
+			@ModelAttribute("otp")OTP otpObj,
+			@ModelAttribute("changePassword") ChangePassword changePassword) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(result.hasErrors()) {
 			mv.setViewName("SignIn");
 			mv.addObject("forgotModal", "Error");
-		return mv;
+			return mv;
 		}
 		
 		Random rand = new Random();
 		otp = 100000 + rand.nextInt(900000);
 		
-		//If The Below code appears This place The warning is coming ...
-		User userExist = userService.findByEmail(forgotPassword.getEmail());
-		
-		User user = new User();
-		user.setEmail(forgotPassword.getEmail());
-		user.setName(userExist.getName());
-
-		//If The Below code appears This place The warning does not coming ...
-		// And one more thing if we use this type then there an error occur null pointer exception... Because of 
-		//user.setName(userExist.getName()); i think so...
-		//User userExist = userService.findByEmail(forgotPassword.getEmail());
-
-		
-		if (user != null) {
-			mailService.sendEmail(user, otp);
+		try {
+			User userExist = userService.findByEmail(forgotPassword.getEmail());
+			
+			User user = new User();
+			user.setEmail(forgotPassword.getEmail());
+			user.setName(userExist.getName());
+	
+			//mailService.sendEmail(user, otp);
 			mv.setViewName("SignIn");
 			mv.addObject("otpModal", "Message");
 			mv.addObject("email", forgotPassword.getEmail());
-		return mv;
-		} else {
+			return mv;
+		}catch(NullPointerException e) {
 			mv.setViewName("SignIn");
 			mv.addObject("forgotModal", "Error");
 			mv.addObject("emailError", "Oops! This Email id is not Registerd...");
-		return mv;
+			return mv;
 		}
 	}
 	
 	@PostMapping("VerifyOTP")
-	public ModelAndView verifyOTP(@Valid @ModelAttribute("otp") OTP useotp,BindingResult result) {
+	public ModelAndView verifyOTP(@Valid @ModelAttribute("otp") OTP useotp,
+			BindingResult result,
+			@ModelAttribute("signin")SignIn signin,
+			@ModelAttribute("forgotPassword")ForgotPassword forgotPassword,
+			@ModelAttribute("changePassword") ChangePassword changePassword) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(result.hasErrors()) {
 			mv.setViewName("SignIn");
 			mv.addObject("otpModal", "Message");
-		return mv;
+			return mv;
 		}
 		
-		if(otp == useotp.getOtp()) {
-			mv.setViewName("SignIn");
-			//mv.addObject("resetPassword", new ResetPassword());
-			//mv.addObject("msg", "success");
-			//mailService.sendDetails(userLoc); 
-			//userService.createUser(userLoc);
-		return mv;
-		}else {
+		if(otp != useotp.getOtp()) {
 			mv.setViewName("SignIn");
 			mv.addObject("otpModal", "Error");
 			mv.addObject("otpError","Invalid OTP, Please try later");
-		return mv;
+			return mv;
+		}else {
+			mv.setViewName("SignIn");
+			mv.addObject("resetModal", "Message");
+			return mv;
 		}
 	}
 	
-//	@RequestMapping("VerificationForm")
-//	public ModelAndView getOTPVerification(@Valid @ModelAttribute("signup") SignUp signup, BindingResult result,HttpSession session) {
-//		ModelAndView mv = new ModelAndView();
-//		
-//		if(session.getAttribute("id") == null) {
-//			mv.setViewName("redirect:/logout");
-//			mv.addObject("session", "Expired");
-//			return mv;
-//		}
-//		if (result.hasErrors()) {
-//			mv.setViewName("SignUp");
-//			return mv;
-//		}
-//		
-//		User user = new User();
-//		user.setEmail(signup.getEmail());
-//		user.setPassword(signup.getPassword());
-//		user.setUsername(signup.getUsername());
-//		user.setPrivilegeProvide(0);
-//
-//		Random rand = new Random();
-//
-//		otp = 100000 + rand.nextInt(900000);
-//		userLoc = user;
-//
-//		User userExist = userService.findByEmail(user.getEmail());
-//
-//		if (userExist == null) {
-//			mailService.sendEmail(user, otp);
-//			mv.setViewName("OTP");
-//			mv.addObject("otp", new OTP());
-//			mv.addObject("email", signup.getEmail());
-//		} else {
-//			mv.setViewName("SignUp");
-//			mv.addObject("exist", "Email id already registerd");
-//		}
-//		return mv;
-//	}
-//
-//	@RequestMapping("Verify") 
-//	public ModelAndView verifyUser(@Valid @ModelAttribute("otp") OTP usotp,BindingResult result,HttpSession session) {
-//		ModelAndView mv = new ModelAndView();
-//		if(session.getAttribute("id") == null) {
-//			mv.setViewName("redirect:/logout");
-//			mv.addObject("session", "Expired");
-//			return mv;
-//		}
-//		if(result.hasErrors()) {
-//			mv.setViewName("OTP");
-//			return mv;
-//		} 
-//		 
-//		if(otp == usotp.getOtp()) {
-//			mv.setViewName("ChangePassword"); 
-//			mv.addObject("msg", "success");
-//			mailService.sendDetails(userLoc); 
-//			userService.createUser(userLoc); 
-//		}
-//		else {
-//			mv.setViewName("OTP"); 
-//			mv.addObject("msg","Invalid OTP, Please try later");
-//			return mv;
-//		}
-//		return mv;
-//	}
+	@PostMapping("ResetPassword")
+	public ModelAndView resetPassword(@Valid @ModelAttribute("changePassword") ChangePassword changePassword,
+			BindingResult result,
+			@ModelAttribute("signin")SignIn signin,
+			@ModelAttribute("forgotPassword")ForgotPassword forgotPassword,
+			@ModelAttribute("otp")OTP otpObj) {
+		ModelAndView mv = new ModelAndView();
+		if (result.hasErrors()) {
+			mv.setViewName("SignIn");
+			mv.addObject("resetModal", "Error");
+			return mv;
+		}
+	
+		if(!(changePassword.getNew_pwd().equalsIgnoreCase(changePassword.getConfirm_pwd()))) {
+			mv.setViewName("SignIn");
+			mv.addObject("resetModal", "Error");
+			mv.addObject("passwordMismatch", "Error");
+			return mv;
+		}
+		
+		userService.updatePassword(changePassword.getNew_pwd(),changePassword.getId());
+		
+		mv.setViewName("redirect:/SignIn");
+		mv.addObject("updated", "Success");
+		return mv;
+	}
 	
 	@GetMapping("home")
 	public ModelAndView getHome(HttpSession session) {
@@ -267,7 +230,7 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 		if (session.getAttribute("id") == null) {
 			mv.setViewName("redirect:/logout");
-			mv.addObject("sessioin", "Expired");
+			mv.addObject("session", "Expired");
 			return mv;
 		}
 		if (result.hasErrors()) {
@@ -275,19 +238,13 @@ public class MainController {
 			return mv;
 		}
 	
-		User exist = userService.findByPassword(changePassword.getOld_pwd());
-		
-		if(!(exist.getPassword().equalsIgnoreCase(changePassword.getOld_pwd()))) {	
-			mv.setViewName("ChangePassword");
-			mv.addObject("passwordError", "Error");
-			return mv;
-		}else if(!(changePassword.getNew_pwd().equalsIgnoreCase(changePassword.getConfirm_pwd()))){
+		if(!(changePassword.getNew_pwd().equalsIgnoreCase(changePassword.getConfirm_pwd()))) {
 			mv.setViewName("ChangePassword");
 			mv.addObject("passwordMismatch", "Error");
 			return mv;
 		}
 		
-		userService.updatePassword(changePassword.getNew_pwd(),exist.getUser_id());
+		userService.updatePassword(changePassword.getNew_pwd(),changePassword.getId());
 		
 		mv.setViewName("redirect:/ChangePassword");
 		mv.addObject("updated", "Success");
@@ -329,12 +286,4 @@ public class MainController {
 		mv.setViewName("Contact");
 		return mv;
 	}
-	
-	/*
-	 * @RequestMapping("show") public ModelAndView viewShow(HttpSession session) {
-	 * ModelAndView mv = new ModelAndView();
-	 * if (session.getAttribute("id") == null) { mv.setViewName("redirect:/logout");
-	 * mv.addObject("session", "Expired"); return mv; } mv.setViewName("show");
-	 * return mv; }
-	 */
 }
