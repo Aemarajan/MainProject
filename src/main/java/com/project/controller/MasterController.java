@@ -17,6 +17,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.customvalidator.AddBatchMaster;
+import com.project.customvalidator.AddBloodGroup;
+import com.project.customvalidator.AddCommunity;
+import com.project.customvalidator.AddCountry;
+import com.project.customvalidator.AddDegree;
+import com.project.customvalidator.AddDepartment;
+import com.project.customvalidator.AddDistrict;
+import com.project.customvalidator.AddGrade;
+import com.project.customvalidator.AddLanguage;
+import com.project.customvalidator.AddRegulation;
+import com.project.customvalidator.AddReligion;
+import com.project.customvalidator.AddSection;
+import com.project.customvalidator.AddSemester;
+import com.project.customvalidator.AddState;
+import com.project.customvalidator.AddSyllabus;
+import com.project.customvalidator.AddYear;
 import com.project.model.Batch;
 import com.project.model.Bloodgroup;
 import com.project.model.Community;
@@ -49,22 +65,6 @@ import com.project.service.SemesterService;
 import com.project.service.StateService;
 import com.project.service.SyllabusService;
 import com.project.service.YearService;
-import com.project.validator.AddBatchMaster;
-import com.project.validator.AddBloodGroup;
-import com.project.validator.AddCommunity;
-import com.project.validator.AddCountry;
-import com.project.validator.AddDegree;
-import com.project.validator.AddDepartment;
-import com.project.validator.AddDistrict;
-import com.project.validator.AddGrade;
-import com.project.validator.AddLanguage;
-import com.project.validator.AddRegulation;
-import com.project.validator.AddReligion;
-import com.project.validator.AddSection;
-import com.project.validator.AddSemester;
-import com.project.validator.AddState;
-import com.project.validator.AddSyllabus;
-import com.project.validator.AddYear;
 
 @Controller
 public class MasterController {

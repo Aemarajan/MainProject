@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.project.customvalidator.AddPrivilege;
+import com.project.customvalidator.ModifyPrivilege;
 import com.project.model.LevelOne;
 import com.project.model.LevelThree;
 import com.project.model.LevelTwo;
@@ -27,8 +29,6 @@ import com.project.service.LevelTwoService;
 import com.project.service.MenuService;
 import com.project.service.PrivilegeService;
 import com.project.service.UserService;
-import com.project.validator.AddPrivilege;
-import com.project.validator.ModifyPrivilege;
 
 @Controller
 public class PrivilegeController {

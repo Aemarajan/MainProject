@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.customvalidator.Personal;
 import com.project.model.Bloodgroup;
 import com.project.model.Community;
 import com.project.model.Country;
@@ -45,7 +46,6 @@ import com.project.service.ReligionService;
 import com.project.service.StateService;
 import com.project.service.UserService;
 import com.project.service.YearService;
-import com.project.validator.Personal;
 
 @RestController
 @RequestMapping("api")
