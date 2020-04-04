@@ -58,7 +58,7 @@ public class MainController {
 	}
 	
 	@PostMapping("Login")
-	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin, BindingResult result,HttpSession session) {
+	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin, BindingResult result,HttpSession session,@ModelAttribute("forgotPassword")ForgotPassword forgot,@ModelAttribute("otp")OTP otpObj) {
 		ModelAndView mv = new ModelAndView();
 		if (result.hasErrors()) {
 			mv.setViewName("SignIn");
