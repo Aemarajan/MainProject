@@ -41,5 +41,35 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 	@Modifying
 	@Query(value="UPDATE user u SET u.password=:password WHERE u.user_id=:id",nativeQuery=true)
 	void updatePassword(@Param("password")String password,@Param("id")int i);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE user u SET u.role=:role, u.name=:name, u.email=:email, u.username=:username, u.password=:password, u.privilege_provide=:privilege_provide, u.inn=:inn WHERE u.user_id=:id",nativeQuery=true)
+	void updateUser(@Param("id")int id,@Param("role")String role,@Param("name")String name,@Param("email")String email,@Param("username")String username,@Param("password")String password,@Param("privilege_provide")int privilege_provide, @Param("inn")int inn);
+
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE user u SET u.inn=:i WHERE u.user_id=:id",nativeQuery=true)
+	void updateInnZero(@Param("id")int id, @Param("i")int i);
+
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM user WHERE user_id!=:id",nativeQuery=true)
+	List<User> findAllById(int id);
+
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM user WHERE role='admin'",nativeQuery=true)
+	List<User> findAllAdministrators();
+
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM user WHERE role='staff'",nativeQuery=true)
+	List<User> findAllStaffs();
+
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM user WHERE role='student'",nativeQuery=true)
+	List<User> findAllStudents();
 	
 }

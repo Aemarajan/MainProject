@@ -148,7 +148,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="Bachelor Of Science" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>
 												
 												
@@ -160,7 +162,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="B.Sc." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
 											</div>													
 											
 											<div class="form-group">
@@ -240,8 +244,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" title="Example 'Bachelor Of Science'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="Bachelor Of Science" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 
@@ -254,7 +258,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Example 'B.Sc.'" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="B.Sc." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>

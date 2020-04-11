@@ -115,13 +115,13 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input pattern="\d*" path="year" id="year" maxlength="4" cssClass="form-control"/>
+														<s:input pattern="\d*" path="year" id="year" maxlength="4" autofocus="autofocus" cssClass="form-control"/>
 														<label for="Year">Year<span class="mandatory"> *</span></label>
 														<s:errors path="year" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="1,2,3,4...."><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4..."><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											
@@ -145,7 +145,7 @@ pageEncoding="ISO-8859-1"%>
 								<div class="modal-content">
 									<s:form action="EditYear" method="post" modelAttribute="year">
 										<div class="modal-header">						
-											<h4 class="modal-title">Edit Country</h4>
+											<h4 class="modal-title">Edit Course Year</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
@@ -178,8 +178,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="year" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="1,2,3,4....."><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4..."><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="form-group">

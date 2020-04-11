@@ -141,8 +141,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : Backward Class"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Backward Class"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="row">
@@ -153,8 +153,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>	
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : BC"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="BC"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="form-group">
@@ -223,8 +223,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : Backward Class"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Backward Class"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="row">
@@ -235,8 +235,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>	
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Example : BC"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="BC"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="form-group">

@@ -19,16 +19,15 @@
 
 	<jsp:include page="Header.jsp" />
 	
+	<div id="header"></div>
+	
 	<div class="wrapper d-flex align-items-stretch">
 		
 		<jsp:include page="Sidebar.jsp" />
 		
 		<!-- Page Content  -->
 		<div id="content" class="pt-2 pb-2 pl-6 pr-5">				
-			
-			<div id="header" class=""></div>
-			<div class="mt-4">
-
+			<div class="mt-2">
 				<nav aria-label="breadcrumb">
 					<ol class="breadcrumb blue-grey lighten-4">
 						<li class="breadcrumb-item">

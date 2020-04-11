@@ -84,7 +84,7 @@
 								<c:if test="${lvl1s.dd != 1 }">
 									<c:forEach items="${menu }" var="menus">
 										<c:if test="${menus.lvl2 == null && lvl1s.lvl1_id == menus.lvl1.lvl1_id }">
-											<li class=" unstyle card-head white-text text-center h5 py-2">${lvl1s.name }</li>
+											<li class="unstyle white-text text-center h5 py-2">${lvl1s.name }</li>
 											<li class="unstyle ml-5"><input type="checkbox" value="${menus.menu_id }"
 												<c:forEach items="${pri }" var="prii"> 
 													<c:if test="${prii.menu_id.menu_id == menus.menu_id }"> 

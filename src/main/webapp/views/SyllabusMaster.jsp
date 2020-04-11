@@ -121,8 +121,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="subject_code" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="MC5401"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="MC5401"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											
@@ -134,8 +134,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="subject_name" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Web Application Development"><i class="fa fa-info mt-4"></i></a>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Web Application Development"><i class="fa fa-info-circle mt-4"></i></a>	
 												</div>
 											</div>
 											
@@ -147,8 +147,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="credit" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="1,2,3,4...."><i class="fa fa-info mt-4"></i></a>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
 												</div>
 											</div>
 											
@@ -205,8 +205,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="subject_code" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="CS5207"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="CS5207"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											
@@ -218,8 +218,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="subject_name" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Android"><i class="fa fa-info mt-4"></i></a>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Android"><i class="fa fa-info-circle mt-4"></i></a>	
 												</div>
 											</div>
 											
@@ -231,8 +231,8 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="credit" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="1,2,3,4...."><i class="fa fa-info mt-4"></i></a>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
 												</div>
 											</div>
 											

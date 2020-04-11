@@ -1,7 +1,11 @@
 package com.project.controller;
 
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.project.customvalidator.ChangePassword;
+import com.project.customvalidator.ExperienceValidation;
 import com.project.customvalidator.ForgotPassword;
 import com.project.customvalidator.OTP;
 import com.project.customvalidator.SignIn;
+import com.project.model.Experience;
 import com.project.model.User;
+import com.project.service.ExperienceService;
 import com.project.service.MailService;
 import com.project.service.UserService;
 
@@ -31,6 +38,12 @@ public class MainController {
 	
 	@Autowired
 	MailService mailService;
+	
+	@Autowired
+	ExperienceService expService;
+	
+	@Autowired
+	MasterController masterController;
 	
 	User userExist;
 	int otp;
@@ -61,8 +74,7 @@ public class MainController {
 	}
 	
 	@PostMapping("Login")
-	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin,
-			BindingResult result,HttpSession session) {
+	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin,BindingResult result,HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		if (result.hasErrors()) {
 			mv.setViewName("SignIn");
@@ -70,9 +82,11 @@ public class MainController {
 		}
 		try {
 			User userloc = userService.findByUsername(signin.getUsername());
+			
 			if (userloc.getPassword().equals(signin.getPassword())) {
 				session.setAttribute("name", userloc.getName());
 				session.setAttribute("id", userloc.getUser_id());
+				session.setAttribute("role", userloc.getRole());
 				mv.setViewName("redirect:/home");
 			} else {
 				mv.setViewName("SignIn");
@@ -251,6 +265,120 @@ public class MainController {
 		return mv;
 	}
 
+	@GetMapping("Experience")
+	public ModelAndView getStateMaster(HttpSession session,HttpServletRequest request,
+			@RequestParam(value = "added", required = false) String added,
+			@RequestParam(value = "updated", required = false) String updated,
+			@RequestParam(value = "deleted", required = false) String deleted) {
+		ModelAndView mv = new ModelAndView();
+		if (session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		if (!(added == null))
+			mv.addObject("added", "success");
+		if (!(updated == null))
+			mv.addObject("updated", "success");
+		if (!(deleted == null))
+			mv.addObject("deleted", "success");
+
+		mv.setViewName("Experience");
+		mv.addObject("exp", new ExperienceValidation());
+		mv.addObject("pagedListHolder", masterController.pagination(expService.selectAllByUserId(session.getAttribute("id")), request));
+		return mv;
+	}
+	
+	public Period ExperienceCalculator(String from_date, String to_date) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		String firstInput = from_date;
+		String secondInput = to_date;
+		LocalDate firstDate = LocalDate.parse(firstInput, formatter);
+		LocalDate secondDate = LocalDate.parse(secondInput, formatter);
+		Period diff = Period.between(firstDate, secondDate);
+		return diff;
+	}
+	
+	@PostMapping("SaveExperience")
+	public ModelAndView saveExperience(@Valid @ModelAttribute("exp") ExperienceValidation exp, BindingResult result,
+			HttpSession session, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		if (session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		if (result.hasErrors()) {
+			mv.setViewName("Experience");
+			mv.addObject("addError", "error");
+			mv.addObject("pagedListHolder", masterController.pagination(expService.selectAllByUserId(session.getAttribute("id")), request));
+			return mv;
+		}
+		        
+		Period diff = ExperienceCalculator(exp.getFrom_date(),exp.getTo_date());
+        
+		Experience e = new Experience();
+        
+        e.setDiff_years(diff.getYears());
+        e.setDiff_months(diff.getMonths());
+        e.setDiff_days(diff.getDays() + 1 );
+        e.setInn(exp.isInn());
+
+        expService.saveExperience(exp.getUser_id(),exp.getInstitute_name(),exp.getDesignation(),exp.getFrom_date(),exp.getTo_date(),e.getDiff_years(),e.getDiff_months(),e.getDiff_days(),e.getInn());
+
+		mv.setViewName("redirect:/Experience");
+		mv.addObject("added", "Success Message");
+		return mv;
+	}
+
+	@PostMapping("EditExperience")
+	public ModelAndView editExperience(@Valid @ModelAttribute("exp") ExperienceValidation exp, BindingResult result,
+			HttpSession session, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		if (session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		if (result.hasErrors()) {
+			mv.addObject("editError", "error");
+			mv.addObject("pagedListHolder", masterController.pagination(expService.selectAllByUserId(session.getAttribute("id")), request));
+			mv.setViewName("Experience");
+			return mv;
+		}
+		
+		Period diff = ExperienceCalculator(exp.getFrom_date(),exp.getTo_date());
+		
+        Experience e = new Experience();
+      
+        e.setDiff_years(diff.getYears());
+        e.setDiff_months(diff.getMonths());
+        e.setDiff_days(diff.getDays() + 1);
+        e.setInn(exp.isInn());
+        		
+		expService.updateExperience(exp.getId(), exp.getInstitute_name(), exp.getDesignation(), exp.getFrom_date(), exp.getTo_date(), e.getDiff_years(), e.getDiff_months(), e.getDiff_days(), e.getInn());;
+
+		mv.setViewName("redirect:/Experience");
+		mv.addObject("updated", "success");
+		return mv;
+	}
+
+	@PostMapping("DeleteExperience")
+	public ModelAndView deleteExperience(@RequestParam("id") int id, HttpSession session) {
+		ModelAndView mv = new ModelAndView();
+		if (session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		expService.updateInnZero(id, 0);
+		
+		mv.setViewName("redirect:/Experience");
+		mv.addObject("deleted", "success");
+		return mv;
+	}
+	
 	@GetMapping("Gallery")
 	public ModelAndView getGallery(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
