@@ -7,9 +7,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
 <title>Profile</title>
 
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
@@ -183,12 +183,11 @@
 </style>
 
 </head>
-<body>
+<body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-
-	<div id="header"></div>
-
+	<jsp:include page="Menubar.jsp" />
+	
 	<div class="wrapper d-flex align-items-stretch">
 
 		<jsp:include page="Sidebar.jsp" />
@@ -583,6 +582,9 @@
 		<jsp:include page="Footer.jsp" />
 	</div>
 
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
 	<!-- jQuery -->
 	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
 	<script type="text/javascript" src="./views/js/popper.min.js"></script>

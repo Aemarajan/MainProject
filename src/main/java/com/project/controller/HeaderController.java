@@ -68,7 +68,7 @@ public class HeaderController {
 			mv.addObject("session", "Expired");
 			return mv;
 		}
-		mv.setViewName("Menubar");
+		
 		List<Menu> menuList = new ArrayList<Menu>();
 		List<LevelOne> lvl1p = new ArrayList<LevelOne>();
 		List<LevelTwo> lvl2p = new ArrayList<LevelTwo>();
@@ -97,6 +97,7 @@ public class HeaderController {
 					lvl2p.add(l2);
 			}
 		}
+		mv.setViewName("Menubar");
 		mv.addObject("menu", menuList);
 		mv.addObject("lvl1", lvl1p);
 		mv.addObject("lvl2", lvl2p);
@@ -313,7 +314,7 @@ public class HeaderController {
 		return mv;
 	}
 
-	@GetMapping("DeleteLevelOneForm")
+	@GetMapping("DeleteLevelOne")
 	public ModelAndView getDeleteLevelOneForm(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		

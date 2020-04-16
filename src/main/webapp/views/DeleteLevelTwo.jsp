@@ -15,12 +15,11 @@
 	<link rel="stylesheet" href="./views/css/mdb.min.css">
 	<link rel="stylesheet" href="./views/css/style.css">
 </head>
-<body>
+<body id="page-top">
 	<!-- Project Starts Here -->
 	<div>
 		<jsp:include page="Header.jsp" />
-		
-		<div id="header"></div>
+		<jsp:include page="Menubar.jsp" />
 		
 		<div class="wrapper d-flex align-items-stretch">
 			
@@ -90,6 +89,10 @@
 	    <div class="">
 	    	<jsp:include page="Footer.jsp" /> 
 	    </div>
+	    
+	    <a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
 	</div>
 	<!-- Project Ends Here -->
   
@@ -98,51 +101,7 @@
 	<script type="text/javascript" src="./views/js/popper.min.js"></script>
 	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-  
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$('#header').load("http://localhost:8080/header");
-			var lvl2 = $("#lvl2");
-			var varurllvl1 = "http://localhost:8080/api/getAllLevelOneByDd";
-	      	var lvl1 = $('#lvl1');
-	      		$.ajax({
-	        		type: 'GET',
-	        		url: varurllvl1,
-	        		async: true,
-	        		success: function(result){
-	          			var output = "<option value='0'> -- Select -- </option>";
-	          			for(var i in result){
-	            			output+="<option value="+result[i].lvl1_id+">"+result[i].name+"</option>";
-	          			}
-	          		lvl1.html(output);
-	        		}
-	      		});
-
-				$('#lvl1').change(function() {
-				$(this).find("option:selected").each(function() {
-					var lvl = $(this).attr("value");
-					var pre = "http://localhost:8080/api/getLvl2/";
-					var varurl = pre+ lvl;
-						$.ajax({
-							type : 'GET',
-							url : varurl,
-							async : true,
-							success : function(result) {
-								var output = "<option selected value='0'>-- Select --</option>";
-								for ( var i in result) {
-									output += "<option value="+result[i].lvl2_id+">"+ result[i].name+ "</option>";
-								}
-							lvl2.html(output);
-							}
-						});
-				});
-			});
-
-			$('#Toast').toast({
-				delay:5000
-			});
-			$('#Toast').toast('show');	
-		});
-	</script>
+  	<script type="text/javascript" src="./views/js/common.js"></script>
+  	
 </body>
 </html>

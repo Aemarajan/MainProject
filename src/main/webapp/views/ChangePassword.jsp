@@ -11,15 +11,15 @@
 
 <title>Change Password</title>
 
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 </head>
-<body>
+<body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 	
 	<div class="wrapper d-flex align-items-stretch">
 		
@@ -36,20 +36,6 @@
 
 						<div class="card-body px-5 pt-0 open-sans">
 
-<%-- 							<c:if test="${passwordError != null }"> --%>
-<!-- 								<div class="toast mt-2" id="Toast"> -->
-<!-- 									<div class="toast-header white-text bg-danger pt-2"> -->
-<!-- 										<h5 class="mr-auto">Error</h5> -->
-<!-- 										<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast"> -->
-<%-- 											<span aria-hidden="true">&times;</span> --%>
-<!-- 										</button> -->
-<!-- 									</div> -->
-<!-- 									<div class="toast-body py-2"> -->
-<!-- 										<div>Incorrect Old Password...</div> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-<%-- 							</c:if> --%>
-							
 							<c:if test="${passwordMismatch != null }">
 								<div class="toast mt-2" id="Toast">
 									<div class="toast-header white-text bg-danger pt-2">
@@ -69,23 +55,10 @@
 								
 								<s:hidden path="id" id="id" value='<%= session.getAttribute("id") %>' />
 
-<!-- 								<div class="row"> -->
-<!-- 									<div class="col-sm-11 col-md-11 col-lg-11"> -->
-<!-- 										<div class="md-form mt-0"> -->
-<%-- 											<s:input path="old_pwd" id="old_pwd" autofocus="autofocus" maxlength="15" cssClass="form-control" /> --%>
-<%-- 											<s:label path="old_pwd" for="Old Password">Old Password<span class="mandatory"> *</span></s:label> --%>
-<%-- 											<s:errors path="old_pwd" cssClass="error"></s:errors> --%>
-<!-- 										</div> -->
-<!-- 									</div> -->
-<!-- 									<div class="col col-sm-1 col-md-1 col-lg-1 pl-0"> -->
-<!-- 										<a href="#" data-toggle="tooltip" data-placement="top" title="Abc@123"><i class="fa fa-info mt-4"></i></a> -->
-<!-- 									</div> -->
-<!-- 								</div> -->
-
 								<div class="row">
 									<div class="col-sm-11 col-md-11 col-lg-11">
 										<div class="md-form mt-0">
-											<s:input path="new_pwd" id="new_pwd" maxlength="15" cssClass="form-control" />
+											<s:input path="new_pwd" id="new_pwd" maxlength="15" autofocus="autofocus" cssClass="form-control" />
 											<s:label path="new_pwd" for="New Password">New Password<span class="mandatory"> *</span></s:label>
 											<s:errors path="new_pwd" cssClass="error"></s:errors>
 										</div>
@@ -145,23 +118,16 @@
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
-
+	
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
+	
 	<!-- jQuery -->
 	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
 	<script type="text/javascript" src="./views/js/popper.min.js"></script>
 	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#header').load("http://localhost:8080/header");
-
-			$('#Toast').toast({
-				delay:5000
-			});
-			$('#Toast').toast('show');
-
-			$('[data-toggle = "tooltip"]').tooltip();
-		});
-	</script>
+	<script type="text/javascript" src="./views/js/common.js"></script>
 </body>
 </html>

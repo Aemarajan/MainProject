@@ -14,11 +14,10 @@
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
-<body>
+<body id="page-top">
 <div>
 	<jsp:include page="Header.jsp" />
-	
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 
 	<div class="wrapper d-flex align-items-stretch">
 		
@@ -127,6 +126,10 @@
 	</c:if>
 	
 	<jsp:include page="Footer.jsp" />
+	
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
 </div>
 	
 <!-- jQuery -->
@@ -134,31 +137,7 @@
 <script type="text/javascript" src="./views/js/popper.min.js"></script>
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
+<script type="text/javascript" src="./views/js/common.js"></script>
 
-<script>
-	$(document).ready(function(){
-    	$('#header').load("http://localhost:8080/header");
-
-    	var varurl = "http://localhost:8080/api/getUserPp0";
-        var users = $('#users');
-        $.ajax({
-            type: 'GET',
-            url: varurl,
-            async: true,
-            success: function(result){
-                var output = "<option value='0'> -- Select -- </option>";
-                for(var i in result){
-                    output+="<option value=" + result[i].user_id + ">" + result[i].name + "<span> [ " + result[i].email + " ] </span>" + "</option>";
-                }
-                users.html(output);
-            }
-        });
-
-    	$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-    });
-</script>
 </body>
 </html>

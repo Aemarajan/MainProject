@@ -20,7 +20,6 @@ public class AddCommunity {
 	
 	boolean inn;
 	
-	
 	public int getId() {
 		return id;
 	}
@@ -45,7 +44,8 @@ public class AddCommunity {
 	public void setInn(boolean inn) {
 		this.inn = inn;
 	}
-	
-	
-
+	@Override
+	public String toString() {
+		return "AddCommunity [id=" + id + ", name=" + name + ", acronym=" + acronym + ", inn=" + inn + "]";
+	}
 }

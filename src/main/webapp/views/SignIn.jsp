@@ -37,22 +37,7 @@
 						</div>
 						<div class="card-body px-sm-5 px-md-5 px-lg-5 mt-1 open-sans">
 							<s:form cssClass="login-form" style="color: #757575;" action="Login" method="post" modelAttribute="signin">
-								
-								<c:if test="${msg != null }">
-									<div class="toast" id="Toast">
-										<div class="toast-header white-text bg-danger pt-2">
-											<h5 class="mr-auto">Error</h5>
-											<button type="button" class="ml-2 mb-1 close white-text"
-												data-dismiss="toast">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="toast-body py-2">
-											<div>Invalid Username or Password. Try Again...</div>
-										</div>
-									</div>
-								</c:if>
-								
+
 								<!-- Username -->
 								<div class="row">
 									<div class="col-sm-11 col-md-11 col-lg-11">
@@ -279,6 +264,20 @@
 		</div>
 	</div>
 
+	<c:if test="${msg != null }">
+		<div class="toast" id="Toast" style="position: absolute; right: 20px; bottom: 20px; width:300px;">
+			<div class="toast-header white-text bg-danger pt-2">
+				<h5 class="mr-auto">Error</h5>
+				<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="toast-body py-2">
+				<div>Invalid Username or Password. Try Again...</div>
+			</div>
+		</div>
+	</c:if>
+
 	<c:if test="${session != null }">
 		<div class="toast" id="Toast" style="position: absolute; right: 20px; bottom: 20px; width:300px;">
 			<div class="toast-header white-text bg-danger pt-2">
@@ -313,12 +312,6 @@
 		<jsp:include page="Footer.jsp" />
 	</div>
 
-	<!-- jQuery -->
-  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
-  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
-  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-  
 	<c:if test="${forgotModal != null }">
 		<script type="text/javascript">
 			$('#forgotModal').modal('show');
@@ -337,6 +330,12 @@
 		</script>
 	</c:if>
 	
+	<!-- jQuery -->
+  	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+  	<script type="text/javascript" src="./views/js/popper.min.js"></script>
+  	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+  	<script type="text/javascript" src="./views/js/mdb.min.js"></script>	
+  	<script type="text/javascript" src="./views/js/common.js"></script>
   	<script type="text/javascript">
 		function showPassword() {
 			var x = document.getElementById("password");
@@ -346,15 +345,6 @@
 				x.type = "password";
 			}
 		}
-	
-		$(document).ready(function() {
-			$('#Toast').toast({
-				delay:10000
-			});
-			$('#Toast').toast('show');
-	
-			$('[data-toggle = "tooltip"]').tooltip();
-		});
 	</script>
 </body>
 </html>

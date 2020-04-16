@@ -10,15 +10,15 @@
 
 <title>About Us</title>
 
+<link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 </head>
-<body>
+<body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 	
 	<div class="wrapper d-flex align-items-stretch">
 		
@@ -43,16 +43,17 @@
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
-
+	
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
+	
 	<!-- jQuery -->
 	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
 	<script type="text/javascript" src="./views/js/popper.min.js"></script>
 	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#header').load("http://localhost:8080/header");
-		});
-	</script>
+	<script type="text/javascript" src="./views/js/common.js"></script>
+
 </body>
 </html>

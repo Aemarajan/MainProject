@@ -468,7 +468,10 @@ public class MasterController {
 				return mv;
 			}
 		}
-		communityService.updateCommunity(comm);
+		
+		System.out.println(comm.toString());
+		
+		communityService.updateCommunity(comm.getName().toLowerCase(),comm.getAcronym().toUpperCase().replaceAll("\\s", ""),comm.isInn() ? 1 : 0,comm.getId());
 
 		mv.setViewName("redirect:/GetCommunityMaster");
 		mv.addObject("updated", "success");

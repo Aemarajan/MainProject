@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="s"%>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags"%>
@@ -19,13 +18,12 @@ pageEncoding="ISO-8859-1"%>
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 </head>
-<body>
+<body id="page-top">
 
 <!-- Project Start --> 
 
 	<jsp:include page="Header.jsp" />
-	
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 	
 	<div class="wrapper d-flex align-items-stretch">  
 
@@ -339,7 +337,10 @@ pageEncoding="ISO-8859-1"%>
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
-
+	
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
 
 <c:if test="${addError != null }"> 
 	<script type="text/javascript">
@@ -360,51 +361,6 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript" src="./views/js/popper.min.js"></script>
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
-
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#header').load("http://localhost:8080/header");
-
-		$('.inn').prop('checked',true);
-
-		$('#editModal').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var id = button.data('id');
-			var from = button.data('from'); 
-			var to = button.data('to');
-			var inn = button.data('inn');
-
-			var modal = $(this);
-
-			modal.find('#id').val(id);
-			modal.find('#from_year').val(from);
-			modal.find('#to_year').val(to);
-			if(inn == 1)
-				modal.find('#inn').prop('checked',true);
-			else
-				modal.find('#inn').prop('checked',false);
-		});
-
-		$('#deleteModal').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var id = button.data('id');
-			var from = button.data('from'); 
-			var to = button.data('to');
-
-			var modal = $(this);
-
-			modal.find('#id').val(id);
-			modal.find('#name').val(from+' - '+to);
-		});
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-
-		$('[data-toggle = "tooltip"]').tooltip();
-
-	}); 
-</script>
+<script type="text/javascript" src="./views/js/common.js"></script>
 </body>
 </html>

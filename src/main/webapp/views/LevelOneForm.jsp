@@ -16,17 +16,32 @@
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
-<body>
+<body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 
 	<div class="wrapper d-flex align-items-stretch">
 
 		<jsp:include page="Sidebar.jsp" />
 
-		<div class="container-fluid pl-5">
+		<div class="container-fluid pl-6">
+			<div class="mt-3 mb-3">
+				<nav aria-label="breadcrumb">
+					<ol class="breadcrumb indigo lighten-4">
+						<li class="breadcrumb-item">
+							<a class="black-text" href="#">Home</a>
+							<i class="fas fa-angle-double-right mx-2" aria-hidden="true"></i>
+						</li>
+						<li class="breadcrumb-item">
+							<a class="black-text" href="#">Header</a>
+							<i class="fas fa-angle-double-right mx-2" aria-hidden="true"></i>
+						</li>
+						<li class="breadcrumb-item active">Add LevelOne Header</li>
+					</ol>
+				</nav>
+			</div>
+			
 			<div class="row mt-2 mb-2">
 				<div class="col col-sm-3.5 col-md-3.5 col-lg-3.5"></div>
 				<div class="col col-sm-5 col-md-5 col-lg-5">
@@ -146,44 +161,15 @@
 
 	<jsp:include page="Footer.jsp" />
 
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
+	
 	<!-- jQuery -->
 	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
 	<script type="text/javascript" src="./views/js/popper.min.js"></script>
 	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-
-	<script type="text/javascript">
-	$(document).ready(function() {
-		$('#header').load("http://localhost:8080/header");
-
-		$('#dd').click(function() {
-			var check = this.checked;
-			if (check == false){
-				$('.ref').show();
-        		$('.rlab').show();
-        		$('.referror').show();
-        		$('.ref').attr('value','');
-      		}
-			else{
-				$('.ref').hide();
-        		$('.rlab').hide();
-        		$('.referror').hide();
-        		$('.ref').attr('value','null');
-      		}
-		});
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-
-		$('#LongToast').toast({
-			delay:10000
-		});
-		$('#LongToast').toast('show');
-
-		$('[data-toggle = "tooltip"]').tooltip();
-	});
-</script>
+	<script type="text/javascript" src="./views/js/common.js"></script>
 </body>
 </html>

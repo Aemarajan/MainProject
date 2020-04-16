@@ -15,25 +15,24 @@
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
-<body>
+<body id="page-top">
 <div>
 	<jsp:include page="Header.jsp" />
-	
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 	
 	<div class="wrapper d-flex align-items-stretch">
 		
 		<jsp:include page="Sidebar.jsp" />
 		
 		<div class="container-fluid pl-5">	
-			<h2 class="text-center py-2">Privilege</h2>
+			<h3 class="text-center py-2">Update Privilege</h3>
 			
 			<form action="UpdatePrivilege" method="post">
 				
 				<div style="margin-left:40px;">
 					<h4>Username</h4>
 					<input type="hidden" name="user_id" value="${user.user_id }"/>
-					<div class="md-form mt-0" style="width:265px;">
+					<div class="md-form mt-0" style="width:253px;">
 						<input type="text" class="form-control" value="${user.username }" readonly />
 					</div>
 				</div>
@@ -109,6 +108,10 @@
 		</div>
 	</div>
 	<jsp:include page="Footer.jsp" />
+	
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
 </div>
 	
 <!-- jQuery -->
@@ -116,11 +119,7 @@
 <script type="text/javascript" src="./views/js/popper.min.js"></script>
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
-   
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#header').load("http://localhost:8080/header");
-	});
-</script>
+<script type="text/javascript" src="./views/js/common.js"></script>
+
 </body>
 </html>

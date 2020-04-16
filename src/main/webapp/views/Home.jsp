@@ -18,8 +18,7 @@
 <body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-	
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 	
 	<div class="wrapper d-flex align-items-stretch">
 		
@@ -28,20 +27,7 @@
 		<!-- Page Content  -->
 		<div id="content" class="pt-2 pb-2 pl-6 pr-5">				
 			<div class="mt-2">
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb blue-grey lighten-4">
-						<li class="breadcrumb-item">
-							<a class="black-text" href="#">Home</a>
-							<i class="fas fa-angle-double-right mx-2" aria-hidden="true"></i>
-						</li>
-						<li class="breadcrumb-item">
-							<a class="black-text" href="#">Library</a>
-							<i class="fas fa-angle-double-right mx-2" aria-hidden="true"></i>
-						</li>
-						<li class="breadcrumb-item active">Data</li>
-					</ol>
-				</nav>
-
+				
 				<h4>Introduction</h4>
 				
 				<p class="indent">
@@ -85,24 +71,6 @@
 	<script type="text/javascript" src="./views/js/popper.min.js"></script>
 	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$('#header').load("http://localhost:8080/header");
-
-			$(window).scroll(function() {
-                if ($(this).scrollTop() > 200) {
-                    $('.scroll-to-top').fadeIn(500);
-                } else {
-                    $('.scroll-to-top').fadeOut(300);
-                }
-            });
-            
-            // Animate the scroll to top
-            $('.scroll-to-top').click(function(event) {
-                event.preventDefault();
-				$('html, body').animate({scrollTop: 0}, 300);
-            })
-		});
-	</script>
+	<script type="text/javascript" src="./views/js/common.js"></script>
 </body>
 </html>

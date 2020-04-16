@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="s"%>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags"%>
@@ -17,10 +16,9 @@ pageEncoding="ISO-8859-1"%>
 <link rel="stylesheet" href="./views/css/mdb.min.css">
 <link rel="stylesheet" href="./views/css/style.css">
 </head>
-<body> 
+<body id="page-top"> 
 	<jsp:include page="Header.jsp" />
-	
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 	
 	<div class="wrapper d-flex align-items-stretch">
 	
@@ -545,6 +543,10 @@ pageEncoding="ISO-8859-1"%>
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
+	
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
 		
 	<c:if test="${added != null }">
 		<div class="toast" id="Toast" 
@@ -608,66 +610,7 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript" src="./views/js/popper.min.js"></script>
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
+<script type="text/javascript" src="./views/js/common.js"></script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-
-		$('#header').load("http://localhost:8080/header");
-		
-		$('.inn').prop('checked',true);
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-
-		$('[data-toggle = "tooltip"]').tooltip();
-
-		$(".nav-tabs a").click(function(){
-			$(this).tab('show');
-		});
-
-		$('.nav-tabs a').on('shown.bs.tab', function(event){
-		    var x = $(event.target).text();         // active tab
-		    var y = $(event.relatedTarget).text();  // previous tab
-		});
-		
-		$('#editModal').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var user_id = button.data('user_id');
-			var role = button.data('role');
-			var name = button.data('name');
-			var email = button.data('email'); 
-			var username = button.data('username');
-			var password = button.data('password');
-			var privilege_provide = button.data('privilege_provide');
-			var inn = button.data('inn');
-
-			var modal = $(this);
-			modal.find('#user_id').val(user_id);
-			modal.find('#role').val(role);
-			modal.find('#name').val(name);
-			modal.find('#email').val(email);
-			modal.find('#username').val(username);
-			modal.find('#password').val(password);
-			modal.find('#privilege_provide').val(privilege_provide);
-			
-			if(inn == 1)
-				modal.find('#inn').prop('checked',true);
-			else
-				modal.find('#inn').prop('checked',false);
-		});
-
-		$('#deleteModal').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var user_id = button.data('user_id');
-			var name = button.data('name'); 
-
-			var modal = $(this);
-			modal.find('#user_id').val(user_id);
-			modal.find('#name').val(name);
-		});
-	}); 
-</script>
 </body>
 </html>

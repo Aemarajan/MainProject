@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.project.customvalidator.AddCommunity;
+
 import com.project.model.Community;
 import com.project.repository.CommunityRepository;
 
@@ -70,8 +70,8 @@ public class CommunityService {
 		return null;
 	}
 
-	public void updateCommunity( AddCommunity comm) {
-		cmrepo.update(comm.getName().toLowerCase(),comm.getAcronym().toUpperCase().replaceAll("\\s", ""),comm.isInn()?1:0,comm.getId());
+	public void updateCommunity(String name, String acronym, int inn, int id) {
+		cmrepo.update(name, acronym, inn, id);
 	}
 	
 	public Community selectByNames(String acronym,String name) {

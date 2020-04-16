@@ -3,7 +3,11 @@ package com.project.controller;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,14 +29,38 @@ import com.project.customvalidator.ForgotPassword;
 import com.project.customvalidator.OTP;
 import com.project.customvalidator.SignIn;
 import com.project.model.Experience;
+import com.project.model.LevelOne;
+import com.project.model.LevelTwo;
+import com.project.model.Menu;
+import com.project.model.Privilege;
 import com.project.model.User;
 import com.project.service.ExperienceService;
+import com.project.service.LevelOneService;
+import com.project.service.LevelThreeService;
+import com.project.service.LevelTwoService;
 import com.project.service.MailService;
+import com.project.service.MenuService;
+import com.project.service.PrivilegeService;
 import com.project.service.UserService;
 
 @Controller
 public class MainController {
 
+	@Autowired
+	LevelOneService lvl1ss;
+
+	@Autowired
+	LevelTwoService lvl2ss;
+
+	@Autowired
+	LevelThreeService lvl3ss;
+
+	@Autowired
+	MenuService menuService;
+
+	@Autowired
+	PrivilegeService privilegeService;
+	
 	@Autowired 
 	UserService userService;
 	
@@ -74,19 +102,60 @@ public class MainController {
 	}
 	
 	@PostMapping("Login")
-	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin,BindingResult result,HttpSession session) {
+	public ModelAndView checkUser(@Valid @ModelAttribute("signin") SignIn signin,
+			BindingResult result,HttpSession session,
+			@ModelAttribute("forgotPassword") ForgotPassword forgotPasswrod,
+			@ModelAttribute("otp")OTP otpObj,
+			@ModelAttribute("changePassword") ChangePassword changePassword) {
 		ModelAndView mv = new ModelAndView();
 		if (result.hasErrors()) {
 			mv.setViewName("SignIn");
 			return mv;
 		}
 		try {
+			
 			User userloc = userService.findByUsername(signin.getUsername());
 			
 			if (userloc.getPassword().equals(signin.getPassword())) {
+				
 				session.setAttribute("name", userloc.getName());
 				session.setAttribute("id", userloc.getUser_id());
 				session.setAttribute("role", userloc.getRole());
+				
+				List<Menu> menuList = new ArrayList<Menu>();
+				List<LevelOne> lvl1p = new ArrayList<LevelOne>();
+				List<LevelTwo> lvl2p = new ArrayList<LevelTwo>();
+				List<Privilege> listPri = privilegeService.selectByUserIdAndInn((int)(userloc.getUser_id()), 1);
+				Set<LevelOne> lvl1set = new HashSet<LevelOne>();
+				Set<LevelTwo> lvl2set = new HashSet<LevelTwo>();
+				for(Privilege p : listPri) {
+					menuList.add(p.getMenu_id());
+					lvl1set.add(p.getMenu_id().getLvl1());
+					if(p.getMenu_id().getLvl2() == null)
+						continue;
+					else
+						lvl2set.add(p.getMenu_id().getLvl2());
+				}
+				List<LevelOne> lvl1t = lvl1ss.selectAll();
+				for(LevelOne l1 : lvl1t) {
+					for(LevelOne lv1 :lvl1set) {
+						if(l1.getLvl1_id() == lv1.getLvl1_id())
+							lvl1p.add(l1);
+					}
+				}
+				List<LevelTwo> lvl2t = lvl2ss.selectAll();
+				for(LevelTwo l2 : lvl2t) {
+					for(LevelTwo lv2 : lvl2set) {
+						if(l2.getLvl2_id() == lv2.getLvl2_id())
+							lvl2p.add(l2);
+					}
+				}
+				
+				session.setAttribute("menu", menuList);
+				session.setAttribute("lvl1", lvl1p);
+				session.setAttribute("lvl2", lvl2p);
+				session.setAttribute("lvl3", lvl3ss.selectAll());
+				
 				mv.setViewName("redirect:/home");
 			} else {
 				mv.setViewName("SignIn");

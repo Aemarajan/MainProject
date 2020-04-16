@@ -19,13 +19,12 @@ pageEncoding="ISO-8859-1"%>
 <link rel="stylesheet" href="./views/css/style.css">
 
 </head>
-<body>
+<body id="page-top">
 
 <!-- Project Start --> 
 <div>
 	<jsp:include page="Header.jsp" />
-	
-	<div id="header"></div>
+	<jsp:include page="Menubar.jsp" />
 	
 	<div class="wrapper d-flex align-items-stretch">  
 		
@@ -449,6 +448,10 @@ pageEncoding="ISO-8859-1"%>
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
+	
+	<a class="scroll-to-top rounded" href="#page-top"> 
+		<i class="fa fa-angle-up"></i>
+	</a>
 </div>
 
 <c:if test="${addError != null }"> 
@@ -470,51 +473,7 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript" src="./views/js/popper.min.js"></script>
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
+<script type="text/javascript" src="./views/js/common.js"></script>
 
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#header').load("http://localhost:8080/header");
-		
-		$('.inn').prop('checked',true);
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-		
-		$('[data-toggle="tooltip"]').tooltip();
-		
-		$('#editModal').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var id = button.data('id');
-			var word = button.data('word');
-			var acronym = button.data('acronym');
-			var point = button.data('point');
-			var marks_range = button.data('marks_range');
-			var inn = button.data('inn');
-
-			var modal = $(this);
-			modal.find('#id').val(id);
-			modal.find('#word').val(word);
-			modal.find('#acronym').val(acronym);
-			modal.find('#point').val(point);
-			modal.find('#marks_range').val(marks_range);
-			if(inn == 1)
-				modal.find('#inn').prop('checked',true);
-			else
-				modal.find('#inn').prop('checked',false);
-		});
-		
-		$('#deleteModal').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var id = button.data('id');
-			var word = button.data('word');
-
-			var modal = $(this);
-			modal.find('#id').val(id);
-			modal.find('#word').val(word);
-		});
-	}); 
-</script>
 </body>
 </html>
