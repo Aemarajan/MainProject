@@ -91,12 +91,30 @@
 	</div>
 	<!-- Project Ends here-->
   
-  <!-- jQuery -->
-  <script type="text/javascript" src="./views/js/jquery.min.js"></script>
-  <script type="text/javascript" src="./views/js/popper.min.js"></script>
-  <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="./views/js/mdb.min.js"></script>
-  <script type="text/javascript" src="./views/js/common.js"></script>  
-
+ 	<!-- jQuery -->
+	<script type="text/javascript" src="./views/js/jquery.min.js"></script>
+	<script type="text/javascript" src="./views/js/popper.min.js"></script>
+	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
+	<script type="text/javascript" src="./views/js/common.js"></script>  
+  	
+  	<script type="text/javascript">
+		$(document).ready(function(){
+			var varurl = "http://localhost:8080/api/getAllLevelOne";
+			  var lvl1 = $('#lvl1');
+			  $.ajax({
+			    type: 'GET',
+			    url: varurl,
+			    async: true,
+			    success: function(result){
+			      var output = "<option value='0'> -- Select -- </option>";
+			      for(var i in result){
+			        output+="<option value="+result[i].lvl1_id+">"+result[i].name+"</option>";
+			      }
+			      lvl1.html(output);
+			    }
+			  });
+			});
+  	</script>
 </body>
 </html>

@@ -612,5 +612,53 @@
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
 <script type="text/javascript" src="./views/js/common.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#editModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var user_id = button.data('user_id');
+			var role = button.data('role');
+			var name = button.data('name');
+			var email = button.data('email'); 
+			var username = button.data('username');
+			var password = button.data('password');
+			var privilege_provide = button.data('privilege_provide');
+			var inn = button.data('inn');
+
+			var modal = $(this);
+			modal.find('#user_id').val(user_id);
+			modal.find('#role').val(role);
+			modal.find('#name').val(name);
+			modal.find('#email').val(email);
+			modal.find('#username').val(username);
+			modal.find('#password').val(password);
+			modal.find('#privilege_provide').val(privilege_provide);
+			
+			if(inn == 1)
+				modal.find('#inn').prop('checked',true);
+			else
+				modal.find('#inn').prop('checked',false);
+		});
+
+		$('#deleteModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var user_id = button.data('user_id');
+			var name = button.data('name'); 
+
+			var modal = $(this);
+			modal.find('#user_id').val(user_id);
+			modal.find('#name').val(name);
+		});
+		
+		$(".nav-tabs a").click(function(){
+			$(this).tab('show');
+		});
+
+		$('.nav-tabs a').on('shown.bs.tab', function(event){
+		    var x = $(event.target).text();         // active tab
+		    var y = $(event.relatedTarget).text();  // previous tab
+		});
+	});
+</script>
 </body>
 </html>

@@ -102,6 +102,45 @@
 	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
   	<script type="text/javascript" src="./views/js/common.js"></script>
-  	
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var lvl2 = $("#lvl2");
+			var varurllvl1 = "http://localhost:8080/api/getAllLevelOneByDd";
+			var lvl1 = $('#lvl1');
+				$.ajax({
+		  		type: 'GET',
+		  		url: varurllvl1,
+		  		async: true,
+		  		success: function(result){
+		    			var output = "<option value='0'> -- Select -- </option>";
+		    			for(var i in result){
+		      			output+="<option value="+result[i].lvl1_id+">"+result[i].name+"</option>";
+		    			}
+		    		lvl1.html(output);
+		  		}
+				});
+
+				$('#lvl1').change(function() {
+				$(this).find("option:selected").each(function() {
+					var lvl = $(this).attr("value");
+					var pre = "http://localhost:8080/api/getLvl2/";
+					var varurl = pre+ lvl;
+						$.ajax({
+							type : 'GET',
+							url : varurl,
+							async : true,
+							success : function(result) {
+								var output = "<option selected value='0'>-- Select --</option>";
+								for ( var i in result) {
+									output += "<option value="+result[i].lvl2_id+">"+ result[i].name+ "</option>";
+								}
+							lvl2.html(output);
+							}
+						});
+				});
+			});	
+		});
+	</script>  	
 </body>
 </html>

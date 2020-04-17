@@ -112,5 +112,23 @@
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>	
 <script type="text/javascript" src="./views/js/common.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		var varurl = "http://localhost:8080/api/getUserPp1";
+	    var users = $('#users');
+	    $.ajax({
+	        type: 'GET',
+	        url: varurl,
+	        async: true,
+	        success: function(result){
+	            var output = "<option value='0'> -- Select -- </option>";
+	            for(var i in result){
+	                output+="<option value=" + result[i].user_id + ">" + result[i].username + "<span> [ " + result[i].email + " ] </span>" + "</option>";
+	            }
+	            users.html(output);
+	        }
+	    });
+	});
+</script>
 </body>
 </html>

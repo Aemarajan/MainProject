@@ -475,5 +475,40 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
 <script type="text/javascript" src="./views/js/common.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#editModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var word = button.data('word');
+			var acronym = button.data('acronym');
+			var point = button.data('point');
+			var marks_range = button.data('marks_range');
+			var inn = button.data('inn');
+
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#word').val(word);
+			modal.find('#acronym').val(acronym);
+			modal.find('#point').val(point);
+			modal.find('#marks_range').val(marks_range);
+			if(inn == 1)
+				modal.find('#inn').prop('checked',true);
+			else
+				modal.find('#inn').prop('checked',false);
+		});
+		
+		$('#deleteModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var word = button.data('word');
+
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#word').val(word);
+		});
+			
+	});
+</script>
 </body>
 </html>

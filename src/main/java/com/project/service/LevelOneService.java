@@ -31,5 +31,13 @@ public class LevelOneService {
 	public void deleteById(int lvl1_id) {
 		lvlRepo.deleteById(lvl1_id);
 	}
+
+	public List<LevelOne> selectAllExceptId(int lvl1_id) {
+		return lvlRepo.findAllById(lvl1_id);
+	}
+
+	public void updateLevelOne(int lvl1_id, String name, int dd, int i) {
+		lvlRepo.update(lvl1_id, name, dd, i);
+	}
 	
 }

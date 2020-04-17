@@ -41,5 +41,12 @@ public class LevelTwoService {
 		List<LevelTwo> list = lvl2Repo.selectByLevelOneAndDd(id,i);
 		return list;
 	}
-
+	
+	public void updateLevelTwo(int lvl2_id, String name,int lvl1_id, int dd, int i) {
+		lvl2Repo.update(lvl2_id, name,lvl1_id, dd, i);
+	}
+	
+	public List<LevelTwo> selectAllExceptId(int lvl2_id) {
+		return lvl2Repo.findAllById(lvl2_id);
+	}
 }

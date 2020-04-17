@@ -171,5 +171,25 @@
 	<script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="./views/js/mdb.min.js"></script>
 	<script type="text/javascript" src="./views/js/common.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#dd').click(function() {
+			var check = this.checked;
+			if (check == false){
+				$('.ref').show();
+	    		$('.rlab').show();
+	    		$('.referror').show();
+	    		$('.ref').attr('value','');
+	  		}
+			else{
+				$('.ref').hide();
+	    		$('.rlab').hide();
+	    		$('.referror').hide();
+	    		$('.ref').attr('value','null');
+	  		}
+		});
+	)};
+	</script>
 </body>
 </html>

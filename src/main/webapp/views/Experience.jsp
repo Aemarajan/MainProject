@@ -364,5 +364,42 @@
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
 <script type="text/javascript" src="./views/js/common.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#editModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var institute_name = button.data('institute_name');
+			var designation = button.data('designation');
+			var from_date = button.data('from_date');
+			var to_date = button.data('to_date');
+			var inn = button.data('inn');
+
+			var modal = $(this);
+
+			modal.find('#id').val(id);
+			modal.find('#institute_name').val(institute_name);
+			modal.find('#designation').val(designation);
+			modal.find('#from_date').val(from_date);
+			modal.find('#to_date').val(to_date);
+			if(inn == 1)
+				modal.find('#inn').prop('checked',true);
+			else
+				modal.find('#inn').prop('checked',false);
+		});
+
+		$('#deleteModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var institute_name = button.data('institute_name');
+			var designation = button.data('designation');
+
+			var modal = $(this);
+
+			modal.find('#id').val(id);
+			modal.find('#institute_name').val(institute_name + '-' + designation);
+		});
+	});
+</script>
 </body>
 </html>

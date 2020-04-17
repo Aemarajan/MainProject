@@ -309,5 +309,31 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
 <script type="text/javascript" src="./views/js/common.js"></script>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#editModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var year = button.data('year');
+			var inn = button.data('inn');
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#year').val(year);
+			if(inn == 1)
+				modal.find('#inn').prop('checked',true);
+			else
+				modal.find('#inn').prop('checked',false);
+
+		});
+		$('#deleteModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var year = button.data('year');
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#name').val(year);
+		});
+	});
+</script>
 </body>
 </html>

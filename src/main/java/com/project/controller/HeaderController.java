@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -25,6 +26,7 @@ import com.project.customvalidator.AddLevelTwo;
 import com.project.customvalidator.DeleteLevelOne;
 import com.project.customvalidator.DeleteLevelThree;
 import com.project.customvalidator.DeleteLevelTwo;
+import com.project.customvalidator.LevelOneValidation;
 import com.project.model.LevelOne;
 import com.project.model.LevelThree;
 import com.project.model.LevelTwo;
@@ -58,6 +60,9 @@ public class HeaderController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MasterController masterController;
 	
 	@RequestMapping("header")
 	public ModelAndView getHeader(HttpSession session) {
@@ -106,7 +111,7 @@ public class HeaderController {
 	}
 	
 	@GetMapping("LevelOneForm")
-	public ModelAndView getLevelOne(HttpSession session) {
+	public ModelAndView addLevelOne(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(session.getAttribute("id") == null) {
@@ -171,8 +176,66 @@ public class HeaderController {
 		return mv;
 	}
 	
+	@GetMapping("ViewLevelOne")
+	public ModelAndView viewLevelOne(HttpSession session,HttpServletRequest request,
+			@RequestParam(value = "updated", required = false) String updated) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(!(updated == null)) 
+			mv.addObject("updated", "Success");
+		
+		mv.setViewName("ViewLevelOne");
+		mv.addObject("pagedListHolder", masterController.pagination(lvl1ss.selectAll(),request));
+		mv.addObject("ValidateLevelOne", new LevelOneValidation());
+		return mv;
+	}
+	
+	@PostMapping("EditLevelOne")
+	public ModelAndView editLevelOne(@Valid @ModelAttribute("ValidateLevelOne") LevelOneValidation lvl, BindingResult result,
+			HttpSession session, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(result.hasErrors()) {
+			mv.setViewName("ViewLeveOne");
+			mv.addObject("editError", "Error");
+			mv.addObject("pagedListHolder", masterController.pagination(lvl1ss.selectAll(),request));
+			return mv;
+		}
+		
+		List<LevelOne> list = lvl1ss.selectAllExceptId(lvl.getLvl1_id());
+		
+		for(LevelOne l : list) {
+			if(l.getName().replaceAll("//s", "").equalsIgnoreCase(lvl.getName().replaceAll("//s", ""))) {
+				mv.setViewName("ViewLevelOne");
+				mv.addObject("editError", "Error");
+				mv.addObject("editExist", "Error");
+				mv.addObject("pagedListHolder", masterController.pagination(lvl1ss.selectAll(),request));
+				return mv;
+			}
+		}
+		
+		lvl1ss.updateLevelOne(lvl.getLvl1_id(),lvl.getName(),lvl.getDd(),lvl.isInn() ? 1 : 0);
+		
+		mv.setViewName("ViewLevelOne");
+		mv.addObject("pagedListHolder", masterController.pagination(lvl1ss.selectAll(),request));
+		mv.addObject("updated", "Success");
+		return mv;
+	}
+	
 	@GetMapping("LevelTwoForm")
-	public ModelAndView getLevelTwo(HttpSession session) {
+	public ModelAndView addLevelTwo(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(session.getAttribute("id") == null) {
@@ -245,8 +308,66 @@ public class HeaderController {
 		return mv;
 	}
 	
+	@GetMapping("ViewLevelTwo")
+	public ModelAndView viewLevelTwo(HttpSession session,HttpServletRequest request,
+			@RequestParam(value = "updated", required = false) String updated) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(!(updated == null)) 
+			mv.addObject("updated", "Success");
+		
+		mv.setViewName("ViewLevelTwo");
+		mv.addObject("pagedListHolder", masterController.pagination(lvl2ss.selectAll(),request));
+		mv.addObject("ValidateLevelOne", new LevelOneValidation());
+		return mv;
+	}
+	
+	@PostMapping("EditLevelTwo")
+	public ModelAndView editLevelTwo(@Valid @ModelAttribute("ValidateLevelOne") LevelOneValidation lvl, BindingResult result,
+			HttpSession session, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(result.hasErrors()) {
+			mv.setViewName("ViewLevelTwo");
+			mv.addObject("editError", "Error");
+			mv.addObject("pagedListHolder", masterController.pagination(lvl2ss.selectAll(),request));
+			return mv;
+		}
+		
+		List<LevelTwo> list = lvl2ss.selectAllExceptId(lvl.getLvl2_id());
+		
+		for(LevelTwo l : list) {
+			if(l.getName().replaceAll("//s", "").equalsIgnoreCase(lvl.getName().replaceAll("//s", ""))) {
+				mv.setViewName("ViewLevelTwo");
+				mv.addObject("editError", "Error");
+				mv.addObject("editExist", "Error");
+				mv.addObject("pagedListHolder", masterController.pagination(lvl1ss.selectAll(),request));
+				return mv;
+			}
+		}
+		
+		lvl2ss.updateLevelTwo(lvl.getLvl2_id(),lvl.getName(),lvl.getDd(),lvl.getLvl1().getLvl1_id(),lvl.isInn() ? 1 : 0);
+		
+		mv.setViewName("ViewLevelTwo");
+		mv.addObject("pagedListHolder", masterController.pagination(lvl2ss.selectAll(),request));
+		mv.addObject("updated", "Success");
+		return mv;
+	}
+	
 	@GetMapping("LevelThreeForm")
-	public ModelAndView getLevelThree(HttpSession session) {
+	public ModelAndView addLevelThree(HttpSession session) {
 		ModelAndView mv = new ModelAndView();
 		
 		if(session.getAttribute("id") == null) {
@@ -314,6 +435,64 @@ public class HeaderController {
 		return mv;
 	}
 
+	@GetMapping("ViewLevelThree")
+	public ModelAndView viewLevelThree(HttpSession session,HttpServletRequest request,
+			@RequestParam(value = "updated", required = false) String updated) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(!(updated == null)) 
+			mv.addObject("updated", "Success");
+		
+		mv.setViewName("ViewLevelThree");
+		mv.addObject("pagedListHolder", masterController.pagination(lvl3ss.selectAll(),request));
+		mv.addObject("ValidateLevelOne", new LevelOneValidation());
+		return mv;
+	}
+	
+	@PostMapping("EditLevelThree")
+	public ModelAndView editLevelThree(@Valid @ModelAttribute("ValidateLevelOne") LevelOneValidation lvl, BindingResult result,
+			HttpSession session, HttpServletRequest request) {
+		ModelAndView mv = new ModelAndView();
+		
+		if(session.getAttribute("id") == null) {
+			mv.setViewName("redirect:/logout");
+			mv.addObject("session", "Expired");
+			return mv;
+		}
+		
+		if(result.hasErrors()) {
+			mv.setViewName("ViewLeveThree");
+			mv.addObject("editError", "Error");
+			mv.addObject("pagedListHolder", masterController.pagination(lvl3ss.selectAll(),request));
+			return mv;
+		}
+		
+		List<LevelThree> list = lvl3ss.selectAllExceptId(lvl.getLvl3_id());
+		
+		for(LevelThree l : list) {
+			if(l.getName().replaceAll("//s", "").equalsIgnoreCase(lvl.getName().replaceAll("//s", ""))) {
+				mv.setViewName("ViewLevelThree");
+				mv.addObject("editError", "Error");
+				mv.addObject("editExist", "Error");
+				mv.addObject("pagedListHolder", masterController.pagination(lvl3ss.selectAll(),request));
+				return mv;
+			}
+		}
+		
+		lvl3ss.updateLevelThree(lvl.getLvl3_id(),lvl.getName(),lvl.isInn() ? 1 : 0);
+		
+		mv.setViewName("ViewLevelThree");
+		mv.addObject("pagedListHolder", masterController.pagination(lvl3ss.selectAll(),request));
+		mv.addObject("updated", "Success");
+		return mv;
+	}
+	
 	@GetMapping("DeleteLevelOne")
 	public ModelAndView getDeleteLevelOneForm(HttpSession session) {
 		ModelAndView mv = new ModelAndView();

@@ -362,5 +362,37 @@
 <script type="text/javascript" src="./views/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="./views/js/mdb.min.js"></script>
 <script type="text/javascript" src="./views/js/common.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#editModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var from = button.data('from'); 
+			var to = button.data('to');
+			var inn = button.data('inn');
+
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#from_year').val(from);
+			modal.find('#to_year').val(to);
+			if(inn == 1)
+				modal.find('#inn').prop('checked',true);
+			else
+				modal.find('#inn').prop('checked',false);
+		});
+
+		$('#deleteModal').on('show.bs.modal', function (event) {
+			var button = $(event.relatedTarget);
+			var id = button.data('id');
+			var from = button.data('from'); 
+			var to = button.data('to');
+			
+			var modal = $(this);
+			modal.find('#id').val(id);
+			modal.find('#name').val(from+' - '+to);
+		});
+	});
+</script>
 </body>
 </html>

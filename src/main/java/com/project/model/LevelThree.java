@@ -15,6 +15,8 @@ public class LevelThree {
 	
 	private String name;
 
+	private int inn;
+	
 	public int getLvl3_id() {
 		return lvl3_id;
 	}
@@ -30,10 +32,27 @@ public class LevelThree {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public int getInn() {
+		return inn;
+	}
+
+	public void setInn(boolean inn) {
+		this.inn = LevelTwo.check(inn);
+	}
+
+	public static int check(boolean bool) {
+		int status = 0;
+		if(bool == true)
+			status = 1;
+		else
+			status = 0;
+		return status;
+	}
 
 	@Override
 	public String toString() {
-		return "LevelThree [lvl3_id=" + lvl3_id + ", name=" + name + "]";
+		return "LevelThree [lvl3_id=" + lvl3_id + ", name=" + name + ", inn=" + inn + "]";
 	}
-	
+
 }

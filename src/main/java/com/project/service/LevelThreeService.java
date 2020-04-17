@@ -23,4 +23,11 @@ public class LevelThreeService {
 		return list;
 	}
 	
+	public void updateLevelThree(int lvl3_id, String name, int i) {
+		lvl3Repo.update(lvl3_id, name, i);
+	}
+	
+	public List<LevelThree> selectAllExceptId(int lvl3_id) {
+		return lvl3Repo.findAllById(lvl3_id);
+	}
 }

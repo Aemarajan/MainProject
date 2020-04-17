@@ -27,6 +27,8 @@ public class LevelTwo {
 	
 	private int dd;
 	
+	private int inn;
+	
 	public int getLvl2_id() {
 		return lvl2_id;
 	}
@@ -68,6 +70,23 @@ public class LevelTwo {
 		return status;
 	}
 
+	public int getInn() {
+		return inn;
+	}
+
+	public void setInn(boolean inn) {
+		this.inn = LevelTwo.check1(inn);
+	}
+
+	public static int check1(boolean bool) {
+		int status = 0;
+		if(bool == true)
+			status = 1;
+		else
+			status = 0;
+		return status;
+	}
+	
 	@Override
 	public String toString() {
 		return "LevelTwo [lvl2_id=" + lvl2_id + ", name=" + name + ", lvl1=" + lvl1 + ", dd=" + dd + "]";

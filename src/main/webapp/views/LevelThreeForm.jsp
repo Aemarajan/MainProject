@@ -176,6 +176,8 @@
 	      });
 	  });
 	  
+	  $('#lvl2').change(function(){
+	      $(this).find("option:selected").each(function(){
 	          var varurl1 = "http://localhost:8080/api/getAllLevelThree";
 	          //console.log(varurl);
 	          $.ajax({
@@ -190,7 +192,8 @@
 	                  lvl3.html(output);
 	              }
 	          });
-	  
+	      });
+	  });
 	});
 	</script>
 </body>
