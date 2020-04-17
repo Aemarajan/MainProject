@@ -167,7 +167,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="word" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Outstanding,Good..." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="Outstanding,Good..." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>	
 												
 											<div class="row">
@@ -178,7 +180,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="O,A+,A,B+,B,U,RA..." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="O,A+,A,B+,B,U,RA..." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
 											</div>													
 											
 											<div class="row">
@@ -189,7 +193,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="point" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="10,9.....1,0" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="10,9.....1,0" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>
 											
 											<div class="row">
@@ -200,7 +206,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="marks_range" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="91-100" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="91-100" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>
 											
 											<div class="form-group">
@@ -296,7 +304,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="word" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Outstanding,Good..." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="Outstanding,Good..." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>	
 												
 											<div class="row">
@@ -307,7 +317,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="0,A+,A,B+,B,U,RA,S and Etc..." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="0,A+,A,B+,B,U,RA,S and Etc..." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
 											</div>													
 											
 											<div class="row">
@@ -318,7 +330,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="point" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="10,9.....1,0" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="10,9.....1,0" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>
 											
 											<div class="row">
@@ -329,7 +343,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="marks_range" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="91-100" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="91-100" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>
 											
 											<div class="form-group">

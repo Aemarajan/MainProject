@@ -130,12 +130,14 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row mt-4">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" id="name" cssClass="form-control"/>
+														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
 														<label for="Country name">Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Tamil Nadu" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="Tamil Nadu" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>	
 												
 											<div class="row">
@@ -146,7 +148,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="TN" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="TN" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
 											</div>													
 											
 											<div class="form-group">
@@ -215,7 +219,9 @@ pageEncoding="ISO-8859-1"%>
 															<s:errors path="name" cssClass="error"></s:errors>
 														</div>									
 													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="Tamil Nadu" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+													<div class="col-sm-1 p-0">
+														<a href="#" data-toggle="tooltip" title="Tamil Nadu" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+													</div>	
 												</div>
 												
 												
@@ -227,7 +233,9 @@ pageEncoding="ISO-8859-1"%>
 														<s:errors path="acronym" cssClass="error"></s:errors>
 													</div>		
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="TN" data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="TN" data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>

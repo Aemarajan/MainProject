@@ -61,11 +61,18 @@
 			                      <s:errors path="lvl1" cssClass="error" />
 			                    </div>
                     
-			                    <!-- Header 1 -->
-			                    <div class="md-form">
-			                      <s:input path="name" type="text"  cssClass="form-control"></s:input>
-			                      <s:label path="name" for="Header Name">Header Name<span class="mandatory"> *</span></s:label>
-			                      <s:errors path="name" cssClass="error"></s:errors>
+			                    <!-- Header 2 -->
+			                    <div class="row mt-3">
+			                    	<div class="col-sm-11">
+			                    		<div class="md-form mt-0">
+					                      <s:input path="name" type="text"  cssClass="form-control"></s:input>
+					                      <s:label path="name" for="Header Name">Header Name<span class="mandatory"> *</span></s:label>
+					                      <s:errors path="name" cssClass="error"></s:errors>
+					                    </div>
+			                    	</div>
+			                    	<div class="col-sm-1 p-0">
+			                    		<a href="#" data-toggle="tooltip" data-placement="top" title="XYZ"><i class="fa fa-info-circle mt-4"></i></a>
+			                    	</div>
 			                    </div>
                     
 			                    <div class="d-flex justify-content-start"> <label>( If this header have another level select this checkbox )</label> </div>
@@ -77,11 +84,19 @@
 			                        <s:label path="dd">Dropdown</s:label>
 			                      </div>
 			                    </div>
-			                    <div class="md-form">
-			                      <s:input path="ref" type="text" cssClass="ref form-control"></s:input>
-			                      <s:label path="ref" for="Header Name" class="rlab">Reference <span class="mandatory"> *</span></s:label>
-			                      <s:errors path="ref" cssClass="error referror"></s:errors>
+			                    <div class="row">
+			                    	<div class="col-sm-11">
+			                    		<div class="md-form mt-0">
+					                      <s:input path="ref" type="text" cssClass="ref form-control"></s:input>
+					                      <s:label path="ref" for="Header Name" class="rlab">Reference <span class="mandatory"> *</span></s:label>
+					                      <s:errors path="ref" cssClass="error referror"></s:errors>
+					                    </div>
+			                    	</div>
+			                    	<div class="col-sm-1 p-0">
+			                    		<a href="#" data-toggle="tooltip" data-placement="top" title="XYZ"><i class="fa fa-info-circle mt-4"></i></a>	
+			                    	</div>
 			                    </div>
+			                    
 			                    <div class="mt-4">
 			                      <button type="submit" class="btn btn-custom waves-effect">ADD</button>
 			                    </div>
@@ -180,6 +195,8 @@
 			delay:10000
 		});
 		$('#LongToast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
     });
   </script>  
 </body>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,10 @@
 				<li class="active"><a href="home"><i class="fa fa-home mr-2" aria-hidden="true"></i>Home</a></li>
 				<li><a href="Profile"><i class="fa fa-address-book mr-2" aria-hidden="true"></i>Profile</a></li>
 				<li><a href="ChangePassword"><i class="fa fa-cogs mr-2" aria-hidden="true"></i>Change Password</a></li>
+				<c:set var="role" value='<%= session.getAttribute("role")%>'/>
+				<c:if test="${role == 'admin' || role == 'staff' }">
+					<li><a href="Experience"><i class="fa fa-briefcase mr-2" aria-hidden="true"></i>Experience</a></li>
+				</c:if>
 				<li><a href="Gallery"><i class="fa fa-photo-video mr-2" aria-hidden="true"></i>Gallery</a></li>
 				<li><a href="About"><i class="fa fa-users mr-2" aria-hidden="true"></i>About Us</a></li>
 				<li><a href="Contact"><i class="fa fa-phone-alt mr-2" aria-hidden="true"></i>Contact Us</a></li>

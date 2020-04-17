@@ -63,7 +63,7 @@
 				
 			</ul>
 			<ul class="ml-auto navbar-nav dropdown">
-				<li class="pt-1"> Welcome <%= session.getAttribute("name") %>... </li>
+				<li class="p-0 text-center text-capitalize"> Welcome <%= session.getAttribute("name") %><br> <%= session.getAttribute("role") %> </li>
 <!-- 				<li class="nav-item dropdown"> -->
 <!-- 			        <a class="nav-link" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> -->
 <!-- 			          <i class="fa fa-user"></i><i class="fa fa-sort-down ml-1" aria-hidden="true"></i> -->

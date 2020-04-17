@@ -5,7 +5,9 @@ import javax.validation.constraints.Email;
 import com.project.customannotations.NotEmpty;
 
 public class SignUp {
-		
+	
+	int user_id;
+	
 	@NotEmpty(message="* Please Select Any Role...")
 	String role;
 	
@@ -22,6 +24,16 @@ public class SignUp {
 	
 	String password;
 
+	int privilege_provide;
+	
+	boolean inn;
+	
+	public int getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(int user_id) {
+		this.user_id = user_id;
+	}
 	public String getRole() {
 		return role;
 	}
@@ -51,5 +63,17 @@ public class SignUp {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public int getPrivilege_provide() {
+		return privilege_provide;
+	}
+	public void setPrivilege_provide(int privilege_provide) {
+		this.privilege_provide = privilege_provide;
+	}
+	public boolean isInn() {
+		return inn;
+	}
+	public void setInn(boolean inn) {
+		this.inn = inn;
 	}
 }

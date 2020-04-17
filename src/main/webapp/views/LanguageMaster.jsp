@@ -116,8 +116,8 @@
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Tamil,English"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Tamil,English"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="form-group">
@@ -170,8 +170,8 @@
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>
 												</div>
-												<div class="col-sm-1">
-													<a href="#" data-toggle="tooltip" data-placement="bottom" title="Tamil,English"><i class="fa fa-info mt-4"></i></a>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Tamil,English"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="form-group">

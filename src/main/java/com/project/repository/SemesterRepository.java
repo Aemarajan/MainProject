@@ -15,7 +15,7 @@ public interface SemesterRepository extends JpaRepository<Semester, Integer>{
 
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE semester_master s SET s.name=:name, s.department=:department,s.inn=:inn WHERE s.id=:id",nativeQuery=true)
+	@Query(value="UPDATE semester_master s SET s.name=:name,s.inn=:inn WHERE s.id=:id",nativeQuery=true)
 	void update(@Param("id")int id, @Param("name")String name, @Param("inn")int inn);
 
 	@Transactional

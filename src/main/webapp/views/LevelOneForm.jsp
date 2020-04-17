@@ -58,10 +58,17 @@
 								<label
 									class="d-flex justify-content-end mandatory mandatory-text mt-2">* must be filled</label>
 
-								<div class="md-form">
-									<s:input type="text" path="name" cssClass="form-control" autofocus="autofocus" />
-									<s:label path="name" for="Header Name">Header Name<span class="mandatory"> *</span> </s:label>
-									<s:errors path="name" cssClass="error" />
+								<div class="row">
+									<div class="col-sm-11">
+										<div class="md-form mt-0">
+											<s:input type="text" path="name" cssClass="form-control" autofocus="autofocus" />
+											<s:label path="name" for="Header Name">Header Name<span class="mandatory"> *</span> </s:label>
+											<s:errors path="name" cssClass="error" />
+										</div>
+									</div>
+									<div class="col-sm-1 p-0">
+										<a href="#" data-toggle="tooltip" data-placement="top" title="ABC"><i class="fa fa-info-circle mt-4"></i></a>
+									</div>
 								</div>
 
 								<div class="d-flex justify-content-start">
@@ -75,12 +82,19 @@
 										<s:label path="dd">Dropdown</s:label>
 									</div>
 								</div>
-								<div class="md-form">
-									<s:input type="text" path="ref" cssClass="ref form-control" />
-									<s:label for="Header Name" path="ref" class="rlab">Reference <span class="mandatory"> *</span> </s:label>
-									<s:errors path="ref" cssClass="error referror"></s:errors>
+								<div class="row">
+									<div class="col-sm-11">
+										<div class="md-form mt-0">
+											<s:input type="text" path="ref" cssClass="ref form-control" />
+											<s:label for="Header Name" path="ref" class="rlab">Reference <span class="mandatory"> *</span> </s:label>
+											<s:errors path="ref" cssClass="error referror"></s:errors>
+										</div>
+									</div>
+									<div class="col-sm-1 p-0">
+										<a href="#" data-toggle="tooltip" data-placement="top" title="ABC"><i class="fa fa-info-circle mt-4"></i></a>
+									</div>
 								</div>
-
+								
 								<div class="mt-4">
 									<button type="submit" class="btn btn-custom waves-effect">ADD</button>
 								</div>
@@ -167,6 +181,8 @@
 			delay:10000
 		});
 		$('#LongToast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
 	});
 </script>
 </body>

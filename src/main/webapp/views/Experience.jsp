@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="s"%>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags"%>
@@ -11,7 +10,7 @@ pageEncoding="ISO-8859-1"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>Country Master</title>
+<title>Experience</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
@@ -26,21 +25,20 @@ pageEncoding="ISO-8859-1"%>
 	<jsp:include page="Header.jsp" />
 	
 	<div id="header"></div>
-
-	<div class="wrapper d-flex align-items-stretch">
+	
+	<div class="wrapper d-flex align-items-strecth">  
 		
 		<jsp:include page="Sidebar.jsp" />
-		  
+		
 		<div class="container-fluid pl-5">
 			<div class="row mt-2 mb-2">
 				<div class="col col-sm-1 col-md-1 col-lg-1"></div>
 				<div class="col col-sm-10 col-md-10 col-lg-10">
-					
 					<div class="table-wrapper">
 						<div class="table-title">
 							<div class="row">
 								<div class="col-sm-6">
-									<h2>Manage <b>Country</b></h2>
+									<h2>Experience Details</h2>
 								</div>
 								<div class="col-sm-6">
 									<a href="#addModal" class="btn btn-info add-new px-3 py-2" data-toggle="modal"><i class="fa fa-plus-circle"></i> <span class="ml-2">Add</span></a>						
@@ -49,32 +47,37 @@ pageEncoding="ISO-8859-1"%>
 						</div>
 						
 						<jsp:useBean id="pagedListHolder" scope="request" type="org.springframework.beans.support.PagedListHolder" />
-						
-						<c:url value="/GetCountryMaster" var="pagedLink">
+						<c:url value="/Experience" var="pagedLink">
 							<c:param name="p" value="~" />
 						</c:url>
 						
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
-									<th>Name</th>
-									<th>Acronym</th>
+									<th>Institute Name</th>
+									<th>Designation</th>
+									<th>Date Of Joining</th>
+									<th>Last Working Date</th>
+									<th>Experience</th>
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="l" items="${pagedListHolder.pageList }">
+									<c:forEach var="l" items="${pagedListHolder.pageList}">
 									<tr>
-										<td class="text-capitalize">${l.name }</td>
-										<td>${l.acronym }</td>
+										<td class="text-capitalize">${l.institute_name }</td>
+										<td class="text-capitalize">${l.designation }</td>
+										<td>${l.from_date }</td>
+										<td>${l.to_date }</td>
+										<td>${l.diff_years } Year(s) ${l.diff_months } Month(s) ${l.diff_days } Day(s)</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  Inactive</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-name="${l.name }" data-acronym="${l.acronym }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-name="${l.name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-institute_name="${l.institute_name }" data-designation="${l.designation }" data-from_date="${l.from_date }" data-to_date="${l.to_date }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-institute_name="${l.institute_name }" data-designation="${l.designation }" data-inn="${l.inn }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -87,73 +90,71 @@ pageEncoding="ISO-8859-1"%>
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="SaveCountryMaster" method="post" modelAttribute="country">
+									<s:form action="SaveExperience" method="post" modelAttribute="exp">
 										<div class="modal-header">						
-											<h4 class="modal-title">Add Country</h4>
+											<h4 class="modal-title">Add Experience</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										
 										<div class="modal-body">
-
-											<c:if test="${addExistAcronym != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="toast-body py-2">
-														<div>Acronym Already Exist. Enter New Acronym...</div>
-													</div>
-												</div>
-											</c:if>
-
-											<c:if test="${addExistCountry != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="toast-body py-2">
-														<div>Country Already Exist. Enter New Country Name...</div>
-													</div>
-												</div>
-											</c:if>
-											
+										
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
 											<s:hidden path="id"/>
+											<s:hidden path="user_id" value='<%= session.getAttribute("id") %>'/>					
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-														<label for="Country name">Name<span class="mandatory"> *</span></label>
-														<s:errors path="name" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="institute_name" id="institute_name" autofocus="autofocus" cssClass="form-control"/>
+														<label for="Institute Name">Institute Name<span class="mandatory"> *</span></label>
+														<s:errors path="institute_name" cssClass="error"></s:errors>
+													</div>
 												</div>
 												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="India"><i class="fa fa-info-circle mt-4"></i></a>
+													<a href="#" data-toggle="tooltip" data-placement="top" title="ABC college"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
-											</div>					
+											</div>
 											
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" maxlength="3" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="designation" id="designation" cssClass="form-control"/>
+														<label for="Designation">Designation<span class="mandatory"> *</span></label>
+														<s:errors path="designation" cssClass="error"></s:errors>
+													</div>
 												</div>
 												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="IND"><i class="fa fa-info-circle mt-4"></i></a>
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Professor,Assistant Professor"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
-							
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="from_date" id="from_date" cssClass="form-control"/>
+														<label for="From Date">From Date<span class="mandatory"> *</span></label>
+														<s:errors path="from_date" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="DD-MM-YYYY"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input  path="to_date" id="to_date" cssClass="form-control"/>
+														<label for="To Date">To Date<span class="mandatory"> *</span></label>
+														<s:errors path="to_date" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="DD-MM-YYYY"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
+											</div>
 											<div class="form-group">
-												<s:checkbox path="inn" cssClass="inn"/>
+												<s:checkbox path="inn" id="inn" cssClass="inn"/>
 												<label>In use</label>
 											</div>					
 										</div>
@@ -170,74 +171,73 @@ pageEncoding="ISO-8859-1"%>
 						<div id="editModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<s:form action="EditCountry" method="post" modelAttribute="country">
+									<s:form action="EditExperience" method="post" modelAttribute="exp">
 										<div class="modal-header">						
-											<h4 class="modal-title">Edit Country</h4>
+											<h4 class="modal-title">Edit Experience</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 															
 										<div class="modal-body">
 											
-											<c:if test="${editExistAcronym != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="toast-body py-2">
-														<div>Acronym Already Exist. Enter New Acronym...</div>
-													</div>
-												</div>
-											</c:if>
-											
-											<c:if test="${editExistCountry != null }">
-												<div class="toast" id="Toast">
-													<div class="toast-header white-text bg-danger pt-2">
-														<h5 class="mr-auto">Error</h5>
-														<button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-															<span aria-hidden="true">&times;</span>
-														</button>
-													</div>
-													<div class="toast-body py-2">
-														<div>Country Already Exist. Enter New Country Name...</div>
-													</div>
-												</div>
-											</c:if>
-											
 											<label class="d-flex justify-content-end mandatory mandatory-text mr-2">* must be filled</label>
 											
-											<s:hidden path="id"/>					
-											<div class="row">
-												<div class="col-sm-11">
-													<div class="md-form mt-0">
-														<s:input path="name" id="name" autofocus="autofocus" cssClass="form-control"/>
-														<label for="Country name">Name<span class="mandatory"> *</span></label>
-														<s:errors path="name" cssClass="error"></s:errors>
-													</div>		
-												</div>
-												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="India"><i class="fa fa-info-circle mt-4"></i></a>
-												</div>
-											</div>					
+											<s:hidden path="id" id="id"/>					
 											
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="acronym" id="acronym" autofocus="autofocus" maxlength="3" cssClass="form-control"/>
-														<label for="Acronym">Acronym<span class="mandatory"> *</span></label>
-														<s:errors path="acronym" cssClass="error"></s:errors>
-													</div>		
+														<s:input path="institute_name" id="institute_name" autofocus="autofocus" cssClass="form-control"/>
+														<label for="Institute Name">Institute Name<span class="mandatory"> *</span></label>
+														<s:errors path="institute_name" cssClass="error"></s:errors>
+													</div>
 												</div>
 												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="IND"><i class="fa fa-info-circle mt-4"></i></a>
+													<a href="#" data-toggle="tooltip" data-placement="top" title="ABC college"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="designation" id="designation" autofocus="autofocus" cssClass="form-control"/>
+														<label for="Designation">Designation<span class="mandatory"> *</span></label>
+														<s:errors path="designation" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="Professor,Assistant Professor"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="from_date" id="from_date" autofocus="autofocus" cssClass="form-control"/>
+														<label for="From Date">From Date<span class="mandatory"> *</span></label>
+														<s:errors path="from_date" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="DD-MM-YYYY"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="to_date" id="to_date" autofocus="autofocus" cssClass="form-control"/>
+														<label for="To Date">To Date<span class="mandatory"> *</span></label>
+														<s:errors path="to_date" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="DD-MM-YYYY"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="form-group">
 												<s:checkbox path="inn" id="inn"/>
 												<label>In use</label>
-											</div>								
+											</div>					
 										</div>
 										
 										<div class="modal-footer">
@@ -253,17 +253,18 @@ pageEncoding="ISO-8859-1"%>
 						<div id="deleteModal" class="modal fade">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<form action="DeleteCountry" method="post">
+									<form action="DeleteExperience" method="post">
 										<div class="modal-header">						
-											<h4 class="modal-title">Delete Country</h4>
+											<h4 class="modal-title">Delete Experience</h4>
 											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 										</div>
 										<div class="modal-body">					
 											<input id="id" name="id" hidden/>
 											<div class="md-form mt-0">
-												<input id="name" class="form-control" readonly/>
+												<input id="institute_name" autofocus="autofocus" class="form-control" readonly/>
+												<label for="Name">Institute And Designation</label>
 											</div>
-											<p>Are you sure you want to Deactivate these Records?</p>
+											<p>Are you sure you want to delete these Record ?</p>
 										</div>
 										<div class="modal-footer">
 											<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -284,52 +285,8 @@ pageEncoding="ISO-8859-1"%>
 		</div>
 		<!-- Container Fluid -->
 	</div>
-	
-		<c:if test="${updated != null }">
-			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;display:block;">
-				<div class="toast-header white-text bg-warning pt-2">
-					<h5 class="mr-auto">Notification</h5>
-				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      	<span aria-hidden="true">&times;</span>
-				    </button>
-				</div>
-				<div class="toast-body py-2">
-            		<div>Updated Successfully.</div>
-        		</div>
-			</div>
-		</c:if>
-		
-		<c:if test="${added != null }">
-			<div class="toast" id="myToast" style="position:absolute;right: 20px;bottom:20px;width:300px;">
-				<div class="toast-header white-text pt-2 bg-success">
-					<h5 class="mr-auto">Notification</h5>
-				    <button type="button" class="ml-2 mb-1 close white-text" data-dismiss="toast">
-				      	<span aria-hidden="true">&times;</span>
-				    </button>
-				</div>
-				<div class="toast-body py-2">
-            		<div>Updated Successfully.</div>
-        		</div>
-			</div>
-		</c:if>
-		
-		<c:if test="${deleted != null }">
-			<div class="toast" id="myToast" style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
-				<div class="toast-header white-text bg-danger pt-2">
-					<h5 class="mr-auto">Notification</h5>
-					<button type="button" class="ml-2 mb-1 close white-text"
-						data-dismiss="toast">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="toast-body py-2">
-					<div>Deactivated Successfully.</div>
-				</div>
-			</div>
-		</c:if>
-		
 	<!-- Content -->
-
+	
 	<c:if test="${added != null }">
 		<div class="toast" id="Toast" 
 			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
@@ -341,7 +298,7 @@ pageEncoding="ISO-8859-1"%>
 				</button>
 			</div>
 			<div class="toast-body py-2">
-				<div>Country Details are Added Successfully.</div>
+				<div>Experience Details are Added Successfully.</div>
 			</div>
 		</div>
 	</c:if>
@@ -357,7 +314,7 @@ pageEncoding="ISO-8859-1"%>
 				</button>
 			</div>
 			<div class="toast-body py-2">
-				<div>Country Details are Updated Successfully.</div>
+				<div>Experience Details are Updated Successfully.</div>
 			</div>
 		</div>
 	</c:if>
@@ -373,11 +330,11 @@ pageEncoding="ISO-8859-1"%>
 				</button>
 			</div>
 			<div class="toast-body py-2">
-				<div>Country Deactivated Successfully.</div>
+				<div>Experience Record Deactivated Successfully.</div>
 			</div>
 		</div>
 	</c:if>
-
+	
 	<div class="">
 		<jsp:include page="Footer.jsp" />
 	</div>
@@ -406,17 +363,32 @@ pageEncoding="ISO-8859-1"%>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#header').load("http://localhost:8080/header");
+
 		$('.inn').prop('checked',true);
+
+		$('#Toast').toast({
+			delay:5000
+		});
+		$('#Toast').toast('show');
+
+		$('[data-toggle = "tooltip"]').tooltip();
+		
 		$('#editModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var name = button.data('name'); 
-			var acronym = button.data('acronym');
+			var institute_name = button.data('institute_name');
+			var designation = button.data('designation');
+			var from_date = button.data('from_date');
+			var to_date = button.data('to_date');
 			var inn = button.data('inn');
+
 			var modal = $(this);
+
 			modal.find('#id').val(id);
-			modal.find('#name').val(name);
-			modal.find('#acronym').val(acronym);
+			modal.find('#institute_name').val(institute_name);
+			modal.find('#designation').val(designation);
+			modal.find('#from_date').val(from_date);
+			modal.find('#to_date').val(to_date);
 			if(inn == 1)
 				modal.find('#inn').prop('checked',true);
 			else
@@ -426,18 +398,14 @@ pageEncoding="ISO-8859-1"%>
 		$('#deleteModal').on('show.bs.modal', function (event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var name = button.data('name');
+			var institute_name = button.data('institute_name');
+			var designation = button.data('designation');
+
 			var modal = $(this);
+
 			modal.find('#id').val(id);
-			modal.find('#name').val(name);
+			modal.find('#institute_name').val(institute_name + '-' + designation);
 		});
-
-		$('#Toast').toast({
-			delay:5000
-		});
-		$('#Toast').toast('show');
-
-		$('[data-toggle = "tooltip"]').tooltip();
 	}); 
 </script>
 </body>

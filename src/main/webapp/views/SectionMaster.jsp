@@ -114,12 +114,14 @@ pageEncoding="ISO-8859-1"%>
 											<div class="row mt-4">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="name" id="name" maxlength="1" cssClass="form-control text-capitalize"/>
+														<s:input path="name" id="name" maxlength="1" autofocus="autofocus" cssClass="form-control text-capitalize"/>
 														<label for="section name">Name<span class="mandatory"> *</span></label>
 														<s:errors path="name" cssClass="error"></s:errors>
 													</div>									
 												</div>
-												<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="A,B,C,D....." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" title="A,B,C,D..." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+												</div>	
 											</div>	
 											
 											<div class="form-group">
@@ -174,7 +176,9 @@ pageEncoding="ISO-8859-1"%>
 															<s:errors path="name" cssClass="error"></s:errors>
 														</div>									
 													</div>
-													<div class="col-sm-1"><a href="#" data-toggle="tooltip" title="A,B,C,D....." data-placement="bottom"><i class="fa fa-info mt-4"></i></a></div>	
+													<div class="col-sm-1 p-0">
+														<a href="#" data-toggle="tooltip" title="A,B,C,D..." data-placement="top"><i class="fa fa-info-circle mt-4"></i></a>
+													</div>	
 												</div>
 													
 											<div class="form-group">
