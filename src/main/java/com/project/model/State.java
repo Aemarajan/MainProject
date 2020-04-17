@@ -18,8 +18,7 @@ public class State {
 	String acronym;
 	int inn;
 
-	public State() {}
-	
+	public State() {}	
 	
 	public State(String name, String acronym, int inn) {
 		super();

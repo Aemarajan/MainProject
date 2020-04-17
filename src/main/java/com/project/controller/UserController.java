@@ -17,6 +17,8 @@ import com.project.customvalidator.SignUp;
 import com.project.model.User;
 import com.project.service.MailService;
 import com.project.service.PrivilegeService;
+import com.project.service.ProfileService;
+import com.project.service.QualificationService;
 import com.project.service.UserService;
 
 @Controller
@@ -34,6 +36,12 @@ public class UserController {
 	@Autowired
 	PrivilegeService privilegeService;
 
+	@Autowired
+	ProfileService profileService;
+	
+	@Autowired
+	QualificationService quaService;
+	
 	@GetMapping("SignUp")
 	public ModelAndView getSignup(HttpSession session, @RequestParam(value = "added", required = false) String added) {
 		ModelAndView mv = new ModelAndView();
@@ -87,6 +95,8 @@ public class UserController {
 			mv.addObject("added", "success");
 			mailService.sendDetails(userLoc);
 			userService.createUser(userLoc);
+			profileService.createUserProfile(userLoc.getUser_id());
+			quaService.createUserQualification(userLoc.getUser_id());
 		}
 		return mv;
 	}

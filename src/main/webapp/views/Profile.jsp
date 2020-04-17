@@ -281,7 +281,7 @@
                             <div class="form-row" style="margin-top: -20px;">
                                 <div class="col-6">
                                     <div class="md-form">
-                                        <input type="text" id="door" class="form-control">
+                                        <input type="text" id="door_no" class="form-control">
                                         <label for="username">Door No.<span class="mandatory pl-1"> *</span></label>
                                     </div>       
                                 </div>
@@ -311,6 +311,7 @@
                                     <div class="mt-0">
                                         <label>Country<span class="mandatory pl-1"> *</span></label>
                                         <select class="browser-default custom-select" id="country">
+                                        	<option> -- Select --</option>
                                         </select>
                                     </div>           
                                 </div>
@@ -318,6 +319,7 @@
                                     <div class="mt-0">
                                         <label>State<span class="mandatory pl-1"> *</span></label>
                                         <select class="browser-default custom-select" id="state">
+                                        	<option> -- Select --</option>
                                         </select>
                                     </div>        
                                 </div>
@@ -327,47 +329,48 @@
                                 <div class="col-6">
                                     <div class="mt-0">
                                         <label>District<span class="mandatory pl-1"> *</span></label>
-                                        <select class="browser-default custom-select" id="country">
+                                        <select class="browser-default custom-select" id="district">
+                                        	<option> -- Select --</option>
                                         </select>
                                     </div>           
                                 </div>
                                 <div class="col-6">
                                     <div class="mt-0">
                                         <div class="md-form">
-                                            <input type="text" id="pin" class="form-control" max_length="6">
-                                            <label for="username">Pincode<span class="mandatory pl-1"> *</span></label>
+                                            <input type="text" id="pincode" class="form-control" max_length="6">
+                                            <label for="username">Pin code<span class="mandatory pl-1"> *</span></label>
                                         </div>  
                                     </div>
                                 </div>
                             </div>
                         </div><hr>
                         <div class="d-flex justify-content-start">
-                            <input type="checkbox" name="permanent"><label> Same as Official Address</label>
+                            <input type="checkbox" name="permanent" id="permanent"><label> Same as Official Address</label>
                         </div>
                         <div class="form-card">
                             <h5 class="d-flex justify-content-center">Permanent Address</h5><hr>
                             <div class="form-row mt-0">
                                 <div class="col-6">
                                     <div class="md-form">
-                                        <input type="text" id="door" class="form-control">
+                                        <input type="text" id="p_door_no" class="form-control">
                                         <label for="username">Door No.<span class="mandatory pl-1"> *</span></label>
                                     </div>       
                                 </div>
                                 <div class="col-6">
                                     <div class="md-form">
-                                        <input type="text" id="line1" class="form-control">
+                                        <input type="text" id="p_line1" class="form-control">
                                         <label for="username">Line 1<span class="mandatory pl-1"> *</span></label>
                                     </div>  
                                 </div>
                             </div>
                             
                             <div class="md-form mt-0">
-                                <input type="text" id="line2" class="form-control">
+                                <input type="text" id="p_line2" class="form-control">
                                 <label for="username">Line 2<span class="mandatory pl-1"> *</span></label>
                             </div>
                             
                             <div class="md-form mt-0">
-                                <input type="text" id="line3" class="form-control">
+                                <input type="text" id="p_line3" class="form-control">
                                 <label for="username">Line 3<span class="mandatory pl-1"> *</span></label>
                             </div>
 
@@ -375,14 +378,16 @@
                                 <div class="col-6">
                                     <div class="mt-0">
                                         <label>Country<span class="mandatory pl-1"> *</span></label>
-                                        <select class="browser-default custom-select" id="country">
+                                        <select class="browser-default custom-select" id="p_country">
+                                        	<option> -- Select --</option>
                                         </select>
                                     </div>           
                                 </div>
                                 <div class="col-6">
                                     <div class="mt-0">
                                         <label>State<span class="mandatory pl-1"> *</span></label>
-                                        <select class="browser-default custom-select" id="state">
+                                        <select class="browser-default custom-select" id="p_state">
+                                        	<option> -- Select --</option>
                                         </select>
                                     </div>        
                                 </div>
@@ -392,21 +397,22 @@
                                 <div class="col-6">
                                     <div class="mt-0">
                                         <label>District<span class="mandatory pl-1"> *</span></label>
-                                        <select class="browser-default custom-select" id="country">
+                                        <select class="browser-default custom-select" id="p_district">
+                                        	<option> -- Select --</option>
                                         </select>
                                     </div>           
                                 </div>
                                 <div class="col-6">
                                     <div class="mt-0">
                                         <div class="md-form">
-                                            <input type="text" id="pin" class="form-control" max_length="6">
+                                            <input type="text" id="p_pincode" class="form-control" max_length="6">
                                             <label for="username">Pincode<span class="mandatory pl-1"> *</span></label>
                                         </div>  
                                     </div>
                                 </div>
                             </div>
                         </div><hr>
-                        <input type="button" name="next" class="next action-button" value="Next" /> 
+                        <input type="button" name="next" class="next action-button" value="Next" onclick="saveAddress();" /> 
                         <input type="button" name="previous" class="previous action-button-previous" value="Previous" />
                     </fieldset>
 
@@ -584,8 +590,6 @@
         cal["religion"] = $('#religion').val();
         cal["community"] = $('#community').val();
 
-        console.log(cal);
-
         $.ajax({
             type:"POST",
             url:"http://localhost:8080/api/savePersonalJson",
@@ -593,17 +597,140 @@
             data:JSON.stringify(cal),
             dataType:'json',
             success:function(data){
-                alert("Saved Successfully");
+            },
+            error:function(error){
+            }
+        });
+    }
+    function saveAddress(){
+        var json = {}
+
+        json["id"] = $('#id').val();
+        json["door_no"] = $('#door_no').val();
+        json["line1"] = $('#line1').val();
+        json["line2"] = $('#line2').val();
+        json["line3"] = $('#line3').val();
+        json["country"] = $('#country').val();
+        json["state"] = $('#state').val();
+        json["district"] = $('#district').val();
+        json["pincode"] = $('#pincode').val();
+		if($('#permanent').is(":checked")){
+			json["permanent"] = 1;
+		}else if($('#permanent').is(":not(:checked)")){
+			json["permanent"] = 0;
+		}
+		json["p_door_no"] = $('#p_door_no').val();
+        json["p_line1"] = $('#p_line1').val();
+        json["p_line2"] = $('#p_line2').val();
+        json["p_line3"] = $('#p_line3').val();
+        json["p_country"] = $('#p_country').val();
+        json["p_state"] = $('#p_state').val();
+        json["p_district"] = $('#p_district').val();
+        json["p_pincode"] = $('#p_pincode').val();
+
+        $.ajax({
+            type:"POST",
+            url:"http://localhost:8080/api/saveAddressJson",
+            contentType:"application/json",
+            data:JSON.stringify(json),
+            dataType:'json',
+            success:function(data){
+                alert("Saved successfully");
             },
             error:function(error){
                 alert("Error");
             }
         });
+        
     }
 		
 		$(document).ready(function() {
 			$('#header').load("http://localhost:8080/header");
 
+			$('#permanent').change("click",function(){
+				if($(this).is(":checked")){
+					$('#p_door_no').val($('#door_no').val());
+					$('#p_door_no').focus();
+					$('#p_line1').val($('#line1').val());
+					$('#p_line1').focus();
+					$('#p_line2').val($('#line2').val());
+					$('#p_line2').focus();
+					$('#p_line3').val($('#line3').val());
+					$('#p_line3').focus();
+					$('#p_pincode').val($('#pincode').val());
+					$('#p_pincode').focus();
+					$('#p_country').html("<option value="+$('#country option:selected').val()+">"+$('#country option:selected').text()+"</option>");
+					$('#p_district').html("<option value="+$('#district option:selected').val()+">"+$('#district option:selected').text()+"</option>");
+					$('#p_state').html("<option value="+$('#state option:selected').val()+">"+$('#state option:selected').text()+"</option>");
+				}
+				else if($(this).is(":not(:checked)")){
+					$('#p_door_no').val("");
+					$('#p_line1').val("");
+					$('#p_line2').val("");
+					$('#p_line3').val("");
+					$('#p_pincode').val("");
+					$('#p_district').html("<option> -- Select --</option>");
+					$('#p_state').html("<option> -- Select --</option>");
+					var pcountry = $('#p_country');
+		            $.ajax({
+						type:'GET',
+						url:"http://localhost:8080/api/getAllCountry",
+						async:true,
+						success:function(result){
+							var output = "<option selected disabled> -- Select -- </option>";
+							for(var i in result){
+								output+="<option value="+result[i].id+">"+result[i].name+"  ["+result[i].acronym+"]</option>";
+							}
+							pcountry.html(output);
+						}
+		            });
+
+		            var pstate = $('#p_state');
+		            $('#p_country').change(function(){
+		                $(this).find("option:selected").each(function(){
+		                    var id = $(this).attr("value");
+		                    var pre = "http://localhost:8080/api/getAllStateByCountryId/";
+		                    var varurl = pre+id;
+		                    $.ajax({
+		                        type: 'GET',
+		                        url: varurl,
+		                        async: true,
+		                        success:function(result){
+		                            var output = "<option value='0'>-- Select --</option>";
+		                            for(var i in result){
+		                                output+="<option value="+result[i].state.id+">"+result[i].state.name+"</option>";
+		                            }
+		                            pstate.html(output);
+		                        }
+		                    });
+		                });
+		            });
+
+		            var pdistrict = $('#p_district');
+
+		            $('#p_state').change(function(){
+		                $(this).find("option:selected").each(function(){
+		                    var id1 = $('#p_country option:selected').val();
+		                    var id = $(this).attr("value");
+		                    var pre = "http://localhost:8080/api/getAllDistrictByStateId/";
+		                    var varurl = pre+id1+"/"+id;
+		                    $.ajax({
+		                        type: 'GET',
+		                        url: varurl,
+		                        async: true,
+		                        success:function(result){
+		                            var output = "<option value='0'>-- Select --</option>";
+		                            for(var i in result){
+		                                output+="<option value="+result[i].district.id+">"+result[i].district.name+"</option>";
+		                            }
+		                            pdistrict.html(output);
+		                        }
+		                    });
+		                });
+		            });
+				}
+			});
+			
             var blood = $('#blood');
             $.ajax({
                 type:'GET',
@@ -643,7 +770,122 @@
                     comm.html(output);
                 }
             });
-			
+
+            var country = $('#country');
+            $.ajax({
+				type:'GET',
+				url:"http://localhost:8080/api/getAllCountry",
+				async:true,
+				success:function(result){
+					var output = "<option selected disabled> -- Select -- </option>";
+					for(var i in result){
+						output+="<option value="+result[i].id+">"+result[i].name+"  ["+result[i].acronym+"]</option>";
+					}
+					country.html(output);
+				}
+            });
+
+            var state = $('#state');
+            $('#country').change(function(){
+                $(this).find("option:selected").each(function(){
+                    var id = $(this).attr("value");
+                    var pre = "http://localhost:8080/api/getAllStateByCountryId/";
+                    var varurl = pre+id;
+                    $.ajax({
+                        type: 'GET',
+                        url: varurl,
+                        async: true,
+                        success:function(result){
+                            var output = "<option value='0'>-- Select --</option>";
+                            for(var i in result){
+                                output+="<option value="+result[i].state.id+">"+result[i].state.name+"</option>";
+                            }
+                            state.html(output);
+                        }
+                    });
+                });
+            });
+
+            var district = $('#district');
+            $('#state').change(function(){
+                $(this).find("option:selected").each(function(){
+                    var id1 = $('#country option:selected').val();
+                    var id = $(this).attr("value");
+                    var pre = "http://localhost:8080/api/getAllDistrictByStateId/";
+                    var varurl = pre+id1+"/"+id;
+                    $.ajax({
+                        type: 'GET',
+                        url: varurl,
+                        async: true,
+                        success:function(result){
+                            var output = "<option value='0'>-- Select --</option>";
+                            for(var i in result){
+                                output+="<option value="+result[i].district.id+">"+result[i].district.name+"</option>";
+                            }
+                            district.html(output);
+                        }
+                    });
+                });
+            });
+
+            var pcountry = $('#p_country');
+            $.ajax({
+				type:'GET',
+				url:"http://localhost:8080/api/getAllCountry",
+				async:true,
+				success:function(result){
+					var output = "<option selected disabled> -- Select -- </option>";
+					for(var i in result){
+						output+="<option value="+result[i].id+">"+result[i].name+"  ["+result[i].acronym+"]</option>";
+					}
+					pcountry.html(output);
+				}
+            });
+
+            var pstate = $('#p_state');
+            $('#p_country').change(function(){
+                $(this).find("option:selected").each(function(){
+                    var id = $(this).attr("value");
+                    var pre = "http://localhost:8080/api/getAllStateByCountryId/";
+                    var varurl = pre+id;
+                    $.ajax({
+                        type: 'GET',
+                        url: varurl,
+                        async: true,
+                        success:function(result){
+                            var output = "<option value='0'>-- Select --</option>";
+                            for(var i in result){
+                                output+="<option value="+result[i].state.id+">"+result[i].state.name+"</option>";
+                            }
+                            pstate.html(output);
+                        }
+                    });
+                });
+            });
+
+            var pdistrict = $('#p_district');
+
+            $('#p_state').change(function(){
+                $(this).find("option:selected").each(function(){
+                    var id1 = $('#p_country option:selected').val();
+                    var id = $(this).attr("value");
+                    var pre = "http://localhost:8080/api/getAllDistrictByStateId/";
+                    var varurl = pre+id1+"/"+id;
+                    $.ajax({
+                        type: 'GET',
+                        url: varurl,
+                        async: true,
+                        success:function(result){
+                            var output = "<option value='0'>-- Select --</option>";
+                            for(var i in result){
+                                output+="<option value="+result[i].district.id+">"+result[i].district.name+"</option>";
+                            }
+                            pdistrict.html(output);
+                        }
+                    });
+                });
+            });
+			            
 			var current_fs, next_fs, previous_fs; //fieldsets
 			var opacity;
 			var current = 1;
@@ -656,32 +898,32 @@
 			    current_fs = $(this).parent();
 			    next_fs = $(this).parent().next();
 
-			//Add Class Active
-			$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
+				//Add Class Active
+				$("#progressbar li").eq($("fieldset").index(next_fs)).addClass("active");
 
-			//show the next fieldset
-			next_fs.show();
-			//hide the current fieldset with style
-			current_fs.animate({opacity: 0}, {
-			    step: function(now) {
-			// for making fielset appear animation
-			opacity = 1 - now;
+				//show the next fieldset
+				next_fs.show();
+				//hide the current fieldset with style
+				current_fs.animate({opacity: 0}, {
+			    	step: function(now) {
+					// for making fielset appear animation
+					opacity = 1 - now;
 
-			current_fs.css({
-			    'display': 'none',
-			    'position': 'relative'
-			});
-			next_fs.css({'opacity': opacity});
-			},
-			duration: 500
+					current_fs.css({
+					    'display': 'none',
+			    		'position': 'relative'
+					});
+					next_fs.css({'opacity': opacity});
+				},
+				duration: 500
 			});
 			setProgressBar(++current);
-			});
+		});
 
-			$(".previous").click(function(){
+		$(".previous").click(function(){
 
-			    current_fs = $(this).parent();
-			    previous_fs = $(this).parent().prev();
+			current_fs = $(this).parent();
+			previous_fs = $(this).parent().prev();
 
 			//Remove class active
 			$("#progressbar li").eq($("fieldset").index(current_fs)).removeClass("active");
@@ -691,33 +933,32 @@
 
 			//hide the current fieldset with style
 			current_fs.animate({opacity: 0}, {
-			    step: function(now) {
-			// for making fielset appear animation
-			opacity = 1 - now;
+				step: function(now) {
+					// for making fielset appear animation
+					opacity = 1 - now;
 
-			current_fs.css({
-			    'display': 'none',
-			    'position': 'relative'
-			});
-			previous_fs.css({'opacity': opacity});
-			},
-			duration: 500
+					current_fs.css({
+			    		'display': 'none',
+			    		'position': 'relative'
+					});
+					previous_fs.css({'opacity': opacity});
+				},
+				duration: 500
 			});
 			setProgressBar(--current);
-			});
-
-			function setProgressBar(curStep){
-			    var percent = parseFloat(100 / steps) * curStep;
-			    percent = percent.toFixed();
-			    $(".progress-bar")
-			    .css("width",percent+"%")
-			}
-
-			$(".submit").click(function(){
-			    return false;
-			})
-			
 		});
+
+		function setProgressBar(curStep){
+			var percent = parseFloat(100 / steps) * curStep;
+			percent = percent.toFixed();
+			$(".progress-bar").css("width",percent+"%")
+		}
+
+		$(".submit").click(function(){
+			return false;
+		})
+            
+	});
 	</script>
 </body>
 </html>

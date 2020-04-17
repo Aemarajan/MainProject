@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.customvalidator.Address;
 import com.project.customvalidator.Personal;
 import com.project.model.Bloodgroup;
+import com.project.model.CSDMapping;
 import com.project.model.Community;
 import com.project.model.Country;
 import com.project.model.Degree;
@@ -29,6 +31,7 @@ import com.project.model.State;
 import com.project.model.User;
 import com.project.model.Year;
 import com.project.service.BloodgroupService;
+import com.project.service.CSDService;
 import com.project.service.CommunityService;
 import com.project.service.CountryService;
 import com.project.service.DegreeService;
@@ -104,6 +107,9 @@ public class ApiController {
 	
 	@Autowired
 	ProfileService profileService;
+	
+	@Autowired
+	CSDService csdService;
 	
 	@GetMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
@@ -210,11 +216,35 @@ public class ApiController {
 		return communityService.selectAll();
 	}
 	
+	@GetMapping("getAllCSD")
+	public List<CSDMapping> getAllCSD(){
+		return csdService.selectAll();
+	}
+	
 	@PostMapping(value="savePersonalJson",produces= {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public Personal savePersonal(@RequestBody Personal personal) {
 		profileService.updatePersonal(personal.getDob(),personal.getBlood(),personal.getReligion(),personal.getCommunity(),personal.getId());
 		return personal;
+	}
+	
+	@GetMapping("getAllStateByCountryId/{id}")
+	public List<CSDMapping> getAllStateByCountry(@PathVariable("id")int id){
+		return csdService.selectAllStateByCountryId(id);
+	}
+	
+	@GetMapping("getAllDistrictByStateId/{countryId}/{stateId}")
+	public List<CSDMapping> getAllDistrictByState(@PathVariable("stateId")int stateid,@PathVariable("countryId")int countryid){
+		return csdService.selectAllDistrictByStateId(countryid,stateid);
+	}
+	
+	@PostMapping(value="saveAddressJson",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public Address saveAddress(@RequestBody Address address) {
+		profileService.updateAddress(address.getId(), address.getDoor_no(), address.getLine1(), address.getLine2(), address.getLine3(), 
+				csdService.selectByCSDId(address.getCountry(),address.getState(),address.getDistrict()),address.getPincode(), address.isPermanent()?1:0, address.getP_door_no(), 
+				address.getP_line1(), address.getP_line2(), address.getP_line3(), csdService.selectByCSDId(address.getP_country(),address.getP_state(),address.getP_district()),address.getP_pincode());
+		return address;
 	}
 	
 }
