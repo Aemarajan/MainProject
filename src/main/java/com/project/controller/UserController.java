@@ -18,10 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.project.config.PasswordGenerator;
 import com.project.customvalidator.SignUp;
 import com.project.model.User;
+import com.project.service.GraduateService;
 import com.project.service.MailService;
 import com.project.service.PrivilegeService;
 import com.project.service.ProfileService;
-import com.project.service.QualificationService;
+import com.project.service.SchoolingService;
 import com.project.service.UserService;
 
 @Controller
@@ -41,12 +42,15 @@ public class UserController {
 
 	@Autowired
 	ProfileService profileService;
-	
-	@Autowired
-	QualificationService quaService;
 
 	@Autowired
 	MasterController masterController;
+	
+	@Autowired
+	SchoolingService schoolService;
+	
+	@Autowired
+	GraduateService graduationService;
 	
 	@GetMapping("SignUp")
 	public ModelAndView getSignup(HttpSession session,HttpServletRequest request,
@@ -122,7 +126,8 @@ public class UserController {
 			mailService.sendDetails(userLoc);
 			userService.createUser(userLoc.getRole(), userLoc.getName(), userLoc.getEmail(), userLoc.getUsername(), userLoc.getPassword(), userLoc.getPrivilege_provide(), userLoc.getInn()==1?true:false);
 			profileService.createUserProfile(userLoc.getUser_id());
-			quaService.createUserQualification(userLoc.getUser_id());
+			schoolService.createSchoolProfile(userLoc.getUser_id(),"SSLC");
+			schoolService.createSchoolProfile(userLoc.getUser_id(),"HSC");
 		}
 		return mv;
 	}

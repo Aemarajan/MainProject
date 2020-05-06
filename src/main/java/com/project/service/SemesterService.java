@@ -39,4 +39,13 @@ public class SemesterService {
 		semrepo.updateInnZero(id,i);
 	}
 
+	public Semester selectById(int id) {
+		List<Semester> list = semrepo.findAll();
+		for(Semester s : list) {
+			if(id == s.getId())
+				return s;
+		}
+		return null;
+	}
+
 }

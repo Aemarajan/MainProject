@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.customvalidator.Address;
+import com.project.customvalidator.Graduation;
 import com.project.customvalidator.Personal;
+import com.project.customvalidator.School;
+import com.project.model.Batch;
 import com.project.model.Bloodgroup;
 import com.project.model.CSDMapping;
 import com.project.model.Community;
@@ -27,9 +30,12 @@ import com.project.model.LevelTwo;
 import com.project.model.Menu;
 import com.project.model.Regulation;
 import com.project.model.Religion;
+import com.project.model.Section;
+import com.project.model.Semester;
 import com.project.model.State;
 import com.project.model.User;
 import com.project.model.Year;
+import com.project.service.BatchService;
 import com.project.service.BloodgroupService;
 import com.project.service.CSDService;
 import com.project.service.CommunityService;
@@ -46,6 +52,8 @@ import com.project.service.PrivilegeService;
 import com.project.service.ProfileService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
+import com.project.service.SectionService;
+import com.project.service.SemesterService;
 import com.project.service.StateService;
 import com.project.service.UserService;
 import com.project.service.YearService;
@@ -111,6 +119,25 @@ public class ApiController {
 	@Autowired
 	CSDService csdService;
 	
+	@Autowired
+	SectionService sectionService;
+	
+	@Autowired
+	BatchService batchService;
+	
+	@Autowired
+	SemesterService semesterService;
+	
+	@GetMapping("getAllSemester")
+	public List<Semester> getAllSemester(){
+		return semesterService.selectAll();
+	}
+	
+	@GetMapping("getAllBatch")
+	public List<Batch> getAllBatch(){
+		return batchService.selectAll();
+	}
+	
 	@GetMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
 		return lvl1s.selectByDd(1);
@@ -164,6 +191,11 @@ public class ApiController {
 	@GetMapping("/getAllDepartment")
 	public List<Department> getAllDepartment(){
 		return departmentService.selectAll();
+	}
+	
+	@GetMapping("/GetAllSection")
+	public List<Section> getAllSection(){
+		return sectionService.selectAll();
 	}
 	
 	@GetMapping("/getAllState")
@@ -245,6 +277,18 @@ public class ApiController {
 				csdService.selectByCSDId(address.getCountry(),address.getState(),address.getDistrict()),address.getPincode(), address.isPermanent()?1:0, address.getP_door_no(), 
 				address.getP_line1(), address.getP_line2(), address.getP_line3(), csdService.selectByCSDId(address.getP_country(),address.getP_state(),address.getP_district()),address.getP_pincode());
 		return address;
+	}
+	
+	@PostMapping(value="saveSchoolMarks",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public School saveSchooling(@RequestBody School school) {
+		return school;
+	}
+	
+	@PostMapping(value="saveGraduationMarks",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public Graduation saveGraduation(@RequestBody Graduation graduate) {
+		return graduate;
 	}
 	
 }
