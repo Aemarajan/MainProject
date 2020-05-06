@@ -18,7 +18,8 @@
 <body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-  	<jsp:include page="Menubar.jsp" />
+<%-- 	<jsp:include page="Menubar.jsp" /> --%>
+	<div id="header" class="mt-2"></div>
     
 	<div class="wrapper d-flex align-items-stretch">
 		
@@ -83,12 +84,13 @@
 			                        <s:label path="dd">Dropdown</s:label>
 			                      </div>
 			                    </div>
-			                    <div class="row">
+			                    
+			                    <div class="row" id="ref">
 			                    	<div class="col-sm-11">
 			                    		<div class="md-form mt-0">
 					                      <s:input path="ref" type="text" cssClass="ref form-control"></s:input>
-					                      <s:label path="ref" for="Header Name" class="rlab">Reference <span class="mandatory"> *</span></s:label>
-					                      <s:errors path="ref" cssClass="error referror"></s:errors>
+					                      <s:label path="ref" for="Header Name">Reference <span class="mandatory"> *</span></s:label>
+					                      <s:errors path="ref" cssClass="error"></s:errors>
 					                    </div>
 			                    	</div>
 			                    	<div class="col-sm-1 p-0">
@@ -161,33 +163,36 @@
 	$(document).ready(function(){
 		$('#dd').click(function() {
 			var check = this.checked;
+			console.log(check);
 			if (check == false){
-				$('.ref').show();
-	  		$('.rlab').show();
-	  		$('.referror').show();
-	  		$('.ref').attr('value','');
+				$('#ref').show();
+// 	  			$('.rlab').show();
+// 	  			$('.referror').show();
+	  			$('.ref').attr('value','');
 			}
 			else{
-				$('.ref').hide();
-	  		$('.rlab').hide();
-	  		$('.referror').hide();
-	  		$('.ref').attr('value','null');
+				$('#ref').hide();
+// 	  			$('.rlab').hide();
+// 	  			$('.referror').hide();
+	  			$('.ref').attr('value','null');
 			}
 		});
-	  var varurl = "http://localhost:8080/api/getAllLevelOneByDd";
-	  var lvl1 = $('#lvl1');
-	  $.ajax({
-	    type: 'GET',
-	    url: varurl,
-	    async: true,
-	    success: function(result){
-	      var output = "<option value='0'> -- Select -- </option>";
-	      for(var i in result){
-	        output+="<option value="+result[i].lvl1_id+">"+result[i].name+"</option>";
-	      }
-	      lvl1.html(output);
-	    }
-	  });
+
+		var varurl = "http://localhost:8080/api/getAllLevelOneByDd";
+	  	var lvl1 = $('#lvl1');
+	  	$.ajax({
+	    	type: 'GET',
+	    	url: varurl,
+	    	async: true,
+	    	success: function(result){
+	      		var output = "<option value='0'> -- Select -- </option>";
+	      		for(var i in result){
+	        		output+="<option value="+result[i].lvl1_id+">"+result[i].name+"</option>";
+	      		}
+	      	lvl1.html(output);
+	    	}
+	  	});
+	  
 	});
 </script>
 </body>

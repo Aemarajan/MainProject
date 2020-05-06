@@ -358,7 +358,7 @@ public class HeaderController {
 			}
 		}
 		
-		lvl2ss.updateLevelTwo(lvl.getLvl2_id(),lvl.getName(),lvl.getDd(),lvl.getLvl1().getLvl1_id(),lvl.isInn() ? 1 : 0);
+		lvl2ss.updateLevelTwo(lvl.getLvl2_id(),lvl.getName(),lvl.getDd(),lvl.isInn() ? 1 : 0);
 		
 		mv.setViewName("ViewLevelTwo");
 		mv.addObject("pagedListHolder", masterController.pagination(lvl2ss.selectAll(),request));

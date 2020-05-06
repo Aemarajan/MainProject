@@ -33,14 +33,9 @@ $(document).ready(function() {
 	$('.inn').prop('checked',true);
 	
 // MenuBar
-	//$("#header").load("http://localhost:8080/header");
+	$("#header").load("http://localhost:8080/header");
 	
-// Add privilege
-	
-// Modify Privilege
-
-// SignUp
-    
+//Header JavaScript Codes
 // Add Level One
 	
 // Add Level Two
@@ -52,7 +47,12 @@ $(document).ready(function() {
 // Delete Level Two
   	
 // Delete Level Three
-	
+
+// Add privilege
+
+// Modify Privilege
+
+//SignUp
 	
 // Master's JavaScript Code
 // Batch Master

@@ -36,6 +36,6 @@ public interface LevelTwoRepository extends JpaRepository<LevelTwo, Integer> {
 	
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE lvl2 l SET l.name=:name,l.lvl1_id=:lvl1_id, l.dd=:dd, l.inn=:inn WHERE l.lvl2_id=:lvl2_id",nativeQuery=true)
-	void update(@Param("lvl2_id")int lvl2_id,@Param("name") String name,@Param("lvl1_id") int lvl1_id,@Param("dd") int dd,@Param("inn") int i);
+	@Query(value="UPDATE lvl2 l SET l.name=:name, l.dd=:dd, l.inn=:inn WHERE l.lvl2_id=:lvl2_id",nativeQuery=true)
+	void update(@Param("lvl2_id")int lvl2_id,@Param("name") String name,@Param("dd") int dd,@Param("inn") int i);
 }

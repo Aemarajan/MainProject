@@ -18,7 +18,8 @@
 <body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-	<jsp:include page="Menubar.jsp" />
+<%-- 	<jsp:include page="Menubar.jsp" /> --%>
+	<div id="header" class="mt-2"></div>
 	
 	<div class="wrapper d-flex align-items-stretch">
 		

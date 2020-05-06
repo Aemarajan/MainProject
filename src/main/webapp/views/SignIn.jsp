@@ -168,7 +168,7 @@
 													</p>
 												</c:if>
 
-												<s:hidden path="id"/>					
+												<s:hidden path="id" value="${id }"/>				
 												<div class="row">
 													<div class="col col-sm-11 col-md-11 col-lg-11">
 														<div class="md-form mt-0">

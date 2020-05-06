@@ -32,13 +32,13 @@ public class SyllabusService {
 		return sylRepo.findAllExceptId(id);
 	}
 
-	public void save(String code, String name, int credit,int inn) {
-		Syllabus s = new Syllabus(code,name,credit,inn);
+	public void save(String code, String name, String category, int contact_period, int lecture, int tutorial, int practical, int credit,int inn) {
+		Syllabus s = new Syllabus(code,name,category,contact_period,lecture,tutorial,practical,credit,inn);
 		sylRepo.save(s);
 	}
 
-	public void update(int id, String name, String code, int credit, boolean inn) {
-		sylRepo.update(id,name,code,credit,inn?1:0);
+	public void update(int id, String name, String code, String category, int contact_period, int lecture, int tutorial, int practical, int credit, boolean inn) {
+		sylRepo.update(id,name,code,category,contact_period,lecture,tutorial,practical,credit,inn?1:0);
 	}
 
 	public void updateInnZero(int id, int i) {

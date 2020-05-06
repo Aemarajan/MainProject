@@ -1,5 +1,9 @@
 package com.project.customvalidator;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import com.project.customannotations.NotEmpty;
 import com.project.model.LevelOne;
 

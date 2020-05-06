@@ -19,7 +19,8 @@
 <body id="page-top">
 
 	<jsp:include page="Header.jsp" />
-	<jsp:include page="Menubar.jsp" />
+<%-- 	<jsp:include page="Menubar.jsp" /> --%>
+	<div id="header" class="mt-2"></div>
 
 	<div class="wrapper d-flex align-items-stretch">
 
@@ -90,19 +91,20 @@
 									<label>( If this header have another level select this checkbox )</label>
 								</div>
 
-								<div class="d-flex justify-content-start">
-									<!-- Default unchecked -->
-									<div>
-										<s:checkbox path="dd" cssClass="drop" id="dd"></s:checkbox>
-										<s:label path="dd">Dropdown</s:label>
-									</div>
-								</div>
-								<div class="row">
+								<!-- Default checked -->
+			                    <div class="d-flex justify-content-start">
+			                      <div>
+			                        <s:checkbox path="dd" cssClass="drop" id="dd"></s:checkbox>
+			                        <s:label path="dd">Dropdown</s:label>
+			                      </div>
+			                    </div>
+			                    
+								<div class="row" id="ref">
 									<div class="col-sm-11">
 										<div class="md-form mt-0">
 											<s:input type="text" path="ref" cssClass="ref form-control" />
-											<s:label for="Header Name" path="ref" class="rlab">Reference <span class="mandatory"> *</span> </s:label>
-											<s:errors path="ref" cssClass="error referror"></s:errors>
+											<s:label for="Header Name" path="ref">Reference <span class="mandatory"> *</span> </s:label>
+											<s:errors path="ref" cssClass="error"></s:errors>
 										</div>
 									</div>
 									<div class="col-sm-1 p-0">
@@ -173,23 +175,26 @@
 	<script type="text/javascript" src="./views/js/common.js"></script>
 	
 	<script type="text/javascript">
-	$(document).ready(function() {
-		$('#dd').click(function() {
-			var check = this.checked;
-			if (check == false){
-				$('.ref').show();
-	    		$('.rlab').show();
-	    		$('.referror').show();
-	    		$('.ref').attr('value','');
-	  		}
-			else{
-				$('.ref').hide();
-	    		$('.rlab').hide();
-	    		$('.referror').hide();
-	    		$('.ref').attr('value','null');
-	  		}
+		$(document).ready(function(){
+
+			$('#dd').click(function() {
+				var check = this.checked;
+				console.log(check);
+				if (check == false){
+					$('#ref').show();
+//	 	  			$('.rlab').show();
+//	 	  			$('.referror').show();
+		  			$('.ref').attr('value','');
+				}
+				else{
+					$('#ref').hide();
+//	 	  			$('.rlab').hide();
+//	 	  			$('.referror').hide();
+		  			$('.ref').attr('value','null');
+				}
+			});
+			
 		});
-	)};
 	</script>
 </body>
 </html>

@@ -122,7 +122,7 @@ public class MasterController {
 		PagedListHolder pageListHolder = new PagedListHolder(list);
 		int page = ServletRequestUtils.getIntParameter(request, "p", 0);
 		pageListHolder.setPage(page);
-		pageListHolder.setPageSize(5);
+		pageListHolder.setPageSize(10);
 		return pageListHolder;
 	}
 
@@ -1827,8 +1827,17 @@ public class MasterController {
 				return mv;
 			}
 		}
-		syllabusService.save(syl.getSubject_code().replaceAll("\\s", ""), syl.getSubject_name().toLowerCase(),
-				(int) syl.getCredit(), syl.isInn() ? 1 : 0);
+		syllabusService.save(
+				syl.getSubject_code().replaceAll("\\s", ""), 
+				syl.getSubject_name().toLowerCase(),
+				syl.getCategory(),
+				(int) syl.getContact_period(),
+				(int) syl.getLecture(),
+				(int) syl.getTutorial(),
+				(int) syl.getPractical(),
+				(int) syl.getCredit(), 
+				syl.isInn() ? 1 : 0);
+		
 		mv.setViewName("redirect:/GetSyllabusMaster");
 		mv.addObject("added", "success");
 		return mv;
@@ -1859,8 +1868,18 @@ public class MasterController {
 				return mv;
 			}
 		}
-		syllabusService.update(syl.getId(), syl.getSubject_name().toLowerCase(),
-				syl.getSubject_code().replaceAll("\\s", ""), (int) syl.getCredit(), syl.isInn());
+		syllabusService.update(
+				syl.getId(), 
+				syl.getSubject_name().toLowerCase(),
+				syl.getSubject_code().replaceAll("\\s", ""),
+				syl.getCategory(),
+				(int) syl.getContact_period(),
+				(int) syl.getLecture(),
+				(int) syl.getTutorial(),
+				(int) syl.getPractical(),
+				(int) syl.getCredit(), 
+				syl.isInn());
+		
 		mv.setViewName("redirect:/GetSyllabusMaster");
 		mv.addObject("updated", "success");
 		return mv;

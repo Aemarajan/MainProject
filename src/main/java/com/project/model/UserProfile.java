@@ -44,19 +44,32 @@ public class UserProfile {
 	String line3;
 	
 	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="Country_id",referencedColumnName = "id")
-	private Country country_id;
-	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="state_id",referencedColumnName = "id")
-	private State state_id;
-	
-	@ManyToOne(cascade= CascadeType.MERGE)
-	@JoinColumn(name="district_id",referencedColumnName = "id")
-	private District district_id;
+	@JoinColumn(name="csd",referencedColumnName = "id")
+	CSDMapping csd;
 	
 	int pincode;
-
+	
+	int permanent;
+	
+	String p_door_no;
+	String p_line1;
+	String p_line2;
+	String p_line3;
+	
+	@ManyToOne(cascade= CascadeType.MERGE)
+	@JoinColumn(name="p_csd",referencedColumnName = "id")
+	CSDMapping p_csd;
+	
+	int p_pincode;
+	
+	int complete;
+	
+	public UserProfile() {}
+	
+	public UserProfile(int id) {
+		this.id = id;
+	}
+	
 	public int getId() {
 		return id;
 	}
@@ -145,30 +158,6 @@ public class UserProfile {
 		this.line3 = line3;
 	}
 
-	public Country getCountry_id() {
-		return country_id;
-	}
-
-	public void setCountry_id(Country country_id) {
-		this.country_id = country_id;
-	}
-
-	public State getState_id() {
-		return state_id;
-	}
-
-	public void setState_id(State state_id) {
-		this.state_id = state_id;
-	}
-
-	public District getDistrict_id() {
-		return district_id;
-	}
-
-	public void setDistrict_id(District district_id) {
-		this.district_id = district_id;
-	}
-
 	public int getPincode() {
 		return pincode;
 	}
@@ -177,12 +166,86 @@ public class UserProfile {
 		this.pincode = pincode;
 	}
 
+	public CSDMapping getCsd() {
+		return csd;
+	}
+
+	public void setCsd(CSDMapping csd) {
+		this.csd = csd;
+	}
+
+	public String getP_door_no() {
+		return p_door_no;
+	}
+
+	public void setP_door_no(String p_door_no) {
+		this.p_door_no = p_door_no;
+	}
+
+	public String getP_line1() {
+		return p_line1;
+	}
+
+	public void setP_line1(String p_line1) {
+		this.p_line1 = p_line1;
+	}
+
+	public String getP_line2() {
+		return p_line2;
+	}
+
+	public void setP_line2(String p_line2) {
+		this.p_line2 = p_line2;
+	}
+
+	public String getP_line3() {
+		return p_line3;
+	}
+
+	public void setP_line3(String p_line3) {
+		this.p_line3 = p_line3;
+	}
+
+	public CSDMapping getP_csd() {
+		return p_csd;
+	}
+
+	public void setP_csd(CSDMapping p_csd) {
+		this.p_csd = p_csd;
+	}
+
+	public int getP_pincode() {
+		return p_pincode;
+	}
+
+	public void setP_pincode(int p_pincode) {
+		this.p_pincode = p_pincode;
+	}
+
+	public int getComplete() {
+		return complete;
+	}
+
+	public void setComplete(int complete) {
+		this.complete = complete;
+	}
+
+	public int getPermanent() {
+		return permanent;
+	}
+
+	public void setPermanent(int permanent) {
+		this.permanent = permanent;
+	}
+
 	@Override
 	public String toString() {
 		return "UserProfile [id=" + id + ", user_id=" + user_id + ", name=" + name + ", dob=" + dob + ", blood_id="
 				+ blood_id + ", religion_id=" + religion_id + ", community_id=" + community_id + ", door_no=" + door_no
-				+ ", line1=" + line1 + ", line2=" + line2 + ", line3=" + line3 + ", country_id=" + country_id
-				+ ", state_id=" + state_id + ", district_id=" + district_id + ", pincode=" + pincode + "]";
+				+ ", line1=" + line1 + ", line2=" + line2 + ", line3=" + line3 + ", csd=" + csd + ", pincode=" + pincode
+				+ ", permanent=" + permanent + ", p_door_no=" + p_door_no + ", p_line1=" + p_line1 + ", p_line2="
+				+ p_line2 + ", p_line3=" + p_line3 + ", p_csd=" + p_csd + ", p_pincode=" + p_pincode + ", complete="
+				+ complete + "]";
 	}
 	
 }

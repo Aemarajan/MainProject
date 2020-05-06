@@ -12,28 +12,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.project.customvalidator.Address;
 import com.project.customvalidator.Personal;
 import com.project.model.Bloodgroup;
+import com.project.model.CSDMapping;
 import com.project.model.Community;
 import com.project.model.Country;
 import com.project.model.Degree;
 import com.project.model.Department;
 import com.project.model.District;
+import com.project.model.Grade;
 import com.project.model.LevelOne;
 import com.project.model.LevelThree;
 import com.project.model.LevelTwo;
 import com.project.model.Menu;
 import com.project.model.Regulation;
 import com.project.model.Religion;
+import com.project.model.SSMapping;
 import com.project.model.State;
 import com.project.model.User;
 import com.project.model.Year;
 import com.project.service.BloodgroupService;
+import com.project.service.CSDService;
 import com.project.service.CommunityService;
 import com.project.service.CountryService;
 import com.project.service.DegreeService;
 import com.project.service.DepartmentService;
 import com.project.service.DistrictService;
+import com.project.service.GradeService;
 import com.project.service.LanguageService;
 import com.project.service.LevelOneService;
 import com.project.service.LevelThreeService;
@@ -43,6 +49,7 @@ import com.project.service.PrivilegeService;
 import com.project.service.ProfileService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
+import com.project.service.SSMappingService;
 import com.project.service.StateService;
 import com.project.service.UserService;
 import com.project.service.YearService;
@@ -103,7 +110,16 @@ public class ApiController {
 	BloodgroupService bloodService;
 	
 	@Autowired
+	GradeService gradeService;
+	
+	@Autowired
 	ProfileService profileService;
+	
+	@Autowired
+	CSDService csdService;
+	
+	@Autowired
+	SSMappingService ssService;
 	
 	@GetMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
@@ -150,6 +166,21 @@ public class ApiController {
 		return list;
 	}
 	
+	@GetMapping("/getAllStaff")
+	public List<User> getAllStaff(){
+		return userService.selectAllStaffs();
+	}
+	
+	@GetMapping("/getAllStudent")
+	public List<User> getAllStudent(){
+		return userService.selectAllStudents();
+	}
+	
+	@GetMapping("/getAllAdmin")
+	public List<User> getAllAdmin(){
+		return userService.selectAllAdministrators();
+	}
+	
 	@GetMapping("/getAllDegree")
 	public List<Degree> getAllDegree(){
 		return degreeService.selectAll();
@@ -175,39 +206,49 @@ public class ApiController {
 		return regulationService.selectAll();
 	}
 	
-	@GetMapping("getAllDistrict")
+	@GetMapping("/getAllDistrict")
 	public List<District> getAllDistrict(){
 		return districtService.selectAll();
 	}
 	
-	@GetMapping("getYearByDegreeId/{id}")
+	@GetMapping("/getYearByDegreeId/{id}")
 	public List<Year> getYearByDegreeId(@PathVariable("id")int id){
 		return yearService.selectByDegreeId(id);
 	}
 	
-	@GetMapping("getAllDepartmentByDegreeId/{id}")
+	@GetMapping("/getAllDepartmentByDegreeId/{id}")
 	public List<Department> getAllDepartmentByDegree(@PathVariable("id")int id){
 		return departmentService.selectDepartmentByDegree(id);
 	}
 	
-	@GetMapping("getAllYear")
+	@GetMapping("/getAllYear")
 	public List<Year> getAllYear(){
 		return yearService.selectAll();
 	}
 	
-	@GetMapping("getAllBlood")
+	@GetMapping("/getAllBlood")
 	public List<Bloodgroup> getAllBlood(){
 		return bloodService.selectAll();
 	}
 	
-	@GetMapping("getAllReligion")
+	@GetMapping("/getAllReligion")
 	public List<Religion> getAllReligion(){
 		return religionService.selectAll();
 	}
 	
-	@GetMapping("getAllCommunity")
+	@GetMapping("/getAllCommunity")
 	public List<Community> getAllCommunity(){
 		return communityService.selectAll();
+	}
+	
+	@GetMapping("/getAllGrade")
+	public List<Grade> getAllGrade(){
+		return gradeService.selectAll();
+	}
+	
+	@GetMapping("/getAllCSD")
+	public List<CSDMapping> getAllCSD(){
+		return csdService.selectAll();
 	}
 	
 	@PostMapping(value="savePersonalJson",produces= {MediaType.APPLICATION_JSON_VALUE})
@@ -215,6 +256,30 @@ public class ApiController {
 	public Personal savePersonal(@RequestBody Personal personal) {
 		profileService.updatePersonal(personal.getDob(),personal.getBlood(),personal.getReligion(),personal.getCommunity(),personal.getId());
 		return personal;
+	}
+	
+	@GetMapping("getAllStateByCountryId/{id}")
+	public List<CSDMapping> getAllStateByCountry(@PathVariable("id")int id){
+		return csdService.selectAllStateByCountryId(id);
+	}
+	
+	@GetMapping("getAllDistrictByStateId/{countryId}/{stateId}")
+	public List<CSDMapping> getAllDistrictByState(@PathVariable("stateId")int stateid,@PathVariable("countryId")int countryid){
+		return csdService.selectAllDistrictByStateId(countryid,stateid);
+	}
+	
+	@PostMapping(value="saveAddressJson",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public Address saveAddress(@RequestBody Address address) {
+		profileService.updateAddress(address.getId(), address.getDoor_no(), address.getLine1(), address.getLine2(), address.getLine3(), 
+				csdService.selectByCSDId(address.getCountry(),address.getState(),address.getDistrict()),address.getPincode(), address.isPermanent()?1:0, address.getP_door_no(), 
+				address.getP_line1(), address.getP_line2(), address.getP_line3(), csdService.selectByCSDId(address.getP_country(),address.getP_state(),address.getP_district()),address.getP_pincode());
+		return address;
+	}
+	
+	@GetMapping("/getAllStudentByStaffId/{id}")
+	public List<SSMapping> getAllStudentByStaffId(@PathVariable("id") int id){
+		return ssService.selectAllStudentByStaffId(id);
 	}
 	
 }

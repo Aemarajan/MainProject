@@ -11,7 +11,7 @@ public class AddLevelTwo {
 	int lvl1;
 	
 	@NotEmpty(message="* Name should not be null")
-	@Size(min=3,max=20,message="* Size must be 3 to 20")
+	@Size(min=3,max=50,message="* Size must be 3 to 50")
 	String name;
 	
 	boolean dd;

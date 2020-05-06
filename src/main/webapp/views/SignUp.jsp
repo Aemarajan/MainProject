@@ -18,7 +18,8 @@
 </head>
 <body id="page-top"> 
 	<jsp:include page="Header.jsp" />
-	<jsp:include page="Menubar.jsp" />
+<%-- 	<jsp:include page="Menubar.jsp" /> --%>
+	<div id="header" class="mt-2"></div>
 	
 	<div class="wrapper d-flex align-items-stretch">
 	
@@ -26,25 +27,25 @@
 	  
 		<div class="container-fluid pl-6">
 			<div class="row mt-2 mb-2">
-				<div class="col col-sm-1 col-md-1 col-lg-1"></div>
-				<div class="col col-sm-10 col-md-10 col-lg-10">
+				<div class="col col-sm-12 col-md-12 col-lg-12">
 
 					<ul class="nav nav-tabs mt-2">
-						<li class="nav-item"><a class="nav-link active" href="#Administrators">Administrator</a></li>
-						<li class="nav-item"><a class="nav-link " href="#Staffs">Staff</a></li>
-						<li class="nav-item"><a class="nav-link " href="#Students">Student</a></li>
+						<li class="nav-item"><a class="nav-link active" href="#Admin">Administrator</a></li>
+						<li class="nav-item"><a class="nav-link " href="#Staff">Staff</a></li>
+						<li class="nav-item"><a class="nav-link " href="#Student">Student</a></li>
 					</ul>
 
 					<c:url value="/SignUp" var="pagedLink">
 						<c:param name="p" value="~" />
 					</c:url>
 					
+					<jsp:useBean id="pagedListHolder1" scope="request" type="org.springframework.beans.support.PagedListHolder" />
+					<jsp:useBean id="pagedListHolder2" scope="request" type="org.springframework.beans.support.PagedListHolder" />
+					<jsp:useBean id="pagedListHolder3" scope="request" type="org.springframework.beans.support.PagedListHolder" />
+					
 					<!-- Tab panes -->
 					<div class="tab-content">
-						<div id="Administrators" class="tab-pane active">
-
-							<jsp:useBean id="pagedListHolder1" scope="request" type="org.springframework.beans.support.PagedListHolder" />
-
+						<div id="Admin" class="tab-pane active">
 							<div class="table-wrapper">
 								<div class="table-title">
 									<div class="row">
@@ -72,6 +73,7 @@
 													<th>Actions</th>
 												</tr>
 											</thead>
+											
 											<tbody>
 												<c:forEach var="l" items="${pagedListHolder1.pageList }">
 													<tr>
@@ -102,14 +104,10 @@
 								</div>
 								<!-- row -->
 								<tg:paging pagedListHolder="${pagedListHolder1}" pagedLink="${pagedLink}" />
-							</div>
-							<!-- Table wrapper -->									
+							</div>									
 						</div>
 						
-						<div id="Staffs" class="tab-pane fade">
-						
-							<jsp:useBean id="pagedListHolder2" scope="request" type="org.springframework.beans.support.PagedListHolder" />
-
+						<div id="Staff" class="tab-pane fade">	
 							<div class="table-wrapper">
 								<div class="table-title">
 									<div class="row">
@@ -171,10 +169,7 @@
 							<!-- Table wrapper -->	
 						</div>
 						
-						<div id="Students" class="tab-pane fade">
-							
-							<jsp:useBean id="pagedListHolder3" scope="request" type="org.springframework.beans.support.PagedListHolder" />
-													
+						<div id="Student" class="tab-pane fade">
 							<div class="table-wrapper">
 								<div class="table-title">
 									<div class="row">
@@ -235,6 +230,7 @@
 							</div>
 							<!-- Table wrapper -->
 						</div>
+					
 					</div>
 
 					<!-- Add Modal HTML -->
@@ -330,7 +326,7 @@
 												<a href="#" data-toggle="tooltip" data-placement="top" title="ABC"><i class="fa fa-info-circle mt-4"></i></a>
 											</div>
 										</div>
-										<div class="row" hidden>
+										<div class="row" hidden="true">
 											<div class="col-sm-11">
 												<div class="md-form mt-0">
 													<s:input path="password" type="text" id="password" cssClass="form-control"></s:input>
@@ -343,7 +339,7 @@
 											</div>
 										</div>
 
-										<div class="row" hidden>
+										<div class="row" hidden="true">
 											<div class="col-sm-11">
 												<div class="md-form mt-0">
 													<s:input path="privilege_provide" type="text" id="privilege_provide" cssClass="form-control"></s:input>
@@ -517,7 +513,7 @@
 										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 									</div>
 									<div class="modal-body">
-										<input id="user_id" name="user_id" hidden />
+										<input id="user_id" name="user_id" hidden="true" />
 										<div class="md-form mt-0">
 											<input id="name" autofocus="autofocus" class="form-control" readonly /> <label for="Name">Name</label>
 										</div>
@@ -531,8 +527,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- col-md-10 -->
-				<div class="col col-sm-1 col-md-1 col-lg-1"></div>
+				<!-- col-md-12 -->
 			</div>
 			<!-- Row -->
 		</div>

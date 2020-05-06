@@ -20,6 +20,8 @@ import com.project.customvalidator.SignUp;
 import com.project.model.User;
 import com.project.service.MailService;
 import com.project.service.PrivilegeService;
+import com.project.service.ProfileService;
+import com.project.service.QualificationService;
 import com.project.service.UserService;
 
 @Controller
@@ -36,7 +38,13 @@ public class UserController {
 
 	@Autowired
 	PrivilegeService privilegeService;
+
+	@Autowired
+	ProfileService profileService;
 	
+	@Autowired
+	QualificationService quaService;
+
 	@Autowired
 	MasterController masterController;
 	
@@ -111,6 +119,10 @@ public class UserController {
 			userService.createUser(signup.getRole().toLowerCase(),signup.getName().toLowerCase(),signup.getEmail().toLowerCase(),signup.getUsername().toLowerCase(),user.getPassword(),user.getPrivilege_provide(),signup.isInn());
 			mv.setViewName("redirect:/SignUp");
 			mv.addObject("added", "success");
+			//mailService.sendDetails(userLoc);
+			//userService.createUser(userLoc.getRole(), userLoc.getName(), userLoc.getEmail(), userLoc.getUsername(), userLoc.getPassword(), userLoc.getPrivilege_provide(), userLoc.getInn()==1?true:false);
+			//profileService.createUserProfile(userLoc.getUser_id());
+			//quaService.createUserQualification(userLoc.getUser_id());
 		}
 		return mv;
 	}

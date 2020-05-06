@@ -28,6 +28,15 @@ public class UserService {
 		return list;
 	}
 	
+	public User selectById(int id) {
+		List<User> list = userRepo.findAll();
+		for(User c : list) {
+			if(c.getUser_id() == id)
+				return c;
+		}
+		return null;
+	}
+	
 	public List<User> selectAllUser(){
 		return userRepo.findAll();
 	}

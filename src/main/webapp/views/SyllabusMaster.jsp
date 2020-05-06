@@ -22,7 +22,8 @@ pageEncoding="ISO-8859-1"%>
 <!-- Project Start --> 
 <div>
 	<jsp:include page="Header.jsp" />
-	<jsp:include page="Menubar.jsp" />
+<%-- 	<jsp:include page="Menubar.jsp" /> --%>
+	<div id="header" class="mt-2"></div>
 		
 	<div class="wrapper d-flex align-items-stretch">
 	
@@ -55,6 +56,11 @@ pageEncoding="ISO-8859-1"%>
 								<tr>
 									<th>Subject Code</th>
 									<th>Subject Name</th>
+									<th>Category</th>
+									<th>Contact Periods</th>
+									<th>Lecture</th>
+									<th>Tutorial</th>
+									<th>Practical</th>
 									<th>Credit</th>
 									<th>In Use</th>
 									<th>Actions</th>
@@ -65,14 +71,36 @@ pageEncoding="ISO-8859-1"%>
 									<tr>
 										<td>${l.subject_code }</td>
 										<td class="text-capitalize">${l.subject_name }</td>
+										<td>${l.category }</td>
+										<td>${l.contact_period }</td>
+										<td>${l.lecture }</td>
+										<td>${l.tutorial }</td>
+										<td>${l.practical }</td>
 										<td>${l.credit }</td>
 										<td>
 											<c:if test="${l.inn == 1 }"><span><i class="fa fa-circle text-success"></i>  Active</span></c:if>
 											<c:if test="${l.inn != 1 }"><span><i class="fa fa-circle text-danger"></i>  Inactive</span></c:if>
 										</td>
 										<td>
-											<a href="#editModal" class="edit" data-toggle="modal" data-id="${l.id }" data-code="${l.subject_code }" data-name="${l.subject_name }" data-credit="${l.credit }" data-inn="${l.inn }"><i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i></a>
-											<a href="#deleteModal" class="delete" data-toggle="modal" data-id="${l.id }" data-code="${l.subject_code }" data-name="${l.subject_name }"><i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i></a>
+											<a href="#editModal" class="edit" data-toggle="modal" 
+												data-id="${l.id }" 
+												data-code="${l.subject_code }" 
+												data-name="${l.subject_name }"
+												data-category="${l.category }"
+												data-contact_period="${l.contact_period }"
+												data-lecture="${l.lecture }"
+												data-tutorial="${l.tutorial }"
+												data-practical="${l.practical }" 
+												data-credit="${l.credit }" 
+												data-inn="${l.inn }">
+												<i class="fa fa-pencil-alt" data-toggle="tooltip" title="Edit"></i>
+											</a>
+											<a href="#deleteModal" class="delete" data-toggle="modal" 
+												data-id="${l.id }" 
+												data-code="${l.subject_code }" 
+												data-name="${l.subject_name }">
+												<i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i>
+											</a>
 										</td>
 									</tr>
 								</c:forEach>
@@ -138,10 +166,73 @@ pageEncoding="ISO-8859-1"%>
 												</div>
 											</div>
 											
+											<div class="mt-0">
+												<label class="d-flex justify-content-start"> Category <span class="mandatory pl-1"> *</span></label>
+												<s:select class="custom-select browser-default" path="category" id="category">
+													<option value="" selected disabled>-- Select --</option>
+													<option value="FC">FC</option>
+													<option value="PC">PC</option>
+													<option value="PE">PE</option>
+													<option value="EEC">EEC</option>
+												</s:select>
+											</div>
+											
+											<div class="row mt-3">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="contact_period" id="contact_period" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="contact Periods">Contact Periods<span class="mandatory"> *</span></label>
+														<s:errors path="contact_period" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="credit" cssClass="form-control" maxlength="1" pattern="\d*"/>
+														<s:input path="lecture" id="lecture" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="Lecture">Lecture<span class="mandatory"> *</span></label>
+														<s:errors path="lecture" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="tutorial" id="tutorial" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="Tutorials">Tutorials<span class="mandatory"> *</span></label>
+														<s:errors path="tutorial" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="practical" id="practical" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="Practicals">Practical<span class="mandatory"> *</span></label>
+														<s:errors path="practical" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="credit" id="credit" cssClass="form-control" maxlength="2" pattern="\d*"/>
 														<label for="credit">Credit<span class="mandatory"> *</span></label>
 														<s:errors path="credit" cssClass="error"></s:errors>
 													</div>
@@ -222,10 +313,73 @@ pageEncoding="ISO-8859-1"%>
 												</div>
 											</div>
 											
+											<div class="mt-0">
+												<label class="d-flex justify-content-start"> Category <span class="mandatory pl-1"> *</span></label>
+												<s:select class="custom-select browser-default" path="category" id="category">
+													<option value="" selected disabled>-- Select --</option>
+													<option value="FC">FC</option>
+													<option value="PC">PC</option>
+													<option value="PE">PE</option>
+													<option value="EEC">EEC</option>
+												</s:select>
+											</div>
+											
+											<div class="row mt-3">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="contact_period" id="contact_period" autofocus="autofocus" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="contact Periods">Contact Periods<span class="mandatory"> *</span></label>
+														<s:errors path="contact_period" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
 											<div class="row">
 												<div class="col-sm-11">
 													<div class="md-form mt-0">
-														<s:input path="credit" autofocus="autofocus" maxlength="1" id="credit" pattern="\d*"  cssClass="form-control"/>
+														<s:input path="lecture" id="lecture" autofocus="autofocus" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="Lecture">Lecture<span class="mandatory"> *</span></label>
+														<s:errors path="lecture" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="tutorial" id="tutorial" autofocus="autofocus" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="Tutorials">Tutorials<span class="mandatory"> *</span></label>
+														<s:errors path="tutorial" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="practical" id="practical" autofocus="autofocus" cssClass="form-control" maxlength="2" pattern="\d*"/>
+														<label for="Practicals">Practical<span class="mandatory"> *</span></label>
+														<s:errors path="practical" cssClass="error"></s:errors>
+													</div>
+												</div>
+												<div class="col-sm-1 p-0">
+													<a href="#" data-toggle="tooltip" data-placement="top" title="1,2,3,4...."><i class="fa fa-info-circle mt-4"></i></a>	
+												</div>
+											</div>
+											
+											<div class="row">
+												<div class="col-sm-11">
+													<div class="md-form mt-0">
+														<s:input path="credit" autofocus="autofocus" maxlength="2" id="credit" pattern="\d*"  cssClass="form-control"/>
 														<label for="credit">Credit<span class="mandatory"> *</span></label>
 														<s:errors path="credit" cssClass="error"></s:errors>
 													</div>
@@ -373,6 +527,11 @@ pageEncoding="ISO-8859-1"%>
 			var id = button.data('id');
 			var code = button.data('code'); 
 			var name = button.data('name');
+			var category = button.data('category');
+			var contact = button.data('contact_period');
+			var lecture = button.data('lecture');
+			var tutorial = button.data('tutorial');
+			var practical = button.data('practical');
 			var credit = button.data('credit');
 			var inn = button.data('inn');
 
@@ -380,6 +539,11 @@ pageEncoding="ISO-8859-1"%>
 			modal.find('#id').val(id);
 			modal.find('#subject_code').val(code);
 			modal.find('#subject_name').val(name);
+			modal.find('#category').val(category);
+			modal.find('#contact_period').val(contact);
+			modal.find('#lecture').val(lecture);
+			modal.find('#tutorial').val(tutorial);
+			modal.find('#practical').val(practical);
 			modal.find('#credit').val(credit);
 			if(inn == 1)
 				modal.find('#inn').prop('checked',true);

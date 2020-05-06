@@ -23,7 +23,8 @@
 <!-- Project Start --> 
 
 	<jsp:include page="Header.jsp" />
-	<jsp:include page="Menubar.jsp" />
+<%-- 	<jsp:include page="Menubar.jsp" /> --%>
+	<div id="header" class="mt-2"></div>
 	
 	<div class="wrapper d-flex align-items-stretch">  
 
@@ -61,9 +62,9 @@
 									<th>In Use</th>
 									<th>Actions</th>
 								</tr>
-								</thead>
-								<tbody>
-									<c:forEach var="l" items="${pagedListHolder.pageList }">
+							</thead>
+							<tbody>
+								<c:forEach var="l" items="${pagedListHolder.pageList }">
 									<tr>
 										<td>${l.from_year } - ${l.to_year }</td>
 										<td>${l.from_year }</td>
@@ -137,7 +138,7 @@
 													</div>
 												</div>
 												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="Year Format : yyyy"><i class="fa fa-info-circle mt-4"></i></a>
+													<a href="#" data-toggle="tooltip" data-placement="top" title="yyyy"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="row">
@@ -149,7 +150,7 @@
 													</div>
 												</div>
 												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="Year Format : yyyy"><i class="fa fa-info-circle mt-4"></i></a>	
+													<a href="#" data-toggle="tooltip" data-placement="top" title="yyyy"><i class="fa fa-info-circle mt-4"></i></a>	
 												</div>
 											</div>
 											<div class="form-group">
@@ -218,7 +219,7 @@
 													</div>
 												</div>
 												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="Year Format : yyyy"><i class="fa fa-info-circle mt-4"></i></a>
+													<a href="#" data-toggle="tooltip" data-placement="top" title="yyyy"><i class="fa fa-info-circle mt-4"></i></a>
 												</div>
 											</div>
 											<div class="row">
@@ -230,7 +231,7 @@
 													</div>
 												</div>
 												<div class="col-sm-1 p-0">
-													<a href="#" data-toggle="tooltip" data-placement="top" title="Year Format : yyyy"><i class="fa fa-info-circle mt-4"></i></a>	
+													<a href="#" data-toggle="tooltip" data-placement="top" title="yyyy"><i class="fa fa-info-circle mt-4"></i></a>	
 												</div>
 											</div>
 											<div class="form-group">

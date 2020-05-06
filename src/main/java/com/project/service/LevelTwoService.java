@@ -42,8 +42,8 @@ public class LevelTwoService {
 		return list;
 	}
 	
-	public void updateLevelTwo(int lvl2_id, String name,int lvl1_id, int dd, int i) {
-		lvl2Repo.update(lvl2_id, name,lvl1_id, dd, i);
+	public void updateLevelTwo(int lvl2_id, String name, int dd, int i) {
+		lvl2Repo.update(lvl2_id, name, dd, i);
 	}
 	
 	public List<LevelTwo> selectAllExceptId(int lvl2_id) {

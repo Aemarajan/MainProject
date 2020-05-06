@@ -38,4 +38,13 @@ public class DistrictService {
 	public List<District> selectAllExceptId(int id){
 		return disrepo.findAllExceptId(id);
 	}
+
+	public District selectById(int id) {
+		List<District> list = disrepo.findAll();
+		for(District d : list) {
+			if(d.getId() == id)
+				return d;
+		}
+		return null;
+	}
 }

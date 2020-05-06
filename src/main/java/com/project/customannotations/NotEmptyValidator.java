@@ -10,7 +10,7 @@ public class NotEmptyValidator implements ConstraintValidator<NotEmpty, Object> 
 
 	@Override
 	public boolean isValid(Object obj, ConstraintValidatorContext cxt) {
-		return ((obj != null) && (!obj.toString().trim().equals("")));
+		return ( (obj != null) && ( !(obj.toString().trim().equals("")) ) );
 	}
 
 }

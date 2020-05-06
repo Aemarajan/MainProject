@@ -18,7 +18,8 @@
 <body id="page-top">
 <div>
 	<jsp:include page="Header.jsp" />
-	<jsp:include page="Menubar.jsp" />
+<%-- 	<jsp:include page="Menubar.jsp" /> --%>
+	<div id="header" class="mt-2"></div>
 	
 	<div class="wrapper d-flex align-items-stretch">
 		
@@ -33,7 +34,7 @@
 					<h4>Username</h4>
 					<input type="hidden" name="user_id" value="${user.user_id }"/>
 					<div class="md-form mt-0" style="width:253px;">
-						<input type="text" class="form-control" value="${user.username }" readonly />
+						<input type="text" class="form-control" value="${user.name }" readonly />
 					</div>
 				</div>
 					
