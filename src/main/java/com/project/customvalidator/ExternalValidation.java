@@ -1,12 +1,15 @@
 package com.project.customvalidator;
 
+import com.project.model.Semester;
 import com.project.model.User;
 
 public class ExternalValidation {
 
 	int id;
 	
-	User user_id;
+	User user;
+	
+	Semester semester;
 	
 	String ma5161;
 	String mc5101;
@@ -84,12 +87,20 @@ public class ExternalValidation {
 		this.id = id;
 	}
 
-	public User getUser_id() {
-		return user_id;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUser_id(User user_id) {
-		this.user_id = user_id;
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Semester getSemester() {
+		return semester;
+	}
+
+	public void setSemester(Semester semester) {
+		this.semester = semester;
 	}
 
 	public String getMa5161() {
@@ -526,20 +537,21 @@ public class ExternalValidation {
 
 	@Override
 	public String toString() {
-		return "ExternalValidation [id=" + id + ", user_id=" + user_id + ", ma5161=" + ma5161 + ", mc5101=" + mc5101
-				+ ", mc5102=" + mc5102 + ", mc5103=" + mc5103 + ", mc5104=" + mc5104 + ", mc5111=" + mc5111
-				+ ", mc5112=" + mc5112 + ", mc5113=" + mc5113 + ", mc5201=" + mc5201 + ", mc5202=" + mc5202
-				+ ", mc5203=" + mc5203 + ", mc5204=" + mc5204 + ", mc5205=" + mc5205 + ", mc5211=" + mc5211
-				+ ", mc5212=" + mc5212 + ", mc5213=" + mc5213 + ", mc5301=" + mc5301 + ", mc5302=" + mc5302
-				+ ", mc5303=" + mc5303 + ", mc5304=" + mc5304 + ", mc5305=" + mc5305 + ", mc5311=" + mc5311
-				+ ", mc5312=" + mc5312 + ", mc5313=" + mc5313 + ", mc5401=" + mc5401 + ", mc5402=" + mc5402
-				+ ", mc5403=" + mc5403 + ", mc5404=" + mc5404 + ", mc5001=" + mc5001 + ", mc5002=" + mc5002
-				+ ", mc5003=" + mc5003 + ", mc5004=" + mc5004 + ", mc5005=" + mc5005 + ", mc5411=" + mc5411
-				+ ", mc5412=" + mc5412 + ", mc5413=" + mc5413 + ", mc5501=" + mc5501 + ", mc5502=" + mc5502
-				+ ", mc5503=" + mc5503 + ", mc5006=" + mc5006 + ", mc5007=" + mc5007 + ", mc5008=" + mc5008
-				+ ", mc5009=" + mc5009 + ", mc5010=" + mc5010 + ", mc5011=" + mc5011 + ", mc5012=" + mc5012
-				+ ", mc5013=" + mc5013 + ", mc5014=" + mc5014 + ", mc5015=" + mc5015 + ", mc5511=" + mc5511
-				+ ", mc5512=" + mc5512 + ", mc5513=" + mc5513 + ", mc5611=" + mc5611 + ", inn=" + inn + "]";
+		return "ExternalValidation [id=" + id + ", user=" + user + ", semester=" + semester + ", ma5161=" + ma5161
+				+ ", mc5101=" + mc5101 + ", mc5102=" + mc5102 + ", mc5103=" + mc5103 + ", mc5104=" + mc5104
+				+ ", mc5111=" + mc5111 + ", mc5112=" + mc5112 + ", mc5113=" + mc5113 + ", mc5201=" + mc5201
+				+ ", mc5202=" + mc5202 + ", mc5203=" + mc5203 + ", mc5204=" + mc5204 + ", mc5205=" + mc5205
+				+ ", mc5211=" + mc5211 + ", mc5212=" + mc5212 + ", mc5213=" + mc5213 + ", mc5301=" + mc5301
+				+ ", mc5302=" + mc5302 + ", mc5303=" + mc5303 + ", mc5304=" + mc5304 + ", mc5305=" + mc5305
+				+ ", mc5311=" + mc5311 + ", mc5312=" + mc5312 + ", mc5313=" + mc5313 + ", mc5401=" + mc5401
+				+ ", mc5402=" + mc5402 + ", mc5403=" + mc5403 + ", mc5404=" + mc5404 + ", mc5001=" + mc5001
+				+ ", mc5002=" + mc5002 + ", mc5003=" + mc5003 + ", mc5004=" + mc5004 + ", mc5005=" + mc5005
+				+ ", mc5411=" + mc5411 + ", mc5412=" + mc5412 + ", mc5413=" + mc5413 + ", mc5501=" + mc5501
+				+ ", mc5502=" + mc5502 + ", mc5503=" + mc5503 + ", mc5006=" + mc5006 + ", mc5007=" + mc5007
+				+ ", mc5008=" + mc5008 + ", mc5009=" + mc5009 + ", mc5010=" + mc5010 + ", mc5011=" + mc5011
+				+ ", mc5012=" + mc5012 + ", mc5013=" + mc5013 + ", mc5014=" + mc5014 + ", mc5015=" + mc5015
+				+ ", mc5511=" + mc5511 + ", mc5512=" + mc5512 + ", mc5513=" + mc5513 + ", mc5611=" + mc5611 + ", inn="
+				+ inn + "]";
 	}
 	
 }

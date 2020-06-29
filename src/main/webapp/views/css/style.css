@@ -85,6 +85,11 @@ h6{
 	list-style: none;
 }
 
+.banner{
+	 border-top : 2px dashed black; 
+	 border-bottom : 2px dashed black;
+}
+
 /* Autofill Styles */
 
 @keyframes autofill {
@@ -360,6 +365,10 @@ table.table td a.edit {
 	color: #FFC107;
 }
 
+table.table td a.view {
+	color: #33b5e5;
+}
+
 table.table td a.delete {
 	color: #F44336;
 }
@@ -401,6 +410,35 @@ table.table td a.delete {
 
 .permanent-delete{
 	padding-left:15px;
+}
+
+.custom-modal .modal-dialog {
+	max-width: 1000px;
+}
+
+.custom-modal .modal-header  {
+	padding: 20px 30px;
+}
+
+.custom-modal .modal-body{
+	padding: 10px 30px;
+}
+
+.custom-modal .modal-footer{
+	padding: 20px 30px;
+}
+
+.custom-modal .modal-content {
+	border-radius: 3px;
+}
+
+.custom-modal .modal-footer {
+	background: #ecf0f1;
+	border-radius: 0 0 3px 3px;
+}
+
+.custom-modal .modal-title {
+	display: inline-block;
 }
 
 /* SideBar Styles */

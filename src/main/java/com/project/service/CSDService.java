@@ -66,5 +66,15 @@ public class CSDService {
 		}
 		return null;
 	}
+
+	public CSDMapping selectByAllColumnId(int country, int state, int district) {
+		List<CSDMapping> list = csdRepo.findAll();
+		for(CSDMapping c : list) {
+			if(c.getCountry().getId() == country && c.getState().getId() == state && c.getDistrict().getId() == district){
+				return c;
+			}
+		}
+		return null;
+	}
 	
 }

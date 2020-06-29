@@ -11,7 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-<title>First Semester</title>
+<title>Sixth Semester</title>
 
 <link rel="stylesheet" href="./views/font-awesome/css/all.css">
 <link rel="stylesheet" href="./views/css/bootstrap.min.css">
@@ -41,15 +41,15 @@
 							<a class="black-text" href="AddExternal">Add External Marks</a>
 							<i class="fas fa-angle-double-right mx-2" aria-hidden="true"></i>
 						</li>
-						<li class="breadcrumb-item active">First Semester</li>
+						<li class="breadcrumb-item active">Sixth Semester</li>
 					</ol>
 				</nav>
 			</div>
-		
-			<h4 class="banner p-2 mt-2 mb-2">First Semester</h4>
+
+			<h4 class="banner p-2 mt-2 mb-2">Sixth Semester</h4>
 			
-<%-- 			<s:form action="SaveSemester1" method="post" modelAttribute="external" class="mt-2"> --%>
-			<form action="SaveSemester1" method="post" class="mt-2">
+<%-- 			<s:form action="SaveSemester6" method="post" modelAttribute="external" class="mt-2"> --%>
+			<form action="SaveSemester6" method="post" class="mt-2">
 				
 <!-- 				<div class="md-form" hidden="true"> -->
 <%-- 					<s:input path="user_id" id="user_id" value='<%= request.getParameter("user") %>' class="form-control"/> --%>

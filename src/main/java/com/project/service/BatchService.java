@@ -23,11 +23,11 @@ public class BatchService {
 		return list;
 	}
 
-	public Batch selectBatchByFromTo(int from_year, int to_year) {
-		List<Batch> list = bmrepo.selectByFromTo(from_year,to_year);
+	public Batch selectBatchByFromTo(Integer from_year, Integer to_year) {
+		List<Batch> list = bmrepo.selectByFromTo((int)from_year,(int)to_year);
 		Batch batch = new Batch();
 		for(Batch b:list) {
-			if(b.getFrom_year() == from_year && b.getTo_year() == to_year) {
+			if(b.getFrom_year() == (int)from_year && b.getTo_year() == (int)to_year) {
 				batch.setFrom_year(b.getFrom_year());
 				batch.setTo_year(b.getTo_year());
 				batch.setTo_year(b.getNo_of_years());
@@ -73,5 +73,14 @@ public class BatchService {
 
 	public List<Batch> selectAllExceptId(int id) {
 		return bmrepo.findAllExceptId(id);
+	}
+
+	public Batch selectById(int id) {
+		List<Batch> list = bmrepo.findAll();
+		for(Batch b : list) {
+			if(id == b.getId())
+				return b;
+		}
+		return null;
 	}
 }

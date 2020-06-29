@@ -10,7 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="ss_mapping")
+@Table(name="staff_student_mapping")
 public class SSMapping {
 
 	@Id

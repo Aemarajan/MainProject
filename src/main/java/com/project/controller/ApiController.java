@@ -13,7 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.customvalidator.Address;
+import com.project.customvalidator.Graduation;
 import com.project.customvalidator.Personal;
+import com.project.customvalidator.School;
+import com.project.model.Batch;
 import com.project.model.Bloodgroup;
 import com.project.model.CSDMapping;
 import com.project.model.Community;
@@ -29,9 +32,14 @@ import com.project.model.Menu;
 import com.project.model.Regulation;
 import com.project.model.Religion;
 import com.project.model.SSMapping;
+import com.project.model.Section;
+import com.project.model.Semester;
 import com.project.model.State;
+import com.project.model.Syllabus;
 import com.project.model.User;
 import com.project.model.Year;
+import com.project.service.AcademicMappingService;
+import com.project.service.BatchService;
 import com.project.service.BloodgroupService;
 import com.project.service.CSDService;
 import com.project.service.CommunityService;
@@ -47,10 +55,15 @@ import com.project.service.LevelTwoService;
 import com.project.service.MenuService;
 import com.project.service.PrivilegeService;
 import com.project.service.ProfileService;
+import com.project.service.RSSMappingService;
 import com.project.service.RegulationService;
 import com.project.service.ReligionService;
 import com.project.service.SSMappingService;
+import com.project.service.SectionService;
+import com.project.service.SemesterService;
 import com.project.service.StateService;
+import com.project.service.StudSubMappingService;
+import com.project.service.SyllabusService;
 import com.project.service.UserService;
 import com.project.service.YearService;
 
@@ -111,7 +124,19 @@ public class ApiController {
 	
 	@Autowired
 	GradeService gradeService;
+
+	@Autowired
+	SectionService sectionService;
 	
+	@Autowired
+	BatchService batchService;
+	
+	@Autowired
+	SemesterService semesterService;
+	
+	@Autowired
+	SyllabusService syllabusService;
+
 	@Autowired
 	ProfileService profileService;
 	
@@ -120,6 +145,15 @@ public class ApiController {
 	
 	@Autowired
 	SSMappingService ssService;
+	
+	@Autowired
+	RSSMappingService rssService;
+	
+	@Autowired
+	StudSubMappingService ssmService;
+	
+	@Autowired
+	AcademicMappingService acaService;
 	
 	@GetMapping("/getAllLevelOneByDd")
 	public List<LevelOne> getAllLevelOneByDd(){
@@ -181,6 +215,16 @@ public class ApiController {
 		return userService.selectAllAdministrators();
 	}
 	
+	@GetMapping("getAllSemester")
+	public List<Semester> getAllSemester(){
+		return semesterService.selectAll();
+	}
+	
+	@GetMapping("getAllBatch")
+	public List<Batch> getAllBatch(){
+		return batchService.selectAll();
+	}
+	
 	@GetMapping("/getAllDegree")
 	public List<Degree> getAllDegree(){
 		return degreeService.selectAll();
@@ -189,6 +233,11 @@ public class ApiController {
 	@GetMapping("/getAllDepartment")
 	public List<Department> getAllDepartment(){
 		return departmentService.selectAll();
+	}
+	
+	@GetMapping("/getAllSection")
+	public List<Section> getAllSection(){
+		return sectionService.selectAll();
 	}
 	
 	@GetMapping("/getAllState")
@@ -209,16 +258,6 @@ public class ApiController {
 	@GetMapping("/getAllDistrict")
 	public List<District> getAllDistrict(){
 		return districtService.selectAll();
-	}
-	
-	@GetMapping("/getYearByDegreeId/{id}")
-	public List<Year> getYearByDegreeId(@PathVariable("id")int id){
-		return yearService.selectByDegreeId(id);
-	}
-	
-	@GetMapping("/getAllDepartmentByDegreeId/{id}")
-	public List<Department> getAllDepartmentByDegree(@PathVariable("id")int id){
-		return departmentService.selectDepartmentByDegree(id);
 	}
 	
 	@GetMapping("/getAllYear")
@@ -246,16 +285,29 @@ public class ApiController {
 		return gradeService.selectAll();
 	}
 	
+	@GetMapping("/getAllSyllabus")
+	public List<Syllabus> getAllSyllabus(){
+		return syllabusService.selectAll();
+	}
+	
+	@GetMapping("/getYearByDegreeId/{id}")
+	public List<Year> getYearByDegreeId(@PathVariable("id")int id){
+		return yearService.selectByDegreeId(id);
+	}
+	
+	@GetMapping("/getAllDepartmentByDegreeId/{id}")
+	public List<Department> getAllDepartmentByDegree(@PathVariable("id")int id){
+		return departmentService.selectDepartmentByDegree(id);
+	}
+	
 	@GetMapping("/getAllCSD")
 	public List<CSDMapping> getAllCSD(){
 		return csdService.selectAll();
 	}
 	
-	@PostMapping(value="savePersonalJson",produces= {MediaType.APPLICATION_JSON_VALUE})
-	@ResponseBody
-	public Personal savePersonal(@RequestBody Personal personal) {
-		profileService.updatePersonal(personal.getDob(),personal.getBlood(),personal.getReligion(),personal.getCommunity(),personal.getId());
-		return personal;
+	@GetMapping("/getAllStudentByStaffId/{id}")
+	public List<SSMapping> getAllStudentByStaffId(@PathVariable("id") int id){
+		return ssService.selectAllStudentByStaffId(id);
 	}
 	
 	@GetMapping("getAllStateByCountryId/{id}")
@@ -268,6 +320,13 @@ public class ApiController {
 		return csdService.selectAllDistrictByStateId(countryid,stateid);
 	}
 	
+	@PostMapping(value="savePersonalJson",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public Personal savePersonal(@RequestBody Personal personal) {
+		profileService.updatePersonal(personal.getDob(),personal.getBlood(),personal.getReligion(),personal.getCommunity(),personal.getId());
+		return personal;
+	}
+	
 	@PostMapping(value="saveAddressJson",produces= {MediaType.APPLICATION_JSON_VALUE})
 	@ResponseBody
 	public Address saveAddress(@RequestBody Address address) {
@@ -277,9 +336,16 @@ public class ApiController {
 		return address;
 	}
 	
-	@GetMapping("/getAllStudentByStaffId/{id}")
-	public List<SSMapping> getAllStudentByStaffId(@PathVariable("id") int id){
-		return ssService.selectAllStudentByStaffId(id);
+	@PostMapping(value="saveSchoolMarks",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public School saveSchooling(@RequestBody School school) {
+		return school;
+	}
+	
+	@PostMapping(value="saveGraduationMarks",produces= {MediaType.APPLICATION_JSON_VALUE})
+	@ResponseBody
+	public Graduation saveGraduation(@RequestBody Graduation graduate) {
+		return graduate;
 	}
 	
 }

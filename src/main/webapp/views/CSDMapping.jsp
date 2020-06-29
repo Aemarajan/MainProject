@@ -51,7 +51,6 @@
 							<c:param name="p" value="~" />
 						</c:url>
 		
-						
 						<table class="table table-striped table-hover">
 							<thead>
 								<tr>
@@ -83,7 +82,7 @@
 						</table>
 						
 						<tg:paging pagedListHolder="${pagedListHolder}" pagedLink="${pagedLink}" />
-											
+
 						<!-- Add Modal HTML -->
 						<div id="addModal" class="modal fade">
 							<div class="modal-dialog">
@@ -106,6 +105,21 @@
 													</div>
 													<div class="toast-body py-2">
 														<div>This Mapping Already Exist, Map New Combination...</div>
+													</div>
+												</div>
+											</c:if>
+											
+											<c:if test="${addExistCSD != null }">
+												<div class="toast" id="Toast">
+													<div class="toast-header white-text bg-danger pt-2">
+														<h5 class="mr-auto">Error</h5>
+														<button type="button" class="ml-2 mb-1 close white-text"
+															data-dismiss="toast">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="toast-body py-2">
+														<div>This country, state and district already mapped.</div>
 													</div>
 												</div>
 											</c:if>
@@ -168,6 +182,8 @@
 	</div>
 	<!-- Wrapper -->
 
+	<jsp:include page="Footer.jsp" />
+
 	<c:if test="${added != null }">
 		<div class="toast" id="Toast" 
 			style="position: absolute; overflow: auto; right: 20px; bottom: 20px; width: 300px;">
@@ -184,7 +200,7 @@
 		</div>
 	</c:if>
 	
-	<c:if test="${updated != null }">
+	<c:if test="${active != null }">
 		<div class="toast" id="Toast"
 			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 			<div class="toast-header white-text bg-warning pt-2">
@@ -200,7 +216,7 @@
 		</div>
 	</c:if>
 	
-	<c:if test="${deleted != null }">
+	<c:if test="${inactive != null }">
 		<div class="toast" id="Toast"
 			style="position: absolute; right: 20px; bottom: 20px; width: 300px;">
 			<div class="toast-header white-text bg-danger pt-2">
@@ -216,7 +232,11 @@
 		</div>
 	</c:if>
 	
-	<jsp:include page="Footer.jsp" />
+	<c:if test="${addError != null }"> 
+		<script type="text/javascript">
+			$('#addModal').modal('show');
+		</script>
+	</c:if>
 <!-- Project End -->
 
 <!-- jQuery -->

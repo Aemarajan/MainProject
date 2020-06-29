@@ -69,7 +69,7 @@ pageEncoding="ISO-8859-1"%>
 								<tbody>
 									<c:forEach var="l" items="${pagedListHolder.pageList }">
 									<tr>
-										<td>${l.subject_code }</td>
+										<td class="text-uppercase">${l.subject_code }</td>
 										<td class="text-capitalize">${l.subject_name }</td>
 										<td>${l.category }</td>
 										<td>${l.contact_period }</td>

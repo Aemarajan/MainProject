@@ -469,7 +469,7 @@ public class MasterController {
 			}
 		}
 		
-		System.out.println(comm.toString());
+		//System.out.println(comm.toString());
 		
 		communityService.updateCommunity(comm.getName().toLowerCase(),comm.getAcronym().toUpperCase().replaceAll("\\s", ""),comm.isInn() ? 1 : 0,comm.getId());
 

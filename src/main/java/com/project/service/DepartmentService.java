@@ -22,10 +22,10 @@ public class DepartmentService {
 		return list;
 	}
 
-	public Department selectById(Integer degree) {
+	public Department selectById(Integer department) {
 		List<Department> list = dpmrepo.findAll();
 		for(Department d : list) {
-			if(d.getId() == degree) {
+			if(d.getId() == department) {
 				return d;
 			}
 		}
